@@ -8,8 +8,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "heroku-postbuild": "webpack-dev-server --config webpack.config.dev.js",
     "build": "webpack-dev-server --config webpack.config.dev.js",
-    "start": "set NODE_ENV=development && set BABEL_ENV=development && webpack-dev-server --config webpack.config.dev.js --https false --open http://localhost:9999/index.html",
-    "https": "set NODE_ENV=development && set BABEL_ENV=development && webpack-dev-server --config webpack.config.dev.js --https true --open https://localhost:9999/index.html --watch"
+    "development": "set NODE_ENV=development && set BABEL_ENV=development && webpack-dev-server --config webpack.config.dev.js --https false --open http://localhost:9999/index.html",
+    "https": "set NODE_ENV=development && set BABEL_ENV=development && webpack-dev-server --config webpack.config.dev.js --https true --open https://localhost:9999/index.html --watch",
+    "start": "node server.js"
   },
   "keywords": [
     "zoom",
