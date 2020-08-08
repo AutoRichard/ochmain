@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="Web site created using create-react-app" />
+
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>React App</title>
+
+    <!--Template-->
+    <link href="/client/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/client/assets/images/fav-icon.png" rel="icon">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link href="/client/assets/style.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/client/assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/client/assets/css/simpleLightbox.min.css">
+    <link rel="stylesheet" href="/client/assets/css/easy-responsive-tabs.css">
+    <!--Template-->
+
+</head>
+
+
+<body>
+    <style>
+        .sdk-select {
+            height: 34px;
+            border-radius: 4px;
+        }
+
+        .websdktest button {
+            float: right;
+            margin-left: 5px;
+        }
+
+        #nav-tool {
+            margin-bottom: 0px;
+        }
+
+        #show-test-tool {
+            position: absolute;
+            top: 100px;
+            left: 0;
+            display: block;
+            z-index: 99999;
+        }
+
+        #display_name {
+            width: 250px;
+        }
+
+
+        #websdk-iframe {
+            width: 700px;
+            height: 500px;
+            border: 1px;
+            border-color: red;
+            border-style: dashed;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            left: 50%;
+            margin: 0;
+        }
+
+        body>#zmmtg-root {
+            display: none;
+            background-color: white;
+        }
+
+        #input_style {
+            width: 150px;
+        }
+
+        #validationError {
+            font-size: 15px !important;
+            font-weight: bold;
+            color: #fc4349;
+        }
+
+        #agreementError {
+            font-size: 12px !important;
+            font-weight: bold;
+            color: #fc4349;
+        }
+    </style>
+    <script src="node_modules/react/umd/react.production.min.js"></script>
+    <script src="node_modules/react-dom/umd/react-dom.production.min.js"></script>
+    <script src="node_modules/redux/dist/redux.min.js"></script>
+    <script src="node_modules/redux-thunk/dist/redux-thunk.min.js"></script>
+    <script src="node_modules/lodash/lodash.min.js"></script>
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <!--<script src="/client/assets/js/jquery-3.3.1.min.js"></script>-->
+
+
+    <div id="main"></div>
+    <script src="./static/main.min.js"></script>
+
+
+
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/client/assets/js/bootstrap.min.js"></script>
+    <script src="/client/assets/js/owl.carousel.min.js"></script>
+    <script src="/client/assets/js/simpleLightbox.min.js"></script>
+    <script src="/client/assets/js/easy-responsive-tabs.js"></script>
+    <script>
+        $("#msg-bar").click(function () {
+            $(".msg-area").toggle(500);
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#chatbar").owlCarousel({
+
+                margin: 20,
+                nav: true,
+                loop: true,
+                navText: ["<div class='nav-btn prev-btn'>Pre</div>", "<div class='nav-btn next-btn'>Next</div>"],
+                dots: true,
+                responsive: {
+                    0: {
+                        items: 3,
+                        margin: 5
+                    },
+                    600: {
+                        items: 4
+                    },
+                    1000: {
+                        items: 6
+                    }
+                }
+            });
+            $("#music-gal").owlCarousel({
+
+                margin: 20,
+                nav: true,
+                loop: true,
+                navText: ["<div class='nav-btn prev-btn'>Pre</div>", "<div class='nav-btn next-btn'>Next</div>"],
+                dots: true,
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                    600: {
+                        items: 3
+                    },
+                    1000: {
+                        items: 3
+                    }
+                }
+            });
+            $("#owl-main").owlCarousel({
+
+                margin: 20,
+                nav: true,
+                loop: true,
+                navText: ["<div class='nav-btn prev-btn'>Pre</div>", "<div class='nav-btn next-btn'>Next</div>"],
+                dots: true,
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                    600: {
+                        items: 2
+                    },
+                    1000: {
+                        items: 4
+                    }
+                }
+            });
+
+            $("#studio-gal").owlCarousel({
+
+                margin: 20,
+                nav: true,
+                loop: true,
+                navText: ["<div class='nav-btn prev-btn'>Pre</div>", "<div class='nav-btn next-btn'>Next</div>"],
+                dots: true,
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                    600: {
+                        items: 3
+                    },
+                    1000: {
+                        items: 6
+                    }
+                }
+            });
+            $("#featured-tal").owlCarousel({
+
+                margin: 20,
+                nav: true,
+                loop: true,
+                navText: ["<div class='nav-btn prev-btn'>Pre</div>", "<div class='nav-btn next-btn'>Next</div>"],
+                dots: true,
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                    600: {
+                        items: 3
+                    },
+                    1000: {
+                        items: 6
+                    }
+                }
+            });
+            $("#virtual-st").owlCarousel({
+
+                margin: 30,
+                nav: true,
+                loop: true,
+                navText: ["<div class='nav-btn prev-btn'>Pre</div>", "<div class='nav-btn next-btn'>Next</div>"],
+                dots: true,
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                    600: {
+                        items: 3
+                    },
+                    1000: {
+                        items: 4
+                    }
+                }
+            });
+
+            $("#insta-feed").owlCarousel({
+
+                margin: 30,
+                nav: true,
+                loop: true,
+                navText: ["<div class='nav-btn prev-btn'>Pre</div>", "<div class='nav-btn next-btn'>Next</div>"],
+                dots: true,
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                    600: {
+                        items: 3
+                    },
+                    1000: {
+                        items: 6
+                    }
+                }
+            });
+
+            $("#press").owlCarousel({
+
+                margin: 30,
+                nav: true,
+                loop: true,
+                navText: ["<div class='nav-btn prev-btn'>Pre</div>", "<div class='nav-btn next-btn'>Next</div>"],
+                dots: true,
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                    600: {
+                        items: 3
+                    },
+                    1000: {
+                        items: 6
+                    }
+                }
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#pop-left").click(function () {
+                $("#popup-l").slideToggle();
+            });
+            $("#hide-l").click(function () {
+                $("#popup-l").slideToggle();
+            });
+
+            $("#pop-right").click(function () {
+                $("#popup-r").slideToggle();
+            });
+            $("#hide-r").click(function () {
+                $("#popup-r").slideToggle();
+            });
+
+
+            $("#pop-right-msg").click(function () {
+                $("#popup-msg").slideToggle();
+            });
+            $("#hide-msg").click(function () {
+                $("#popup-msg").slideToggle();
+            });
+
+        });
+        $(".rotate").click(function () {
+            $(this).toggleClass("up");
+        });
+    </script>
+    <script>
+
+        new SimpleLightbox({ elements: '.imageGallery1 a' });
+        new SimpleLightbox({ elements: '.imageGallery2 a' });
+
+    </script>
+    <script>
+        $(document).ready(function () {
+            $(".icon-arrow").click(function () {
+                $(".popup").slideToggle();
+            });
+        });
+
+    </script>
+    <script>
+        $(document).ready(function () {
+
+            $("#v-studio").owlCarousel({
+
+                margin: 30,
+                nav: true,
+                loop: true,
+                navText: ["<div class='nav-btn prev-btn'>Pre</div>", "<div class='nav-btn next-btn'>Next</div>"],
+                dots: true,
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                    600: {
+                        items: 3
+                    },
+                    1000: {
+                        items: 4
+                    },
+
+                }
+            });
+
+
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+
+            $("#pro-list").owlCarousel({
+
+                margin: 40,
+                nav: true,
+                loop: true,
+                navText: ["<div class='nav-btn prev-btn'>Pre</div>", "<div class='nav-btn next-btn'>Next</div>"],
+                dots: true,
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                    600: {
+                        items: 3
+                    },
+                    1000: {
+                        items: 5
+                    },
+
+                }
+            });
+            $("#event-list").owlCarousel({
+
+                margin: 40,
+                nav: true,
+                loop: true,
+                navText: ["<div class='nav-btn prev-btn'>Pre</div>", "<div class='nav-btn next-btn'>Next</div>"],
+                dots: true,
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                    600: {
+                        items: 2
+                    },
+                    1000: {
+                        items: 3
+                    },
+                    1100: {
+                        items: 4
+                    }
+                }
+            });
+            $("#chatbar").owlCarousel({
+
+                margin: 20,
+                nav: true,
+                loop: true,
+                navText: ["<div class='nav-btn prev-btn'>Pre</div>", "<div class='nav-btn next-btn'>Next</div>"],
+                dots: true,
+                responsive: {
+                    0: {
+                        items: 3
+                    },
+                    600: {
+                        items: 4
+                    },
+                    1000: {
+                        items: 6
+                    }
+                }
+            });
+            $("#owl-main").owlCarousel({
+
+                margin: 20,
+                nav: true,
+                loop: true,
+                navText: ["<div class='nav-btn prev-btn'>Pre</div>", "<div class='nav-btn next-btn'>Next</div>"],
+                dots: true,
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                    600: {
+                        items: 3
+                    },
+                    1000: {
+                        items: 4
+                    }
+                }
+            });
+
+            $("#studio-gal").owlCarousel({
+
+                margin: 20,
+                nav: true,
+                loop: true,
+                navText: ["<div class='nav-btn prev-btn'>Pre</div>", "<div class='nav-btn next-btn'>Next</div>"],
+                dots: true,
+                responsive: {
+                    0: {
+                        items: 2
+                    },
+                    600: {
+                        items: 3
+                    },
+                    1000: {
+                        items: 6
+                    }
+                }
+            });
+            $("#featured-tal").owlCarousel({
+
+                margin: 20,
+                nav: true,
+                loop: true,
+                navText: ["<div class='nav-btn prev-btn'>Pre</div>", "<div class='nav-btn next-btn'>Next</div>"],
+                dots: true,
+                responsive: {
+                    0: {
+                        items: 2
+                    },
+                    600: {
+                        items: 3
+                    },
+                    1000: {
+                        items: 6
+                    }
+                }
+            });
+            $("#virtual-st").owlCarousel({
+
+                margin: 30,
+                nav: true,
+                loop: true,
+                navText: ["<div class='nav-btn prev-btn'>Pre</div>", "<div class='nav-btn next-btn'>Next</div>"],
+                dots: true,
+                responsive: {
+                    0: {
+                        items: 2
+                    },
+                    600: {
+                        items: 3
+                    },
+                    1000: {
+                        items: 4
+                    }
+                }
+            });
+
+            $("#insta-feed").owlCarousel({
+
+                margin: 30,
+                nav: true,
+                loop: true,
+                navText: ["<div class='nav-btn prev-btn'>Pre</div>", "<div class='nav-btn next-btn'>Next</div>"],
+                dots: true,
+                responsive: {
+                    0: {
+                        items: 2
+                    },
+                    600: {
+                        items: 3
+                    },
+                    1000: {
+                        items: 6
+                    }
+                }
+            });
+
+            $("#press").owlCarousel({
+
+                margin: 30,
+                nav: true,
+                loop: true,
+                navText: ["<div class='nav-btn prev-btn'>Pre</div>", "<div class='nav-btn next-btn'>Next</div>"],
+                dots: true,
+                responsive: {
+                    0: {
+                        items: 2
+                    },
+                    600: {
+                        items: 3
+                    },
+                    1000: {
+                        items: 6
+                    }
+                }
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+
+
+            var readURL = function (input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('.profile-pic').attr('src', e.target.result);
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+
+            $(".file-upload").on('change', function () {
+                readURL(this);
+            });
+
+            $(".upload-button").on('click', function () {
+                $(".file-upload").click();
+            });
+        });
+    </script>
+
+    <script>
+        $("#msg-bar-two").click(function () {
+            $(".msg-area-two").toggle(500);
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+
+            $('#verticalTab').easyResponsiveTabs({
+                type: 'vertical',
+                width: 'auto',
+                fit: true
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $("#booking-list").owlCarousel({
+
+                margin: 20,
+                nav: true,
+                loop: true,
+                navText: ["<div class='nav-btn prev-btn'>Pre</div>", "<div class='nav-btn next-btn'>Next</div>"],
+                dots: true,
+                responsive: {
+                    0: {
+                        items: 1,
+                        margin: 5
+                    },
+                    1000: {
+                        items: 2
+                    },
+                    1100: {
+                        items: 3
+                    }
+                }
+            });
+        });
+    </script>
+
+
+    <script>
+        $(document).ready(function () {
+            $('.count').prop('disabled', true);
+            $(document).on('click', '.plus', function () {
+                $('.count').val(parseInt($('.count').val()) + 1);
+            });
+            $(document).on('click', '.minus', function () {
+                $('.count').val(parseInt($('.count').val()) - 1);
+                if ($('.count').val() == 0) {
+                    $('.count').val(1);
+                }
+            });
+        });
+    </script>
+
+
+</body>
+
+</html>
