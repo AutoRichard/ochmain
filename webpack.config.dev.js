@@ -70,7 +70,7 @@ module.exports = {
     },
     context: __dirname,
     target: 'web',
-    devServer: {
+    /*devServer: {
         https,
         cert: './localhost.crt',
         key: './localhost.key',
@@ -84,7 +84,7 @@ module.exports = {
         headers: {
             'Access-Control-Allow-Origin': https ? 'https://0.0.0.0:9999' : 'http://0.0.0.0:9999'
         }
-    },
+    },*/
     mode: 'development',
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
