@@ -6,7 +6,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "heroku-postbuild": "webpack-dev-server -p --config webpack.config.dev.js --progress",
+    "heroku-postbuild": "webpack -p --config webpack.config.dev.js --progress",
     "build": "webpack --mode production --config webpack.config.dev.js",
     "start": "set NODE_ENV=development && set BABEL_ENV=development && webpack-dev-server --config webpack.config.dev.js --https false --open http://localhost:9999/index.html",
     "https": "set NODE_ENV=development && set BABEL_ENV=development && webpack-dev-server --config webpack.config.dev.js --https true --open https://localhost:9999/index.html --watch"
