@@ -78,7 +78,7 @@ module.exports = {
         port: 9999,
         hot: true,
         overlay: true,
-        historyApiFallback: true,
+        historyApiFallback: true, 
         watchContentBase: true,
         disableHostCheck: true,
         headers: {
