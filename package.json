@@ -8,9 +8,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "heroku-postbuild": "npm install --dev",
     "build": "webpack-dev-server --config webpack.config.dev.js --progress",
-    "development": "set NODE_ENV=development && set BABEL_ENV=development && webpack-dev-server --config webpack.config.dev.js --https false --open http://localhost:9999/index.html",
-    "https": "set NODE_ENV=development && set BABEL_ENV=development && webpack-dev-server --config webpack.config.dev.js --https true --open https://localhost:9999/index.html --watch",
-    "start": "node server.js"
+    "start": "set NODE_ENV=development && set BABEL_ENV=development && webpack-dev-server --config webpack.config.dev.js",
+    "https": "set NODE_ENV=development && set BABEL_ENV=development && webpack-dev-server --config webpack.config.dev.js --https true --open https://localhost:9999/index.html --watch"
   },
   "keywords": [
     "zoom",
@@ -38,9 +37,7 @@
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "redux": "3.7.2",
-    "redux-thunk": "2.2.0"
-  },
-  "devDependencies": {
+    "redux-thunk": "2.2.0",
     "@babel/cli": "^7.1.5",
     "@babel/core": "^7.1.6",
     "@babel/preset-react": "^7.0.0",
