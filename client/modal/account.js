@@ -64,7 +64,7 @@ class AccountInfo extends React.Component {
 
         if (this.state.fullName === '' || this.state.displayName === '' || this.state.about === '') {
             this.setState({ loading: false });
-            this.state.fullName === '' ? (this.setState({ fullNameValidate: '* name is required' }), this.scrollApplication()) : this.setState({ fullNameValidate: '*' });
+            this.state.fullName === '' ? (this.setState({ fullNameValidation: '* name is required' }), this.scrollApplication()) : this.setState({ fullNameValidation: '*' });
             this.state.displayName === '' ? (this.setState({ displayNameValidation: '* name is required' }), this.scrollApplication()) : this.setState({ displayNameValidation: '*' });
             this.state.about === '' ? (this.setState({ aboutValidation: '* biography is required' }), this.scrollApplication()) : this.setState({ aboutValidation: '*' });
         } else {
