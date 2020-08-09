@@ -80,6 +80,9 @@ module.exports = {
         overlay: true,
         historyApiFallback: true, 
         watchContentBase: true,
+        watchOptions: {
+            ignored: '/node_modules/'
+          },
         disableHostCheck: true,
         headers: {
             'Access-Control-Allow-Origin': https ? 'https://0.0.0.0:9999' : 'http://0.0.0.0:9999'
