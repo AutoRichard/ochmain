@@ -1,6 +1,6 @@
 import React from 'react';
 import auth from './../auth/auth-helper';
-import { read, update } from './../api/api-user';
+import { read, update, password } from './../api/api-user';
 
 
 
@@ -781,33 +781,114 @@ W/JACKIE HISHMEH</h4>
     );
 }
 
-const Password = () => {
-    return (
-        <div>
-            <div className="input-box text-center">
-                <div className="input-area">
-                    <label>CURRENT PASSWORD</label>
-                    <input type="password" />
-                    <span>FORGOT PASSWORD? <a href="">CLICK HERE</a> TO RESET IT</span>
+class Password extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            oldPassword: '',
+            oldPasswordValidation: '',
+            password: '',
+            passwordValidation: '',
+            confirmPassword: '',
+            confirmPasswordValidation: '',
+            loading: false,
+            status: ''
+        }
+    }
+
+    onChange = (event) => {
+        this.setState({
+            [event.target.name]: event.target.value
+        });
+
+        event.target.name === 'oldPassword' ? this.setState({ oldPasswordValidation: '' }) : '';
+        event.target.name === 'confirmPassword' ? this.setState({ confirmPasswordValidation: '' }) : '';
+        event.target.name === 'password' ? this.setState({ passwordValidation: '' }) : '';
+        //this.setState({ status: '' })
+    }
+
+    scrollApplication = () => {
+        document.getElementById('closePassword').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    submitPassword = () => {
+        this.setState({ loading: true });
+
+        if (this.state.oldPassword === '' || this.state.confirmPassword === '' || this.state.password === '' || this.state.password !== this.state.confirmPassword) {
+            this.setState({ loading: false });
+            this.state.oldPassword === '' ? (this.setState({ oldPasswordValidation: 'current password is required' }), this.scrollApplication()) : this.setState({ oldPasswordValidation: '' });
+            this.state.confirmPassword === '' ? (this.setState({ confirmPasswordValidation: 'confirm password is required' }), this.scrollApplication()) : this.setState({ confirmPasswordValidation: '' });
+            this.state.password === '' ? (this.setState({ passwordValidation: 'password is required' }), this.scrollApplication()) : this.setState({ passwordValidation: '' });
+            this.state.password !== this.state.confirmPassword ? (this.setState({ confirmPasswordValidation: 'password does not match' }), this.scrollApplication()) : this.setState({ confirmPasswordValidation: '' });
+        } else {
+
+
+            const user = {
+                oldPassword: this.state.oldPassword,
+                password: this.state.password
+            }
+            const jwt = auth.isAuthenticated();
+            const userId = jwt.user._id;
+            const token = jwt.token;
+
+
+
+            password({
+                userId: userId
+            }, {
+                t: token
+            }, user).then((data) => {
+                if (data.error) {
+                    this.state.oldPassword === '' ? (this.setState({ oldPasswordValidation: data.error }), this.scrollApplication()) : this.setState({ oldPasswordValidation: '' });
+                } else {
+                    this.setState({ status: data.message });
+                    setTimeout(
+                        () => this.setState({ status: '', loading: false }),
+                        4000
+                    );
+
+                }
+            });
+        }
+    }
+
+    render() {
+        const loadingStyle = {
+            width: '30%',
+            height: '30%'
+        }
+        return (
+            <div>
+                <div className="input-box text-center">
+                    <div className="input-area" id="closePassword">
+                        <label>CURRENT PASSWORD</label>
+                        <span id="validationError">{this.state.oldPasswordValidation}</span>
+                        <input type="password" name="oldPassword" onChange={this.onChange} value={this.state.oldPassword} />
+                        {/*<span>FORGOT PASSWORD? <a href="">CLICK HERE</a> TO RESET IT</span>*/}
+                    </div>
+                    <div className="input-area">
+                        <label>NEW PASSWORD</label>
+                        <span id="validationError">{this.state.passwordValidation}</span>
+                        <input type="password" name="password" onChange={this.onChange} value={this.state.password} />
+                    </div>
+
+                    <div className="input-area">
+                        <label>CONFIRM NEW PASSWORD</label>
+                        <span id="validationError">{this.state.confirmPasswordValidation}</span>
+                        <input type="password" name="confirmPassword" onChange={this.onChange} value={this.state.confirmPassword} />
+                    </div>
+
+                    <span>{this.state.status}</span>
+                    {this.state.loading === true ? (<img style={loadingStyle} src="/client/assets/images/loading.gif" />) : (<input type="submit" onClick={this.submitPassword} value="SAVE CHANGES" />)}
+
+
                 </div>
-                <div className="input-area">
-                    <label>NEW PASSWORD</label>
-                    <input type="password" />
-                </div>
-
-                <div className="input-area">
-                    <label>CONFIRM NEW PASSWORD</label>
-                    <input type="password" />
-                </div>
-
-
-                <input type="submit" value="SAVE CHANGES" />
-
             </div>
-        </div>
 
 
-    )
+        );
+    }
 }
 
 class Account extends React.Component {
@@ -885,7 +966,7 @@ class Account extends React.Component {
                                                     <img className="img-set" src="/client/assets/images/profile-page.png" />
                                                 </div>
                                                 <div className="account-data float-lg-left">
-                                                    <h4 style={{color: 'white'}}>{this.state.displayName !== '' ? this.state.displayName : this.state.fullName.substr(0, 6)}</h4>
+                                                    <h4 style={{ color: 'white' }}>{this.state.displayName !== '' ? this.state.displayName : this.state.fullName.substr(0, 6)}</h4>
                                                     <h5>GOLD MEMBER</h5>
                                                     <h6>42 CREDITS</h6>
                                                 </div>

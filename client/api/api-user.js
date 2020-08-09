@@ -63,10 +63,26 @@ const remove = (params, credentials) => {
   }).catch((err) => console.log(err))
 }
 
+
+const password = (params, credentials, user) => {
+  return fetch(link + '/api/password/' + params.userId, {
+    method: 'PUT',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + credentials.t
+    },
+    body: JSON.stringify(user)
+  }).then((response) => {
+    return response.json()
+  }).catch((err) => console.log(err))
+}
+
 export {
   create,
   list,
   read,
   update,
-  remove
+  remove,
+  password
 }
