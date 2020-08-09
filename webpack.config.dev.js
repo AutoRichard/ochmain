@@ -2,7 +2,6 @@ const path = require('path');
 const webpack = require('webpack');
 const args = process.argv.slice(2);
 const https = args[2] === '--https' && args[3] === 'true';
-const port = process.env.PORT || 8080;
 
 module.exports = {
     devtool: 'eval',
@@ -76,17 +75,17 @@ module.exports = {
         cert: './localhost.crt',
         key: './localhost.key',
         host: '0.0.0.0',
-        port: port,
+        port: 9999,
         hot: true,
         overlay: true,
-        historyApiFallback: true,
-        watchContentBase: false,
-        disableHostCheck: true,
+        historyApiFallback: true, 
+        watchContentBase: true,
         watchOptions: {
             ignored: './node_modules/'
-        },
+          },
+        disableHostCheck: true,
         headers: {
-            'Access-Control-Allow-Origin': https ? 'https://0.0.0.0:' + port : 'http://0.0.0.0:' + port
+            'Access-Control-Allow-Origin': https ? 'https://0.0.0.0:9999' : 'http://0.0.0.0:9999'
         }
     },
     mode: 'development',

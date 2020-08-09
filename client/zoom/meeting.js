@@ -46,8 +46,11 @@ class Meeting extends React.Component {
             china: tmpArgs.china === "1",
         };
 
+        //const link =  'http://localhost:4000';
+        const link = 'https://ochbackend.herokuapp.com';
 
-        fetch('http://localhost:4000/api/check', {
+
+        fetch(link + '/api/check', {
             method: 'get',
         })
             .then(result => result.json())
@@ -62,7 +65,7 @@ class Meeting extends React.Component {
                     disableRecord: true, //optional
                     isSupportAV: true, //optional,
                     meetingInfo: [
-                        'Topic', 'host', 
+                        'Topic', 'host',
                     ],
                     success: function () {
                         console.log(meetingConfig);

@@ -17,8 +17,11 @@ class Zoom extends React.Component {
 
     join = () => {
 
+        //const link =  'http://localhost:4000';
+        const link = 'https://ochbackend.herokuapp.com';
 
-        fetch('http://localhost:4000/api/signature', {
+
+        fetch(link + '/api/signature', {
             method: 'get',
         })
             .then(result => result.json())

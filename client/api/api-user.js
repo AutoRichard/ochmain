@@ -1,19 +1,22 @@
+//const link = 'http://localhost:4000';
+const link = 'https://ochbackend.herokuapp.com';
+
 const create = (user) => {
-  return fetch('http://localhost:4000/api/users', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(user)
-    })
+  return fetch(link + '/api/users', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(user)
+  })
     .then((response) => {
       return response.json()
     }).catch((err) => console.log(err))
 }
 
 const list = () => {
-  return fetch('http://localhost:4000/api/users', {
+  return fetch(link + '/api/users', {
     method: 'GET',
   }).then(response => {
     return response.json()
@@ -21,7 +24,7 @@ const list = () => {
 }
 
 const read = (params, credentials) => {
-  return fetch('http://localhost:4000/api/users/' + params.userId, {
+  return fetch(link + '/api/users/' + params.userId, {
     method: 'GET',
     headers: {
       'Accept': 'application/json',
@@ -34,7 +37,7 @@ const read = (params, credentials) => {
 }
 
 const update = (params, credentials, user) => {
-  return fetch('http://localhost:4000/api/users/' + params.userId, {
+  return fetch(link + '/api/users/' + params.userId, {
     method: 'PUT',
     headers: {
       'Accept': 'application/json',
@@ -48,7 +51,7 @@ const update = (params, credentials, user) => {
 }
 
 const remove = (params, credentials) => {
-  return fetch('http://localhost:4000/api/users/' + params.userId, {
+  return fetch(link + '/api/users/' + params.userId, {
     method: 'DELETE',
     headers: {
       'Accept': 'application/json',
