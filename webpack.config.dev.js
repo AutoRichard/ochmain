@@ -81,7 +81,7 @@ module.exports = {
         historyApiFallback: true, 
         watchContentBase: true,
         watchOptions: {
-            ignored: '/node_modules/'
+            ignored: './node_modules/'
           },
         disableHostCheck: true,
         headers: {
