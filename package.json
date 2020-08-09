@@ -3,14 +3,14 @@
   "name": "socialmedia",
   "version": "1.7.10",
   "description": "Zoom sample app for web client WebSDK",
-  "main": "server.js",
+  "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "heroku-postbuild": "webpack-dev-server --config webpack.config.dev.js && node server.js",
-    "build": "webpack-dev-server --config webpack.config.dev.js && node server.js",
-    "development": "set NODE_ENV=development && set BABEL_ENV=development && webpack-dev-server --config webpack.config.dev.js --https false --open http://localhost:9999/index.html",
-    "https": "set NODE_ENV=development && set BABEL_ENV=development && webpack-dev-server --config webpack.config.dev.js --https true --open https://localhost:9999/index.html --watch",
-    "start": "node server.js"
+    "heroku-postbuild": "npm run build",
+    "build": "webpack-dev-server --config webpack.config.dev.js",
+    "development": "set NODE_ENV=development && set BABEL_ENV=development && webpack-dev-server --config webpack.config.dev.cjs --https false --open http://localhost:9999/index.html",
+    "https": "set NODE_ENV=development && set BABEL_ENV=development && webpack-dev-server --config webpack.config.dev.cjs --https true --open https://localhost:9999/index.html --watch",
+    "start": "npm run build && node server.js"
   },
   "keywords": [
     "zoom",
