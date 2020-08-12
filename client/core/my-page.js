@@ -319,21 +319,21 @@ class Timeline extends Component{
     
                             </div>
                             <ul className="social-circle">
-                                <li><a style={{display: 'none'}} href="javascript:void0" className="crs-btn"><img src="/client/assets/images/close-icon.png" /></a><img src="/client/assets/images/facebook.png" />{ this.state.facebookStatus == true ? (<div className="dropdown-share"><div data-toggle="modal" data-target="#artist-box" className=" edit-two"><i className="fa fa-eye" aria-hidden="true"></i></div>
+                                <li><a style={{display: 'none'}} href="javascript:void0" className="crs-btn"><img src="/client/assets/images/close-icon.png" /></a><img src="/client/assets/images/facebook.png" />{ this.state.facebookStatus == true ? (<div className="dropdown-share"><div className=" edit-two"><i className="fa fa-eye" aria-hidden="true"></i></div>
                                     <div className="dropdown-share-content edit-drp d-nn">
                                         {this.state.facebook}    
                                         <input style={{display: 'none'}} type="text" placeholder="Enter/Paste Facebook Artist Link..." />
                                         {/*<a href="javascript:void0" className="save-btn btm">ADD LINK</a>*/}
                                     </div>
                                 </div>) : ''}</li>
-                                <li><a style={{display: 'none'}} href="javascript:void0" className="crs-btn"><img src="/client/assets/images/close-icon.png" /></a><img src="/client/assets/images/insta.png" />{ this.state.instagramStatus == true ? (<div className="dropdown-share"><div data-toggle="modal" data-target="#artist-box" className=" edit-two"><i className="fa fa-eye" aria-hidden="true"></i></div>
+                                <li><a style={{display: 'none'}} href="javascript:void0" className="crs-btn"><img src="/client/assets/images/close-icon.png" /></a><img src="/client/assets/images/insta.png" />{ this.state.instagramStatus == true ? (<div className="dropdown-share"><div className=" edit-two"><i className="fa fa-eye" aria-hidden="true"></i></div>
                                     <div className="dropdown-share-content edit-drp d-nn">
                                         {this.state.instagram}      
                                         <input style={{display: 'none'}} type="text" placeholder="Enter/Paste Instagram Artist Link..." />
                                         {/*<a href="javascript:void0" className="save-btn btm">ADD LINK</a>*/}
                                     </div>
                                 </div>) : ''}</li>
-                                <li><a style={{display: 'none'}} href="javascript:void0" className="crs-btn"><img src="/client/assets/images/close-icon.png" /></a><img src="/client/assets/images/spotify.png" />{ this.state.spotifyStatus == true ? (<div className="dropdown-share"><div data-toggle="modal" data-target="#artist-box" className="edit-two"><i className="fa fa-eye" aria-hidden="true"></i></div>
+                                <li><a style={{display: 'none'}} href="javascript:void0" className="crs-btn"><img src="/client/assets/images/close-icon.png" /></a><img src="/client/assets/images/spotify.png" />{ this.state.spotifyStatus == true ? (<div className="dropdown-share"><div className="edit-two"><i className="fa fa-eye" aria-hidden="true"></i></div>
                                     <div className="dropdown-share-content edit-drp d-nn">
                                         {this.state.spotify}    
                                         <input style={{display: 'none'}} type="text" placeholder="Enter/Paste Spotify Artist Link..." />
@@ -520,21 +520,21 @@ class Timeline extends Component{
     
                             </div>
                             <ul className="social-circle">
-                                <li><a style={{display: 'none'}} href="javascript:void0" className="crs-btn"><img src="/client/assets/images/close-icon.png" /></a><img src="/client/assets/images/youtube.png" />{ this.state.youtubeStatus == true ? (<div className="dropdown-share"><div data-toggle="modal" data-target="#artist-box" className="edit-two"><i className="fa fa-eye" aria-hidden="true"></i></div>
+                                <li><a style={{display: 'none'}} href="javascript:void0" className="crs-btn"><img src="/client/assets/images/close-icon.png" /></a><img src="/client/assets/images/youtube.png" />{ this.state.youtubeStatus == true ? (<div className="dropdown-share"><div className="edit-two"><i className="fa fa-eye" aria-hidden="true"></i></div>
                                     <div className="dropdown-share-content edit-drp right d-nn">
                                         {this.state.youtube}    
                                         <input style={{display: 'none'}} type="text" placeholder="Enter/Paste Youtube Artist Link..." />
                                         {/*<a href="javascript:void0" className="save-btn btm">ADD LINK</a>*/}
                                     </div>
                                 </div>) : ''}</li>
-                                <li><a style={{display: 'none'}} href="javascript:void0" className="crs-btn"><img src="/client/assets/images/close-icon.png" /></a><img src="/client/assets/images/snapchat.png" />{ this.state.snapchatStatus == true ? (<div className="dropdown-share"><div data-toggle="modal" data-target="#artist-box" className=" edit-two"><i className="fa fa-eye" aria-hidden="true"></i></div>
+                                <li><a style={{display: 'none'}} href="javascript:void0" className="crs-btn"><img src="/client/assets/images/close-icon.png" /></a><img src="/client/assets/images/snapchat.png" />{ this.state.snapchatStatus == true ? (<div className="dropdown-share"><div className=" edit-two"><i className="fa fa-eye" aria-hidden="true"></i></div>
                                     <div className="dropdown-share-content edit-drp right d-nn">
                                         {this.state.snapchat}    
                                         <input style={{display: 'none'}} type="text" placeholder="Enter/Paste Snapchat Artist Link..." />
                                         {/*<a href="javascript:void0" className="save-btn btm">ADD LINK</a>*/}
                                     </div>
                                 </div>) : ''}</li>
-                                <li><a style={{display: 'none'}} href="javascript:void0" className="crs-btn"><img src="/client/assets/images/close-icon.png" /></a><img src="/client/assets/images/tiktok.png" />{ this.state.tiktokStatus == true ? (<div className="dropdown-share"><div data-toggle="modal" data-target="#artist-box" className=" edit-two"><i className="fa fa-eye" aria-hidden="true"></i></div>
+                                <li><a style={{display: 'none'}} href="javascript:void0" className="crs-btn"><img src="/client/assets/images/close-icon.png" /></a><img src="/client/assets/images/tiktok.png" />{ this.state.tiktokStatus == true ? (<div className="dropdown-share"><div className=" edit-two"><i className="fa fa-eye" aria-hidden="true"></i></div>
                                     <div className="dropdown-share-content edit-drp right d-nn">
                                         {this.state.tiktok}    
                                         <input style={{display: 'none'}} type="text" placeholder="Enter/Paste Tiktok Artist Link..." />
