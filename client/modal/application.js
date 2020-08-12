@@ -12,18 +12,18 @@ class ApplicationForm extends React.Component {
 
         this.state = {
             fullName: '',
-            fullNameValidate: '*',
+            fullNameValidate: '',
             email: '',
-            emailValidate: '*',
+            emailValidate: '',
             password: '',
-            passwordValidate: '*',
+            passwordValidate: '',
             passwordConfirm: '',
-            passwordConfirmValidate: '*',
+            passwordConfirmValidate: '',
             link: '',
-            linkValidate: '*',
+            linkValidate: '',
             phoneNumber: '',
             about: '',
-            aboutValidate: '*',
+            aboutValidate: '',
             agreement: false,
             agreementValidate: '',
             loading: false,
@@ -37,12 +37,12 @@ class ApplicationForm extends React.Component {
             [event.target.name]: value
         });
 
-        event.target.name === 'fullName' ? this.setState({ fullNameValidate: '*' }) : '';
-        event.target.name === 'email' ? this.setState({ emailValidate: '*' }) : '';
-        event.target.name === 'password' ? this.setState({ passwordValidate: '*' }) : '';
-        event.target.name === 'passwordConfirm' ? this.setState({ passwordConfirmValidate: '*' }) : '';
-        event.target.name === 'link' ? this.setState({ linkValidate: '*' }) : '';
-        event.target.name === 'about' ? this.setState({ aboutValidate: '*' }) : '';
+        event.target.name === 'fullName' ? this.setState({ fullNameValidate: '' }) : '';
+        event.target.name === 'email' ? this.setState({ emailValidate: '' }) : '';
+        event.target.name === 'password' ? this.setState({ passwordValidate: '' }) : '';
+        event.target.name === 'passwordConfirm' ? this.setState({ passwordConfirmValidate: '' }) : '';
+        event.target.name === 'link' ? this.setState({ linkValidate: '' }) : '';
+        event.target.name === 'about' ? this.setState({ aboutValidate: '' }) : '';
 
         if (event.target.name === 'agreement') {
             event.target.checked === true ? this.setState({ agreementValidate: '' }) : '';
@@ -60,13 +60,13 @@ class ApplicationForm extends React.Component {
 
         if (this.state.fullName === '' || this.state.email === '' || this.state.password === '' || this.state.link === '' || this.state.agreement === false || this.state.about === '' || this.state.password != this.state.passwordConfirm) {
             this.setState({loading: false});
-            this.state.fullName === '' ? (this.setState({ fullNameValidate: '* full name is required' }), this.scrollApplication()) : this.setState({ fullNameValidate: '*' });
-            this.state.email === '' ? (this.setState({ emailValidate: '* email is required' }), this.scrollApplication()) : this.setState({ emailValidate: '*' });
-            this.state.password === '' ? (this.setState({ passwordValidate: '* password is required' }), this.scrollApplication()) : this.setState({ passwordValidate: '*' });
-            this.state.link === '' ? (this.setState({ linkValidate: '* required' }), this.scrollApplication()) : this.setState({ linkValidate: '*' });
-            this.state.agreement === false ? this.setState({ agreementValidate: 'agreement to terms and condition is required' }, this.scrollApplication()) : this.setState({ agreementValidate: '*' });
-            this.state.password != this.state.passwordConfirm ? this.setState({ passwordConfirmValidate: 'check password' }, this.scrollApplication()) : this.setState({ passwordConfirmValidate: '*' });
-            this.state.about === '' ? this.setState({ aboutValidate: 'write about yourself' }, this.scrollApplication()) : this.setState({ aboutValidate: '*' });
+            this.state.fullName === '' ? (this.setState({ fullNameValidate: 'Full Name is required' }), this.scrollApplication()) : this.setState({ fullNameValidate: '' });
+            this.state.email === '' ? (this.setState({ emailValidate: 'Email is required' }), this.scrollApplication()) : this.setState({ emailValidate: '' });
+            this.state.password === '' ? (this.setState({ passwordValidate: 'Password is required' }), this.scrollApplication()) : this.setState({ passwordValidate: '' });
+            this.state.link === '' ? (this.setState({ linkValidate: 'Link is required' }), this.scrollApplication()) : this.setState({ linkValidate: '' });
+            this.state.agreement === false ? this.setState({ agreementValidate: 'agreement to terms and condition is required' }, this.scrollApplication()) : this.setState({ agreementValidate: '' });
+            this.state.password != this.state.passwordConfirm ? this.setState({ passwordConfirmValidate: 'Password does not match' }, this.scrollApplication()) : this.setState({ passwordConfirmValidate: '' });
+            this.state.about === '' ? this.setState({ aboutValidate: 'Write about yourself' }, this.scrollApplication()) : this.setState({ aboutValidate: '' });
 
         } else {
             let thankYou = document.getElementById('thankYou');
@@ -83,11 +83,11 @@ class ApplicationForm extends React.Component {
 
             create(user).then((data) => {
                 if (data.error) {
-                    data.error[0] === 'email' ? this.setState({ emailValidate: '* ' + data.error[1] }) : this.setState({ emailValidate: '*' });
+                    data.error[0] === 'email' ? this.setState({ emailValidate: data.error[1] }) : this.setState({ emailValidate: '' });
                     this.setState({loading: false});
                     this.scrollApplication();
                 } else {
-                    this.setState({ fullName: '', fullNameValidate: '*', email: '', emailValidate: '*', password: '', passwordValidate: '*', passwordConfirm: '', passwordConfirmValidate: '*', link: '', linkValidate: '*', phoneNumber: '', about: '', aboutValidate: '*', agreement: false, agreementValidate: '' });
+                    this.setState({ fullName: '', fullNameValidate: '', email: '', emailValidate: '', password: '', passwordValidate: '', passwordConfirm: '', passwordConfirmValidate: '', link: '', linkValidate: '*', phoneNumber: '', about: '', aboutValidate: '', agreement: false, agreementValidate: '' });
                     this.setState({loading: false});
                     close.click();
                     thankYou.click();
@@ -116,47 +116,53 @@ class ApplicationForm extends React.Component {
                             <h1>APPLICATION FORM</h1>
                             <div className="input-box-two">
                                 <div className="row">
-                                    <div className="col-md-6 padd-right">
+                                    <div className="col-md-12">
                                         <div className="input-area sp">
-                                            <label>FULL NAME <span id="validationError">{this.state.fullNameValidate}</span></label>
+                                            <label>FULL NAME</label>
                                             <input type="text" name="fullName" placeholder="Beaux" onChange={this.onChange} value={this.state.fullName} />
+                                            <div className="text-left" id="validationError">{this.state.fullNameValidate}</div>
                                         </div>
                                     </div>
-                                    <div className="col-md-6 padd-left">
+                                    <div className="col-md-12 ">
                                         <div className="input-area sp">
-                                            <label>EMAIL ADDRESS <span id="validationError">{this.state.emailValidate}</span></label>
+                                            <label>EMAIL ADDRESS</label>
                                             <input type="email" name="email" placeholder="michelledenise99@gmail.com" onChange={this.onChange} value={this.state.email} />
+                                            <div className="text-left" id="validationError">{this.state.emailValidate}</div>
                                         </div>
                                     </div>
-                                    <div className="col-md-6 padd-right">
+                                    <div className="col-md-12">
                                         <div className="input-area sp">
                                             <label>PHONE NUMBER (OPTIONAL) </label>
                                             <input type="text" name="phoneNumber" placeholder="(310) 954-3456" onChange={this.onChange} value={this.state.phoneNumber} />
                                         </div>
                                     </div>
-                                    <div className="col-md-6 padd-left">
+                                    <div className="col-md-12 ">
                                         <div className="input-area sp">
-                                            <label>YOUR MUSIC/VIDEO - LINK <span id="validationError">{this.state.linkValidate}</span></label>
+                                            <label>YOUR MUSIC/VIDEO - LINK </label>
                                             <input type="text" name="link" placeholder="Paste URL to show us your talent..." onChange={this.onChange} value={this.state.link} />
+                                            <div className="text-left" id="validationError">{this.state.linkValidate}</div>
                                         </div>
                                     </div>
-                                    <div className="col-md-6 padd-right">
+                                    <div className="col-md-12">
                                         <div className="input-area sp">
-                                            <label>Password <span id="validationError">{this.state.passwordValidate}</span></label>
+                                            <label>Password</label>
                                             <input type="password" name="password" placeholder="******" onChange={this.onChange} value={this.state.password} />
+                                            <div className="text-left" id="validationError">{this.state.passwordValidate}</div>
                                         </div>
                                     </div>
-                                    <div className="col-md-6 padd-left">
+                                    <div className="col-md-12 ">
                                         <div className="input-area sp">
-                                            <label>Retype-Password <span id="validationError">{this.state.passwordConfirmValidate}</span></label>
+                                            <label>Retype-Password</label>
                                             <input type="password" name="passwordConfirm" placeholder="******" onChange={this.onChange} value={this.state.passwordConfirm} />
+                                            <div className="text-left" id="validationError">{this.state.passwordConfirmValidate}</div>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="line3 sp-area"></div>
                                 <div className="input-area sp">
-                                    <label>TELL US A LITTLE ABOUT YOURSELF <span id="validationError">{this.state.aboutValidate}</span></label>
+                                    <label>TELL US A LITTLE ABOUT YOURSELF</label>
                                     <textarea name="about" value={this.state.about} onChange={this.onChange} placeholder="Examples: Background, dreams, ambitions, strengths, weaknesses..." />
+                                    <div className="text-left" id="validationError">{this.state.aboutValidate}</div>
                                 </div>
 
 
@@ -168,7 +174,7 @@ class ApplicationForm extends React.Component {
                                         <input name="agreement" type="checkbox" checked={this.state.agreement} onChange={this.onChange} />
                                         <div className="control_indicator"></div>
                                     </label>
-                                    <span id="agreementError">{this.state.agreementValidate}</span>
+                                    <div id="agreementError">{this.state.agreementValidate}</div>
                                 </div>
                             </div>
                         </div>

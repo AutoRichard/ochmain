@@ -33,7 +33,7 @@ class MainRouter extends Component {
           <Route path="/studio" component={Studio} />
           <Route path="/news" component={News} />
           <PrivateRoute path="/network" component={Network} />
-          <PrivateRoute path="/my-page" component={Mypage} />
+          <PrivateRoute path="/my-page/:userId" component={Mypage} />
         </Switch>
 
 

@@ -46,7 +46,7 @@ class Meeting extends React.Component {
             china: tmpArgs.china === "1",
         };
 
-        //const link =  'http://localhost:4000';
+        //const link =  'http://localhost:8080';
         const link = 'https://ochbackend.herokuapp.com';
 
 

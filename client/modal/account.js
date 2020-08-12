@@ -1,6 +1,7 @@
 import React from 'react';
 import auth from './../auth/auth-helper';
 import { read, update, password } from './../api/api-user';
+import { createLink, checkLink, updateLinkStatus } from './../api/api-link';
 
 
 
@@ -10,33 +11,41 @@ class AccountInfo extends React.Component {
 
         this.state = {
             fullName: '',
-            fullNameValidation: '*',
+            fullNameValidation: '',
             displayName: '',
-            displayNameValidation: '*',
+            displayNameValidation: '',
             phoneNumber: '',
             about: '',
-            aboutValidation: '*',
+            aboutValidation: '',
             facebook: '',
             facebookStatus: '',
-            Instagram: '',
-            InstagramStatus: '',
+            instagram: '',
+            instagramStatus: false,
             spotify: '',
-            spotifyStatus: '',
+            spotifyStatus: false,
             youtube: '',
-            youtubeStatus: '',
+            youtubeStatus: false,
             snapchat: '',
-            snapchatStatus: '',
+            snapchatStatus: false,
             tiktok: '',
-            tiktokStatus: '',
+            tiktokStatus: false,
             loading: true,
+            newLink: true,
+            linkId: ''
         }
+    }
+
+    componentDidMount() {
+        this.linkData = new FormData()
+        if (auth.isAuthenticated())
+        this.updateLink()
     }
 
     componentDidUpdate(prevProps) {
         if (this.props.userData !== prevProps.userData) {
             let user = this.props.userData;
             this.updateUser(user);
-            console.log(user);
+            //console.log(user);
         }
     }
 
@@ -49,9 +58,21 @@ class AccountInfo extends React.Component {
             [event.target.name]: event.target.value
         });
 
-        event.target.name === 'fullName' ? this.setState({ fullNameValidation: '*' }) : '';
-        event.target.name === 'displayName' ? this.setState({ displayNameValidation: '*' }) : '';
-        event.target.name === 'about' ? this.setState({ aboutValidation: '*' }) : '';
+        event.target.name === 'fullName' ? this.setState({ fullNameValidation: '' }) : '';
+        event.target.name === 'displayName' ? this.setState({ displayNameValidation: '' }) : '';
+        event.target.name === 'about' ? this.setState({ aboutValidation: '' }) : '';
+    }
+
+    onChangeLink = (event) => {
+        this.setState({
+            [event.target.name]: event.target.value
+        });
+    }
+
+    onChangeLinkStatus = (event) => {
+        this.setState({
+            [event.target.name]: event.target.checked
+        });
     }
 
     scrollApplication = () => {
@@ -64,9 +85,9 @@ class AccountInfo extends React.Component {
 
         if (this.state.fullName === '' || this.state.displayName === '' || this.state.about === '') {
             this.setState({ loading: false });
-            this.state.fullName === '' ? (this.setState({ fullNameValidation: '* name is required' }), this.scrollApplication()) : this.setState({ fullNameValidation: '*' });
-            this.state.displayName === '' ? (this.setState({ displayNameValidation: '* name is required' }), this.scrollApplication()) : this.setState({ displayNameValidation: '*' });
-            this.state.about === '' ? (this.setState({ aboutValidation: '* biography is required' }), this.scrollApplication()) : this.setState({ aboutValidation: '*' });
+            this.state.fullName === '' ? (this.setState({ fullNameValidation: 'Full Name is required' }), this.scrollApplication()) : this.setState({ fullNameValidation: '' });
+            this.state.displayName === '' ? (this.setState({ displayNameValidation: 'Diisplay name is required' }), this.scrollApplication()) : this.setState({ displayNameValidation: '' });
+            this.state.about === '' ? (this.setState({ aboutValidation: 'Biography is required' }), this.scrollApplication()) : this.setState({ aboutValidation: '' });
         } else {
             const user = {
                 fullName: this.state.fullName,
@@ -75,12 +96,92 @@ class AccountInfo extends React.Component {
                 about: this.state.about,
             }
 
-            this.props.updateUserParent(user);
+            this.submitLink(user);
+        }
+    }
+
+    submitLink = (user) => {
+        this.linkData.set('facebook', this.state.facebook)
+        this.linkData.set('facebookStatus', this.state.facebookStatus)
+        this.linkData.set('instagram', this.state.instagram)
+        this.linkData.set('instagramStatus', this.state.instagramStatus)
+        this.linkData.set('spotify', this.state.spotify)
+        this.linkData.set('spotifyStatus', this.state.spotifyStatus)
+        this.linkData.set('youtube', this.state.youtube)
+        this.linkData.set('youtubeStatus', this.state.youtubeStatus)
+        this.linkData.set('snapchat', this.state.snapchat)
+        this.linkData.set('snapchatStatus', this.state.snapchatStatus)
+        this.linkData.set('tiktok', this.state.tiktok)
+        this.linkData.set('tiktokStatus', this.state.tiktokStatus)
+
+
+        if (!auth.isAuthenticated) {
+            window.location = '/'
+            return
+        }
+
+
+        const jwt = auth.isAuthenticated();
+        const userId = jwt.user._id;
+        const token = jwt.token;
+
+        this.linkData.set('userId', userId);
+
+
+
+        if (this.state.newLink === true) {
+            createLink({
+                t: token
+            }, this.linkData).then((data) => {
+                if (data.error) {
+                    console.log(data.error);
+                } else {
+                    this.props.updateUserParent(user);
+                }
+            });
+        } else {
+            updateLinkStatus({ linkId: this.state.linkId }, { t: token }, this.linkData).then((data) => {
+                if (data.error) {
+                    console.log(data.error);
+                } else {
+                    this.props.updateUserParent(user);
+                }
+            });
         }
     }
 
     closeUpdate = () => {
         document.getElementById('closeUpdate').click();
+    }
+
+    updateLink = () => {
+        if (!auth.isAuthenticated) {
+            return
+        }
+
+        const jwt = auth.isAuthenticated();
+        const userId = jwt.user._id;
+        const token = jwt.token;
+
+        checkLink({
+            userId: userId
+        }).then((data) => {
+            if (data.error) {
+                alert(data.error)
+            } else {
+                let countLink = data.link.length;
+                let links = data.link;
+                if (countLink > 0 && countLink == 1) {
+                    links = links[0]
+                    this.setState({
+                        facebook: links.facebook, facebookStatus: links.facebookStatus, instagram: links.instagram, instagramStatus: links.instagramStatus,
+                        spotify: links.spotify, spotifyStatus: links.spotifyStatus, youtube: links.youtube, youtubeStatus: links.youtubeStatus,
+                        snapchat: links.snapchat, snapchatStatus: links.snapchatStatus, tiktok: links.tiktok, tiktokStatus: links.tiktokStatus,
+                        newLink: false, linkId: links._id
+                    })
+                }
+            }
+        })
     }
 
     render() {
@@ -95,14 +196,16 @@ class AccountInfo extends React.Component {
                         <div className="row">
                             <div className="col-md-12">
                                 <div className="input-area sp">
-                                    <label>FULL NAME <span id="validationError">{this.state.fullNameValidation}</span></label>
+                                    <label>FULL NAME</label>
                                     <input name="fullName" type="text" onChange={this.onChange} value={this.state.fullName} />
+                                    <span id="validationError">{this.state.fullNameValidation}</span>
                                 </div>
                             </div>
                             <div className="col-md-12">
                                 <div className="input-area sp">
-                                    <label>DISPLAY NAME <span id="validationError">{this.state.displayNameValidation}</span></label>
+                                    <label>DISPLAY NAME</label>
                                     <input name="displayName" type="text" onChange={this.onChange} value={this.state.displayName} />
+                                    <span id="validationError">{this.state.displayNameValidation}</span>
                                 </div>
                             </div>
                             <div className="clearfix"></div>
@@ -118,83 +221,85 @@ class AccountInfo extends React.Component {
 
                             <div className="col-lg-12 padd-right">
                                 <div className="input-area-two">
-                                    <label>BIOGRAPHY <span id="validationError">{this.state.aboutValidation}</span></label>
+                                    <label>BIOGRAPHY</label>
                                     <textarea name="about" onChange={this.onChange} value={this.state.about}></textarea>
+                                    <span id="validationError">{this.state.aboutValidation}</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div className="col-md-6">
+                    <div className="col-md-6" id="linkScroll">
                         <div className="row">
                             <div className="col-md-8 col-9 padd-both">
                                 <div className="input-area sp im-a">
                                     <label>SOCIAL MEDIA LINKS</label>
-                                    <input type="text" placeholder="Enter your Facebook URL..." />
+                                    <input type="text" name="facebook" onChange={this.onChangeLink} value={this.state.facebook} placeholder="Enter your Facebook URL..." />
                                     <img src="/client/assets/images/facebook.png" className="img-responsive img-ab" />
                                 </div>
                                 <div className="input-area sp im-a szw nw">
 
-                                    <input type="text" placeholder="Enter your Instagram URL..." />
+                                    <input type="text" name="instagram" onChange={this.onChangeLink} value={this.state.instagram} placeholder="Enter your instagram URL..." />
                                     <img src="/client/assets/images/insta.png" className="img-responsive img-ab-two" />
                                 </div>
 
                                 <div className="input-area sp im-a szw nz">
 
-                                    <input type="text" placeholder="Enter your Spotify URL..." />
+                                    <input type="text" name="spotify" onChange={this.onChangeLink} value={this.state.spotify} placeholder="Enter your Spotify URL..." />
                                     <img src="/client/assets/images/spotify.png" className="img-responsive img-ab-two" />
                                 </div>
                                 <div className="input-area sp im-a szw">
 
-                                    <input type="text" placeholder="Enter your Youtube URL..." />
+                                    <input type="text" name="youtube" onChange={this.onChangeLink} value={this.state.youtube} placeholder="Enter your Youtube URL..." />
                                     <img src="/client/assets/images/youtube.png" className="img-responsive img-ab-two" />
                                 </div>
                                 <div className="input-area sp im-a szw">
 
-                                    <input type="text" placeholder="Enter your Snapchat URL..." />
+                                    <input type="text" name="snapchat" onChange={this.onChangeLink} value={this.state.snapchat} placeholder="Enter your Snapchat URL..." />
                                     <img src="/client/assets/images/snapchat.png" className="img-responsive img-ab-two" />
                                 </div>
                                 <div className="input-area sp im-a szw">
-                                    <input type="text" placeholder="Enter your Tiktok URL..." />
+                                    <input type="text" name="tiktok" onChange={this.onChangeLink} value={this.state.tiktok} placeholder="Enter your Tiktok URL..." />
                                     <img src="/client/assets/images/tiktok.png" className="img-responsive img-ab-two" />
                                 </div>
                             </div>
                             <div className="col-md-4 col-3 padd-left">
                                 <div className="input-area sp">
-                                    <label className="text-center">DISPLAY</label>
+                                    <label className="text-center">DISPLAY{this.state.facebookStatus}</label>
                                     <label className="switch ">
-                                        <input type="checkbox" className="default" />
+                                        <input type="checkbox" name="facebookStatus" onChange={this.onChangeLinkStatus} checked={this.state.facebookStatus} value={this.state.facebookStatus} className="default" />
                                         <span className="slider round"></span>
+
                                     </label>
                                 </div>
                                 <div className="input-area sp m-top nw">
                                     <label className="switch ">
-                                        <input type="checkbox" className="default" />
+                                        <input type="checkbox" name="instagramStatus" onChange={this.onChangeLinkStatus} checked={this.state.instagramStatus} value={this.state.instagramStatus} className="default" />
                                         <span className="slider round"></span>
                                     </label>
                                 </div>
                                 <div className="input-area sp m-top ex">
                                     <label className="switch nw">
-                                        <input type="checkbox" className="default" />
+                                        <input type="checkbox" name="spotifyStatus" onChange={this.onChangeLinkStatus} checked={this.state.spotifyStatus} value={this.state.spotifyStatus} className="default" />
                                         <span className="slider round"></span>
                                     </label>
                                 </div>
                                 <div className="input-area sp m-top">
                                     <label className="switch nw">
-                                        <input type="checkbox" className="default" />
-                                        <span className="slider round"></span>
-                                    </label>
-                                </div>
-                                <div className="input-area sp m-top">
-
-                                    <label className="switch nw">
-                                        <input type="checkbox" className="default" />
+                                        <input type="checkbox" name="youtubeStatus" onChange={this.onChangeLinkStatus} checked={this.state.youtubeStatus} value={this.state.youtubeStatus} className="default" />
                                         <span className="slider round"></span>
                                     </label>
                                 </div>
                                 <div className="input-area sp m-top">
 
                                     <label className="switch nw">
-                                        <input type="checkbox" className="default" />
+                                        <input type="checkbox" name="snapchatStatus" onChange={this.onChangeLinkStatus} checked={this.state.snapchatStatus} value={this.state.snapchatStatus} className="default" />
+                                        <span className="slider round"></span>
+                                    </label>
+                                </div>
+                                <div className="input-area sp m-top">
+
+                                    <label className="switch nw">
+                                        <input type="checkbox" name="tiktokStatus" onChange={this.onChangeLinkStatus} checked={this.state.tiktokStatus} value={this.state.tiktokStatus} className="default" />
                                         <span className="slider round"></span>
                                     </label>
                                 </div>
@@ -211,7 +316,6 @@ class AccountInfo extends React.Component {
         );
     }
 }
-
 
 const Billing = () => {
     return (
@@ -941,6 +1045,13 @@ class Account extends React.Component {
                 alert(data.error);
             } else {
                 this.setState({ 'fullName': data.fullName, 'displayName': data.displayName, dataEdit: { ...data, loading: false } });
+
+                let authLink = "/my-page/" + auth.isAuthenticated().user._id;
+                let actLink = window.location.pathname;
+
+                if(authLink == actLink){
+                    location.reload();
+                }
             }
         });
     }

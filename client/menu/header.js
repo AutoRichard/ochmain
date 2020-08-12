@@ -9,12 +9,15 @@ class Header extends React.Component {
 
         this.state = {
             checkAuthenticated: false,
+            link: ''
         }
     }
 
     componentDidMount() {
         if (auth.isAuthenticated()) {
             this.setState({ checkAuthenticated: true })
+            const jwt = auth.isAuthenticated();
+            this.setState({link: jwt.user._id});
         } else {
             this.setState({ checkAuthenticated: false });
         }
@@ -55,7 +58,7 @@ class Header extends React.Component {
                                 <a href="/network">NETWORK</a>
                             </li>) : ''}
                             {this.state.checkAuthenticated ? (<li className={this.props.path == '/my-page' ? "nav-item active" : "nav-item"}>
-                                <a href="/my-page">MY PAGE</a>
+                                <a href={'/my-page/' + this.state.link}>MY PAGE</a>
                             </li>) : ''}
 
                             <li>

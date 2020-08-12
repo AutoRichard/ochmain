@@ -14,8 +14,8 @@ class LoginModal extends React.Component {
         this.state = {
             email: '',
             password: '',
-            emailValidate: '*',
-            passwordValidate: '*',
+            emailValidate: '',
+            passwordValidate: '',
             loading: false
         };
     }
@@ -25,16 +25,16 @@ class LoginModal extends React.Component {
         this.setState({
             [event.target.name]: event.target.value
         });
-        event.target.name == 'email' ? this.setState({ emailValidate: '*' }) : '';
-        event.target.name == 'password' ? this.setState({ passwordValidate: '*' }) : '';
+        event.target.name == 'email' ? this.setState({ emailValidate: '' }) : '';
+        event.target.name == 'password' ? this.setState({ passwordValidate: '' }) : '';
     }
 
     signIn = () => {
         this.setState({loading: true});
         if (this.state.email === '' || this.state.password === '') {
             this.setState({loading: false});
-            this.state.email === '' ? this.setState({ emailValidate: '* email is required' }) : this.setState({ emailValidate: '*' });
-            this.state.password === '' ? this.setState({ passwordValidate: '* password is required' }) : this.setState({ passwordValidate: '*' });
+            this.state.email === '' ? this.setState({ emailValidate: 'Email is required' }) : this.setState({ emailValidate: '' });
+            this.state.password === '' ? this.setState({ passwordValidate: 'Password is required' }) : this.setState({ passwordValidate: '' });
 
         } else {
             const user = {
@@ -81,14 +81,16 @@ class LoginModal extends React.Component {
                             <h1>SIGN IN </h1>
                             <div className="input-box">
                                 <div className="input-area">
-                                    <label>EMAIL ADDRESS <small id="validationError">{this.state.emailValidate}</small></label>
+                                    <label>EMAIL ADDRESS</label>
                                     <input type="email" name="email" onChange={this.onChange} value={this.state.email} />
+                                    <div className="text-left" id="validationError">{this.state.emailValidate}</div>
                                 </div>
                                 <div className="input-area">
-                                    <label>PASSWORD <small id="validationError">{this.state.passwordValidate}</small></label>
+                                    <label>PASSWORD</label>
                                     <input type="password" name="password" onChange={this.onChange} value={this.state.password} />
+                                    <div className="text-left" id="validationError">{this.state.passwordValidate}</div>
                                 </div>
-                                <a href="#" className="pull-right">Forgot Password?</a>
+                                {/*<a href="#" className="pull-right">Forgot Password?</a>*/}
                                 <div className="control-group">
                                     <label className="control control-checkbox">
                                         STAY SIGNED IN
