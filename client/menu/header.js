@@ -57,7 +57,7 @@ class Header extends React.Component {
                             {this.state.checkAuthenticated ? (<li className={this.props.path == '/network' ? "nav-item active" : "nav-item"}>
                                 <a href="/network">NETWORK</a>
                             </li>) : ''}
-                            {this.state.checkAuthenticated ? (<li className={this.props.path == '/my-page' ? "nav-item active" : "nav-item"}>
+                            {this.state.checkAuthenticated ? (<li className={this.props.path == '/my-page/'+auth.isAuthenticated().user._id ? "nav-item active" : "nav-item"}>
                                 <a href={'/my-page/' + this.state.link}>MY PAGE</a>
                             </li>) : ''}
 
