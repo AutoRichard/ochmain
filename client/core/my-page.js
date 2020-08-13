@@ -38,7 +38,8 @@ class Profile extends Component {
     }
 
     updateUser = (data) => {
-        
+        let imageV = 'https://ochbackend.herokuapp.com/api/usersPhoto/'+data._id
+        console.log(imageV)
         this.setState({
             fullName: data.fullName || '', displayName: data.displayName || '', phoneNumber: data.phoneNumber || '', about: data.about || '', loading: data.loading, _id: data._id, auth: data.auth, image: imageV
         });
@@ -50,13 +51,12 @@ class Profile extends Component {
 
 
     render() {
-        let imageV = 'https://ochbackend.herokuapp.com/api/usersPhoto/'+this.state._id
         return (
             <section className="padd-small padd-top text-center">
 
                 <div className="small-12 medium-2 large-2 columns">
                     <div className="circle">
-                        <img className="profile-pic" style={{maxWidth: 'unset'}} src={imageV} />
+                        <img className="profile-pic" style={{maxWidth: 'unset'}} src={this.state.image} />
 
                         <i className="fa fa-user fa-5x"></i>
                     </div>
