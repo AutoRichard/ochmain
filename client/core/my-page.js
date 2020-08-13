@@ -31,17 +31,15 @@ class Profile extends Component {
         if (this.props.userData !== prevProps.userData) {
             let user = this.props.userData;
             this.updateUser(user);
-            this.setState({image:'/'+this.props.image})
             //this.updateLink(user._id);
             //console.log(user);
         }
     }
 
     updateUser = (data) => {
-        let imageV = 'https://ochbackend.herokuapp.com/api/usersPhoto/'+data._id
-        console.log(imageV)
+        let imageView = 'https://ochbackend.herokuapp.com/api/usersPhoto/'+data._id
         this.setState({
-            fullName: data.fullName || '', displayName: data.displayName || '', phoneNumber: data.phoneNumber || '', about: data.about || '', loading: data.loading, _id: data._id, auth: data.auth, image: imageV
+            fullName: data.fullName || '', displayName: data.displayName || '', phoneNumber: data.phoneNumber || '', about: data.about || '', loading: data.loading, _id: data._id, auth: data.auth, image: imageView
         });
     }
 
@@ -66,7 +64,7 @@ class Profile extends Component {
                     </div>
                 </div>
                 <div className="heading-areaz">
-                    <h2>{this.state.displayName}</h2>
+                    <h2 onClick={this.viewCredential}>{this.state.displayName}</h2>
                     <h4>{this.state.fullName}</h4>
                 </div>
 
