@@ -56,7 +56,7 @@ class Profile extends Component {
 
                 <div className="small-12 medium-2 large-2 columns">
                     <div className="circle">
-                        <img className="profile-pic" style={{maxWidth: 'unset'}} src={this.state.image} />
+                        <img className="profile-pic" style={{maxWidth: 'unset'}} src={imageV} />
 
                         <i className="fa fa-user fa-5x"></i>
                     </div>
