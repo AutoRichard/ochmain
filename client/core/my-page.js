@@ -567,7 +567,7 @@ class Mypage extends Component {
             fullName: '',
             dataEdit: {},
             _id: '',
-            image: 'client/assets/images/crop-pic.jpg',
+            image: '',
         }
     }
 
