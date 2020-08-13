@@ -23,7 +23,7 @@ class Profile extends Component {
             linkId: '',
             _id: '',
             auth: false,
-            image: '/client/assets/images/profile-page.png'
+            image: ''
         }
     }
 
@@ -38,6 +38,7 @@ class Profile extends Component {
     }
 
     updateUser = (data) => {
+        let image = 'https://ochbackend.herokuapp.com/api/usersPhoto/'+data._id
         this.setState({
             fullName: data.fullName || '', displayName: data.displayName || '', phoneNumber: data.phoneNumber || '', about: data.about || '', loading: data.loading, _id: data._id, auth: data.auth
         });
