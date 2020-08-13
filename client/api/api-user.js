@@ -35,6 +35,20 @@ const read = (params) => {
   }).catch((err) => console.log(err))
 }
 
+const image = (params, credentials, formData) => {
+  return fetch(link + '/api/image/' + params.userId, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Authorization': 'Bearer ' + credentials.t
+    },
+    body: formData
+  })
+    .then((response) => {
+      return response.json()
+    }).catch((err) => console.log(err))
+} 
+
 const update = (params, credentials, user) => {
   return fetch(link + '/api/users/' + params.userId, {
     method: 'PUT',
@@ -83,5 +97,6 @@ export {
   read,
   update,
   remove,
-  password
+  password,
+  image
 }
