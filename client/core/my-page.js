@@ -55,7 +55,7 @@ class Profile extends Component {
 
                 <div className="small-12 medium-2 large-2 columns">
                     <div className="circle">
-                        <img className="profile-pic" style={{maxWidth: 'unset'}} src='https://ochbackend.herokuapp.com/api/usersPhoto/5f3599cf98c76714243f2843' />
+                        <img className="profile-pic" style={{maxWidth: 'unset'}} src={this.state.image} />
 
                         <i className="fa fa-user fa-5x"></i>
                     </div>
