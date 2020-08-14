@@ -11,7 +11,8 @@ class PicBox extends React.Component {
         super(props)
 
         this.state = {
-            id: 'client/assets/images/crop-pic.jpg'
+            id: 'client/assets/images/crop-pic.jpg',
+            loading: false
         }
     }
 
@@ -63,6 +64,7 @@ class PicBox extends React.Component {
 
     submitImage = () => {
         this.updateUserParent_()
+        this.setState({loading: true});
         this.props.renderImage(this.state.id)
     }
 
@@ -71,6 +73,11 @@ class PicBox extends React.Component {
         const imageStyle = {
             width: '60%',
             height: '60%'
+        }
+
+        const loadingStyle = {
+            width: '30%',
+            height: '30%'
         }
         return (
             <div className="modal" id="pic-box" >
@@ -90,6 +97,10 @@ class PicBox extends React.Component {
                             <div className="btn-b e-wd">
                                 <label for="profile"><a className="outline-btn">CHOOSE PICTURE</a></label>
                                 <label><a onClick={this.submitImage} className="cancel-small">SAVE</a></label>
+                            </div>
+
+                            <div className="text-center">
+                                {this.state.loading === true ? (<img style={loadingStyle} src="/client/assets/images/loading.gif" />) : ('')}
                             </div>
 
                         </div>

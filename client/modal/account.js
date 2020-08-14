@@ -38,7 +38,7 @@ class AccountInfo extends React.Component {
     componentDidMount() {
         this.linkData = new FormData()
         if (auth.isAuthenticated())
-        this.updateLink()
+            this.updateLink()
     }
 
     componentDidUpdate(prevProps) {
@@ -1002,7 +1002,8 @@ class Account extends React.Component {
         this.state = {
             displayName: '',
             fullName: '',
-            dataEdit: {}
+            dataEdit: {},
+            userPhoto: ''
         }
     }
 
@@ -1012,6 +1013,9 @@ class Account extends React.Component {
             const jwt = auth.isAuthenticated();
             const userId = jwt.user._id;
             const token = jwt.token;
+            let link= 'https://ochbackend.herokuapp.com/api/usersPhoto/' + userId;
+
+            this.setState({userPhoto: link});
             read({
                 userId: userId
             }, { t: token }).then((data) => {
@@ -1049,7 +1053,7 @@ class Account extends React.Component {
                 let authLink = "/my-page/" + auth.isAuthenticated().user._id;
                 let actLink = window.location.pathname;
 
-                if(authLink == actLink){
+                if (authLink == actLink) {
                     location.reload();
                 }
             }
@@ -1057,6 +1061,7 @@ class Account extends React.Component {
     }
 
     render() {
+
         return (
             <div className="modal fade" id="account-setting" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog modal-dialog-centered act-set" role="document">
@@ -1074,7 +1079,7 @@ class Account extends React.Component {
                                         <div className="account-info clearfix">
                                             <div className="account-cov">
                                                 <div className="account-img float-lg-left">
-                                                    <img className="img-set" src="/client/assets/images/profile-page.png" />
+                                                    <img className="img-set" src={this.state.userPhoto}/>
                                                 </div>
                                                 <div className="account-data float-lg-left">
                                                     <h4 style={{ color: 'white' }}>{this.state.displayName !== '' ? this.state.displayName : this.state.fullName.substr(0, 6)}</h4>
