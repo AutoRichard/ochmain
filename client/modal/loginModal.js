@@ -98,7 +98,7 @@ class LoginModal extends React.Component {
                                         <div className="control_indicator"></div>
                                     </label>
                                 </div>
-                                {this.state.loading == true ? (<img style={loadingStyle} src="/client/assets/images/loading.gif" />) : (<input type="submit" onClick={this.signIn} value="SIGN IN" />)}                                
+                                {this.state.loading == true ? (<img style={loadingStyle} src="/client/assets/images/loading4.gif" />) : (<input type="submit" onClick={this.signIn} value="SIGN IN" />)}                                
                                 <h5>Not a member yet? <a href="#" data-toggle="modal" onClick={this.closeLogin} data-target="#applicaion-form">APPLY
 								NOW</a></h5>
                             </div>

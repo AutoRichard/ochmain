@@ -10,15 +10,17 @@ class AccountInfo extends React.Component {
         super(props);
 
         this.state = {
-            fullName: '',
-            fullNameValidation: '',
+            firstName: '',
+            firstNameValidation: '',
+            lastName: '',
+            lastNameValidation: '',
             displayName: '',
             displayNameValidation: '',
             phoneNumber: '',
             about: '',
             aboutValidation: '',
             facebook: '',
-            facebookStatus: '',
+            facebookStatus: false,
             instagram: '',
             instagramStatus: false,
             spotify: '',
@@ -37,20 +39,20 @@ class AccountInfo extends React.Component {
 
     componentDidMount() {
         this.linkData = new FormData()
-        if (auth.isAuthenticated())
+        if (auth.isAuthenticated()) {
             this.updateLink()
+        }
     }
 
     componentDidUpdate(prevProps) {
         if (this.props.userData !== prevProps.userData) {
             let user = this.props.userData;
             this.updateUser(user);
-            //console.log(user);
         }
     }
 
     updateUser = (data) => {
-        this.setState({ 'fullName': data.fullName || '', 'displayName': data.displayName || '', 'phoneNumber': data.phoneNumber || '', 'about': data.about || '', 'loading': data.loading });
+        this.setState({ firstName: data.firstName || '', lastName: data.lastName || '', displayName: data.displayName || '', phoneNumber: data.phoneNumber || '', about: data.about || '', loading: data.loading });
     }
 
     onChange = (event) => {
@@ -58,7 +60,8 @@ class AccountInfo extends React.Component {
             [event.target.name]: event.target.value
         });
 
-        event.target.name === 'fullName' ? this.setState({ fullNameValidation: '' }) : '';
+        event.target.name === 'firstName' ? this.setState({ firstNameValidation: '' }) : '';
+        event.target.name === 'lastName' ? this.setState({ lastNameValidation: '' }) : '';
         event.target.name === 'displayName' ? this.setState({ displayNameValidation: '' }) : '';
         event.target.name === 'about' ? this.setState({ aboutValidation: '' }) : '';
     }
@@ -83,14 +86,16 @@ class AccountInfo extends React.Component {
     submitData = () => {
         this.setState({ loading: true });
 
-        if (this.state.fullName === '' || this.state.displayName === '' || this.state.about === '') {
+        if (this.state.firstName === '' || this.state.lastName === '' || this.state.displayName === '' || this.state.about === '') {
             this.setState({ loading: false });
-            this.state.fullName === '' ? (this.setState({ fullNameValidation: 'Full Name is required' }), this.scrollApplication()) : this.setState({ fullNameValidation: '' });
-            this.state.displayName === '' ? (this.setState({ displayNameValidation: 'Diisplay name is required' }), this.scrollApplication()) : this.setState({ displayNameValidation: '' });
-            this.state.about === '' ? (this.setState({ aboutValidation: 'Biography is required' }), this.scrollApplication()) : this.setState({ aboutValidation: '' });
+            this.state.firstName === '' ? (this.setState({ firstNameValidation: 'FIRST NAME IS REQUIRED' }), this.scrollApplication()) : this.setState({ firstNameValidation: '' });
+            this.state.lastName === '' ? (this.setState({ lastNameValidation: 'LAST NAME IS REQUIRED' }), this.scrollApplication()) : this.setState({ lastNameValidation: '' });
+            this.state.displayName === '' ? (this.setState({ displayNameValidation: 'DISPLAY NAME IS REQUIRED' }), this.scrollApplication()) : this.setState({ displayNameValidation: '' });
+            this.state.about === '' ? (this.setState({ aboutValidation: 'BIOGRAPHY IS REQUIRED' }), this.scrollApplication()) : this.setState({ aboutValidation: '' });
         } else {
             const user = {
-                fullName: this.state.fullName,
+                firstName: this.state.firstName,
+                lastName: this.state.lastName,
                 displayName: this.state.displayName,
                 phoneNumber: this.state.phoneNumber,
                 about: this.state.about,
@@ -127,27 +132,37 @@ class AccountInfo extends React.Component {
 
         this.linkData.set('userId', userId);
 
-
-
-        if (this.state.newLink === true) {
-            createLink({
-                t: token
-            }, this.linkData).then((data) => {
-                if (data.error) {
-                    console.log(data.error);
-                } else {
-                    this.props.updateUserParent(user);
+        checkLink({
+            userId: userId
+        }).then((data) => {
+            if (data.error) {
+                alert(data.error)
+            } else {
+                let countLink = data.link.length;
+                let links = data.link;
+                if (countLink > 0 && countLink == 1) {
+                    updateLinkStatus({ linkId: this.state.linkId }, { t: token }, this.linkData).then((data) => {
+                        if (data.error) {
+                            console.log(data.error);
+                        } else {
+                            this.props.updateUserParent(user);
+                            this.setState({ newLink: false, linkId: data._id });
+                        }
+                    });
+                } else if (countLink == 0) {
+                    createLink({
+                        t: token
+                    }, this.linkData).then((data) => {
+                        if (data.error) {
+                            console.log(data.error);
+                        } else {
+                            this.props.updateUserParent(user);
+                            this.setState({ newLink: false, linkId: data._id });
+                        }
+                    });
                 }
-            });
-        } else {
-            updateLinkStatus({ linkId: this.state.linkId }, { t: token }, this.linkData).then((data) => {
-                if (data.error) {
-                    console.log(data.error);
-                } else {
-                    this.props.updateUserParent(user);
-                }
-            });
-        }
+            }
+        })
     }
 
     closeUpdate = () => {
@@ -179,6 +194,33 @@ class AccountInfo extends React.Component {
                         snapchat: links.snapchat, snapchatStatus: links.snapchatStatus, tiktok: links.tiktok, tiktokStatus: links.tiktokStatus,
                         newLink: false, linkId: links._id
                     })
+                } else if (countLink == 0) {
+
+                    this.linkData.set('facebook', this.state.facebook)
+                    this.linkData.set('facebookStatus', this.state.facebookStatus)
+                    this.linkData.set('instagram', this.state.instagram)
+                    this.linkData.set('instagramStatus', this.state.instagramStatus)
+                    this.linkData.set('spotify', this.state.spotify)
+                    this.linkData.set('spotifyStatus', this.state.spotifyStatus)
+                    this.linkData.set('youtube', this.state.youtube)
+                    this.linkData.set('youtubeStatus', this.state.youtubeStatus)
+                    this.linkData.set('snapchat', this.state.snapchat)
+                    this.linkData.set('snapchatStatus', this.state.snapchatStatus)
+                    this.linkData.set('tiktok', this.state.tiktok)
+                    this.linkData.set('tiktokStatus', this.state.tiktokStatus)
+                    this.linkData.set('userId', userId);
+
+                    createLink({
+                        t: token
+                    }, this.linkData).then((data) => {
+                        if (data.error) {
+                            console.log(data.error);
+                        } else {
+                            this.setState({ newLink: false, linkId: data._id });
+                        }
+                    })
+
+
                 }
             }
         })
@@ -194,22 +236,29 @@ class AccountInfo extends React.Component {
                 <div className="row">
                     <div className="col-md-6" id="accountScroll">
                         <div className="row">
-                            <div className="col-md-12">
+                            <div className="col-md-6 padd-right">
                                 <div className="input-area sp">
-                                    <label>FULL NAME</label>
-                                    <input name="fullName" type="text" onChange={this.onChange} value={this.state.fullName} />
-                                    <span id="validationError">{this.state.fullNameValidation}</span>
+                                    <label>FIRST NAME </label>
+                                    <input name="firstName" type="text" onChange={this.onChange} value={this.state.firstName} />
+                                    <span id="validationError">{this.state.firstNameValidation}</span>
                                 </div>
                             </div>
-                            <div className="col-md-12">
+                            <div className="col-md-6 padd-left">
                                 <div className="input-area sp">
-                                    <label>DISPLAY NAME</label>
+                                    <label>LAST NAME </label>
+                                    <input name="lastName" type="text" onChange={this.onChange} value={this.state.lastName} />
+                                    <span id="validationError">{this.state.lastNameValidation}</span>
+                                </div>
+                            </div>
+                            <div className="col-md-6 padd-right">
+                                <div className="input-area sp error">
+                                    <label>DISPLAY NAME </label>
                                     <input name="displayName" type="text" onChange={this.onChange} value={this.state.displayName} />
                                     <span id="validationError">{this.state.displayNameValidation}</span>
                                 </div>
                             </div>
                             <div className="clearfix"></div>
-                            <div className="col-md-12">
+                            <div className="col-md-6 padd-left">
                                 <div className="input-area sp">
                                     <label>PHONE NUMBER</label>
                                     <input name="phoneNumber" type="text" onChange={this.onChange} value={this.state.phoneNumber} />
@@ -219,7 +268,7 @@ class AccountInfo extends React.Component {
                             <div className="clearfix"></div>
 
 
-                            <div className="col-lg-12 padd-right">
+                            <div className="col-lg-12">
                                 <div className="input-area-two">
                                     <label>BIOGRAPHY</label>
                                     <textarea name="about" onChange={this.onChange} value={this.state.about}></textarea>
@@ -264,7 +313,7 @@ class AccountInfo extends React.Component {
                             </div>
                             <div className="col-md-4 col-3 padd-left">
                                 <div className="input-area sp">
-                                    <label className="text-center">DISPLAY{this.state.facebookStatus}</label>
+                                    <label className="text-center">DISPLAY</label>
                                     <label className="switch ">
                                         <input type="checkbox" name="facebookStatus" onChange={this.onChangeLinkStatus} checked={this.state.facebookStatus} value={this.state.facebookStatus} className="default" />
                                         <span className="slider round"></span>
@@ -310,7 +359,7 @@ class AccountInfo extends React.Component {
                 <br />
                 <div className="text-center mt-a">
                     <a href="#" className="white-btn" onClick={this.closeUpdate}>CANCEL</a>
-                    {this.state.loading === true ? (<img style={loadingStyle} src="/client/assets/images/loading.gif" />) : (<a className="white-btn red" onClick={this.submitData}>SAVE CHANGES</a>)}
+                    <a className="white-btn red" onClick={this.submitData}>{this.state.loading === true ? (<img style={loadingStyle} src="/client/assets/images/loading4.gif" />) : ('SAVE CHANGES')}</a>
                 </div>
             </div >
         );
@@ -921,10 +970,10 @@ class Password extends React.Component {
 
         if (this.state.oldPassword === '' || this.state.confirmPassword === '' || this.state.password === '' || this.state.password !== this.state.confirmPassword) {
             this.setState({ loading: false });
-            this.state.oldPassword === '' ? (this.setState({ oldPasswordValidation: 'current password is required' }), this.scrollApplication()) : this.setState({ oldPasswordValidation: '' });
-            this.state.confirmPassword === '' ? (this.setState({ confirmPasswordValidation: 'confirm password is required' }), this.scrollApplication()) : this.setState({ confirmPasswordValidation: '' });
-            this.state.password === '' ? (this.setState({ passwordValidation: 'password is required' }), this.scrollApplication()) : this.setState({ passwordValidation: '' });
-            this.state.password !== this.state.confirmPassword ? (this.setState({ confirmPasswordValidation: 'password does not match' }), this.scrollApplication()) : this.setState({ confirmPasswordValidation: '' });
+            this.state.oldPassword === '' ? (this.setState({ oldPasswordValidation: 'CURRENT PASSWORD IS REQUIRED' }), this.scrollApplication()) : this.setState({ oldPasswordValidation: '' });
+            this.state.confirmPassword === '' ? (this.setState({ confirmPasswordValidation: 'CONFIRM PASSWORD IS REQUIRED' }), this.scrollApplication()) : this.setState({ confirmPasswordValidation: '' });
+            this.state.password === '' ? (this.setState({ passwordValidation: 'PASSWORD IS REQUIRED' }), this.scrollApplication()) : this.setState({ passwordValidation: '' });
+            this.state.password !== this.state.confirmPassword ? (this.setState({ confirmPasswordValidation: 'PASSWORD DOES NOT MATCH' }), this.scrollApplication()) : this.setState({ confirmPasswordValidation: '' });
         } else {
 
 
@@ -944,12 +993,17 @@ class Password extends React.Component {
                 t: token
             }, user).then((data) => {
                 if (data.error) {
-                    this.state.oldPassword === '' ? (this.setState({ oldPasswordValidation: data.error }), this.scrollApplication()) : this.setState({ oldPasswordValidation: '' });
+                    this.setState({ oldPasswordValidation: data.error })
+
+                    setTimeout(
+                        () => this.setState({ status: '', loading: false }),
+                        2000
+                    );
                 } else {
                     this.setState({ status: data.message });
                     setTimeout(
                         () => this.setState({ status: '', loading: false }),
-                        4000
+                        2000
                     );
 
                 }
@@ -967,24 +1021,24 @@ class Password extends React.Component {
                 <div className="input-box text-center">
                     <div className="input-area" id="closePassword">
                         <label>CURRENT PASSWORD</label>
-                        <span id="validationError">{this.state.oldPasswordValidation}</span>
                         <input type="password" name="oldPassword" onChange={this.onChange} value={this.state.oldPassword} />
+                        <span className="text-left" id="validationError">{this.state.oldPasswordValidation}</span>
                         {/*<span>FORGOT PASSWORD? <a href="">CLICK HERE</a> TO RESET IT</span>*/}
                     </div>
                     <div className="input-area">
                         <label>NEW PASSWORD</label>
-                        <span id="validationError">{this.state.passwordValidation}</span>
                         <input type="password" name="password" onChange={this.onChange} value={this.state.password} />
+                        <span className="text-left" id="validationError">{this.state.passwordValidation}</span>
                     </div>
 
                     <div className="input-area">
                         <label>CONFIRM NEW PASSWORD</label>
-                        <span id="validationError">{this.state.confirmPasswordValidation}</span>
                         <input type="password" name="confirmPassword" onChange={this.onChange} value={this.state.confirmPassword} />
+                        <span className="text-left" id="validationError">{this.state.confirmPasswordValidation}</span>
                     </div>
 
                     <span>{this.state.status}</span>
-                    {this.state.loading === true ? (<img style={loadingStyle} src="/client/assets/images/loading.gif" />) : (<input type="submit" onClick={this.submitPassword} value="SAVE CHANGES" />)}
+                    {this.state.loading === true ? (<img style={loadingStyle} src="/client/assets/images/loading4.gif" />) : (<input type="submit" onClick={this.submitPassword} value="SAVE CHANGES" />)}
 
 
                 </div>
@@ -1001,9 +1055,9 @@ class Account extends React.Component {
         super(props);
         this.state = {
             displayName: '',
-            fullName: '',
+            firstName: '',
             dataEdit: {},
-            userPhoto: ''
+            userPhoto: '',
         }
     }
 
@@ -1013,19 +1067,18 @@ class Account extends React.Component {
             const jwt = auth.isAuthenticated();
             const userId = jwt.user._id;
             const token = jwt.token;
-            let link= 'https://ochbackend.herokuapp.com/api/usersPhoto/' + userId;
+            let link1 = 'https://ochbackend.herokuapp.com/api/usersPhoto/';
+            //let link1 = 'http://localhost:8080/api/usersPhoto/'
+            let link = link1 + userId;
 
-            this.setState({userPhoto: link});
+            this.setState({ userPhoto: link });
             read({
                 userId: userId
             }, { t: token }).then((data) => {
                 if (data.error) {
                     alert(data.error)
-                    //this.setState({ redirectToSignin: true })
                 } else {
-                    this.setState({ 'fullName': data.fullName, 'displayName': data.displayName, dataEdit: { ...data, loading: false } });
-
-                    //console.log(this.state.dataEdit);
+                    this.setState({ firstName: data.firstName || '', displayName: data.displayName || '', dataEdit: { ...data, loading: false } });
                 }
             })
         }
@@ -1048,11 +1101,10 @@ class Account extends React.Component {
             if (data.error) {
                 alert(data.error);
             } else {
-                this.setState({ 'fullName': data.fullName, 'displayName': data.displayName, dataEdit: { ...data, loading: false } });
+                this.setState({ firstName: data.firstName, displayName: data.displayName, dataEdit: { ...data, loading: false } });
 
                 let authLink = "/my-page/" + auth.isAuthenticated().user._id;
                 let actLink = window.location.pathname;
-
                 if (authLink == actLink) {
                     location.reload();
                 }
@@ -1079,10 +1131,10 @@ class Account extends React.Component {
                                         <div className="account-info clearfix">
                                             <div className="account-cov">
                                                 <div className="account-img float-lg-left">
-                                                    <img className="img-set" src={this.state.userPhoto}/>
+                                                    <img className="img-set" style={{ borderRadius: '50%' }} src={this.state.userPhoto} />
                                                 </div>
                                                 <div className="account-data float-lg-left">
-                                                    <h4 style={{ color: 'white' }}>{this.state.displayName !== '' ? this.state.displayName : this.state.fullName.substr(0, 6)}</h4>
+                                                    <h3 style={{ color: 'white' }}>{this.state.displayName !== '' ? this.state.displayName : this.state.firstName}</h3>
                                                     <h5>GOLD MEMBER</h5>
                                                     <h6>42 CREDITS</h6>
                                                 </div>

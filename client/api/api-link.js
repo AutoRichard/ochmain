@@ -13,7 +13,7 @@ const createLink = (credentials, formData) => {
     .then((response) => {
       return response.json()
     }).catch((err) => console.log(err))
-} 
+}
 
 /*const removeLink = (params, credentials) => {
   return fetch(link + '/api/link/' + params.Id, {
@@ -54,33 +54,71 @@ const updateLinkStatus = (params, credentials, links) => {
   }).catch((err) => console.log(err))
 }
 
-
-
-
-/*const list = () => {
-  return fetch(link + '/api/users', {
-    method: 'GET',
-  }).then(response => {
-    return response.json()
-  }).catch((err) => console.log(err))
-}
-
-const password = (params, credentials, user) => {
-  return fetch(link + '/api/password/' + params.userId, {
+const updateLinkAudio = (credentials, linkData) => {
+  return fetch(link + '/api/linkAudio', {
     method: 'PUT',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + credentials.t
     },
-    body: JSON.stringify(user)
+    body: JSON.stringify(linkData)
   }).then((response) => {
     return response.json()
   }).catch((err) => console.log(err))
-}*/
+}
+
+const deleteLinkAudio = (credentials, linkData) => {
+  return fetch(link + '/api/linkAudio', {
+    method: 'DELETE',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + credentials.t
+    },
+    body: JSON.stringify(linkData)
+  }).then((response) => {
+    return response.json()
+  }).catch((err) => console.log(err))
+}
+
+
+const updateLinkVideo = (credentials, linkData) => {
+  return fetch(link + '/api/linkVideo', {
+    method: 'PUT',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + credentials.t
+    },
+    body: JSON.stringify(linkData)
+  }).then((response) => {
+    return response.json()
+  }).catch((err) => console.log(err))
+}
+
+const deleteLinkVideo = (credentials, linkData) => {
+  return fetch(link + '/api/linkVideo', {
+    method: 'DELETE',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + credentials.t
+    },
+    body: JSON.stringify(linkData)
+  }).then((response) => {
+    return response.json()
+  }).catch((err) => console.log(err))
+}
+
+
 
 export {
   createLink,
   checkLink,
-  updateLinkStatus
+  updateLinkStatus,
+  updateLinkAudio,
+  deleteLinkAudio,
+  updateLinkVideo,
+  deleteLinkVideo
 }
