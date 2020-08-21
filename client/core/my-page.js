@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Header from './../menu/header';
+import { Header, socket } from './../menu/header';
 import PicBox from './../modal/pic-box';
 import Art from './../modal/art';
 import Upgrade from './../modal/upgrade';
@@ -27,6 +27,8 @@ class Profile extends Component {
         }
     }
 
+
+
     componentDidUpdate(prevProps) {
         if (this.props.userData !== prevProps.userData) {
             let user = this.props.userData;
@@ -37,7 +39,7 @@ class Profile extends Component {
     }
 
     updateUser = (data) => {
-        let imageView = 'https://ochbackend.herokuapp.com/api/usersPhoto/'+data._id
+        let imageView = 'https://ochbackend.herokuapp.com/api/usersPhoto/' + data._id
         //let imageView = 'http://localhost:8080/api/usersPhoto/' + data._id;
         this.setState({
             fullName: data.fullName || '', displayName: data.displayName || '', phoneNumber: data.phoneNumber || '', about: data.about || '', loading: data.loading, _id: data._id, auth: data.auth, image: imageView
@@ -672,7 +674,7 @@ class Timeline extends Component {
     }
 
     updateUser = (data) => {
-        let imageView = 'https://ochbackend.herokuapp.com/api/usersPhoto/'+data._id
+        let imageView = 'https://ochbackend.herokuapp.com/api/usersPhoto/' + data._id
         //let imageView = 'http://localhost:8080/api/usersPhoto/' + data._id;
         this.setState({
             loading: data.loading, _id: data._id, auth: data.auth, imageLink: imageView
@@ -910,7 +912,7 @@ class Mypage extends Component {
 
         let jwt, authId;
 
-        if (auth.isAuthenticated) {
+        if (auth.isAuthenticated()) {
             jwt = auth.isAuthenticated();
             authId = jwt.user._id;
         } else {

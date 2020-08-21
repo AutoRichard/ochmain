@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Header from './../menu/header';
+import { Header } from './../menu/header';
 
 const Headline = () => {
     return (

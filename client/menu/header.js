@@ -1,5 +1,6 @@
 import React from 'react';
 import auth from './../auth/auth-helper';
+import socketIOClient from "socket.io-client";
 
 
 class Header extends React.Component {
@@ -9,8 +10,10 @@ class Header extends React.Component {
 
         this.state = {
             checkAuthenticated: false,
-            link: ''
+            link: '',
+            endpoint: 'http://localhost:3001/'
         }
+        //socket = socketIOClient(this.state.endpoint);
     }
 
     componentDidMount() {
@@ -82,4 +85,4 @@ class Header extends React.Component {
         );
     }
 }
-export default Header
+export {Header}
