@@ -70,7 +70,7 @@ class ContactList extends React.Component {
                                 <div className="cont">
                                     <b>{el.displayName == '' ? el.firstName + ' ' + el.lastName : el.displayName}</b>
                                 </div>
-                                <a onClick={this.openChat.bind(this, el)} value={el._id} href="#chat-bx" id="pop-right"> <img src="/client/assets/images/msg.png"
+                                <a onClick={this.openChat.bind(this, el)} value={el._id} href="#chat-bx_" id="pop-right"> <img src="/client/assets/images/msg.png"
                                     className="img-responsive wd" /></a>
                             </div>)
                     )}

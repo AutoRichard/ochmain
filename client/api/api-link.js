@@ -88,10 +88,9 @@ const updateLinkVideo = (credentials, linkData) => {
     method: 'PUT',
     headers: {
       'Accept': 'application/json',
-      'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + credentials.t
     },
-    body: JSON.stringify(linkData)
+    body: linkData
   }).then((response) => {
     return response.json()
   }).catch((err) => console.log(err))

@@ -38,7 +38,7 @@ class AccountInfo extends React.Component {
     }
 
     componentDidMount() {
-        this.linkData = new FormData()
+        this.linkData = new FormData() 
         if (auth.isAuthenticated()) {
             this.updateLink()
         }

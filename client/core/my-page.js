@@ -200,6 +200,7 @@ class AudioList extends Component {
         const _userId = _jwt.user._id;
         return (
             <li>
+                <a href="javascript:void0" className="play-btn"> {this.props.title}</a>
                 <iframe width="100%" height="100%" scrolling="no" frameborder="no" allow="autoplay" src={this.state.linkUrl}></iframe>
                 <div className="btn-area clearfix">
                     <div className="dropdown-share">
@@ -252,7 +253,8 @@ class Audio extends Component {
             linkUrl: '',
             linkUrlValidation: '',
             auth: false,
-            audioLink: []
+            audioLink: [],
+            title: ''
         }
     }
 
@@ -281,7 +283,7 @@ class Audio extends Component {
     }
 
     onSubmitAudio = () => {
-        if (this.state.linkUrl === '') {
+        if (this.state.linkUrl === '' || this.state.title === '') {
             this.state.linkUrl === '' ? (this.setState({ linkUrlValidation: 'LINK IS REQUIRED' })) : this.setState({ linkUrlValidation: '' });
         } else {
             this.validateSoundCloud();
@@ -324,7 +326,8 @@ class Audio extends Component {
     _onSubmitAudio = () => {
         let _linkData = {
             linkUrlAudio: this.state.linkUrl,
-            userId: this.state._userId
+            userId: this.state._userId,
+            title: this.state.title
         }
 
         if (auth.isAuthenticated()) {
@@ -348,7 +351,7 @@ class Audio extends Component {
                                 if (data.error) {
                                     console.log(data.error);
                                 } else {
-                                    this.setState({ linkUrl: '' })
+                                    this.setState({ linkUrl: '', title: '' })
                                     this.props.parentUpdateLink(userId)
                                 }
                             });
@@ -372,6 +375,7 @@ class Audio extends Component {
 
                     {this.state.audioLink.map((el, i) =>
                         <AudioList
+                            title={el.title}
                             link={el.text}
                             _audioId={el._id}
                             userId={this.state._userId}
@@ -389,6 +393,7 @@ class Audio extends Component {
                                 <p>Create new post containing link to the song</p>
 
                                 <b><a href="#">Add Song via Link</a></b>
+                                <input type="text" name="title" onChange={this.onChangeLink} value={this.state.title} placeholder="Enter/Paste Songs Title" />
                                 <input type="text" name="linkUrl" onChange={this.onChangeLink} value={this.state.linkUrl} placeholder="Enter/Paste Soundcloud or Spotify Link..." />
                                 <span id="validationError">{this.state.linkUrlValidation}</span>
                                 <a onClick={this.onSubmitAudio} className="save-btn btm">ADD LINK</a>
@@ -439,15 +444,32 @@ class VideoList extends Component {
         }
     }
 
+    displayVideo = () => {
+        document.getElementById(this.props.thumbnail).style.display = 'inline'
+        document.getElementById('#' + this.props.thumbnail).style.display = 'none'
+    }
+
     render() {
         const _jwt = auth.isAuthenticated();
         const _userId = _jwt.user._id;
-        return (
 
-            <li>
-                <iframe width="100%" height="100%"
+        let imageView = 'https://ochbackend.herokuapp.com/api/linkthumbnail/' + this.props.thumbnail
+        //let imageView = 'http://localhost:8080/api/linkthumbnail/' + this.props.thumbnail;
+
+        const thumbnailStyle = {
+            width: '100%',
+            height: '200px'
+        }
+
+        return (
+            <li><a href="javascript:void0" className="play-btn"> {this.props.title}</a>
+                <iframe id={this.props.thumbnail} style={{ display: 'none' }} width="100%" height="100%"
                     src={this.props.link}>
                 </iframe>
+                <div className="video-c" id={'#' + this.props.thumbnail}>
+                    <img src={imageView} className="img-responsive" style={thumbnailStyle} />
+                    <a href="javascript:void0" onClick={this.displayVideo}>	<img src="/client/assets/images/play-btn.png" className="img-responsive ply" /></a>
+                </div>
                 <div className="btn-area tp clearfix">
                     <div className="dropdown-share">
                         <span><img src="/client/assets/images/share-white.png" className="img-responsive share" /></span>
@@ -481,6 +503,8 @@ class VideoList extends Component {
                         </div>
                     </div>) : ('')}
                 </div>
+
+
             </li>
 
         )
@@ -498,7 +522,9 @@ class Video extends Component {
             linkUrl: '',
             linkUrlValidation: '',
             auth: false,
-            videoLink: []
+            videoLink: [],
+            id: '',
+            title: ''
         }
     }
 
@@ -518,6 +544,10 @@ class Video extends Component {
         }
     }
 
+    componentDidMount() {
+        this.linkData = new FormData()
+    }
+
 
     onChangeLink = (event) => {
         this.setState({
@@ -527,9 +557,18 @@ class Video extends Component {
         event.target.name === 'linkUrl' ? this.setState({ linkUrlValidation: '' }) : '';
     }
 
+    handleChange = (event) => {
+        const value = event.target.name === 'photo'
+            ? event.target.files[0]
+            : event.target.value
+
+        this.linkData.set(event.target.name, value)
+        this.setState({ id: URL.createObjectURL(event.target.files[0]) });
+    }
+
 
     onSubmitVideo = () => {
-        if (this.state.linkUrl === '') {
+        if (this.state.linkUrl === '' || this.state.title === '' || this.linkData.get('photo') === '') {
             this.state.linkUrl === '' ? (this.setState({ linkUrlValidation: 'LINK IS REQUIRED' })) : this.setState({ linkUrlValidation: '' });
         } else {
             this.validateYouTubeUrl();
@@ -558,10 +597,12 @@ class Video extends Component {
 
 
     _onSubmitVideo = () => {
-        let _linkData = {
-            linkUrlVideo: this.state.linkUrl,
-            userId: this.state._userId
-        }
+
+        this.linkData.set('linkUrlVideo', this.state.linkUrl)
+        this.linkData.set('userId', this.state._userId)
+        this.linkData.set('title', this.state.title)
+
+
 
         if (auth.isAuthenticated()) {
             const jwt = auth.isAuthenticated();
@@ -579,12 +620,14 @@ class Video extends Component {
                         let links = data.link;
                         if (countLink > 0 && countLink == 1) {
                             links = links[0]
-                            _linkData = { ..._linkData, linkId: links._id }
-                            updateLinkVideo({ t: token }, _linkData).then((data) => {
+                            // _linkData = { ..._linkData, linkId: links._id }
+
+                            this.linkData.set('linkId', links._id)
+                            updateLinkVideo({ t: token }, this.linkData).then((data) => {
                                 if (data.error) {
                                     console.log(data.error);
                                 } else {
-                                    this.setState({ linkUrl: '' })
+                                    this.setState({ linkUrl: '', title: '' })
                                     this.props.parentUpdateLink(userId)
                                 }
                             });
@@ -598,6 +641,10 @@ class Video extends Component {
     }
 
     render() {
+        const imageStyle = {
+            width: '20%',
+            height: '20%'
+        }
         return (
             <div className="white-box transparent-area">
                 <h2 className="in-h">VIDEOS</h2>
@@ -606,6 +653,8 @@ class Video extends Component {
                 <ul className="song-list">
                     {this.state.videoLink.map((el, i) =>
                         <VideoList
+                            title={el.title}
+                            thumbnail={el._id}
                             link={el.text}
                             _videoId={el._id}
                             userId={this.state._userId}
@@ -621,7 +670,18 @@ class Video extends Component {
                                 <div className="dropdown-share-content add-song">
                                     <p>Create new post containing link to the video</p>
                                     <p>format: https://www.youtube.com/embed/watch?v=kiyi-C7NQrQ</p>
+                                    <div className="pic-cvr">
+                                        <img style={imageStyle} src={this.state.id} />
+                                        <input name="photo" onChange={this.handleChange} id="profile" type="file" style={{ position: "unset" }} />
+                                    </div>
+                                    <div className="btn-b e-wd">
+                                        <label for="profile"><a className="outline-btn">Thumbnail</a></label>
+                                    </div>
+
+                                    <input type="text" name="title" onChange={this.onChangeLink} value={this.state.title} placeholder="Enter Title" />
+
                                     <input type="text" name="linkUrl" onChange={this.onChangeLink} value={this.state.linkUrl} placeholder="Enter/Paste YouTube Link..." />
+
                                     <span id="validationError">{this.state.linkUrlValidation}</span>
                                     <a onClick={this.onSubmitVideo} className="save-btn btm">ADD VIDEO</a>
                                 </div>
@@ -661,7 +721,8 @@ class Timeline extends Component {
             auth: false,
             audio: [],
             video: [],
-            imageLink: ''
+            imageLink: '',
+            title: ''
         }
     }
 

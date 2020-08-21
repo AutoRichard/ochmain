@@ -44,9 +44,11 @@ class Chat extends React.Component {
     }
 
     view = data => {
-        if (data.length != this.state.message.length) {
+        if (data != this.state.message) {
             this.setState({ message: data })
             this.scrollTobottom()
+
+            //console.log(data.length)
         }
 
     }
@@ -118,6 +120,7 @@ class Chat extends React.Component {
                         <h1>{this.state.name}</h1>
                         <span>Active Now</span>
                     </div>
+                    <div id="chat-bx_"></div>
                     <div className="chat-area" id="_chatArea" style={chatArea}>
                         {this.state.message.map((el, i) =>
                             el.to !== auth.isAuthenticated().user._id ? (
