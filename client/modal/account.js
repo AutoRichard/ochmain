@@ -359,7 +359,7 @@ class AccountInfo extends React.Component {
                 <br />
                 <div className="text-center mt-a">
                     <a href="#" className="white-btn" onClick={this.closeUpdate}>CANCEL</a>
-                    <a className="white-btn red" onClick={this.submitData}>{this.state.loading === true ? (<img style={loadingStyle} src="/client/assets/images/loading4.gif" />) : ('SAVE CHANGES')}</a>
+                    <a className="white-btn red" onClick={this.submitData}>SAVE CHANGES {this.state.loading === true ? (<img style={loadingStyle} src="/client/assets/images/loading4.gif" />) : ('')}</a>
                 </div>
             </div >
         );

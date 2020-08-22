@@ -1,7 +1,8 @@
 import React from 'react';
 import auth from './../auth/auth-helper';
-import { showMessage, sendMessage } from './socket';
+//import { showMessage, sendMessage } from './socket';
 
+import openSocket from 'socket.io-client'
 
 class Chat extends React.Component {
 
@@ -14,14 +15,17 @@ class Chat extends React.Component {
             sender: '',
             name: '',
             msg: '',
-            scroll: false
+            scroll: false,
+            link: 'https://ochbackend.herokuapp.com'
         }
+
+        this.socket = openSocket(this.state.link)
     }
 
 
     componentDidMount() {
         this.setState({ receiver: this.props.receiver })
-        //setInterval(this.viewMessage, 100);
+        setInterval(this.viewMessage, 1000)
 
         if (auth.isAuthenticated()) {
             const jwt = auth.isAuthenticated();
@@ -35,6 +39,8 @@ class Chat extends React.Component {
     componentDidUpdate(prevProps) {
         if (this.props.receiver !== prevProps.receiver) {
             this.setState({ receiver: this.props.receiver })
+
+            this.viewMessage()
             if (this.props.name != undefined && this.props.name != '') {
                 this.setState({ name: this.props.name })
             } else {
@@ -44,23 +50,33 @@ class Chat extends React.Component {
     }
 
     view = data => {
-        if (data != this.state.message) {
-            this.setState({ message: data })
-            this.scrollTobottom()
+        if (data.length > 0) {
+            if (data[0].from == this.state.sender && data[0].to == this.state.receiver) {
 
-            //console.log(data.length)
+                if (data.length !== this.state.message.length) {
+                    this.setState({ message: data })
+                    this.scrollTobottom()
+                }
+            }
         }
-
     }
 
     viewMessage = () => {
 
-        if (this.state.receiver !== '' && this.state.sender !== '') {
+        let _receiver = ''
+        if (this.state.receiver == '') {
+            _receiver = this.props.receiver
+        } else {
+            _receiver = this.state.receiver
+        }
+        if (_receiver !== '' && this.state.sender !== '') {
             let conversation = {
-                reciever: this.state.receiver,
+                reciever: _receiver,
                 sender: this.state.sender
             }
-            showMessage(this.view, conversation)
+            this.socket.emit('show_message', conversation);
+
+            this.socket.on('messages', this.view)
         }
 
     }
@@ -76,15 +92,21 @@ class Chat extends React.Component {
 
         if (auth.isAuthenticated()) {
             if (this.state.msg != '') {
+
+
                 let conversation = {
                     reciever: this.state.receiver,
                     sender: this.state.sender,
                     body: this.state.msg
                 }
 
-                sendMessage(conversation)
+                if (this.state.receiver !== '') {
+                    this.socket.emit('send_message', conversation)
 
-                this.setState({ msg: '' })
+                    this.setState({ msg: '' })
+                }
+
+
             }
         }
     }
@@ -112,7 +134,7 @@ class Chat extends React.Component {
                     <div className="pop-header message-pop">
                         <a href="javascript:void(0)" id="hide-r" className="close-pop"><i className="fa fa-times"
                             aria-hidden="true"></i></a>
-                        <div className="user-im"><img src={'https://ochbackend.herokuapp.com/api/usersPhoto/' + this.state.receiver} className="img-responsive" />
+                        <div className="user-im"><img src={'http://localhost:8080/api/usersPhoto/' + this.state.receiver} className="img-responsive" />
                             <div className="st"></div>
                         </div>
                         <a href="javascript:void(0)" className="arrow-left"><i className="fa fa-angle-left"
@@ -146,7 +168,7 @@ class Chat extends React.Component {
 
                 </div>
 
-                <div className="input-space">
+                <div id="chatInput" style={{display: 'none'}}  className="input-space">
                     <a className="icon-arrow" id="pop-right-msg"><i className="rotate fa fa-angle-right"
                         aria-hidden="true"></i></a>
                     <input type="text" name="msg" value={this.state.msg} onChange={this.handleInput} placeholder="Type Message..." />

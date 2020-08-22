@@ -484,7 +484,8 @@ class ApplicationForm extends React.Component {
                                 </div>
 
 
-                                <a id="thankYou" href="#" data-toggle="modal" data-target="#thankyou"></a>{this.state.loading == true ? (<img style={loadingStyle} src="/client/assets/images/loading4.gif" />) : (<input type="submit" onClick={this.register} value="APPLY NOW"
+                                <a id="thankYou" href="#" data-toggle="modal" data-target="#thankyou"></a>{this.state.loading == true ? (<div><input type="submit" value="APPLY NOW"
+                                    className="spc" /><img style={loadingStyle} src="/client/assets/images/loading4.gif" /></div>) : (<input type="submit" onClick={this.register} value="APPLY NOW"
                                     className="spc" />)}
                                 <div className="control-group two">
                                     <label className="control control-checkbox">

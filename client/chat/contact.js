@@ -44,6 +44,8 @@ class ContactList extends React.Component {
 
     openChat = (data, e) => {
         this.props._openChat(data)
+
+        document.getElementById('chatInput').style.display = '';
     }
 
 
@@ -58,7 +60,6 @@ class ContactList extends React.Component {
                 <h2 className="in-h">SUGGESTED CONNECTS</h2>
                 <div className="line3 text-left"></div>
                 <div className="likes-section suggest" style={contactArea}>
-
                     {this.state.contact.map((el, i) =>
 
                         el._id == auth.isAuthenticated().user._id ? '' :
@@ -68,9 +69,10 @@ class ContactList extends React.Component {
                                     <span className="status"></span>
                                 </div>
                                 <div className="cont">
-                                    <b>{el.displayName == '' ? el.firstName + ' ' + el.lastName : el.displayName}</b>
+                                    <b>{el.displayName}</b>
+                                    <p>{el.firstName} {el.lastName}</p>
                                 </div>
-                                <a onClick={this.openChat.bind(this, el)} value={el._id} href="#chat-bx_" id="pop-right"> <img src="/client/assets/images/msg.png"
+                                <a onClick={this.openChat.bind(this, el)} value={el._id} href="#chat-bx" id="pop-right"> <img src="/client/assets/images/msg.png"
                                     className="img-responsive wd" /></a>
                             </div>)
                     )}

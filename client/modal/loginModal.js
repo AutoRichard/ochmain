@@ -30,9 +30,9 @@ class LoginModal extends React.Component {
     }
 
     signIn = () => {
-        this.setState({loading: true});
+        this.setState({ loading: true });
         if (this.state.email === '' || this.state.password === '') {
-            this.setState({loading: false});
+            this.setState({ loading: false });
             this.state.email === '' ? this.setState({ emailValidate: 'Email is required' }) : this.setState({ emailValidate: '' });
             this.state.password === '' ? this.setState({ passwordValidate: 'Password is required' }) : this.setState({ passwordValidate: '' });
 
@@ -45,7 +45,7 @@ class LoginModal extends React.Component {
             signin(user).then((data) => {
                 if (data.error) {
                     //this.setState({ error: data.error })
-                    this.setState({loading: false});
+                    this.setState({ loading: false });
                     alert(data.error)
                 } else {
                     auth.authenticate(data, () => {
@@ -98,7 +98,8 @@ class LoginModal extends React.Component {
                                         <div className="control_indicator"></div>
                                     </label>
                                 </div>
-                                {this.state.loading == true ? (<img style={loadingStyle} src="/client/assets/images/loading4.gif" />) : (<input type="submit" onClick={this.signIn} value="SIGN IN" />)}                                
+                                {this.state.loading == true ? (<div><input type="submit" value="SIGN IN"
+                                    className="spc" /><img style={loadingStyle} src="/client/assets/images/loading4.gif" /></div>) : (<input type="submit" onClick={this.signIn} value="SIGN IN" />)}
                                 <h5>Not a member yet? <a href="#" data-toggle="modal" onClick={this.closeLogin} data-target="#applicaion-form">APPLY
 								NOW</a></h5>
                             </div>
