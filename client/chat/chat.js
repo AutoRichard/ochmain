@@ -102,7 +102,7 @@ class Chat extends React.Component {
     render() {
 
         const chatArea = {
-            height: '200px',
+            height: '400px',
             overflow: 'auto',
         }
 

@@ -201,9 +201,8 @@ class AudioList extends Component {
         return (
             <li>
                 <a href="javascript:void0" className="play-btn"> {this.props.title}</a>
-                <iframe width="100%" height="100%" scrolling="no" frameborder="no" allow="autoplay" src={this.state.linkUrl}></iframe>
                 <div className="btn-area clearfix">
-                    <div className="dropdown-share">
+                    {/*<div className="dropdown-share">
                         <span><img src="/client/assets/images/share-white.png" className="img-responsive share" /></span>
                         <div className="dropdown-share-content song-share">
                             <b><a href="javascript:void0">Share Song in New Post</a></b>
@@ -220,7 +219,7 @@ class AudioList extends Component {
                             <b><a href="javascript:void0">Copy Song Link</a></b>
                             <p>Copy song link to the Copy/Paste buffer</p>
                         </div>
-                    </div>
+                    </div>*/}
                     {this.props.userId === _userId ? (<div className="dropdown-share del-share"><a href="#"><img src="/client/assets/images/del.png" className="img-responsive" /></a>
                         <div className="dropdown-share-content sharee">
                             <div className="cancel-bx">
@@ -235,6 +234,9 @@ class AudioList extends Component {
                     </div>) : ('')}
 
                 </div>
+                <div className="clearfix"></div>
+                <iframe width="100%" height="100%" scrolling="no" frameborder="no" allow="autoplay" src={this.state.linkUrl}></iframe>
+                <div className="clearfix"></div>
             </li>
 
 
@@ -456,22 +458,17 @@ class VideoList extends Component {
         let imageView = 'https://ochbackend.herokuapp.com/api/linkthumbnail/' + this.props.thumbnail
         //let imageView = 'http://localhost:8080/api/linkthumbnail/' + this.props.thumbnail;
 
+        let videoView = 'https://www.youtube.com/embed/' + this.props.link
+
         const thumbnailStyle = {
             width: '100%',
             height: '200px'
         }
 
         return (
-            <li><a href="javascript:void0" className="play-btn"> {this.props.title}</a>
-                <iframe id={this.props.thumbnail} style={{ display: 'none' }} width="100%" height="100%"
-                    src={this.props.link}>
-                </iframe>
-                <div className="video-c" id={'#' + this.props.thumbnail}>
-                    <img src={imageView} className="img-responsive" style={thumbnailStyle} />
-                    <a href="javascript:void0" onClick={this.displayVideo}>	<img src="/client/assets/images/play-btn.png" className="img-responsive ply" /></a>
-                </div>
+            <li><a href="javascript:void0" className="play-btn">{this.props.title}</a>
                 <div className="btn-area tp clearfix">
-                    <div className="dropdown-share">
+                    {/*<div className="dropdown-share">
                         <span><img src="/client/assets/images/share-white.png" className="img-responsive share" /></span>
                         <div className="dropdown-share-content song-share">
                             <b><a href="javascript:void0">Share Video in New Post</a></b>
@@ -488,7 +485,7 @@ class VideoList extends Component {
                             <b><a href="javascript:void0">Copy Video Link</a></b>
                             <p>Copy video link to the Copy/Paste buffer</p>
                         </div>
-                    </div>
+                    </div>*/}
 
                     {this.props.userId === _userId ? (<div className="dropdown-share del-share"><a href="javascript:void0"><img src="/client/assets/images/del.png" className="img-responsive" /></a>
                         <div className="dropdown-share-content sharee">
@@ -503,8 +500,16 @@ class VideoList extends Component {
                         </div>
                     </div>) : ('')}
                 </div>
+                <div className="clearfix"></div>
+                <div className="video-c" id={'#' + this.props.thumbnail}>
+                    <img src={imageView} className="img-responsive" style={thumbnailStyle} />
+                    <a href="javascript:void0" onClick={this.displayVideo}>	<img src="/client/assets/images/play-btn.png" className="img-responsive ply" /></a>
+                </div>
+                <iframe id={this.props.thumbnail} style={{ display: 'none' }} width="100%" height="100%"
+                    src={videoView}>
+                </iframe>
 
-
+                <div className="clearfix"></div>
             </li>
 
         )
@@ -597,8 +602,16 @@ class Video extends Component {
 
 
     _onSubmitVideo = () => {
+        var _link = this.state.linkUrl;
+        var _linkArr = _link.split("/");
+        var videoId = _linkArr[_linkArr.length - 1];
 
-        this.linkData.set('linkUrlVideo', this.state.linkUrl)
+        if (videoId.startsWith('watch?v=')) {
+            let _videoId = videoId.replace('watch?v=', '')
+            videoId = _videoId;
+        }
+
+        this.linkData.set('linkUrlVideo', videoId)
         this.linkData.set('userId', this.state._userId)
         this.linkData.set('title', this.state.title)
 
@@ -627,7 +640,7 @@ class Video extends Component {
                                 if (data.error) {
                                     console.log(data.error);
                                 } else {
-                                    this.setState({ linkUrl: '', title: '' })
+                                    this.setState({ linkUrl: '', title: '', id: '' })
                                     this.props.parentUpdateLink(userId)
                                 }
                             });
@@ -669,9 +682,9 @@ class Video extends Component {
                                 <a className="play-btn"><img src="/client/assets/images/plus-btn.png" /> Add Video...</a>
                                 <div className="dropdown-share-content add-song">
                                     <p>Create new post containing link to the video</p>
-                                    <p>format: https://www.youtube.com/embed/watch?v=kiyi-C7NQrQ</p>
+                                    {/*<p>format: https://www.youtube.com/embed/watch?v=kiyi-C7NQrQ</p>*/}
                                     <div className="pic-cvr">
-                                        <img style={imageStyle} src={this.state.id} />
+                                        {this.state.id == '' ? '' : (<img style={imageStyle} src={this.state.id} />)}
                                         <input name="photo" onChange={this.handleChange} id="profile" type="file" style={{ position: "unset" }} />
                                     </div>
                                     <div className="btn-b e-wd">
@@ -783,27 +796,38 @@ class Timeline extends Component {
                             />
 
                             <ul className="social-circle">
-                                <li><a style={{ display: 'none' }} href="javascript:void0" className="crs-btn"><img src="/client/assets/images/close-icon.png" /></a><a href={this.state.facebookStatus == true ? 'https://' + this.state.facebook : '#'} target={this.state.facebookStatus == true ? '_blank' : ''}  ><img src="/client/assets/images/facebook.png" />{this.state.facebookStatus == true ? (<div className="dropdown-share"><div className=" edit-two"><i className="fa fa-eye" aria-hidden="true"></i></div>
-                                    <div className="dropdown-share-content edit-drp d-nn">
-                                        {this.state.facebook}
-                                        <input style={{ display: 'none' }} type="text" placeholder="Enter/Paste Facebook Artist Link..." />
-                                        {/*<a href="javascript:void0" className="save-btn btm">ADD LINK</a>*/}
-                                    </div>
-                                </div>) : ''}</a></li>
-                                <li><a style={{ display: 'none' }} href="javascript:void0" className="crs-btn"><img src="/client/assets/images/close-icon.png" /></a><a href={this.state.instagramStatus == true ? 'https://' + this.state.instagram : '#'} target={this.state.instagramStatus == true ? '_blank' : ''}  ><a /><img src="/client/assets/images/insta.png" />{this.state.instagramStatus == true ? (<div className="dropdown-share"><div className=" edit-two"><i className="fa fa-eye" aria-hidden="true"></i></div>
-                                    <div className="dropdown-share-content edit-drp d-nn">
-                                        {this.state.instagram}
-                                        <input style={{ display: 'none' }} type="text" placeholder="Enter/Paste Instagram Artist Link..." />
-                                        {/*<a href="javascript:void0" className="save-btn btm">ADD LINK</a>*/}
-                                    </div>
-                                </div>) : ''}</a></li>
-                                <li><a style={{ display: 'none' }} href="javascript:void0" className="crs-btn"><img src="/client/assets/images/close-icon.png" /></a><a href={this.state.spotifyStatus == true ? 'https://' + this.state.spotify : '#'} target={this.state.spotifyStatus == true ? '_blank' : ''} ><img src="/client/assets/images/spotify.png" />{this.state.spotifyStatus == true ? (<div className="dropdown-share"><div className="edit-two"><i className="fa fa-eye" aria-hidden="true"></i></div>
-                                    <div className="dropdown-share-content edit-drp d-nn">
-                                        {this.state.spotify}
-                                        <input style={{ display: 'none' }} type="text" placeholder="Enter/Paste Spotify Artist Link..." />
-                                        {/*<a href="javascript:void0" className="save-btn btm">ADD LINK</a>*/}
-                                    </div>
-                                </div>) : ''}</a></li>
+                                <li><a style={{ display: 'none' }} href="javascript:void0" className="crs-btn"><img src="/client/assets/images/close-icon.png" />
+                                </a>
+                                    {this.state.facebookStatus == true ? (<a href={this.state.facebookStatus == true ? 'https://' + this.state.facebook : '#'} target={this.state.facebookStatus == true ? '_blank' : ''}  >
+                                        <img src="/client/assets/images/facebook.png" />
+                                        <div className="dropdown-share"><div className=" edit-two"><i className="fa fa-eye" aria-hidden="true"></i></div>
+                                            <div className="dropdown-share-content edit-drp d-nn">
+                                                {this.state.facebook}
+                                                <input style={{ display: 'none' }} type="text" placeholder="Enter/Paste Facebook Artist Link..." />
+                                                {/*<a href="javascript:void0" className="save-btn btm">ADD LINK</a>*/}
+                                            </div>
+                                        </div></a>) : ''}</li>
+                                <li><a style={{ display: 'none' }} href="javascript:void0" className="crs-btn"><img src="/client/assets/images/close-icon.png" /></a>
+
+                                    {this.state.instagramStatus == true ? (<a href={this.state.instagramStatus == true ? 'https://' + this.state.instagram : '#'} target={this.state.instagramStatus == true ? '_blank' : ''}  >
+                                        <img src="/client/assets/images/insta.png" /><div className="dropdown-share"><div className=" edit-two"><i className="fa fa-eye" aria-hidden="true"></i></div>
+                                            <div className="dropdown-share-content edit-drp d-nn">
+                                                {this.state.instagram}
+                                                <input style={{ display: 'none' }} type="text" placeholder="Enter/Paste Instagram Artist Link..." />
+                                                {/*<a href="javascript:void0" className="save-btn btm">ADD LINK</a>*/}
+                                            </div>
+                                        </div></a>) : ''}</li>
+                                <li><a style={{ display: 'none' }} href="javascript:void0" className="crs-btn"><img src="/client/assets/images/close-icon.png" /></a>
+
+                                    {this.state.spotifyStatus == true ? (
+                                        <a href={this.state.spotifyStatus == true ? 'https://' + this.state.spotify : '#'} target={this.state.spotifyStatus == true ? '_blank' : ''} >
+                                            <img src="/client/assets/images/spotify.png" /><div className="dropdown-share"><div className="edit-two"><i className="fa fa-eye" aria-hidden="true"></i></div>
+                                                <div className="dropdown-share-content edit-drp d-nn">
+                                                    {this.state.spotify}
+                                                    <input style={{ display: 'none' }} type="text" placeholder="Enter/Paste Spotify Artist Link..." />
+                                                    {/*<a href="javascript:void0" className="save-btn btm">ADD LINK</a>*/}
+                                                </div>
+                                            </div></a>) : ''}</li>
                             </ul>
                         </div>
                         {/*Audio Component*/}
@@ -920,27 +944,38 @@ class Timeline extends Component {
                                 parentUpdateLink={this.updateLink}
                             />
                             <ul className="social-circle">
-                                <li><a style={{ display: 'none' }} href="javascript:void0" className="crs-btn"><img src="/client/assets/images/close-icon.png" /></a><a href={this.state.youtubeStatus == true ? ('https://' + this.state.youtube) : '#'} target={this.state.youtubeStatus == true ? '_blank' : ''} ><img src="/client/assets/images/youtube.png" />{this.state.youtubeStatus == true ? (<div className="dropdown-share"><div className="edit-two"><i className="fa fa-eye" aria-hidden="true"></i></div>
-                                    <div className="dropdown-share-content edit-drp right d-nn">
-                                        {this.state.youtube}
-                                        <input style={{ display: 'none' }} type="text" placeholder="Enter/Paste Youtube Artist Link..." />
-                                        {/*<a href="javascript:void0" className="save-btn btm">ADD LINK</a>*/}
-                                    </div>
-                                </div>) : ''}</a></li>
-                                <li><a style={{ display: 'none' }} href="javascript:void0" className="crs-btn"><img src="/client/assets/images/close-icon.png" /></a><a href={this.state.snapchatStatus == true ? 'https://' + this.state.snapchat : '#'} target={this.state.snapchatStatus == true ? '_blank' : ''} ><img src="/client/assets/images/snapchat.png" />{this.state.snapchatStatus == true ? (<div className="dropdown-share"><div className=" edit-two"><i className="fa fa-eye" aria-hidden="true"></i></div>
-                                    <div className="dropdown-share-content edit-drp right d-nn">
-                                        {this.state.snapchat}
-                                        <input style={{ display: 'none' }} type="text" placeholder="Enter/Paste Snapchat Artist Link..." />
-                                        {/*<a href="javascript:void0" className="save-btn btm">ADD LINK</a>*/}
-                                    </div>
-                                </div>) : ''}</a></li>
-                                <li><a style={{ display: 'none' }} href="javascript:void0" className="crs-btn"><img src="/client/assets/images/close-icon.png" /></a><a href={this.state.tiktokStatus == true ? 'https://' + this.state.tiktok : '#'} target={this.state.tiktokStatus == true ? '_blank' : ''} ><img src="/client/assets/images/tiktok.png" />{this.state.tiktokStatus == true ? (<div className="dropdown-share"><div className=" edit-two"><i className="fa fa-eye" aria-hidden="true"></i></div>
-                                    <div className="dropdown-share-content edit-drp right d-nn">
-                                        {this.state.tiktok}
-                                        <input style={{ display: 'none' }} type="text" placeholder="Enter/Paste Tiktok Artist Link..." />
-                                        {/*<a href="javascript:void0" className="save-btn btm">ADD LINK</a>*/}
-                                    </div>
-                                </div>) : ''}</a></li>
+                                <li><a style={{ display: 'none' }} href="javascript:void0" className="crs-btn"><img src="/client/assets/images/close-icon.png" /></a>
+                                    {this.state.youtubeStatus == true ? (<a href={this.state.youtubeStatus == true ? ('https://' + this.state.youtube) : '#'} target={this.state.youtubeStatus == true ? '_blank' : ''} >
+                                        <img src="/client/assets/images/youtube.png" />
+                                        <div className="dropdown-share"><div className="edit-two"><i className="fa fa-eye" aria-hidden="true"></i></div>
+                                            <div className="dropdown-share-content edit-drp right d-nn">
+                                                {this.state.youtube}
+                                                <input style={{ display: 'none' }} type="text" placeholder="Enter/Paste Youtube Artist Link..." />
+                                                {/*<a href="javascript:void0" className="save-btn btm">ADD LINK</a>*/}
+                                            </div>
+                                        </div></a>) : ''}</li>
+                                <li><a style={{ display: 'none' }} href="javascript:void0" className="crs-btn"><img src="/client/assets/images/close-icon.png" /></a>
+                                    {this.state.snapchatStatus == true ? (
+                                        <a href={this.state.snapchatStatus == true ? 'https://' + this.state.snapchat : '#'} target={this.state.snapchatStatus == true ? '_blank' : ''} >
+                                            <img src="/client/assets/images/snapchat.png" />
+                                            <div className="dropdown-share"><div className=" edit-two"><i className="fa fa-eye" aria-hidden="true"></i></div>
+                                                <div className="dropdown-share-content edit-drp right d-nn">
+                                                    {this.state.snapchat}
+                                                    <input style={{ display: 'none' }} type="text" placeholder="Enter/Paste Snapchat Artist Link..." />
+                                                    {/*<a href="javascript:void0" className="save-btn btm">ADD LINK</a>*/}
+                                                </div>
+                                            </div></a>) : ''}</li>
+                                <li><a style={{ display: 'none' }} href="javascript:void0" className="crs-btn"><img src="/client/assets/images/close-icon.png" /></a>
+                                    {this.state.tiktokStatus == true ? (
+                                        <a href={this.state.tiktokStatus == true ? 'https://' + this.state.tiktok : '#'} target={this.state.tiktokStatus == true ? '_blank' : ''} >
+                                            <img src="/client/assets/images/tiktok.png" />
+                                            <div className="dropdown-share"><div className=" edit-two"><i className="fa fa-eye" aria-hidden="true"></i></div>
+                                                <div className="dropdown-share-content edit-drp right d-nn">
+                                                    {this.state.tiktok}
+                                                    <input style={{ display: 'none' }} type="text" placeholder="Enter/Paste Tiktok Artist Link..." />
+                                                    {/*<a href="javascript:void0" className="save-btn btm">ADD LINK</a>*/}
+                                                </div>
+                                            </div></a>) : ''}</li>
 
 
                             </ul>
