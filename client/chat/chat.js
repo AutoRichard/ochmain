@@ -134,7 +134,7 @@ class Chat extends React.Component {
                     <div className="pop-header message-pop">
                         <a href="javascript:void(0)" id="hide-r" className="close-pop"><i className="fa fa-times"
                             aria-hidden="true"></i></a>
-                        <div className="user-im"><img src={'http://localhost:8080/api/usersPhoto/' + this.state.receiver} className="img-responsive" />
+                        <div className="user-im"><img src={'https://ochbackend.herokuapp.com/api/usersPhoto/' + this.state.receiver} className="img-responsive" />
                             <div className="st"></div>
                         </div>
                         <a href="javascript:void(0)" className="arrow-left"><i className="fa fa-angle-left"
