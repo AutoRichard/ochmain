@@ -21,7 +21,7 @@ class Chat extends React.Component {
 
     componentDidMount() {
         this.setState({ receiver: this.props.receiver })
-        setInterval(this.viewMessage, 100);
+        //setInterval(this.viewMessage, 100);
 
         if (auth.isAuthenticated()) {
             const jwt = auth.isAuthenticated();
