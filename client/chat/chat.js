@@ -25,7 +25,7 @@ class Chat extends React.Component {
 
     componentDidMount() {
         this.setState({ receiver: this.props.receiver })
-        setInterval(this.viewMessage, 1000)
+        setInterval(this.viewMessage, 250)
 
         if (auth.isAuthenticated()) {
             const jwt = auth.isAuthenticated();
@@ -50,33 +50,48 @@ class Chat extends React.Component {
     }
 
     view = data => {
+        //console.log(this.state.sender+'client'+this.state.receiver)
         if (data.length > 0) {
             if (data[0].from == this.state.sender && data[0].to == this.state.receiver) {
-
+                if (data.length !== this.state.message.length) {
+                    this.setState({ message: data })
+                    this.scrollTobottom()
+                }
+            } else if (data[0].to == this.state.sender && data[0].from == this.state.receiver) {
                 if (data.length !== this.state.message.length) {
                     this.setState({ message: data })
                     this.scrollTobottom()
                 }
             }
+        } else {
+            this.setState({ message: [] })
         }
     }
 
     viewMessage = () => {
 
-        let _receiver = ''
-        if (this.state.receiver == '') {
-            _receiver = this.props.receiver
-        } else {
-            _receiver = this.state.receiver
-        }
-        if (_receiver !== '' && this.state.sender !== '') {
+        if (this.state.receiver == '' && this.state.sender != '') {
+            if (this.props.receiver != '') {
+                let receiver = this.props.receiver
+                let conversation = {
+                    reciever: receiver,
+                    sender: this.state.sender
+                }
+                this.socket.emit('show_message', conversation);
+
+                this.socket.on('messages', this.view)
+            }
+        } else if (this.state.receiver != '' && this.state.sender != '') {
+            let receiver = this.state.receiver
+
             let conversation = {
-                reciever: _receiver,
+                reciever: receiver,
                 sender: this.state.sender
             }
             this.socket.emit('show_message', conversation);
 
             this.socket.on('messages', this.view)
+
         }
 
     }
@@ -168,7 +183,7 @@ class Chat extends React.Component {
 
                 </div>
 
-                <div id="chatInput" style={{display: 'none'}}  className="input-space">
+                <div id="chatInput" style={{ display: 'none' }} className="input-space">
                     <a className="icon-arrow" id="pop-right-msg"><i className="rotate fa fa-angle-right"
                         aria-hidden="true"></i></a>
                     <input type="text" name="msg" value={this.state.msg} onChange={this.handleInput} placeholder="Type Message..." />

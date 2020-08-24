@@ -18,11 +18,9 @@ class PicBox extends React.Component {
 
     componentDidMount = () => {
         this.userData = new FormData();
-
-
     }
 
-    handleChange = (event) => {
+    _handleChange = (event) => {
         const value = event.target.name === 'photo'
             ? event.target.files[0]
             : event.target.value
@@ -64,7 +62,7 @@ class PicBox extends React.Component {
 
     submitImage = () => {
         this.updateUserParent_()
-        this.setState({loading: true});
+        this.setState({ loading: true });
         this.props.renderImage(this.state.id)
     }
 
@@ -92,10 +90,10 @@ class PicBox extends React.Component {
                         <div className="modal-body bg-w pic-area">
                             <div className="pic-cvr">
                                 <img style={imageStyle} src={this.state.id} />
-                                <input name="photo" onChange={this.handleChange} id="profile" type="file" style={{ position: "unset" }} />
+                                <input name="photo" onChange={this._handleChange} id="profilePhoto" type="file" style={{ position: "unset" }} />
                             </div>
                             <div className="btn-b e-wd">
-                                <label for="profile"><a className="outline-btn">CHOOSE PICTURE</a></label>
+                                <label for="profilePhoto"><a className="outline-btn">CHOOSE PICTURE</a></label>
                                 <label><a onClick={this.submitImage} className="cancel-small">SAVE</a></label>
                             </div>
 
