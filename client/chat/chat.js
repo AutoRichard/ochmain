@@ -158,7 +158,7 @@ class Chat extends React.Component {
                         <div className="user-im"><img src={'https://ochbackend.herokuapp.com/api/usersPhoto/' + this.state.receiver} className="img-responsive" />
                             <div className="st"></div>
                         </div>
-                        <a href="javascript:void(0)" className="arrow-left"><i className="fa fa-angle-left"
+                        <a href="javascript:void(0)" id="_hide-r" className="arrow-left"><i className="fa fa-angle-left"
                             aria-hidden="true"></i></a>
                         <h1>{this.state.name}</h1>
                         <span>Active Now</span>
