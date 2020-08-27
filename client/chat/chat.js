@@ -1,6 +1,7 @@
 import React from 'react';
 import auth from './../auth/auth-helper';
 //import { showMessage, sendMessage } from './socket';
+import { sendMessage } from './../api/api-chat';
 
 import openSocket from 'socket.io-client'
 
@@ -16,7 +17,7 @@ class Chat extends React.Component {
             name: '',
             msg: '',
             scroll: false,
-            link: 'https://ochbackend.herokuapp.com'
+            link: 'https://ochbackend.herokuapp.com/'
         }
 
         this.socket = openSocket(this.state.link)
@@ -24,14 +25,13 @@ class Chat extends React.Component {
 
 
     componentDidMount() {
-        this.setState({ receiver: this.props.receiver })
-        setInterval(this.viewMessage, 250)
-
         if (auth.isAuthenticated()) {
             const jwt = auth.isAuthenticated();
             const userId = jwt.user._id;
             this.setState({ sender: userId })
         }
+        this.setState({ receiver: this.props.receiver })
+        setInterval(this.viewMessage, 250)
 
         this.setState({ scroll: true })
     }
@@ -116,9 +116,13 @@ class Chat extends React.Component {
                 }
 
                 if (this.state.receiver !== '') {
-                    this.socket.emit('send_message', conversation)
-
-                    this.setState({ msg: '' })
+                    sendMessage(conversation).then((data) => {
+                        if (data.error) {
+                            console.log(data.error);
+                        } else {
+                            this.setState({ msg: '' })
+                        }
+                    });
                 }
 
 
@@ -134,6 +138,8 @@ class Chat extends React.Component {
 
 
     }
+
+
 
 
     render() {
@@ -186,11 +192,18 @@ class Chat extends React.Component {
                 <div id="chatInput" style={{ display: 'none' }} className="input-space">
                     <a className="icon-arrow" id="pop-right-msg"><i className="rotate fa fa-angle-right"
                         aria-hidden="true"></i></a>
-                    <input type="text" name="msg" value={this.state.msg} onChange={this.handleInput} placeholder="Type Message..." />
+                    <input type="text" name="msg" value={this.state.msg} onKeyDown={e => {
+                        if (e.keyCode === 13) {
+                            this.sentMessage();
+                            e.preventDefault();
+                            e.stopPropagation();
+                        }
+                    }} onChange={this.handleInput} placeholder="Type Message..." />
                     <div className="env">
                         <i className="fa fa-paper-plane" onClick={this.sentMessage} aria-hidden="true"></i>
                     </div>
                 </div>
+
 
 
                 <div className="popup" id="popup-msg">

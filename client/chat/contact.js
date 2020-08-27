@@ -1,6 +1,6 @@
 import React from 'react';
 import { list } from './../api/api-user';
-import auth from './../auth/auth-helper';
+import auth from './../auth/auth-helper'; 
 
 
 class ContactList extends React.Component {
@@ -51,7 +51,7 @@ class ContactList extends React.Component {
 
     render() {
         const contactArea = {
-            height: '500px',
+            height: '480px',
             overflow: 'auto'
         }
 

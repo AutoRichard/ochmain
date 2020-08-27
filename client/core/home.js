@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Header, socket } from './../menu/header';
 import auth from './../auth/auth-helper'
 import ContactList from '../chat/contact';
-import Chat from '../chat/chat'
+import Chat from '../chat/chat';
+import Messages from '../chat/messages';
 
 
 const SVG = () => {
@@ -510,6 +511,11 @@ class Profile extends Component {
         }
     }
 
+    parentViewMessageArea = (data) => {
+        this.props.__parentOpenChat(data)   
+    }
+    
+
     
     render(){
         return (
@@ -956,51 +962,12 @@ class Profile extends Component {
                                 <a href="" className="btn-spc"><i className="fa fa-ellipsis-h" aria-hidden="true"></i> See More
                                 Notifications</a>
                             </div>
-    
-                            <div className="white-box">
-                                <h2 className="in-h">MESSAGES</h2>
-                                <div className="line3 text-left"></div>
-                                <div className="likes-section new">
-                                    <div className="img-area clearfix">
-                                        <div className="img-c">
-                                            <img src="/client/assets/images/user-six.png" className="img-responsive circled" />
-                                            <span className="msg"></span>
-                                        </div>
-    
-                                        <div className="cont w-70">
-                                            <b>Cory Young</b>
-    
-                                            <p>Unread Message</p>
-                                            <p className="mins">2 mins ago</p>
-                                        </div>
-                                        <div className="msg-icon"><a href="#"><i className="fa fa-envelope" aria-hidden="true"></i></a>
-                                        </div>
-                                    </div>
-                                    <div className="img-area clearfix">
-                                        <div className="img-c">
-                                            <img src="/client/assets/images/user-six.png" className="img-responsive circled" />
-                                            <span className="msg"></span>
-                                        </div>
-    
-                                        <div className="cont w-70">
-                                            <b>Cory Young</b>
-    
-                                            <p>Unread Message</p>
-                                            <p className="mins">2 mins ago</p>
-                                        </div>
-                                        <div className="msg-icon grey"><a href="#"><i className="fa fa-envelope-open"
-                                            aria-hidden="true"></i></a></div>
-                                    </div>
-    
-    
-    
-    
-    
-                                </div>
-                                <a href="" className="btn-spc"><i className="fa fa-ellipsis-h" aria-hidden="true"></i> See More
-                                Messages</a>
-                            </div>
-    
+
+
+                            <Messages
+                            _viewMessageArea={this.parentViewMessageArea}
+                            />    
+                            
                         </div>
     
                     </div>
@@ -1280,6 +1247,32 @@ class Home extends React.Component {
         console.log(this.state.message)
     }
 
+    _grandOpenChat = (data) => {
+
+        let user;
+        let _name
+        if(data.recipients[0]._id == auth.isAuthenticated().user._id){
+            user = data.recipients[1]
+        }else{
+            user = data.recipients[0]   
+        }
+
+        this.setState({receiver: user._id})
+
+
+        if(user.displayName == ''){
+            _name = user.firstName + ' ' + user.lastName;
+        }else{
+            _name =  user.displayName
+        }
+
+        this.setState({name: _name})
+
+        document.getElementById('pop-right-msg').click()
+        this.setState({open : true})
+        
+    }
+
     grandOpenChat = (data) => {
         this.setState({receiver: data._id})
         let _name
@@ -1344,6 +1337,7 @@ class Home extends React.Component {
 
                 <Profile 
                 _parentOpenChat={this.grandOpenChat}
+                __parentOpenChat={this._grandOpenChat}
                 />
 
                 <Contact
