@@ -67,15 +67,15 @@ class ContactList extends React.Component {
 
 
         if (sender == auth.isAuthenticated().user._id) {
-            return (<div className="msg-icon"><a href="#"><i className="fa fa-envelope-open" aria-hidden="true"></i></a>
+            return (<div className="msg-icon"><a href="javascript:void(0)"><i className="fa fa-envelope-open" aria-hidden="true"></i></a>
             </div>)
         } else {
             if (status == true) {
-                return (<div className="msg-icon"><a href="#"><i className="fa fa-envelope-open" aria-hidden="true"></i></a>
+                return (<div className="msg-icon"><a href="javascript:void(0)"><i className="fa fa-envelope-open" aria-hidden="true"></i></a>
                 </div>)
             } else {
                 return (
-                    <div className="msg-icon"><a href="#"><i className="fa fa-envelope" style={{ color: 'red' }} aria-hidden="true"></i></a>
+                    <div className="msg-icon"><a href="javascript:void(0)"><i className="fa fa-envelope" style={{ color: 'red' }} aria-hidden="true"></i></a>
                     </div>
                 )
             }
