@@ -2,9 +2,6 @@ import React from 'react';
 import { create } from './../api/api-user';
 
 
-
-
-
 class ApplicationForm extends React.Component {
 
     constructor(props) {
@@ -485,7 +482,7 @@ class ApplicationForm extends React.Component {
 
 
                                 <a id="thankYou" href="#" data-toggle="modal" data-target="#thankyou"></a>{this.state.loading == true ? (<a className="white-btn red" href="javascript:void(0)">APPLY NOW<img style={loadingStyle} src="/client/assets/images/loading4.gif" /></a>) : (<a className="white-btn red" href="javascript:void(0)" onClick={this.register}
-                                    className="spc">APPLY NOW</a>)}
+                                    >APPLY NOW</a>)}
                                 <div className="control-group two">
                                     <label className="control control-checkbox">
                                         I agree to the <a href="#">Terms of Service</a> & <a href="#">Privacy Policy</a>

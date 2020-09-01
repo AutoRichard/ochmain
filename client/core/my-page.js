@@ -26,7 +26,9 @@ class Profile extends Component {
             auth: false,
             image: '',
             userStatus: 1,
-            userLink: window.location.href
+            userLink: window.location.href,
+            _userStatus: 'Available',
+            ifUser: 'false'
         }
     }
 
@@ -57,21 +59,28 @@ class Profile extends Component {
     }
 
     updateStatus = (data) => {
+
+        this.setState({userStatus: data.userStatus})
         if (data.userStatus == 1) {
             document.getElementById('checkb').style.backgroundColor = '#68bd53'
             document.getElementById("_checkb").className = "fa fa-check";
+            this.setState({_userStatus: 'Available'})
         } else if (data.userStatus == 2) {
             document.getElementById('checkb').style.backgroundColor = '#ffc107'
-            document.getElementById("_checkb").className = "fa fa-clock-o";
+            document.getElementById("_checkb").className = "fa fa-clock-o";            
+            this.setState({_userStatus: 'Away'})
         } else if (data.userStatus == 3) {
             document.getElementById('checkb').style.backgroundColor = '#dc3545'
             document.getElementById("_checkb").className = "";
+            this.setState({_userStatus: 'Busy'})
         } else if (data.userStatus == 4) {
             document.getElementById('checkb').style.backgroundColor = '#dc3545'
             document.getElementById("_checkb").className = "fa fa-minus";
+            this.setState({_userStatus: 'Do not disturb'})
         } else if (data.userStatus == 5) {
-            document.getElementById('checkb').style.backgroundColor = '	#A9A9A9'
+            document.getElementById('checkb').style.backgroundColor = '#A9A9A9'
             document.getElementById("_checkb").className = "fa fa-times";
+            this.setState({_userStatus: 'Appear offline'})
         }
     }
 
@@ -106,6 +115,7 @@ class Profile extends Component {
 
 
     render() {
+        let ifUser = this.state._id == auth.isAuthenticated().user._id ? '' : 'none';
         return (
             <section className="padd-small padd-top text-center">
 
@@ -135,14 +145,14 @@ class Profile extends Component {
                             </div>
                         </div>
                     </li>
-                    <li> <div className="dropdown-share"><a href="javascript:void0">AVAILABLE <i className="fa fa-angle-down" aria-hidden="true"></i></a>
-                        <div className="dropdown-share-content ava">
+                    <li> <div className="dropdown-share"><a href="javascript:void0">{this.state._userStatus} <i className="fa fa-angle-down" aria-hidden="true"></i></a>
+                        <div className="dropdown-share-content ava" style={{display: ifUser}}>
                             <ul className="status-list">
-                                <li> <a href="javascript:void0" name="1" onClick={this.updateUserStatus}><img src="/client/assets/images/profile-available.png" />Available <i className="fa fa-check grn" aria-hidden="true"></i></a></li>
-                                <li>  <a href="javascript:void0" name="2" onClick={this.updateUserStatus}><img src="/client/assets/images/p-away.png" />Away</a></li>
-                                <li> <a href="javascript:void0" name="3" onClick={this.updateUserStatus}><img src="/client/assets/images/p-busy.png" />Busy</a></li>
-                                <li> <a href="javascript:void0" name="4" onClick={this.updateUserStatus}><img src="/client/assets/images/p-dist.png" />Do not Disturb</a></li>
-                                <li><a href="javascript:void0" name="5" onClick={this.updateUserStatus}><img src="/client/assets/images/p-close.png" />Appear Offline</a></li>
+                                <li> <a href="javascript:void0" name="1" onClick={this.updateUserStatus}><img src="/client/assets/images/profile-available.png" />Available {this.state.userStatus == 1 ? (<i className="fa fa-check" style={{color: '#68bd53'}} aria-hidden="true"></i>) : ('')}</a></li>
+                                <li>  <a href="javascript:void0" name="2" onClick={this.updateUserStatus}><img src="/client/assets/images/p-away.png" />Away{this.state.userStatus == 2 ? (<i className="fa fa-check" style={{color: '#ffc107'}} aria-hidden="true"></i>) : ('')}</a></li>
+                                <li> <a href="javascript:void0" name="3" onClick={this.updateUserStatus}><img src="/client/assets/images/p-busy.png" />Busy{this.state.userStatus == 3 ? (<i className="fa fa-check" style={{color: '#dc3545'}} aria-hidden="true"></i>) : ('')}</a></li>
+                                <li> <a href="javascript:void0" name="4" onClick={this.updateUserStatus}><img src="/client/assets/images/p-dist.png" />Do not Disturb{this.state.userStatus == 4 ? (<i className="fa fa-check" style={{color: '#dc3545'}} aria-hidden="true"></i>) : ('')}</a></li>
+                                <li><a href="javascript:void0" name="5" onClick={this.updateUserStatus}><img src="/client/assets/images/p-close.png" />Appear Offline{this.state.userStatus == 5 ? (<i className="fa fa-check" style={{color: '#A9A9A9'}} aria-hidden="true"></i>) : ('')}</a></li>
                             </ul>
                         </div>
                     </div>

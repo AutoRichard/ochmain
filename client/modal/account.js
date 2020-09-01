@@ -360,7 +360,7 @@ class AccountInfo extends React.Component {
                 <br />
                 <div className="text-center mt-a">
                     <a href="#" className="white-btn" onClick={this.closeUpdate}>CANCEL</a>
-                    <a className="white-btn red" href="javascript:void(0)" onClick={this.submitData}>SAVE CHANGES {this.state.loading === true ? (<img style={loadingStyle} src="/client/assets/images/loading4.gif" />) : ('')}</a>
+                    <a className="white-btn red" href="javascript:void(0)" onClick={this.submitData}>SAVE CHANGES{this.state.loading === true ? (<img style={loadingStyle} src="/client/assets/images/loading4.gif" />) : ('')}</a>
                 </div>
             </div >
         );
