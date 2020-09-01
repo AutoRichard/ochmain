@@ -1005,6 +1005,11 @@ class Contact extends Component {
         if (this.props.receiver !== prevProps.receiver) {
             this.setState({receiver: this.props.receiver, name: this.props.name, userStatus: this.props.userStatus})
         }
+
+        if(this.props.userStatus !== prevProps.userStatus){
+            this.setState({userStatus: this.props.userStatus})
+
+        }
     }
 
     render(){

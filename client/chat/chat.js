@@ -40,7 +40,7 @@ class Chat extends React.Component {
 
     componentDidUpdate(prevProps) {
         if (this.props.receiver !== prevProps.receiver) {
-            this.setState({ receiver: this.props.receiver, userStatus: this.props.userStatus })
+            this.setState({ receiver: this.props.receiver })
 
             //console.log(this.props.userStatus)
 
@@ -50,6 +50,10 @@ class Chat extends React.Component {
             } else {
                 this.setState({ name: 'User' })
             }
+        }
+
+        if (this.props.userStatus !== prevProps.userStatus) {
+            this.setState({ userStatus: this.props.userStatus })
         }
     }
 
