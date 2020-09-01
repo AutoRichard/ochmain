@@ -2,6 +2,7 @@ import React from 'react';
 import auth from './../auth/auth-helper';
 //import { showMessage, sendMessage } from './socket';
 import { sendMessage } from './../api/api-chat';
+import swal from "sweetalert"
 
 import openSocket from 'socket.io-client'
 
@@ -17,7 +18,8 @@ class Chat extends React.Component {
             name: '',
             msg: '',
             scroll: false,
-            link: 'https://ochbackend.herokuapp.com/'
+            link: 'https://ochbackend.herokuapp.com/',
+            userStatus: ''
         }
 
         this.socket = openSocket(this.state.link)
@@ -38,7 +40,9 @@ class Chat extends React.Component {
 
     componentDidUpdate(prevProps) {
         if (this.props.receiver !== prevProps.receiver) {
-            this.setState({ receiver: this.props.receiver })
+            this.setState({ receiver: this.props.receiver, userStatus: this.props.userStatus })
+
+            //console.log(this.props.userStatus)
 
             this.viewMessage()
             if (this.props.name != undefined && this.props.name != '') {
@@ -156,7 +160,7 @@ class Chat extends React.Component {
                         <a href="javascript:void(0)" id="hide-r" className="close-pop"><i className="fa fa-times"
                             aria-hidden="true"></i></a>
                         <div className="user-im"><img src={'https://ochbackend.herokuapp.com/api/usersPhoto/' + this.state.receiver} className="img-responsive" />
-                            <div className="st"></div>
+                            <div className={"st" + this.state.userStatus}></div>
                         </div>
                         <a href="javascript:void(0)" id="_hide-r" className="arrow-left"><i className="fa fa-angle-left"
                             aria-hidden="true"></i></a>

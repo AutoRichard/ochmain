@@ -4,8 +4,9 @@ import PicBox from './../modal/pic-box';
 import Art from './../modal/art';
 import Upgrade from './../modal/upgrade';
 import Plan from './../modal/plan';
-import { read } from './../api/api-user';
+import { read, update } from './../api/api-user';
 import { checkLink, updateLinkAudio, deleteLinkAudio, updateLinkVideo, deleteLinkVideo } from './../api/api-link';
+import swal from 'sweetalert';
 import auth from './../auth/auth-helper';
 
 class Profile extends Component {
@@ -23,7 +24,54 @@ class Profile extends Component {
             linkId: '',
             _id: '',
             auth: false,
-            image: ''
+            image: '',
+            userStatus: 1,
+            userLink: window.location.href
+        }
+    }
+
+    updateUserStatus = (e) => {
+        e.preventDefault();
+
+        const user = {
+            userStatus: e.target.name,
+        }
+
+        if (auth.isAuthenticated()) {
+            const jwt = auth.isAuthenticated();
+            const userId = jwt.user._id;
+            const token = jwt.token;
+
+            update({
+                userId: userId
+            }, {
+                t: token
+            }, user).then((data) => {
+                if (data.error) {
+                    swal(data.error);
+                } else {
+                    this.updateStatus(data)
+                }
+            });
+        }
+    }
+
+    updateStatus = (data) => {
+        if (data.userStatus == 1) {
+            document.getElementById('checkb').style.backgroundColor = '#68bd53'
+            document.getElementById("_checkb").className = "fa fa-check";
+        } else if (data.userStatus == 2) {
+            document.getElementById('checkb').style.backgroundColor = '#ffc107'
+            document.getElementById("_checkb").className = "fa fa-clock-o";
+        } else if (data.userStatus == 3) {
+            document.getElementById('checkb').style.backgroundColor = '#dc3545'
+            document.getElementById("_checkb").className = "";
+        } else if (data.userStatus == 4) {
+            document.getElementById('checkb').style.backgroundColor = '#dc3545'
+            document.getElementById("_checkb").className = "fa fa-minus";
+        } else if (data.userStatus == 5) {
+            document.getElementById('checkb').style.backgroundColor = '	#A9A9A9'
+            document.getElementById("_checkb").className = "fa fa-times";
         }
     }
 
@@ -42,8 +90,18 @@ class Profile extends Component {
         let imageView = 'https://ochbackend.herokuapp.com/api/usersPhoto/' + data._id
         //let imageView = 'http://localhost:8080/api/usersPhoto/' + data._id;
         this.setState({
-            fullName: data.fullName || '', displayName: data.displayName || '', phoneNumber: data.phoneNumber || '', about: data.about || '', loading: data.loading, _id: data._id, auth: data.auth, image: imageView
+            fullName: data.fullName || '', displayName: data.displayName || '', phoneNumber: data.phoneNumber || '', about: data.about || '', loading: data.loading, _id: data._id, auth: data.auth, image: imageView, userStatus: data.userStatus
         });
+        this.updateStatus(data)
+    }
+
+    copyProfile = (e) => {
+        e.preventDefault();
+
+        var copyText = document.getElementById("windowLocation");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999)
+        document.execCommand("copy");
     }
 
 
@@ -77,34 +135,31 @@ class Profile extends Component {
                             </div>
                         </div>
                     </li>
-                    <li style={{ display: 'none' }}> <div className="dropdown-share"><a href="javascript:void0">AVAILABLE <i className="fa fa-angle-down" aria-hidden="true"></i></a>
+                    <li> <div className="dropdown-share"><a href="javascript:void0">AVAILABLE <i className="fa fa-angle-down" aria-hidden="true"></i></a>
                         <div className="dropdown-share-content ava">
                             <ul className="status-list">
-                                <li> <a href="javascript:void0"><img src="/client/assets/images/profile-available.png" />Available <i className="fa fa-check grn" aria-hidden="true"></i></a></li>
-                                <li>  <a href="javascript:void0"><img src="/client/assets/images/p-away.png" />Away</a></li>
-                                <li> <a href="javascript:void0"><img src="/client/assets/images/p-busy.png" />Busy</a></li>
-                                <li> <a href="javascript:void0"><img src="/client/assets/images/p-dist.png" />Do not Disturb</a></li>
-                                <li><a href="javascript:void0"><img src="/client/assets/images/p-close.png" />Appear Offline</a></li>
+                                <li> <a href="javascript:void0" name="1" onClick={this.updateUserStatus}><img src="/client/assets/images/profile-available.png" />Available <i className="fa fa-check grn" aria-hidden="true"></i></a></li>
+                                <li>  <a href="javascript:void0" name="2" onClick={this.updateUserStatus}><img src="/client/assets/images/p-away.png" />Away</a></li>
+                                <li> <a href="javascript:void0" name="3" onClick={this.updateUserStatus}><img src="/client/assets/images/p-busy.png" />Busy</a></li>
+                                <li> <a href="javascript:void0" name="4" onClick={this.updateUserStatus}><img src="/client/assets/images/p-dist.png" />Do not Disturb</a></li>
+                                <li><a href="javascript:void0" name="5" onClick={this.updateUserStatus}><img src="/client/assets/images/p-close.png" />Appear Offline</a></li>
                             </ul>
                         </div>
                     </div>
-                        <div className="checkb">
-
-                            <span><i className="fa fa-check" aria-hidden="true"></i></span>
+                        <div id="checkb" className="checkb">
+                            <span><i className="fa fa-check" id="_checkb" aria-hidden="true"></i></span>
                         </div>
 
                     </li>
-                    <li style={{ display: 'none' }}>
+                    <li>
                         <div className="dropdown-share"><a href="javascript:void0"><img src="/client/assets/images/user-share.png" className="img-responsive" /></a>
                             <div className="dropdown-share-content shr">
-                                <b><a href="javascript:void0">Share Profile Via Email</a></b>
-                                <p>Create new email containing link to your profile</p>
 
-                                <b><a href="javascript:void0">Share Profile via Text or iMessage</a></b>
-                                <p>Create new text/iMessage containing profile link </p>
-
-                                <b><a href="javascript:void0">Copy Profile Link</a></b>
+                                <b><a href="javascript:void0" onClick={this.copyProfile}>Copy Profile Link</a></b>
                                 <p>Copy your profile link to the Copy/Paste buffer </p>
+                                <div className="input-area sp">
+                                    <input type="text" id="windowLocation" value={this.state.userLink} />
+                                </div>
                             </div>
                         </div>
                     </li>
@@ -221,6 +276,7 @@ class AudioList extends Component {
                         </div>
                     </div>*/}
                     {this.props.userId === _userId ? (<div className="dropdown-share del-share"><a href="#"><img src="/client/assets/images/del.png" className="img-responsive" /></a>
+                        
                         <div className="dropdown-share-content sharee">
                             <div className="cancel-bx">
                                 <b className="d-block text-center bold">Do you want to delete the song?</b>
@@ -232,11 +288,9 @@ class AudioList extends Component {
                             </div>
                         </div>
                     </div>) : ('')}
-
-                </div>
-                <div className="clearfix"></div>
+                </div>                
+                <br/><br/>
                 <iframe width="100%" height="100%" scrolling="no" frameborder="no" allow="autoplay" src={this.state.linkUrl}></iframe>
-                <div className="clearfix"></div>
             </li>
 
 
@@ -342,7 +396,7 @@ class Audio extends Component {
                     userId: userId
                 }).then((data) => {
                     if (data.error) {
-                        alert(data.error)
+                        swal(data.error)
                     } else {
                         let countLink = data.link.length;
                         let links = data.link;
@@ -358,7 +412,7 @@ class Audio extends Component {
                                 }
                             });
                         } else if (countLink == 0) {
-                            alert('Unknown error occured');
+                            swal('Unknown error occured');
                         }
                     }
                 })
@@ -627,7 +681,7 @@ class Video extends Component {
                     userId: userId
                 }).then((data) => {
                     if (data.error) {
-                        alert(data.error)
+                        swal(data.error)
                     } else {
                         let countLink = data.link.length;
                         let links = data.link;
@@ -645,7 +699,7 @@ class Video extends Component {
                                 }
                             });
                         } else if (countLink == 0) {
-                            alert('Unknown error occured');
+                            swal('Unknown error occured');
                         }
                     }
                 })
@@ -761,7 +815,7 @@ class Timeline extends Component {
             userId: userId
         }).then((data) => {
             if (data.error) {
-                alert(data.error)
+                swal(data.error)
             } else {
                 let countLink = data.link.length;
                 let links = data.link;
@@ -1028,7 +1082,7 @@ class Mypage extends Component {
             userId: userId
         }).then((data) => {
             if (data.error) {
-                alert(data.error)
+                swal(data.error)
             } else {
                 this.setState({ 'fullName': data.fullName, 'displayName': data.displayName, dataEdit: { ...data, loading: false, auth: check } });
             }

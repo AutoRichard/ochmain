@@ -65,8 +65,8 @@ class LoginModal extends React.Component {
 
     render() {
         const loadingStyle = {
-            width: '40%',
-            height: '40%'
+            width: '20%',
+            height: '20%'
         }
         return (
             <div className="modal" id="signin">
@@ -98,8 +98,7 @@ class LoginModal extends React.Component {
                                         <div className="control_indicator"></div>
                                     </label>
                                 </div>
-                                {this.state.loading == true ? (<div><input type="submit" value="SIGN IN"
-                                    className="spc" /><img style={loadingStyle} src="/client/assets/images/loading4.gif" /></div>) : (<input type="submit" onClick={this.signIn} value="SIGN IN" />)}
+                                {this.state.loading == true ? (<a className="white-btn red">SIGN IN<img style={loadingStyle} src="/client/assets/images/loading4.gif" /></a>) : (<a className="white-btn red" onClick={this.signIn}>SIGN IN</a>)}
                                 <h5>Not a member yet? <a href="#" data-toggle="modal" onClick={this.closeLogin} data-target="#applicaion-form">APPLY
 								NOW</a></h5>
                             </div>

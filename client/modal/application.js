@@ -114,8 +114,8 @@ class ApplicationForm extends React.Component {
 
     render() {
         const loadingStyle = {
-            width: '40%',
-            height: '40%'
+            width: '20%',
+            height: '20%'
         }
         return (
             <div className="modal" id="applicaion-form">
@@ -484,9 +484,8 @@ class ApplicationForm extends React.Component {
                                 </div>
 
 
-                                <a id="thankYou" href="#" data-toggle="modal" data-target="#thankyou"></a>{this.state.loading == true ? (<div><input type="submit" value="APPLY NOW"
-                                    className="spc" /><img style={loadingStyle} src="/client/assets/images/loading4.gif" /></div>) : (<input type="submit" onClick={this.register} value="APPLY NOW"
-                                    className="spc" />)}
+                                <a id="thankYou" href="#" data-toggle="modal" data-target="#thankyou"></a>{this.state.loading == true ? (<a className="white-btn red" href="javascript:void(0)">APPLY NOW<img style={loadingStyle} src="/client/assets/images/loading4.gif" /></a>) : (<a className="white-btn red" href="javascript:void(0)" onClick={this.register}
+                                    className="spc">APPLY NOW</a>)}
                                 <div className="control-group two">
                                     <label className="control control-checkbox">
                                         I agree to the <a href="#">Terms of Service</a> & <a href="#">Privacy Policy</a>

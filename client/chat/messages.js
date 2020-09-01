@@ -1,5 +1,6 @@
 import React from 'react';
 import auth from './../auth/auth-helper';
+import swal from 'sweetalert'
 
 import openSocket from 'socket.io-client'
 
@@ -109,7 +110,7 @@ class ContactList extends React.Component {
                                 <div className="img-area clearfix" onClick={this.viewMessageArea.bind(this, el)}>
                                     <div className="img-c">
                                         <img src={'https://ochbackend.herokuapp.com/api/usersPhoto/' + user._id} className="img-responsive circled" />
-                                        <span className="msg"></span>
+                                        <span className={"msg"+user.userStatus}></span>
                                     </div>
 
                                     <div className="cont w-70">
@@ -133,7 +134,7 @@ class ContactList extends React.Component {
                                 <div className="img-area clearfix" onClick={this.viewMessageArea.bind(this, el)}>
                                     <div className="img-c">
                                         <img src={'https://ochbackend.herokuapp.com/api/usersPhoto/' + user._id} className="img-responsive circled" />
-                                        <span className="msg"></span>
+                                        <span className={"msg"+user.userStatus}></span>
                                     </div>
 
                                     <div className="cont w-70">

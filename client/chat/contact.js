@@ -1,6 +1,7 @@
 import React from 'react';
 import { list } from './../api/api-user';
-import auth from './../auth/auth-helper'; 
+import auth from './../auth/auth-helper';
+import swal from 'sweetalert';
 
 
 class ContactList extends React.Component {
@@ -29,7 +30,7 @@ class ContactList extends React.Component {
 
         list().then((data) => {
             if (data.error) {
-                alert(data.error)
+                swal(data.error)
             } else {
                 this.setState({
                     contact: data
@@ -66,7 +67,7 @@ class ContactList extends React.Component {
                             (<div className="img-area clearfix">
                                 <div className="img-c">
                                     <img src={'https://ochbackend.herokuapp.com/api/usersPhoto/' + el._id} className="img-responsive circled" />
-                                    <span className="status"></span>
+                                    <span className={"msg"+el.userStatus}></span>
                                 </div>
                                 <div className="cont">
                                     <b>{el.displayName}</b>

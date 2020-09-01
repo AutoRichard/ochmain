@@ -963,10 +963,13 @@ class Profile extends Component {
                                 Notifications</a>
                             </div>
 
+                            {this.state.check === true ?
+                            (<Messages
+                                _viewMessageArea={this.parentViewMessageArea}
+                                /> ) : ''}
 
-                            <Messages
-                            _viewMessageArea={this.parentViewMessageArea}
-                            />    
+
+                               
                             
                         </div>
     
@@ -985,7 +988,8 @@ class Contact extends Component {
         this.state = {
             receiver: '',
             check: false,
-            name: ''
+            name: '',
+            userStatus: ''
         }
     }
 
@@ -999,7 +1003,7 @@ class Contact extends Component {
 
     componentDidUpdate(prevProps) {
         if (this.props.receiver !== prevProps.receiver) {
-            this.setState({receiver: this.props.receiver, name: this.props.name})
+            this.setState({receiver: this.props.receiver, name: this.props.name, userStatus: this.props.userStatus})
         }
     }
 
@@ -1125,6 +1129,7 @@ class Contact extends Component {
                         {this.state.check === true ? <Chat
                         receiver={this.state.receiver}
                         name={this.state.name}
+                        userStatus={this.state.userStatus}
                         /> : ''}
                     </div>
                 </div>
@@ -1224,7 +1229,8 @@ class Home extends React.Component {
             receiver: '',
             sender: '',
             name: '',
-            open: false
+            open: false,
+            userStatus: ''
         }
     }
 
@@ -1257,7 +1263,7 @@ class Home extends React.Component {
             user = data.recipients[0]   
         }
 
-        this.setState({receiver: user._id})
+        this.setState({receiver: user._id, userStatus: user.userStatus})
 
 
         if(user.displayName == ''){
@@ -1274,7 +1280,7 @@ class Home extends React.Component {
     }
 
     grandOpenChat = (data) => {
-        this.setState({receiver: data._id})
+        this.setState({receiver: data._id, userStatus: data.userStatus})
         let _name
 
         if(data.displayName == ''){
@@ -1282,6 +1288,7 @@ class Home extends React.Component {
         }else{
             _name =  data.displayName
         }
+        
 
         this.setState({name: _name})
 
@@ -1343,6 +1350,7 @@ class Home extends React.Component {
                 <Contact
                 receiver={this.state.receiver}
                 name={this.state.name}
+                userStatus={this.state.userStatus}
                 />
 
                 <Modal />

@@ -2,6 +2,7 @@ import React from 'react';
 import auth from './../auth/auth-helper';
 import { read, update, password } from './../api/api-user';
 import { createLink, checkLink, updateLinkStatus } from './../api/api-link';
+import swal from 'sweetalert'
 
 
 
@@ -136,7 +137,7 @@ class AccountInfo extends React.Component {
             userId: userId
         }).then((data) => {
             if (data.error) {
-                alert(data.error)
+                swal(data.error)
             } else {
                 let countLink = data.link.length;
                 let links = data.link;
@@ -182,7 +183,7 @@ class AccountInfo extends React.Component {
             userId: userId
         }).then((data) => {
             if (data.error) {
-                alert(data.error)
+                swal(data.error)
             } else {
                 let countLink = data.link.length;
                 let links = data.link;
@@ -228,8 +229,8 @@ class AccountInfo extends React.Component {
 
     render() {
         const loadingStyle = {
-            width: '30%',
-            height: '30%'
+            width: '20%',
+            height: '20%'
         }
         return (
             <div>
@@ -359,7 +360,7 @@ class AccountInfo extends React.Component {
                 <br />
                 <div className="text-center mt-a">
                     <a href="#" className="white-btn" onClick={this.closeUpdate}>CANCEL</a>
-                    <a className="white-btn red" onClick={this.submitData}>SAVE CHANGES {this.state.loading === true ? (<img style={loadingStyle} src="/client/assets/images/loading4.gif" />) : ('')}</a>
+                    <a className="white-btn red" href="javascript:void(0)" onClick={this.submitData}>SAVE CHANGES {this.state.loading === true ? (<img style={loadingStyle} src="/client/assets/images/loading4.gif" />) : ('')}</a>
                 </div>
             </div >
         );
@@ -1013,8 +1014,8 @@ class Password extends React.Component {
 
     render() {
         const loadingStyle = {
-            width: '30%',
-            height: '30%'
+            width: '20%',
+            height: '20%'
         }
         return (
             <div>
@@ -1036,11 +1037,8 @@ class Password extends React.Component {
                         <input type="password" name="confirmPassword" onChange={this.onChange} value={this.state.confirmPassword} />
                         <span className="text-left" id="validationError">{this.state.confirmPasswordValidation}</span>
                     </div>
-
-                    <span>{this.state.status}</span>
-                    {this.state.loading === true ? (<img style={loadingStyle} src="/client/assets/images/loading4.gif" />) : (<input type="submit" onClick={this.submitPassword} value="SAVE CHANGES" />)}
-
-
+                    {this.state.loading === true ? (<a className="white-btn red" href="javascript:void(0)">SAVE CHANGES<img style={loadingStyle} src="/client/assets/images/loading4.gif" /></a>)  : (<a className="white-btn red" href="javascript:void(0)" onClick={this.submitPassword}>SAVE CHANGES</a>)}
+                    <br/><span>{this.state.status}</span>
                 </div>
             </div>
 
@@ -1076,7 +1074,7 @@ class Account extends React.Component {
                 userId: userId
             }, { t: token }).then((data) => {
                 if (data.error) {
-                    alert(data.error)
+                    swal(data.error)
                 } else {
                     this.setState({ firstName: data.firstName || '', displayName: data.displayName || '', dataEdit: { ...data, loading: false } });
                 }
@@ -1099,7 +1097,7 @@ class Account extends React.Component {
             t: token
         }, user).then((data) => {
             if (data.error) {
-                alert(data.error);
+                swal(data.error);
             } else {
                 this.setState({ firstName: data.firstName, displayName: data.displayName, dataEdit: { ...data, loading: false } });
 
