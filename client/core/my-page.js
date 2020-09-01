@@ -753,7 +753,7 @@ class Video extends Component {
                                     <input type="text" name="linkUrl" onChange={this.onChangeLink} value={this.state.linkUrl} placeholder="Enter/Paste YouTube Link..." />
 
                                     <span id="validationError">{this.state.linkUrlValidation}</span>
-                                    <a onClick={this.onSubmitVideo} className="save-btn btm">ADD VIDEO</a>
+                                    <a href="javascript:void(0)" onClick={this.onSubmitVideo} className="save-btn btm">ADD VIDEO</a>
                                 </div>
                             </div>
                         ) : ('')}

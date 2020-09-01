@@ -1,6 +1,7 @@
 import React from 'react';
 import { signin } from './../auth/api-auth';
 import auth from './../auth/auth-helper';
+import swal from 'sweetalert';
 
 
 
@@ -46,7 +47,7 @@ class LoginModal extends React.Component {
                 if (data.error) {
                     //this.setState({ error: data.error })
                     this.setState({ loading: false });
-                    alert(data.error)
+                    swal(data.error)
                 } else {
                     auth.authenticate(data, () => {
                         window.location = '/'
@@ -65,8 +66,8 @@ class LoginModal extends React.Component {
 
     render() {
         const loadingStyle = {
-            width: '20%',
-            height: '20%'
+            width: '26%',
+            height: '26%'
         }
         return (
             <div className="modal" id="signin">
@@ -98,7 +99,7 @@ class LoginModal extends React.Component {
                                         <div className="control_indicator"></div>
                                     </label>
                                 </div>
-                                {this.state.loading == true ? (<a className="white-btn red">SIGN IN<img style={loadingStyle} src="/client/assets/images/loading4.gif" /></a>) : (<a className="white-btn red" onClick={this.signIn}>SIGN IN</a>)}
+                                {this.state.loading == true ? (<a href="javascript:void(0)" className="white-btn red">SIGN IN<img style={loadingStyle} src="/client/assets/images/loading4.gif" /></a>) : (<a className="white-btn red" onClick={this.signIn}>SIGN IN</a>)}
                                 <h5>Not a member yet? <a href="#" data-toggle="modal" onClick={this.closeLogin} data-target="#applicaion-form">APPLY
 								NOW</a></h5>
                             </div>
