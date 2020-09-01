@@ -502,7 +502,8 @@ class VideoList extends Component {
 
     displayVideo = () => {
         document.getElementById(this.props.thumbnail).style.display = 'inline'
-        document.getElementById('#' + this.props.thumbnail).style.display = 'none'
+        document.getElementById('#' + this.props.thumbnail).style.display = 'none'        
+        document.getElementById('12' + this.props.thumbnail).style.display = 'inline'
     }
 
     render() {
@@ -559,6 +560,8 @@ class VideoList extends Component {
                     <img src={imageView} className="img-responsive" style={thumbnailStyle} />
                     <a href="javascript:void0" onClick={this.displayVideo}>	<img src="/client/assets/images/play-btn.png" className="img-responsive ply" /></a>
                 </div>
+
+                <br id={'12'+this.props.thumbnail} style={{display: 'none'}} />
                 <iframe id={this.props.thumbnail} style={{ display: 'none' }} width="100%" height="100%"
                     src={videoView}>
                 </iframe>
