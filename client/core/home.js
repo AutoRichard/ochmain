@@ -497,7 +497,8 @@ class Profile extends Component {
         super(props)
 
         this.state = {
-            check: false
+            check: false,
+            receiver: ''
         }
     }
 
@@ -513,6 +514,12 @@ class Profile extends Component {
 
     parentViewMessageArea = (data) => {
         this.props.__parentOpenChat(data)   
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.receiver !== prevProps.receiver) {
+            this.setState({receiver: this.props.receiver})
+        }
     }
     
 
@@ -583,6 +590,7 @@ class Profile extends Component {
     
                             {this.state.check === true ?
                             (<ContactList
+                            receiver={this.state.receiver}
                             _openChat={this.parentOpenChat}                            
                             />) : ''}
                         </div>
@@ -966,6 +974,7 @@ class Profile extends Component {
                             {this.state.check === true ?
                             (<Messages
                                 _viewMessageArea={this.parentViewMessageArea}
+                                receiver={this.state.receiver}
                                 /> ) : ''}
 
 
@@ -1350,6 +1359,7 @@ class Home extends React.Component {
                 <Profile 
                 _parentOpenChat={this.grandOpenChat}
                 __parentOpenChat={this._grandOpenChat}
+                receiver={this.state.receiver}
                 />
 
                 <Contact

@@ -60,27 +60,27 @@ class Profile extends Component {
 
     updateStatus = (data) => {
 
-        this.setState({userStatus: data.userStatus})
+        this.setState({ userStatus: data.userStatus })
         if (data.userStatus == 1) {
             document.getElementById('checkb').style.backgroundColor = '#68bd53'
             document.getElementById("_checkb").className = "fa fa-check";
-            this.setState({_userStatus: 'Available'})
+            this.setState({ _userStatus: 'Available' })
         } else if (data.userStatus == 2) {
             document.getElementById('checkb').style.backgroundColor = '#ffc107'
-            document.getElementById("_checkb").className = "fa fa-clock-o";            
-            this.setState({_userStatus: 'Away'})
+            document.getElementById("_checkb").className = "fa fa-clock-o";
+            this.setState({ _userStatus: 'Away' })
         } else if (data.userStatus == 3) {
             document.getElementById('checkb').style.backgroundColor = '#dc3545'
             document.getElementById("_checkb").className = "";
-            this.setState({_userStatus: 'Busy'})
+            this.setState({ _userStatus: 'Busy' })
         } else if (data.userStatus == 4) {
             document.getElementById('checkb').style.backgroundColor = '#dc3545'
             document.getElementById("_checkb").className = "fa fa-minus";
-            this.setState({_userStatus: 'Do not disturb'})
+            this.setState({ _userStatus: 'Do not disturb' })
         } else if (data.userStatus == 5) {
             document.getElementById('checkb').style.backgroundColor = '#A9A9A9'
             document.getElementById("_checkb").className = "fa fa-times";
-            this.setState({_userStatus: 'Appear offline'})
+            this.setState({ _userStatus: 'Appear offline' })
         }
     }
 
@@ -121,7 +121,8 @@ class Profile extends Component {
 
                 <div className="small-12 medium-2 large-2 columns">
                     <div className="circle">
-                        <img className="profile-pic" style={{ maxWidth: 'unset' }} src={this.state.image} />
+                        <img className="profile-pic" style={{ maxWidth: 'unset', width: '100%' }} src={this.state.image} />
+                        <img class="profile-ring" src="/client/assets/images/profile-ring.png"></img>
 
                         <i className="fa fa-user fa-5x"></i>
                     </div>
@@ -146,13 +147,13 @@ class Profile extends Component {
                         </div>
                     </li>
                     <li> <div className="dropdown-share"><a href="javascript:void0">{this.state._userStatus} <i className="fa fa-angle-down" aria-hidden="true"></i></a>
-                        <div className="dropdown-share-content ava" style={{display: ifUser}}>
+                        <div className="dropdown-share-content ava" style={{ display: ifUser }}>
                             <ul className="status-list">
-                                <li> <a href="javascript:void0" name="1" onClick={this.updateUserStatus}><img src="/client/assets/images/profile-available.png" />Available {this.state.userStatus == 1 ? (<i className="fa fa-check" style={{color: '#68bd53'}} aria-hidden="true"></i>) : ('')}</a></li>
-                                <li>  <a href="javascript:void0" name="2" onClick={this.updateUserStatus}><img src="/client/assets/images/p-away.png" />Away{this.state.userStatus == 2 ? (<i className="fa fa-check" style={{color: '#ffc107'}} aria-hidden="true"></i>) : ('')}</a></li>
-                                <li> <a href="javascript:void0" name="3" onClick={this.updateUserStatus}><img src="/client/assets/images/p-busy.png" />Busy{this.state.userStatus == 3 ? (<i className="fa fa-check" style={{color: '#dc3545'}} aria-hidden="true"></i>) : ('')}</a></li>
-                                <li> <a href="javascript:void0" name="4" onClick={this.updateUserStatus}><img src="/client/assets/images/p-dist.png" />Do not Disturb{this.state.userStatus == 4 ? (<i className="fa fa-check" style={{color: '#dc3545'}} aria-hidden="true"></i>) : ('')}</a></li>
-                                <li><a href="javascript:void0" name="5" onClick={this.updateUserStatus}><img src="/client/assets/images/p-close.png" />Appear Offline{this.state.userStatus == 5 ? (<i className="fa fa-check" style={{color: '#A9A9A9'}} aria-hidden="true"></i>) : ('')}</a></li>
+                                <li> <a href="javascript:void0" name="1" onClick={this.updateUserStatus}><img src="/client/assets/images/profile-available.png" />Available {this.state.userStatus == 1 ? (<i className="fa fa-check" style={{ color: '#68bd53' }} aria-hidden="true"></i>) : ('')}</a></li>
+                                <li>  <a href="javascript:void0" name="2" onClick={this.updateUserStatus}><img src="/client/assets/images/p-away.png" />Away{this.state.userStatus == 2 ? (<i className="fa fa-check" style={{ color: '#ffc107' }} aria-hidden="true"></i>) : ('')}</a></li>
+                                <li> <a href="javascript:void0" name="3" onClick={this.updateUserStatus}><img src="/client/assets/images/p-busy.png" />Busy{this.state.userStatus == 3 ? (<i className="fa fa-check" style={{ color: '#dc3545' }} aria-hidden="true"></i>) : ('')}</a></li>
+                                <li> <a href="javascript:void0" name="4" onClick={this.updateUserStatus}><img src="/client/assets/images/p-dist.png" />Do not Disturb{this.state.userStatus == 4 ? (<i className="fa fa-check" style={{ color: '#dc3545' }} aria-hidden="true"></i>) : ('')}</a></li>
+                                <li><a href="javascript:void0" name="5" onClick={this.updateUserStatus}><img src="/client/assets/images/p-close.png" />Appear Offline{this.state.userStatus == 5 ? (<i className="fa fa-check" style={{ color: '#A9A9A9' }} aria-hidden="true"></i>) : ('')}</a></li>
                             </ul>
                         </div>
                     </div>
@@ -286,7 +287,7 @@ class AudioList extends Component {
                         </div>
                     </div>*/}
                     {this.props.userId === _userId ? (<div className="dropdown-share del-share"><a href="#"><img src="/client/assets/images/del.png" className="img-responsive" /></a>
-                        
+
                         <div className="dropdown-share-content sharee">
                             <div className="cancel-bx">
                                 <b className="d-block text-center bold">Do you want to delete the song?</b>
@@ -298,8 +299,8 @@ class AudioList extends Component {
                             </div>
                         </div>
                     </div>) : ('')}
-                </div>                
-                <br/><br/>
+                </div>
+                <br /><br />
                 <iframe width="100%" height="100%" scrolling="no" frameborder="no" allow="autoplay" src={this.state.linkUrl}></iframe>
             </li>
 
@@ -512,7 +513,7 @@ class VideoList extends Component {
 
     displayVideo = () => {
         document.getElementById(this.props.thumbnail).style.display = 'inline'
-        document.getElementById('#' + this.props.thumbnail).style.display = 'none'        
+        document.getElementById('#' + this.props.thumbnail).style.display = 'none'
         document.getElementById('12' + this.props.thumbnail).style.display = 'inline'
     }
 
@@ -526,8 +527,7 @@ class VideoList extends Component {
         let videoView = 'https://www.youtube.com/embed/' + this.props.link
 
         const thumbnailStyle = {
-            width: '100%',
-            height: '200px'
+            width: '100% !important',
         }
 
         return (
@@ -567,11 +567,13 @@ class VideoList extends Component {
                 </div>
                 <div className="clearfix"></div>
                 <div className="video-c" id={'#' + this.props.thumbnail}>
-                    <img src={imageView} className="img-responsive" style={thumbnailStyle} />
+                    {/*<img src={imageView} className="img-responsive" style={thumbnailStyle} />*/}
+                    <img src="/client/assets/images/video-thumbz.png" className="img-responsive" style={thumbnailStyle} />
+                    <img src="/client/assets/images/video-frame.png" class="img-responsive v-frame" style={{ height: '150px !important' }}></img>
                     <a href="javascript:void0" onClick={this.displayVideo}>	<img src="/client/assets/images/play-btn.png" className="img-responsive ply" /></a>
                 </div>
 
-                <br id={'12'+this.props.thumbnail} style={{display: 'none'}} />
+                <br id={'12' + this.props.thumbnail} style={{ display: 'none' }} />
                 <iframe id={this.props.thumbnail} style={{ display: 'none' }} width="100%" height="100%"
                     src={videoView}>
                 </iframe>

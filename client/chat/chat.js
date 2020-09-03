@@ -19,7 +19,9 @@ class Chat extends React.Component {
             msg: '',
             scroll: false,
             link: 'https://ochbackend.herokuapp.com/',
-            userStatus: ''
+            userStatus: '',
+            intervalId: ''
+            
         }
 
         this.socket = openSocket(this.state.link)
@@ -33,9 +35,15 @@ class Chat extends React.Component {
             this.setState({ sender: userId })
         }
         this.setState({ receiver: this.props.receiver })
-        setInterval(this.viewMessage, 250)
+        
+        let intervalId = setInterval(this.viewMessage, 1100)
+        this.setState({ intervalId: intervalId })
 
         this.setState({ scroll: true })
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.state.intervalId)
     }
 
     componentDidUpdate(prevProps) {
@@ -64,6 +72,7 @@ class Chat extends React.Component {
                 if (data.length !== this.state.message.length) {
                     this.setState({ message: data })
                     this.scrollTobottom()
+
                 }
             } else if (data[0].to == this.state.sender && data[0].from == this.state.receiver) {
                 if (data.length !== this.state.message.length) {
@@ -313,4 +322,4 @@ class Chat extends React.Component {
         );
     }
 }
-export default Chat;
+export default Chat; 
