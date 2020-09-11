@@ -360,7 +360,7 @@ class AccountInfo extends React.Component {
                 <br />
                 <div className="text-center mt-a">
                     <a href="#" className="white-btn" onClick={this.closeUpdate}>CANCEL</a>
-                    <a className="white-btn red" href="javascript:void(0)" onClick={this.submitData}>SAVE CHANGES{this.state.loading === true ? (<img style={loadingStyle} src="/client/assets/images/loading4.gif" />) : ('')}</a>
+                    <a className="white-btn red" href="javascript:void(0)" onClick={this.submitData}>SAVE CHANGES {this.state.loading === true ? (<img style={loadingStyle} src="/client/assets/images/loading4.gif" />) : ('')}</a>
                 </div>
             </div >
         );
@@ -1128,8 +1128,8 @@ class Account extends React.Component {
 
                                         <div className="account-info clearfix">
                                             <div className="account-cov">
-                                                <div className="account-img float-lg-left">
-                                                    <img className="img-set" style={{ borderRadius: '50%' }} src={this.state.userPhoto} />
+                                                <div className="account-img float-lg-left __circular">                                                    
+                                                    <img  src={this.state.userPhoto} />
                                                 </div>
                                                 <div className="account-data float-lg-left">
                                                     <h3 style={{ color: 'white' }}>{this.state.displayName !== '' ? this.state.displayName : this.state.firstName}</h3>

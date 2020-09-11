@@ -121,7 +121,7 @@ class Profile extends Component {
 
                 <div className="small-12 medium-2 large-2 columns">
                     <div className="circle">
-                        <img className="profile-pic" style={{ maxWidth: 'unset', width: '100%' }} src={this.state.image} />
+                        <img className="profile-pic" style={{ width: '100%' }} src={this.state.image} />
                         <img class="profile-ring" src="/client/assets/images/profile-ring.png"></img>
 
                         <i className="fa fa-user fa-5x"></i>
@@ -132,8 +132,8 @@ class Profile extends Component {
                     </div>
                 </div>
                 <div className="heading-areaz">
-                    <h2>{this.state.displayName}</h2>
-                    <h4>{this.state.fullName}</h4>
+                    <h1>{this.state.displayName}</h1>
+                    <h2>{this.state.fullName}</h2>
                 </div>
 
                 <ul className="profile-setting clearfix">
@@ -908,7 +908,8 @@ class Timeline extends Component {
 
                                 <div className="left-img">
 
-                                    <img src={this.state.imageLink} width="5%" height="5%" className="img-responsive circled no-b" />
+
+                                    <img src={this.state.imageLink} className="img-responsive circled no-b __circular2" />
 
                                 </div>
                                 <div className="right-content">

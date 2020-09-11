@@ -77,7 +77,7 @@ class ContactList extends React.Component {
             const userId = jwt.user._id;
             this.setState({ sender: userId })
 
-            let intervalId = setInterval(this.readMessage, 1000)
+            let intervalId = setInterval(this.readMessage, 2500)
             this.setState({ intervalId: intervalId })
         }
         
@@ -143,10 +143,10 @@ class ContactList extends React.Component {
             <div className="white-box">
                 <h2 className="in-h">MESSAGES</h2>
                 <audio id="myAudio1">
-                    <source src="/client/assets/audio/ring3.mp3" type="audio/mpeg" />
+                    <source src="/client/assets/audio/ring4.mp3" type="audio/mpeg" />
                 </audio>
                 <audio id="myAudio2">
-                    <source src="/client/assets/audio/ring2.mp3" type="audio/mpeg" />
+                    <source src="/client/assets/audio/ring4.mp3" type="audio/mpeg" />
                 </audio>
                 <div className="line3 text-left"></div>
                 <div className="likes-section new" style={contactArea}>
@@ -182,7 +182,7 @@ class ContactList extends React.Component {
                             return (
                                 <div className="img-area clearfix" onClick={this.viewMessageArea.bind(this, el)}>
                                     <div className="img-c">
-                                        <img src={'https://ochbackend.herokuapp.com/api/usersPhoto/' + user._id} className="img-responsive circled" />
+                                        <img src={'https://ochbackend.herokuapp.com/api/usersPhoto/' + user._id} className="img-responsive circled __circular3" />
                                         <span className={"msg" + user.userStatus}></span>
                                     </div>
 

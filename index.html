@@ -199,6 +199,83 @@
             top: 32px;
             right: 34px;
         }
+
+        .__circular {
+            display: inline-block;
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+            margin: 35px 6px 30px -10px !important;
+        }
+
+        .__circular img {
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            -moz-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            margin-top: 0px !important;
+        }
+
+        .__circular2 {
+                display: inline-block;
+                width: 65px !important;
+                height: 65px;
+                border-radius: 50% !important;
+                position: relative;
+                overflow: hidden;
+                margin: -10px 5px 0px -14px !important;
+            }
+
+            .__circular3 {
+                display: inline-block;
+                width: 50px !important;
+                height: 50px;
+                border-radius: 50% !important;
+                position: relative;
+                overflow: hidden;
+                margin: 0px 0px !important;
+            }
+
+            .__circular4 {
+                display: inline-block;
+                width: 50px !important;
+                height: 50px;
+                border-radius: 50% !important;
+                position: relative;
+                overflow: hidden;
+                margin: -5px -10px !important;
+            }
+
+        @media (min-width: 320px) and (max-width: 600px) {
+            .__circular {
+                display: inline-block;
+                width: 150px;
+                height: 150px;
+                border-radius: 50%;
+                position: relative;
+                overflow: hidden;
+                margin: -10px 5px !important;
+            }
+
+            .__circular2 {
+                display: inline-block;
+                width: 65px !important;
+                height: 65px;
+                border-radius: 50% !important;
+                position: relative;
+                overflow: hidden;
+                margin: -10px 5px !important;
+            }
+        }
     </style>
     <script src="/node_modules/react/umd/react.production.min.js"></script>
     <script src="/node_modules/react-dom/umd/react-dom.production.min.js"></script>
