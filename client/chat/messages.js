@@ -71,7 +71,7 @@ class ContactList extends React.Component {
             const notifyMessage = (data) => {
                 if (data.sender === this.state.sender) {
                     if (data.conversation4 > 0) {
-                        this.play1()
+                        document.getElementById('myAudio1').click()
                     }
                 }
             }
@@ -177,7 +177,7 @@ class ContactList extends React.Component {
         return (
             <div className="white-box">
                 <h2 className="in-h">MESSAGES</h2>
-                <audio id="myAudio1">
+                <audio onClick={this.play1} id="myAudio1">
                     <source src="/client/assets/audio/ring4.mp3" type="audio/mpeg" />
                 </audio>
                 <audio id="myAudio2">
