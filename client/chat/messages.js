@@ -13,8 +13,8 @@ class ContactList extends React.Component {
         this.state = {
             sender: '',
             mesageList: [],
-            //link: 'https://ochbackend.herokuapp.com/',
-            link: 'http://localhost:8080',
+            link: 'https://ochbackend.herokuapp.com/',
+            //link: 'http://localhost:8080',
             intervalId: '',
             check: 0,
             receiver: '',
@@ -68,6 +68,8 @@ class ContactList extends React.Component {
                 if (data > 0) {
                     this.play1()
                 }
+
+                console.log(data)
             }
 
         }
