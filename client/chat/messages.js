@@ -120,6 +120,7 @@ class ContactList extends React.Component {
 
     play1 = () => {
         let x = document.getElementById("myAudio1");
+        x.pause();
         x.play();
         setTimeout(function () { x.pause(); }, 2500);
     }
