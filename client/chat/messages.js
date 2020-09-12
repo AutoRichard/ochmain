@@ -120,8 +120,52 @@ class ContactList extends React.Component {
 
     play1 = () => {
         let x = document.getElementById("myAudio1");
-        x.play();
-        setTimeout(function () { x.pause(); }, 2500);
+        //x.play();
+        //setTimeout(function () { x.pause(); }, 2500);
+        this.play2()
+    }
+
+
+    play2 = () => {
+
+        var _snd = false;
+
+        function playAudio(src) {
+            if (!_snd)
+                _snd = new Audio();
+            else
+                $(_snd).empty();
+
+            for (var i = 0; i < src.length; i++) {
+                var source = document.createElement('source');
+                source.type = src[i].type;
+                source.src = src[i].src;
+                _snd.appendChild(source);
+            }
+
+            _snd.load(); // Needed on safari / idevice
+            _snd.play();
+        };
+
+        let src = [
+            { src: "/client/assets/audio/ring4.mp3", type: "audio/mpeg" }
+        ];
+
+        playAudio(src)
+
+        /*var playAudio = function () {
+            var src = [
+                { src: "/client/assets/audio/ring4.mp3", type: "audio/mpeg" }
+            ];
+            playAudio(src);
+
+        };
+
+        //console.log(_snd)
+
+        return {
+            playAudio: playAudio,
+        };*/
     }
 
 
