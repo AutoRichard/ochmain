@@ -41,7 +41,7 @@ class ContactList extends React.Component {
 
             const viewNewMessage = (data) => {
 
-                
+
                 if (data.sender === this.state.sender) {
 
                     /*if (JSON.stringify(this.state.mesageList) != JSON.stringify(data.conversation)) {
@@ -69,11 +69,11 @@ class ContactList extends React.Component {
             }
 
             const notifyMessage = (data) => {
-                if (data > 0) {
-                    this.play1()
+                if (data.sender === this.state.sender) {
+                    if (data.conversation4 > 0) {
+                        this.play1()
+                    }
                 }
-
-                console.log(data)
             }
 
         }
