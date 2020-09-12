@@ -13,8 +13,8 @@ class ContactList extends React.Component {
         this.state = {
             sender: '',
             mesageList: [],
-            link: 'https://ochbackend.herokuapp.com/',
-            //link: 'http://localhost:8080',
+            //link: 'https://ochbackend.herokuapp.com/',
+            link: 'http://localhost:8080',
             intervalId: '',
             check: 0,
             receiver: '',
@@ -40,9 +40,13 @@ class ContactList extends React.Component {
 
 
             const viewNewMessage = (data) => {
+
+                
                 if (data.sender === this.state.sender) {
 
                     /*if (JSON.stringify(this.state.mesageList) != JSON.stringify(data.conversation)) {
+
+                        //console.log(data)
                         let check = this.state.check + 1;
                         this.setState({ check: check })
                         let _check = check % 2 == 0;

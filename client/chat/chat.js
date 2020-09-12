@@ -137,6 +137,8 @@ class Chat extends React.Component {
                         if (data.error) {
                             console.log(data.error);
                         } else {
+
+                            
                             this.setState({ msg: '' })
                         }
                     });
