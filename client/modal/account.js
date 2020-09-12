@@ -39,7 +39,7 @@ class AccountInfo extends React.Component {
     }
 
     componentDidMount() {
-        this.linkData = new FormData() 
+        this.linkData = new FormData()
         if (auth.isAuthenticated()) {
             this.updateLink()
         }
@@ -1037,8 +1037,8 @@ class Password extends React.Component {
                         <input type="password" name="confirmPassword" onChange={this.onChange} value={this.state.confirmPassword} />
                         <span className="text-left" id="validationError">{this.state.confirmPasswordValidation}</span>
                     </div>
-                    {this.state.loading === true ? (<a className="white-btn red" href="javascript:void(0)">SAVE CHANGES<img style={loadingStyle} src="/client/assets/images/loading4.gif" /></a>)  : (<a className="white-btn red" href="javascript:void(0)" onClick={this.submitPassword}>SAVE CHANGES</a>)}
-                    <br/><span>{this.state.status}</span>
+                    {this.state.loading === true ? (<a className="white-btn red" href="javascript:void(0)">SAVE CHANGES<img style={loadingStyle} src="/client/assets/images/loading4.gif" /></a>) : (<a className="white-btn red" href="javascript:void(0)" onClick={this.submitPassword}>SAVE CHANGES</a>)}
+                    <br /><span>{this.state.status}</span>
                 </div>
             </div>
 
@@ -1128,8 +1128,11 @@ class Account extends React.Component {
 
                                         <div className="account-info clearfix">
                                             <div className="account-cov">
-                                                <div className="account-img float-lg-left __circular">                                                    
-                                                    <img  src={this.state.userPhoto} />
+                                                <div className="account-img float-lg-left">
+                                                    <div className="__circular1">
+                                                      <img class="user-dp" src={this.state.userPhoto} />
+                                                    </div>
+                                                    <img class="profile-ring2" src="/client/assets/images/profile-ring.png" />
                                                 </div>
                                                 <div className="account-data float-lg-left">
                                                     <h3 style={{ color: 'white' }}>{this.state.displayName !== '' ? this.state.displayName : this.state.firstName}</h3>

@@ -137,6 +137,16 @@ h6 {
 .m-tp h1 {
     margin-bottom: 0px;
 }
+.account-img.float-lg-left {
+    margin: 15px 0px;
+    position: relative;
+}
+img.profile-ring2 {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    margin: 0 auto !important;
+}
 img.img-responsive.v-frame {
     position: absolute;
 top: 23px;
@@ -319,7 +329,9 @@ div#booking-list .owl-dots.disabled {
     letter-spacing: -2px;
     margin-bottom: 0px;
 }
-
+img.user-dp {
+    border-radius: 50%;
+}
 img.user-dpz {
     width: 90px !important;
     margin: 20px auto;
@@ -3199,7 +3211,7 @@ label.switch.nw {
 }
 .account-img.float-lg-left img {
     width: 120px;
-    margin-right: 15px;
+
 }
 .text-center.mt-a {
     margin-top: -18px;
@@ -4027,7 +4039,10 @@ h5.creditz {
 }
 	.account-img.float-lg-left img {
     width: 89px;
-    margin-top: 26px;
+  
+}
+.account-img.float-lg-left {
+    margin: 34px 15px 15px 0px !important;
 }
 	.group-b {
     position: relative;
@@ -4036,6 +4051,10 @@ h5.creditz {
     background-repeat: no-repeat;
 background-position: 0px 0px;}}
 @media (min-width: 992px) and (max-width: 1199px) {
+	img.user-dp {
+    border-radius: 50%;
+
+}
 	p.f-small {
     font-size: 9px;
     text-align: center;
@@ -4128,7 +4147,15 @@ top: 19px;}
 }
 	.account-img.float-lg-left img {
     width: 70px;
-    margin-top: 19px;
+
+}
+.account-img.float-lg-left {
+    margin: 46px 15px 15px 0px !important;
+}
+.account-img.float-lg-left img {
+    width: 69px;
+
+    margin-right: 0px;
 }
 	.account-data.float-lg-left {
     padding-top: 0px;
@@ -4257,6 +4284,10 @@ a.book-now-green {
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
+	img.user-dp {
+    border-radius: 50%;
+    margin: 0px !important;
+}
 	.msg-area .left-img {
     padding-left: 0px;
     width: 9%;
@@ -4614,6 +4645,13 @@ margin: 0px 0px;}
 
 
 @media (min-width: 320px) and (max-width: 767px) {
+	.account-img.float-lg-left {
+    margin: 0px !important;
+}
+	img.user-dp {
+    border-radius: 50%;
+    margin: 0px !important;
+}
 	img.profile-ring {
     width: 270px;
     height: 270px;
@@ -5321,6 +5359,12 @@ a.cancel-btn {
 }
 }
 @media (min-width: 320px) and (max-width: 550px) {
+	
+	
+	img.user-dp {
+    border-radius: 50%;
+    margin: 0px !important;
+}
 	.modal-body.bg-black.text-center h2 {
     font-size: 16px;
     color: #fff;
