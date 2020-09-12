@@ -176,7 +176,7 @@ class ContactList extends React.Component {
 
         return (
             <div className="white-box">
-                <h2 className="in-h">MESSAGES</h2>
+                <h2 className="in-h" onClick={this.play1}>MESSAGES</h2>
                 <audio onClick={this.play1} id="myAudio1">
                     <source src="/client/assets/audio/ring4.mp3" type="audio/mpeg" />
                 </audio>
