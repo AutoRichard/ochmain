@@ -13,61 +13,69 @@ class ContactList extends React.Component {
         this.state = {
             sender: '',
             mesageList: [],
-            link: 'https://ochbackend.herokuapp.com/',
+            //link: 'https://ochbackend.herokuapp.com/',
+            link: 'http://localhost:8080',
             intervalId: '',
             check: 0,
-            receiver: ''
+            receiver: '',
+            conversation: {
+                sender: auth.isAuthenticated().user._id || ''
+            }
         }
 
         this.socket = openSocket(this.state.link)
-    }
-
-    readMessage = () => {
 
         if (auth.isAuthenticated()) {
-            let jwt = auth.isAuthenticated();
-            let authId = jwt.user._id;
+            this.socket.emit('show_conversation', this.state.conversation);
 
-            if (authId) {
-                let conversation = {
-                    sender: authId
+
+            this.socket.on('conversations', function (data) {
+                viewNewMessage(data);
+            })
+
+            this.socket.on('conversationNotification', function (data) {
+                notifyMessage(data)
+            })
+
+
+
+            const viewNewMessage = (data) => {
+                if (data.sender === this.state.sender) {
+
+                    /*if (JSON.stringify(this.state.mesageList) != JSON.stringify(data.conversation)) {
+                        let check = this.state.check + 1;
+                        this.setState({ check: check })
+                        let _check = check % 2 == 0;
+
+                        if (_check == true) {
+                            data.conversation.map((el, i) => {
+                                console.log(el.deleivered)
+                                if (el.recieveLast == auth.isAuthenticated().user._id && el.deleivered == false) {
+                                    this.state.receiver == el.sendLast ? this.play2() : this.play1()
+                                }
+                            })
+                            this.setState({ check: 0 })
+                        }
+                    }*/
+                    this.setState({
+                        mesageList: data.conversation
+                    });
+
                 }
-
-                this.socket.emit('show_conversation', conversation);
-
-                this.socket.on('conversations', this.viewNewMessage)
             }
+
+            const notifyMessage = (data) => {
+                if (data > 0) {
+                    this.play1()
+                }
+            }
+
         }
     }
-
 
     componentDidUpdate(prevProps) {
         if (this.props.receiver !== prevProps.receiver) {
             this.setState({ receiver: this.props.receiver })
-        }
-    }
-
-
-    viewNewMessage = data => {
-        if (data.sender === this.state.sender) {
-            if (JSON.stringify(this.state.mesageList) != JSON.stringify(data.conversation)) {
-                let check = this.state.check + 1;
-                this.setState({ check: check })
-                let _check = check % 2 == 0;
-
-                if (_check == true) {
-                    data.conversation.map((el, i) => {
-                        if (el.recieveLast == auth.isAuthenticated().user._id && el.deleivered == false) {
-                            this.state.receiver == el.sendLast ? this.play2() : this.play1()
-                        }
-                    })
-                    this.setState({ check: 0 })
-                }
-            }
-            this.setState({
-                mesageList: data.conversation
-            });
-
         }
     }
 
@@ -76,18 +84,8 @@ class ContactList extends React.Component {
             const jwt = auth.isAuthenticated();
             const userId = jwt.user._id;
             this.setState({ sender: userId })
-
-            let intervalId = setInterval(this.readMessage, 2500)
-            this.setState({ intervalId: intervalId })
         }
-        
     }
-
-
-    componentWillUnmount() {
-        clearInterval(this.state.intervalId)
-    }
-
 
     viewMessageArea = (data) => {
         this.props._viewMessageArea(data)
@@ -117,20 +115,8 @@ class ContactList extends React.Component {
     play1 = () => {
         let x = document.getElementById("myAudio1");
         x.play();
-        setTimeout(function(){ x.pause(); }, 2500);
+        setTimeout(function () { x.pause(); }, 2500);
     }
-
-    play2 = () => {
-        let x = document.getElementById("myAudio2");
-        x.play();
-        setTimeout(function(){ x.pause(); }, 2500);
-    }
-
-    /*openChat = (data, e) => {
-        this.props._openChat(data)
-
-        document.getElementById('chatInput').style.display = '';
-    }*/
 
 
     render() {
