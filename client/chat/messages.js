@@ -90,6 +90,30 @@ class ContactList extends React.Component {
             const jwt = auth.isAuthenticated();
             const userId = jwt.user._id;
             this.setState({ sender: userId })
+            //this.play1()
+
+            let ios = (/iPad|iPhone|iPod/.test(navigator.platform) ||
+                (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) &&
+                !window.MSStream
+
+            if (ios) {
+                swal({
+                    title: "Enable sound notification",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: '#DD6B55',
+                    confirmButtonText: 'Yes, I am sure!',
+                    cancelButtonText: "No, cancel it!"
+                }).then(
+                    function () {
+                        let x = document.getElementById("myAudio1");
+                        x.pause();
+                        x.play();
+                    });
+            }
+
+
+
         }
     }
 
