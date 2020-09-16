@@ -13,19 +13,25 @@ class ContactList extends React.Component {
         this.state = {
             sender: '',
             mesageList: [],
-            link: 'https://ochbackend.herokuapp.com/',
-            //link: 'http://localhost:8080',
+            //link: 'https://ochbackend.herokuapp.com/',
+            link: 'http://localhost:8080',
             intervalId: '',
             check: 0,
             receiver: '',
             conversation: {
                 sender: auth.isAuthenticated().user._id || ''
-            }
+            },
+            socketId: ''
         }
 
         this.socket = openSocket(this.state.link)
 
         if (auth.isAuthenticated()) {
+
+
+            this.socket.on('connect', () => {
+                this.setState({ socketId: this.socket.id });
+            });
             this.socket.emit('show_conversation', this.state.conversation);
 
 
@@ -41,37 +47,44 @@ class ContactList extends React.Component {
 
             const viewNewMessage = (data) => {
 
+                //console.log(data)
 
-                if (data.sender === this.state.sender) {
-
-                    /*if (JSON.stringify(this.state.mesageList) != JSON.stringify(data.conversation)) {
+                if (this.state.sender != undefined && data[this.state.socketId] != undefined) {
+                    if (data[this.state.socketId].sender === this.state.sender) {
 
                         //console.log(data)
-                        let check = this.state.check + 1;
-                        this.setState({ check: check })
-                        let _check = check % 2 == 0;
 
-                        if (_check == true) {
-                            data.conversation.map((el, i) => {
-                                console.log(el.deleivered)
-                                if (el.recieveLast == auth.isAuthenticated().user._id && el.deleivered == false) {
-                                    this.state.receiver == el.sendLast ? this.play2() : this.play1()
-                                }
-                            })
-                            this.setState({ check: 0 })
-                        }
-                    }*/
-                    this.setState({
-                        mesageList: data.conversation
-                    });
+                        /*if (JSON.stringify(this.state.mesageList) != JSON.stringify(data.conversation)) {
+    
+                            //console.log(data)
+                            let check = this.state.check + 1;
+                            this.setState({ check: check })
+                            let _check = check % 2 == 0;
+    
+                            if (_check == true) {
+                                data.conversation.map((el, i) => {
+                                    console.log(el.deleivered)
+                                    if (el.recieveLast == auth.isAuthenticated().user._id && el.deleivered == false) {
+                                        this.state.receiver == el.sendLast ? this.play2() : this.play1()
+                                    }
+                                })
+                                this.setState({ check: 0 })
+                            }
+                        }*/
+                        this.setState({
+                            mesageList: data[this.state.socketId].conversation
+                        });
 
+                    }
                 }
             }
 
             const notifyMessage = (data) => {
-                if (data.sender === this.state.sender) {
-                    if (data.conversation4 > 0) {
-                        document.getElementById('myAudio1').click()
+                if (this.state.sender != undefined && data[this.state.socketId] != undefined) {
+                    if (data[this.state.socketId].sender === this.state.sender) {
+                        if (data[this.state.socketId].conversation4 > 0) {
+                            document.getElementById('myAudio1').click()
+                        }
                     }
                 }
             }
@@ -146,7 +159,7 @@ class ContactList extends React.Component {
         let x = document.getElementById("myAudio1");
         x.pause();
         x.play();
-        //setTimeout(function () { x.pause(); }, 2500);
+        setTimeout(function () { x.pause(); }, 2500);
     }
 
 

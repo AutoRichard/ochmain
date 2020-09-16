@@ -18,13 +18,19 @@ class Chat extends React.Component {
             name: '',
             msg: '',
             scroll: false,
-            link: 'https://ochbackend.herokuapp.com/',
+            //link: 'https://ochbackend.herokuapp.com/',
+            link: 'http://localhost:8080',
             userStatus: '',
-            intervalId: ''
-            
+            intervalId: '',
+            socketId: ''
+
         }
 
         this.socket = openSocket(this.state.link)
+
+        this.socket.on('connect', () => {
+            this.setState({ socketId: this.socket.id });
+        });
     }
 
 
@@ -35,7 +41,7 @@ class Chat extends React.Component {
             this.setState({ sender: userId })
         }
         this.setState({ receiver: this.props.receiver })
-        
+
         let intervalId = setInterval(this.viewMessage, 1100)
         this.setState({ intervalId: intervalId })
 
@@ -66,23 +72,26 @@ class Chat extends React.Component {
     }
 
     view = data => {
-        //console.log(this.state.sender+'client'+this.state.receiver)
-        if (data.length > 0) {
-            if (data[0].from == this.state.sender && data[0].to == this.state.receiver) {
-                if (data.length !== this.state.message.length) {
-                    this.setState({ message: data })
-                    this.scrollTobottom()
 
+        if (data[this.state.socketId] != undefined) {
+            if (data[this.state.socketId].messages.length > 0) {
+                if (data[this.state.socketId].messages[0].from == this.state.sender && data[this.state.socketId].messages[0].to == this.state.receiver) {
+                    if (data[this.state.socketId].messages.length !== this.state.message.length) {
+                        this.setState({ message: data[this.state.socketId].messages })
+                        this.scrollTobottom()
+
+                    }
+                } else if (data[this.state.socketId].messages[0].to == this.state.sender && data[this.state.socketId].messages[0].from == this.state.receiver) {
+                    if (data[this.state.socketId].messages.length !== this.state.message.length) {
+                        this.setState({ message: data[this.state.socketId].messages })
+                        this.scrollTobottom()
+                    }
                 }
-            } else if (data[0].to == this.state.sender && data[0].from == this.state.receiver) {
-                if (data.length !== this.state.message.length) {
-                    this.setState({ message: data })
-                    this.scrollTobottom()
-                }
+            } else {
+                this.setState({ message: [] })
             }
-        } else {
-            this.setState({ message: [] })
         }
+
     }
 
     viewMessage = () => {
@@ -138,7 +147,7 @@ class Chat extends React.Component {
                             console.log(data.error);
                         } else {
 
-                            
+
                             this.setState({ msg: '' })
                         }
                     });
