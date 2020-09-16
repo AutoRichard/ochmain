@@ -18,8 +18,8 @@ class Chat extends React.Component {
             name: '',
             msg: '',
             scroll: false,
-            //link: 'https://ochbackend.herokuapp.com/',
-            link: 'http://localhost:8080',
+            link: 'https://ochbackend.herokuapp.com/',
+            //link: 'http://localhost:8080',
             userStatus: '',
             intervalId: '',
             socketId: ''
