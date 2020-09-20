@@ -109,6 +109,8 @@ class ContactList extends React.Component {
                 (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) &&
                 !window.MSStream
 
+                return
+
             if (ios) {
                 swal({
                     title: "Enable sound notification",
