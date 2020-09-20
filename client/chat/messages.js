@@ -224,14 +224,14 @@ class ContactList extends React.Component {
                 <div className="line3 text-left"></div>
                 <div className="likes-section new" style={contactArea}>
 
-                    {/*this.state.mesageList.map((el, i) => {
+                    {this.state.mesageList.map((el, i) => {
                         let user;
                         if (el.recipients[0]._id == auth.isAuthenticated().user._id) {
                             user = el.recipients[1]
                             return (
                                 <div className="img-area clearfix" onClick={this.viewMessageArea.bind(this, el)}>
                                     <div className="img-c">
-                                        <img src={'https://ochbackend.herokuapp.com/api/usersPhoto/' + user._id} className="img-responsive circled __circular3" />
+                                        <img src={'https://ochbackend.herokuapp.com/api/usersPhoto/'} className="img-responsive circled __circular3" />
                                         <span className={"msg" + user.userStatus}></span>
                                     </div>
 
@@ -252,7 +252,7 @@ class ContactList extends React.Component {
                             return (
                                 <div className="img-area clearfix" onClick={this.viewMessageArea.bind(this, el)}>
                                     <div className="img-c">
-                                        <img src={'https://ochbackend.herokuapp.com/api/usersPhoto/' + user._id} className="img-responsive circled __circular3" />
+                                        <img src={'https://ochbackend.herokuapp.com/api/usersPhoto/'} className="img-responsive circled __circular3" />
                                         <span className={"msg" + user.userStatus}></span>
                                     </div>
 
@@ -268,7 +268,7 @@ class ContactList extends React.Component {
                             );
                         }
                     }
-                )*/}
+                )}
 
                     {/**/}
 
