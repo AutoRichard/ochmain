@@ -26,70 +26,6 @@ class ContactList extends React.Component {
 
         this.socket = openSocket(this.state.link)
 
-        if (auth.isAuthenticated()) {
-
-
-            this.socket.on('connect', () => {
-                this.setState({ socketId: this.socket.id });
-            });
-            this.socket.emit('show_conversation', this.state.conversation);
-
-
-            this.socket.on('conversations', function (data) {
-                viewNewMessage(data);
-            })
-
-            this.socket.on('conversationNotification', function (data) {
-                notifyMessage(data)
-            })
-
-
-
-            const viewNewMessage = (data) => {
-
-                //console.log(data)
-
-                if (this.state.sender != undefined && data[this.state.socketId] != undefined) {
-                    if (data[this.state.socketId].sender === this.state.sender) {
-
-                        //console.log(data)
-
-                        /*if (JSON.stringify(this.state.mesageList) != JSON.stringify(data.conversation)) {
-    
-                            //console.log(data)
-                            let check = this.state.check + 1;
-                            this.setState({ check: check })
-                            let _check = check % 2 == 0;
-    
-                            if (_check == true) {
-                                data.conversation.map((el, i) => {
-                                    console.log(el.deleivered)
-                                    if (el.recieveLast == auth.isAuthenticated().user._id && el.deleivered == false) {
-                                        this.state.receiver == el.sendLast ? this.play2() : this.play1()
-                                    }
-                                })
-                                this.setState({ check: 0 })
-                            }
-                        }*/
-                        this.setState({
-                            mesageList: data[this.state.socketId].conversation
-                        });
-
-                    }
-                }
-            }
-
-            const notifyMessage = (data) => {
-                if (this.state.sender != undefined && data[this.state.socketId] != undefined) {
-                    if (data[this.state.socketId].sender === this.state.sender) {
-                        if (data[this.state.socketId].conversation4 > 0) {
-                            document.getElementById('myAudio1').click()
-                        }
-                    }
-                }
-            }
-
-        }
     }
 
     componentDidUpdate(prevProps) {
@@ -103,34 +39,55 @@ class ContactList extends React.Component {
             const jwt = auth.isAuthenticated();
             const userId = jwt.user._id;
             this.setState({ sender: userId })
+
+
+
+            this.socket.on('connect', () => {
+                this.setState({ socketId: this.socket.id });
+            });
+            this.socket.emit('show_conversation', this.state.conversation);
+
+
+            this.socket.on('conversations', function (data) {
+                this.viewNewMessage(data);
+            })
+
+            this.socket.on('conversationNotification', function (data) {
+                this.notifyMessage(data)
+            })
+
+
+
             //this.play1()
 
             /*setTimeout(() => {
                 this.iosCheck()
             }, 0)*/
+
+
         }
     }
 
     iosCheck = () => {
         let ios = (/iPad|iPhone|iPod/.test(navigator.platform) ||
-                (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) &&
-                !window.MSStream                
+            (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) &&
+            !window.MSStream
 
-            if (ios) {
-                swal({
-                    title: "Enable sound notification",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: '#DD6B55',
-                    confirmButtonText: 'Yes, I am sure!',
-                    cancelButtonText: "No, cancel it!"
-                }).then(
-                    function () {
-                        let x = document.getElementById("myAudio1");
-                        x.pause();
-                        x.play();
-                    });
-            }
+        if (ios) {
+            swal({
+                title: "Enable sound notification",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: '#DD6B55',
+                confirmButtonText: 'Yes, I am sure!',
+                cancelButtonText: "No, cancel it!"
+            }).then(
+                function () {
+                    let x = document.getElementById("myAudio1");
+                    x.pause();
+                    x.play();
+                });
+        }
     }
 
     viewMessageArea = (data) => {
@@ -206,6 +163,50 @@ class ContactList extends React.Component {
         return {
             playAudio: playAudio,
         };*/
+    }
+
+    notifyMessage = (data) => {
+        if (this.state.sender != undefined && data[this.state.socketId] != undefined) {
+            if (data[this.state.socketId].sender === this.state.sender) {
+                if (data[this.state.socketId].conversation4 > 0) {
+                    document.getElementById('myAudio1').click()
+                }
+            }
+        }
+    }
+
+    viewNewMessage = (data) => {
+
+        //console.log(data)
+
+        if (this.state.sender != undefined && data[this.state.socketId] != undefined) {
+            if (data[this.state.socketId].sender === this.state.sender) {
+
+                //console.log(data)
+
+                /*if (JSON.stringify(this.state.mesageList) != JSON.stringify(data.conversation)) {
+
+                    //console.log(data)
+                    let check = this.state.check + 1;
+                    this.setState({ check: check })
+                    let _check = check % 2 == 0;
+
+                    if (_check == true) {
+                        data.conversation.map((el, i) => {
+                            console.log(el.deleivered)
+                            if (el.recieveLast == auth.isAuthenticated().user._id && el.deleivered == false) {
+                                this.state.receiver == el.sendLast ? this.play2() : this.play1()
+                            }
+                        })
+                        this.setState({ check: 0 })
+                    }
+                }*/
+                this.setState({
+                    mesageList: data[this.state.socketId].conversation
+                });
+
+            }
+        }
     }
 
 
