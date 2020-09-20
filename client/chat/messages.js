@@ -231,12 +231,12 @@ class ContactList extends React.Component {
                             return (
                                 <div className="img-area clearfix" onClick={this.viewMessageArea.bind(this, el)}>
                                     <div className="img-c">
-                                        <img src={'https://ochbackend.herokuapp.com/api/usersPhoto/'} className="img-responsive circled __circular3" />
-                                        <span className={"msg" + user.userStatus}></span>
+                                        <img src={'https://ochbackend.herokuapp.com/api/usersPhoto/' + el.recipients[1]._id} className="img-responsive circled __circular3" />
+                                        <span className={"msg" + el.recipients[1].userStatus}></span>
                                     </div>
 
                                     <div className="cont w-70">
-                                        <b>{user.displayName}</b>
+                                        <b>{el.recipients[1].displayName}</b>
 
                                         <p>{el.lastMessage}</p>
                                     </div>
@@ -252,12 +252,12 @@ class ContactList extends React.Component {
                             return (
                                 <div className="img-area clearfix" onClick={this.viewMessageArea.bind(this, el)}>
                                     <div className="img-c">
-                                        <img src={'https://ochbackend.herokuapp.com/api/usersPhoto/'} className="img-responsive circled __circular3" />
-                                        <span className={"msg" + user.userStatus}></span>
+                                        <img src={'https://ochbackend.herokuapp.com/api/usersPhoto/' + el.recipients[0]._id} className="img-responsive circled __circular3" />
+                                        <span className={"msg" + el.recipients[0].userStatus}></span>
                                     </div>
 
                                     <div className="cont w-70">
-                                        <b>{user.displayName}</b>
+                                        <b>{el.recipients[0].displayName}</b>
 
                                         <p>{el.lastMessage}</p>
 
