@@ -48,13 +48,9 @@ class ContactList extends React.Component {
             this.socket.emit('show_conversation', this.state.conversation);
 
 
-            this.socket.on('conversations', function (data) {
-                this.viewNewMessage(data);
-            })
+            this.socket.on('conversations', this.viewNewMessage)
 
-            this.socket.on('conversationNotification', function (data) {
-                this.notifyMessage(data)
-            })
+            this.socket.on('conversationNotification', this.notifyMessage)
 
 
 
