@@ -105,11 +105,16 @@ class ContactList extends React.Component {
             this.setState({ sender: userId })
             //this.play1()
 
-            let ios = (/iPad|iPhone|iPod/.test(navigator.platform) ||
-                (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) &&
-                !window.MSStream
+            /*setTimeout(() => {
+                this.iosCheck()
+            }, 0)*/
+        }
+    }
 
-                return
+    iosCheck = () => {
+        let ios = (/iPad|iPhone|iPod/.test(navigator.platform) ||
+                (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) &&
+                !window.MSStream                
 
             if (ios) {
                 swal({
@@ -126,10 +131,6 @@ class ContactList extends React.Component {
                         x.play();
                     });
             }
-
-
-
-        }
     }
 
     viewMessageArea = (data) => {

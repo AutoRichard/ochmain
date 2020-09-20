@@ -971,11 +971,11 @@ class Profile extends Component {
                                 Notifications</a>
                             </div>
 
-                            {this.state.check === true ?
+                            {/*this.state.check === true ?
                             (<Messages
                                 _viewMessageArea={this.parentViewMessageArea}
                                 receiver={this.state.receiver}
-                                /> ) : ''}
+                                /> ) : ''*/}
 
 
                                
