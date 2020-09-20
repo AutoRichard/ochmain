@@ -231,7 +231,7 @@ class ContactList extends React.Component {
                             return (
                                 <div className="img-area clearfix" onClick={this.viewMessageArea.bind(this, el)}>
                                     <div className="img-c">
-                                        <img src={'https://ochbackend.herokuapp.com/api/usersPhoto/' + user._id} className="img-responsive circled __circular3" />
+                                        <img src={'https://ochbackend.herokuapp.com/api/usersPhoto/'} className="img-responsive circled __circular3" />
                                         <span className={"msg" + user.userStatus}></span>
                                     </div>
 
@@ -255,7 +255,7 @@ class ContactList extends React.Component {
                             return (
                                 <div className="img-area clearfix" onClick={this.viewMessageArea.bind(this, el)}>
                                     <div className="img-c">
-                                        <img src={'https://ochbackend.herokuapp.com/api/usersPhoto/' + user._id} className="img-responsive circled __circular3" />
+                                        <img src={'https://ochbackend.herokuapp.com/api/usersPhoto/'} className="img-responsive circled __circular3" />
                                         <span className={"msg" + user.userStatus}></span>
                                     </div>
 
