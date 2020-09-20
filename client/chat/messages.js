@@ -224,7 +224,7 @@ class ContactList extends React.Component {
                 <div className="line3 text-left"></div>
                 <div className="likes-section new" style={contactArea}>
 
-                    {this.state.mesageList.map((el, i) => {
+                    {/*this.state.mesageList.map((el, i) => {
                         let user;
                         if (el.recipients[0]._id == auth.isAuthenticated().user._id) {
                             user = el.recipients[1]
@@ -239,9 +239,6 @@ class ContactList extends React.Component {
                                         <b>{user.displayName}</b>
 
                                         <p>{el.lastMessage}</p>
-
-
-                                        {/*<p className="mins">2 mins ago</p>*/}
                                     </div>
 
                                     {this.showNewMessageStatus(el.sendLast, el.read, el)}
@@ -264,8 +261,6 @@ class ContactList extends React.Component {
 
                                         <p>{el.lastMessage}</p>
 
-
-                                        {/*<p className="mins">2 mins ago</p>*/}
                                     </div>
 
                                     {this.showNewMessageStatus(el.sendLast, el.read, el)}
@@ -273,7 +268,7 @@ class ContactList extends React.Component {
                             );
                         }
                     }
-                    )}
+                )*/}
 
                     {/**/}
 
