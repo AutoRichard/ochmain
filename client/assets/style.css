@@ -134,6 +134,33 @@ h6 {
 	clear:both;
 	display:table;
 }
+.input-spacez input[type=submit] {
+    background: #fc4349;
+    color: #fff;
+    padding: 10px 25px;
+    display: inline-block; 
+    border-radius: 50px !important; outline:none;
+    border: 1px solid #fc4349;
+    font-weight: 600;
+    width: 200px;
+}
+.input-spacez input[type=submit]:hover{  background: #000;   border: 1px solid #000; outline:none;}
+.input-spacez label{display:block; font-weight:bold; margin-bottom:5px;}
+.input-spacez {
+    margin-bottom: 20px;
+}
+/*Meeting Page*/
+.input-spacez input[type=text], .input-spacez input[type=time] {
+    width: 100%; padding-left:15px;
+    background: #fff;
+    height: 50px;
+    color: #000;
+    font-size: 15px;
+    border: 2px solid #000;
+    border-radius: 6px !important;
+}
+
+/**/
 .m-tp h1 {
     margin-bottom: 0px;
 }

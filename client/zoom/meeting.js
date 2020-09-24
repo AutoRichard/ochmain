@@ -32,7 +32,7 @@ class Meeting extends React.Component {
                 );
             })(),
             passWord: tmpArgs.pwd,
-            leaveUrl: "/home",
+            leaveUrl: "/studio",
             role: parseInt(tmpArgs.role, 10),
             userEmail: (function () {
                 try {

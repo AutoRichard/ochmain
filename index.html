@@ -11,6 +11,7 @@
     <title>React App</title>
 
     <!--Template-->
+    <link rel="stylesheet" href="/client/assets/css/javascript-calendar.css" type="text/css">
     <link href="/client/assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="/client/assets/images/fav-icon.png" rel="icon">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -276,6 +277,7 @@
                 margin: 0px 0px !important;
             }
         }
+
         @media (min-width: 1205px) and (max-width: 1360px) {
             .__circular1 {
                 display: inline-block;
@@ -352,171 +354,32 @@
     <script src="/client/assets/js/owl.carousel.min.js"></script>
     <script src="/client/assets/js/simpleLightbox.min.js"></script>
     <script src="/client/assets/js/easy-responsive-tabs.js"></script>
+    <script src="/client/assets/js/javascript-calendar.js" type="text/javascript"></script>
+
+
+    <script>
+        $(document).ready(function () {
+            $('.count').prop('disabled', true);
+            $(document).on('click', '.plus', function () {
+                $('.count').val(parseInt($('.count').val()) + 1);
+            });
+            $(document).on('click', '.minus', function () {
+                $('.count').val(parseInt($('.count').val()) - 1);
+                if ($('.count').val() == 0) {
+                    $('.count').val(1);
+                }
+            });
+        });
+    </script>
+    <!-- Bootstrap Core JavaScript -->
+
+
     <script>
         $("#msg-bar").click(function () {
             $(".msg-area").toggle(500);
         });
     </script>
-    <script>
-        $(document).ready(function () {
-            $("#chatbar").owlCarousel({
 
-                margin: 20,
-                nav: true,
-                loop: true,
-                navText: ["<div class='nav-btn prev-btn'>Pre</div>", "<div class='nav-btn next-btn'>Next</div>"],
-                dots: true,
-                responsive: {
-                    0: {
-                        items: 3,
-                        margin: 5
-                    },
-                    600: {
-                        items: 4
-                    },
-                    1000: {
-                        items: 6
-                    }
-                }
-            });
-            $("#music-gal").owlCarousel({
-
-                margin: 20,
-                nav: true,
-                loop: true,
-                navText: ["<div class='nav-btn prev-btn'>Pre</div>", "<div class='nav-btn next-btn'>Next</div>"],
-                dots: true,
-                responsive: {
-                    0: {
-                        items: 1
-                    },
-                    600: {
-                        items: 3
-                    },
-                    1000: {
-                        items: 3
-                    }
-                }
-            });
-            $("#owl-main").owlCarousel({
-
-                margin: 20,
-                nav: true,
-                loop: true,
-                navText: ["<div class='nav-btn prev-btn'>Pre</div>", "<div class='nav-btn next-btn'>Next</div>"],
-                dots: true,
-                responsive: {
-                    0: {
-                        items: 1
-                    },
-                    600: {
-                        items: 2
-                    },
-                    1000: {
-                        items: 4
-                    }
-                }
-            });
-
-            $("#studio-gal").owlCarousel({
-
-                margin: 20,
-                nav: true,
-                loop: true,
-                navText: ["<div class='nav-btn prev-btn'>Pre</div>", "<div class='nav-btn next-btn'>Next</div>"],
-                dots: true,
-                responsive: {
-                    0: {
-                        items: 1
-                    },
-                    600: {
-                        items: 3
-                    },
-                    1000: {
-                        items: 6
-                    }
-                }
-            });
-            $("#featured-tal").owlCarousel({
-
-                margin: 20,
-                nav: true,
-                loop: true,
-                navText: ["<div class='nav-btn prev-btn'>Pre</div>", "<div class='nav-btn next-btn'>Next</div>"],
-                dots: true,
-                responsive: {
-                    0: {
-                        items: 1
-                    },
-                    600: {
-                        items: 3
-                    },
-                    1000: {
-                        items: 6
-                    }
-                }
-            });
-            $("#virtual-st").owlCarousel({
-
-                margin: 30,
-                nav: true,
-                loop: true,
-                navText: ["<div class='nav-btn prev-btn'>Pre</div>", "<div class='nav-btn next-btn'>Next</div>"],
-                dots: true,
-                responsive: {
-                    0: {
-                        items: 1
-                    },
-                    600: {
-                        items: 3
-                    },
-                    1000: {
-                        items: 4
-                    }
-                }
-            });
-
-            $("#insta-feed").owlCarousel({
-
-                margin: 30,
-                nav: true,
-                loop: true,
-                navText: ["<div class='nav-btn prev-btn'>Pre</div>", "<div class='nav-btn next-btn'>Next</div>"],
-                dots: true,
-                responsive: {
-                    0: {
-                        items: 1
-                    },
-                    600: {
-                        items: 3
-                    },
-                    1000: {
-                        items: 6
-                    }
-                }
-            });
-
-            $("#press").owlCarousel({
-
-                margin: 30,
-                nav: true,
-                loop: true,
-                navText: ["<div class='nav-btn prev-btn'>Pre</div>", "<div class='nav-btn next-btn'>Next</div>"],
-                dots: true,
-                responsive: {
-                    0: {
-                        items: 1
-                    },
-                    600: {
-                        items: 3
-                    },
-                    1000: {
-                        items: 6
-                    }
-                }
-            });
-        });
-    </script>
     <script>
         $(document).ready(function () {
             $("#pop-left").click(function () {
@@ -585,7 +448,7 @@
                         items: 4
                     },
 
-                }
+                },
             });
 
 
@@ -803,11 +666,7 @@
         });
     </script>
 
-    <script>
-        $("#msg-bar-two").click(function () {
-            $(".msg-area-two").toggle(500);
-        });
-    </script>
+
 
     <script>
         $(document).ready(function () {

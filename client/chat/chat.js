@@ -1,7 +1,7 @@
 import React from 'react';
 import auth from './../auth/auth-helper';
 //import { showMessage, sendMessage } from './socket';
-import { sendMessage } from './../api/api-chat';
+//import { sendMessage } from './../api/api-chat';
 import swal from "sweetalert"
 
 import openSocket from 'socket.io-client'
@@ -42,21 +42,21 @@ class Chat extends React.Component {
         }
         this.setState({ receiver: this.props.receiver })
 
-        let intervalId = setInterval(this.viewMessage, 1100)
-        this.setState({ intervalId: intervalId })
+        this.viewMessage()
+
+        //let intervalId = setInterval(this.viewMessage, 1100)
+        //this.setState({ intervalId: intervalId })
 
         this.setState({ scroll: true })
     }
 
     componentWillUnmount() {
-        clearInterval(this.state.intervalId)
+        //clearInterval(this.state.intervalId)
     }
 
     componentDidUpdate(prevProps) {
         if (this.props.receiver !== prevProps.receiver) {
             this.setState({ receiver: this.props.receiver })
-
-            //console.log(this.props.userStatus)
 
             this.viewMessage()
             if (this.props.name != undefined && this.props.name != '') {
@@ -72,20 +72,23 @@ class Chat extends React.Component {
     }
 
     view = data => {
-
         if (data[this.state.socketId] != undefined) {
+
             if (data[this.state.socketId].messages.length > 0) {
+
                 if (data[this.state.socketId].messages[0].from == this.state.sender && data[this.state.socketId].messages[0].to == this.state.receiver) {
                     if (data[this.state.socketId].messages.length !== this.state.message.length) {
                         this.setState({ message: data[this.state.socketId].messages })
                         this.scrollTobottom()
-
                     }
+
+
                 } else if (data[this.state.socketId].messages[0].to == this.state.sender && data[this.state.socketId].messages[0].from == this.state.receiver) {
                     if (data[this.state.socketId].messages.length !== this.state.message.length) {
                         this.setState({ message: data[this.state.socketId].messages })
                         this.scrollTobottom()
                     }
+
                 }
             } else {
                 this.setState({ message: [] })
@@ -108,7 +111,7 @@ class Chat extends React.Component {
                 this.socket.on('messages', this.view)
             }
         } else if (this.state.receiver != '' && this.state.sender != '') {
-            let receiver = this.state.receiver
+            let receiver = this.props.receiver
 
             let conversation = {
                 reciever: receiver,
@@ -142,19 +145,22 @@ class Chat extends React.Component {
                 }
 
                 if (this.state.receiver !== '') {
-                    sendMessage(conversation).then((data) => {
-                        if (data.error) {
-                            console.log(data.error);
-                        } else {
-
-
-                            this.setState({ msg: '' })
-                        }
-                    });
+                    this.socket.emit('send_message', conversation)
+                    this.socket.on('fetch_update', this.updateMessage)
                 }
 
 
             }
+        }
+    }
+
+    updateMessage = data => {
+        if (data == true) {
+            this.setState({
+                msg: ''
+            })
+
+            this.viewMessage();
         }
     }
 

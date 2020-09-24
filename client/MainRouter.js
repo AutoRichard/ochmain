@@ -20,6 +20,7 @@ import Detail from './modal/detail';
 
 import Account from './modal/account';
 import Cancel from './modal/cancel';
+import Meeting from './core/meeting';
 
 class MainRouter extends Component {
   render() {
@@ -32,6 +33,7 @@ class MainRouter extends Component {
           <Route path="/services" component={Services} />
           <Route path="/studio" component={Studio} />
           <Route path="/news" component={News} />
+          <Route path="/meeting" component={Meeting} />
           <PrivateRoute path="/network" component={Network} />
           <PrivateRoute path="/my-page/:userId" component={Mypage} />
         </Switch>
@@ -44,8 +46,8 @@ class MainRouter extends Component {
         <Thanks />
         <JoinSession />
         <Detail />
-        
-        <Account/>        
+
+        <Account />
         <Cancel />
       </div>
     );

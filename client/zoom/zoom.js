@@ -1,28 +1,76 @@
 import React from 'react';
 import { ZoomMtg } from "@zoomus/websdk";
 import '../api-zoom/tool';
+import swal from 'sweetalert'
 
 class Zoom extends React.Component {
 
+    constructor(props) {
+        super(props)
+
+
+        this.state = {
+            meeting_number: '',
+            meeting_pwd: '',
+            link: 'http://localhost:8080'
+        }
+    }
+
     componentDidMount() {
-        ZoomMtg.preLoadWasm();
-        ZoomMtg.prepareJssdk();
 
-        console.log("checkSystemRequirements");
-        console.log(JSON.stringify(ZoomMtg.checkSystemRequirements()));
 
-        testTool = window.testTool;
+        const queryString = window.location.search;
+
+        const urlParams = new URLSearchParams(queryString);
+
+        const page_type = urlParams.get('meeting_id')
+
+        if(page_type == '' || page_type == undefined){
+            window.location = '/'
+        }       
+
+        fetch(this.state.link + '/api/meeting',
+            {
+                method: 'post',
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                },
+
+                body: JSON.stringify({ _id: page_type })
+            }).then(result => result.json())
+            .then(response => {
+
+                this.setState({
+                    meeting_number: response.id,
+                    meeting_pwd: response.password
+                })
+
+                ZoomMtg.preLoadWasm();
+                ZoomMtg.prepareJssdk();
+
+                console.log("checkSystemRequirements");
+                console.log(JSON.stringify(ZoomMtg.checkSystemRequirements()));
+
+                testTool = window.testTool;
+                this.join()
+            });
     }
 
 
     join = () => {
-
-        //const link =  'http://localhost:8080';
+        //const link = 'http://localhost:8080';
         const link = 'https://ochbackend.herokuapp.com';
 
 
         fetch(link + '/api/signature', {
-            method: 'get',
+            method: 'post',
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            },
+
+            body: JSON.stringify({ mn: this.state.meeting_number })
         })
             .then(result => result.json())
             .then(response => {
@@ -47,9 +95,9 @@ class Zoom extends React.Component {
     render() {
         return (
             <div>
-                <input type="hidden" value="95339654036" id="meeting_number" />
-                <input type="hidden" value="1.7.10#Local" id="display_name" />
-                <input type="hidden" value="8167739200" id="meeting_pwd" />
+                <input type="hidden" value={this.state.meeting_number} id="meeting_number" />
+                <input type="hidden" value="OCHIT" id="display_name" />
+                <input type="hidden" value={this.state.meeting_pwd} id="meeting_pwd" />
                 <input type="hidden" value="0" id="meeting_role" />
                 <input type="hidden" value="" id="meeting_email" />
                 <input type="hidden" value="en-US" id="meeting_lang" />

@@ -19,7 +19,7 @@ class ContactList extends React.Component {
             check: 0,
             receiver: '',
             conversation: {
-                sender: auth.isAuthenticated().user._id || ''
+                sender: auth.isAuthenticated().user._id
             },
             socketId: ''
         }
@@ -27,7 +27,6 @@ class ContactList extends React.Component {
         this.socket = openSocket(this.state.link)
 
         if (auth.isAuthenticated()) {
-
 
             this.socket.on('connect', () => {
                 this.setState({ socketId: this.socket.id });
@@ -43,34 +42,21 @@ class ContactList extends React.Component {
                 notifyMessage(data)
             })
 
+            this.socket.on('fetch_update', function (data) {
+                if (data == true) {
+                    show_conversation()
+                }
+            })
 
+            const show_conversation = () => {
+                this.socket.emit('show_conversation', this.state.conversation);
+            }
 
             const viewNewMessage = (data) => {
-
-                //console.log(data)
 
                 if (this.state.sender != undefined && data[this.state.socketId] != undefined) {
                     if (data[this.state.socketId].sender === this.state.sender) {
 
-                        //console.log(data)
-
-                        /*if (JSON.stringify(this.state.mesageList) != JSON.stringify(data.conversation)) {
-    
-                            //console.log(data)
-                            let check = this.state.check + 1;
-                            this.setState({ check: check })
-                            let _check = check % 2 == 0;
-    
-                            if (_check == true) {
-                                data.conversation.map((el, i) => {
-                                    console.log(el.deleivered)
-                                    if (el.recieveLast == auth.isAuthenticated().user._id && el.deleivered == false) {
-                                        this.state.receiver == el.sendLast ? this.play2() : this.play1()
-                                    }
-                                })
-                                this.setState({ check: 0 })
-                            }
-                        }*/
                         this.setState({
                             mesageList: data[this.state.socketId].conversation
                         });

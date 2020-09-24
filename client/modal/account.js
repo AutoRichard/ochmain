@@ -1084,7 +1084,7 @@ class Account extends React.Component {
 
     componentDidMount() {
         this.readUser();
-    }
+    } 
 
     updateUserParent_ = (user) => {
         const jwt = auth.isAuthenticated();

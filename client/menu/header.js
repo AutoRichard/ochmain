@@ -54,6 +54,9 @@ class Header extends React.Component {
                             <li className={this.props.path == '/studio' ? "nav-item active" : "nav-item"}>
                                 <a href="/studio">STUDIOS</a>
                             </li>
+                            <li className={this.props.path == '/meeting' ? "nav-item active" : "nav-item"}>
+                                <a href="/meeting">MEETING</a>
+                            </li>
                             <li className={this.props.path == '/news' ? "nav-item active" : "nav-item"}>
                                 <a href="/news">NEWS</a>
                             </li>
