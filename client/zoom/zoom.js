@@ -27,7 +27,9 @@ class Zoom extends React.Component {
 
         if(page_type == '' || page_type == undefined){
             window.location = '/'
-        }       
+        }   
+        
+        swal(page_type)
 
         fetch(this.state.link + '/api/meeting',
             {
