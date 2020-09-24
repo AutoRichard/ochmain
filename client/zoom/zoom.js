@@ -12,7 +12,8 @@ class Zoom extends React.Component {
         this.state = {
             meeting_number: '',
             meeting_pwd: '',
-            link: 'http://localhost:8080'
+            link: 'https://ochbackend.herokuapp.com',
+            //link: 'http://localhost:8080'
         }
     }
 
@@ -28,8 +29,6 @@ class Zoom extends React.Component {
         if(page_type == '' || page_type == undefined){
             window.location = '/'
         }   
-        
-        swal(page_type)
 
         fetch(this.state.link + '/api/meeting',
             {
