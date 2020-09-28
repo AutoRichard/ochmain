@@ -51,12 +51,12 @@ class Header extends React.Component {
                             <li className={this.props.path == '/services' ? "nav-item active" : "nav-item"}>
                                 <a href="/services">SERVICES</a>
                             </li>
-                            <li className={this.props.path == '/studio' ? "nav-item active" : "nav-item"}>
+                            {this.state.checkAuthenticated ? (<li className={this.props.path == '/studio' ? "nav-item active" : "nav-item"}>
                                 <a href="/studio">STUDIOS</a>
-                            </li>
-                            <li className={this.props.path == '/meeting' ? "nav-item active" : "nav-item"}>
+                            </li>) : ''}
+                            {this.state.checkAuthenticated ? (<li className={this.props.path == '/meeting' ? "nav-item active" : "nav-item"}>
                                 <a href="/meeting">MEETING</a>
-                            </li>
+                            </li>) : ''}
                             <li className={this.props.path == '/news' ? "nav-item active" : "nav-item"}>
                                 <a href="/news">NEWS</a>
                             </li>
@@ -88,4 +88,4 @@ class Header extends React.Component {
         );
     }
 }
-export {Header}
+export { Header }

@@ -2,6 +2,7 @@ import React from 'react';
 import { ZoomMtg } from "@zoomus/websdk";
 import '../api-zoom/tool';
 import swal from 'sweetalert'
+import auth from '../auth/auth-helper';
 
 class Zoom extends React.Component {
 
@@ -19,6 +20,9 @@ class Zoom extends React.Component {
 
     componentDidMount() {
 
+        if(!auth.isAuthenticated()){
+            window.location = '/'
+        }
 
         const queryString = window.location.search;
 

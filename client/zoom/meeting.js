@@ -1,10 +1,14 @@
 import React from 'react';
 import { ZoomMtg } from "@zoomus/websdk";
 import '../api-zoom/tool';
+import auth from '../auth/auth-helper'
 
 class Meeting extends React.Component {
 
     componentDidMount() {
+        if(!auth.isAuthenticated()){
+            window.location = '/'
+        }
         ZoomMtg.preLoadWasm();
         ZoomMtg.prepareJssdk();
         console.log("checkSystemRequirements");

@@ -31,9 +31,9 @@ class MainRouter extends Component {
           <Route exact path="/" component={Home} />
           <Route path="/about" component={About} />
           <Route path="/services" component={Services} />
-          <Route path="/studio" component={Studio} />
+          <PrivateRoute path="/studio" component={Studio} />
           <Route path="/news" component={News} />
-          <Route path="/meeting" component={Meeting} />
+          <PrivateRoute path="/meeting" component={Meeting} />
           <PrivateRoute path="/network" component={Network} />
           <PrivateRoute path="/my-page/:userId" component={Mypage} />
         </Switch>
