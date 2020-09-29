@@ -40,7 +40,8 @@ class Studios extends Component {
                     $(".owl-carousel").owlCarousel({
                         margin: 30,
                         nav: true,
-                        loop: true,
+                        loop: false,
+                        singleItem:true,
                         navText: ["<div class='nav-btn prev-btn'>Pre</div>", "<div class='nav-btn next-btn'>Next</div>"],
                         dots: true,
                         responsive: {
