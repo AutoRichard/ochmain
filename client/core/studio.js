@@ -86,8 +86,7 @@ class Studios extends Component {
                                     <div className="request-box">
                                         <img src="/client/assets/images/v1.jpg" className="img-responsive" />
                                         <div className="request-text animate__animated animate__fadeIn">
-                                            <h5>SESSION IN PROGRESS</h5>
-                                            {/*<a href="#" className="book-now">REQUEST ACCESS</a>*/}
+                                            {/*<h5>SESSION IN PROGRESS</h5><a href="#" className="book-now">REQUEST ACCESS</a>*/}
                                         </div>
                                     </div>
                                     <a href={"/zoom.html?meeting_id="+el._id} className="book-now">JOIN NOW</a>
