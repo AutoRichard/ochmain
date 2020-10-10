@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Header } from './../menu/header';
 import { listMeeting } from './../api/api-meeting';
 import auth from './../auth/auth-helper';
+import Booking from './../modal/booking'
 
 
 
@@ -29,7 +30,7 @@ class Studios extends Component {
                     meetings: data
                 })
 
-                console.log(data)
+                //console.log(data)
 
                 if ($('.owl-carousel').hasClass('owl-theme')) { //resize event was triggering an error, this if statement is to go around it
 
@@ -41,7 +42,7 @@ class Studios extends Component {
                         margin: 30,
                         nav: true,
                         loop: false,
-                        singleItem:true,
+                        singleItem: true,
                         navText: ["<div class='nav-btn prev-btn'>Pre</div>", "<div class='nav-btn next-btn'>Next</div>"],
                         dots: true,
                         responsive: {
@@ -61,6 +62,11 @@ class Studios extends Component {
             }
         });
     }
+
+    openMeeting = (data, e) => {
+        this.props._openMeeting(data)
+    }
+
 
     render() {
         return (
@@ -83,14 +89,14 @@ class Studios extends Component {
 
                             <div className="item">
                                 <div className="v-box">
-                                    <h3>{el.topic}</h3>
+                                    <h3>{el.topic.substring(0, 15)}</h3>
                                     <div className="request-box">
                                         <img src="/client/assets/images/v1.jpg" className="img-responsive" />
                                         <div className="request-text animate__animated animate__fadeIn">
-                                            {/*<h5>SESSION IN PROGRESS</h5><a href="#" className="book-now">REQUEST ACCESS</a>*/}
+                                            {/*<h5>SESSION IN PROGRESS</h5>*/}<a href={"/zoom.html?meeting_id=" + el._id} className="book-now">JOIN NOW</a>
                                         </div>
                                     </div>
-                                    <a href={"/zoom.html?meeting_id="+el._id} className="book-now">JOIN NOW</a>
+                                    <a href="#" onClick={this.openMeeting.bind(this, el)} data-toggle="modal" data-target="#v-st" class="book-now">BOOK NOW</a>
                                 </div>
                             </div>
                         )}
@@ -223,10 +229,15 @@ class Studio extends Component {
         super(props);
 
         this.state = {
-
+            meeting_image: '',
+            meeting_title: '',
         }
 
 
+    }
+
+    openMeetings = (data) => {
+        this.setState({meeting_image: '/client/assets/images/v1.jpg', meeting_title: data.topic})
     }
 
 
@@ -238,7 +249,14 @@ class Studio extends Component {
                     path={this.props.location.pathname}
                 />
 
-                <Studios />
+                <Studios
+                    _openMeeting={this.openMeetings}
+                />
+
+                <Booking
+                    meeting_image={this.state.meeting_image}
+                    meeting_title={this.state.meeting_title}
+                />
 
 
 
