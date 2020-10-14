@@ -99,7 +99,7 @@ class CheckoutForm extends React.Component {
             <form>
                 <CardSection />
                 <a onClick={this.handleSubmit} href="#" className="book-now-green">
-                    Confirm Order
+                    Buy Now
                 </a>
             </form>
         );

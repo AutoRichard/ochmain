@@ -748,12 +748,12 @@ class Credit extends React.Component {
 
 
     plus = () => {
-        this.setState({ credit: this.state.credit + 2 })
+        this.setState({ credit: this.state.credit + 1 })
     }
 
     minus = () => {
         if (this.state.credit > 1) {
-            this.setState({ credit: this.state.credit - 2 })
+            this.setState({ credit: this.state.credit - 1 })
         }
     }
 
@@ -930,7 +930,7 @@ W/JACKIE HISHMEH</h4>
         </div>
 
     );
-}
+} 
 
 class Password extends React.Component {
     constructor(props) {
