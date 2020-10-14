@@ -798,7 +798,7 @@ class Credit extends React.Component {
 
                 </div>
 
-                {/*<div className="row">
+                <div className="row">
 
                     <div className="col-md-3 text-center">
                     </div>
@@ -819,12 +819,12 @@ class Credit extends React.Component {
                         <div className="top-spc">
                             <a href="#"><img src="/client/assets/images/pdf-icon.png" className="pd-icon" /> DOWNLOAD AS PDF</a>
                         </div>
-                    </div>*
+                    </div>*/}
 
                     <div className="col-md-3 text-center">
                     </div>
 
-                </div>*/}
+                </div>
 
                 <div className="row">
 
@@ -930,7 +930,7 @@ W/JACKIE HISHMEH</h4>
         </div>
 
     );
-} 
+}
 
 class Password extends React.Component {
     constructor(props) {
