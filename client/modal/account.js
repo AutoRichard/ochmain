@@ -810,7 +810,6 @@ class Credit extends React.Component {
                             <span className="total-f">({this.state.credit} TOTAL)</span>
                         </div>
 
-                        <p className="f-small">BY CLICKING “BUY NOW” I AGREE TO THE TERMS OF SERVICE & UNDERSTAND THAT MY CREDIT CARD WILL BE CHARGED THE AMOUNT ABOVE</p>
                     </div>
 
 

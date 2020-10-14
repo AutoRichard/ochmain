@@ -101,6 +101,8 @@ class CheckoutForm extends React.Component {
                 <a onClick={this.handleSubmit} href="#" className="book-now-green">
                     Buy Now
                 </a>
+                <p className="f-small">BY CLICKING “BUY NOW” I AGREE TO THE TERMS OF SERVICE & UNDERSTAND THAT MY CREDIT CARD WILL BE CHARGED THE AMOUNT ABOVE</p>
+                    
             </form>
         );
     }
