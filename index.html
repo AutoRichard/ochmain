@@ -333,6 +333,37 @@
                 margin: -10px 5px !important;
             }
         }
+
+
+        /*stripe*/
+        .FormGroup {
+            margin: 0 15px 20px;
+            padding: 0;
+            border-style: none;
+            background-color: #FFFFFF;
+            will-change: opacity, transform;
+            box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08),
+                inset 0 1px 0 #808080;
+            border-radius: 4px;
+        }
+
+        .FormRow {
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-align: center;
+            align-items: center;
+            margin-left: 15px;
+            border-top: 1px solid #FFFFFF;
+        }
+
+        .StripeElement--webkit-autofill {
+            background: transparent !important;
+        }
+
+        .StripeElement {
+            width: 100%;
+            padding: 11px 15px 11px 0;
+        }
     </style>
     <script src="/node_modules/react/umd/react.production.min.js"></script>
     <script src="/node_modules/react-dom/umd/react-dom.production.min.js"></script>
@@ -342,6 +373,7 @@
     <script src="/node_modules/jquery/dist/jquery.min.js"></script>
     <!--<script src="/client/assets/js/jquery-3.3.1.min.js"></script>-->
 
+    <script id="stripe-js" src="https://js.stripe.com/v3/" async></script>
 
     <div id="main"></div>
     <script src="/static/main.min.js"></script>
@@ -435,7 +467,7 @@
                 margin: 30,
                 nav: true,
                 loop: false,
-                singleItem:true,
+                singleItem: true,
                 navText: ["<div class='nav-btn prev-btn'>Pre</div>", "<div class='nav-btn next-btn'>Next</div>"],
                 dots: true,
                 responsive: {

@@ -4,6 +4,10 @@ import { read, update, password } from './../api/api-user';
 import { createLink, checkLink, updateLinkStatus } from './../api/api-link';
 import swal from 'sweetalert'
 
+import { StripeProvider, Elements } from 'react-stripe-elements'
+import CheckoutForm from './checkout'
+
+
 
 
 class AccountInfo extends React.Component {
@@ -730,128 +734,121 @@ const Billing = () => {
     );
 }
 
-const Credit = () => {
-    return (
-        <div>
-            <h3 className="text-center white">CREDITS AVAILABLE:<br />42</h3>
-            <div className="row"><div className="col-md-4">
-                <div className="qty-new clearfix">
-                    <h5 className="creditz">10 CREDITS</h5>
-                    <span className="minus bg-dark">-</span>
-                    <input type="number" className="count" name="qty" value="2" />
-                    <span className="plus bg-dark">+</span>
+class Credit extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            checkout: false,
+            stripe: null,
+            credit: 1
+        }
+    }
+
+
+    plus = () => {
+        this.setState({ credit: this.state.credit + 2 })
+    }
+
+    minus = () => {
+        if (this.state.credit > 1) {
+            this.setState({ credit: this.state.credit - 2 })
+        }
+    }
+
+
+    componentDidMount = () => {
+        if (window.Stripe) {
+            this.setState({ stripe: window.Stripe('pk_test_dksRz4lNch4nYscnd8gzxf1E00llQZyDOL') });
+        } else {
+            document.querySelector('#stripe-js').addEventListener('load', () => {
+                // Create Stripe instance once Stripe.js loads
+                this.setState({ stripe: window.Stripe('pk_test_dksRz4lNch4nYscnd8gzxf1E00llQZyDOL') });
+            });
+        }
+    }
+
+
+    refreshParent = () => {
+        this.setState({ credit: 1 })
+        $('.count').val(1);
+
+        this.props._refreshParent();
+    }
+
+
+    render() {
+        return (
+            <div>
+                <h3 className="text-center white">CREDITS AVAILABLE: <br />42</h3>
+                <div className="row">
+                    <div className="col-md-4 center-block">
+                    </div>
+                    <div className="col-md-4">
+                        <div className="qty-new clearfix">
+                            <h5 className="creditz">{this.state.credit} CREDITS</h5>
+                            <span onClick={this.minus} className="minus bg-dark">-</span>
+                            <input type="number" onChange={this.onChange} className="count" name="qty" value={this.state.credit} />
+                            <span onClick={this.plus} className="plus bg-dark">+</span>
+                        </div>
+                    </div>
+                    <div className="col-md-4 center-block">
+                    </div>
+
+                </div>
+
+                {/*<div className="row">
+
+                    <div className="col-md-3 text-center">
+                    </div>
+
+                    <div className="col-md-6 text-center">
+                        <h5 className="m-b">CREDITS IN CART</h5>
+                        <div className="input-area ft-sz">
+                            <input type="text" value={this.state.credit} />
+                            <span className="total-f">({this.state.credit} TOTAL)</span>
+                        </div>
+
+                        <p className="f-small">BY CLICKING “BUY NOW” I AGREE TO THE TERMS OF SERVICE & UNDERSTAND THAT MY CREDIT CARD WILL BE CHARGED THE AMOUNT ABOVE</p>
+                    </div>
+
+
+                    {/*<div className="col-md-4 text-center">
+                        <h5 className="m-b">BILLING HISTORY</h5>
+                        <div className="top-spc">
+                            <a href="#"><img src="/client/assets/images/pdf-icon.png" className="pd-icon" /> DOWNLOAD AS PDF</a>
+                        </div>
+                    </div>*
+
+                    <div className="col-md-3 text-center">
+                    </div>
+
+                </div>*/}
+
+                <div className="row">
+
+                    <div className="col-md-12 text-center">
+                        <StripeProvider stripe={this.state.stripe}>
+                            <Elements>
+                                <CheckoutForm
+                                    credit={this.state.credit}
+                                    _refresh={this.refreshParent}
+                                />
+                            </Elements>
+                        </StripeProvider>
+                    </div>
+
+
+
+
                 </div>
             </div>
 
-                <div className="col-md-4">
-                    <div className="qty-new clearfix">
-                        <h5 className="creditz">10 CREDITS</h5>
-                        <span className="minus bg-dark">-</span>
-                        <input type="number" className="count" name="qty" value="3" />
-                        <span className="plus bg-dark">+</span>
-                    </div>
-                </div>
-                <div className="col-md-4">
-                    <div className="qty-new clearfix">
-                        <h5 className="creditz">10 CREDITS</h5>
-                        <span className="minus bg-dark">-</span>
-                        <input type="number" className="count" name="qty" value="4" />
-                        <span className="plus bg-dark">+</span>
-                    </div>
-                </div>
-            </div>
 
-            <div className="row"><div className="col-md-4">
-                <div className="qty-new clearfix">
-                    <h5 className="creditz">10 CREDITS</h5>
-                    <span className="minus bg-dark">-</span>
-                    <input type="number" className="count" name="qty" value="2" />
-                    <span className="plus bg-dark">+</span>
-                </div>
-            </div>
+        );
+    }
 
-                <div className="col-md-4">
-                    <div className="qty-new clearfix">
-                        <h5 className="creditz">10 CREDITS</h5>
-                        <span className="minus bg-dark">-</span>
-                        <input type="number" className="count" name="qty" value="3" />
-                        <span className="plus bg-dark">+</span>
-                    </div>
-                </div>
-                <div className="col-md-4">
-                    <div className="qty-new clearfix">
-                        <h5 className="creditz">10 CREDITS</h5>
-                        <span className="minus bg-dark">-</span>
-                        <input type="number" className="count" name="qty" value="4" />
-                        <span className="plus bg-dark">+</span>
-                    </div>
-                </div>
-            </div>
-            <div className="row">
-                <div className="col-md-4">
-
-                    <h5 className="m-b">CARD SELECTION</h5>
-                    <label className="control-r control-radio">
-                        <ul className="card-detail new clearfix">
-                            <li><img src="/client/assets/images/card-one.png" className="card-im" /></li>
-                            <li><p>VISA - **** 3432</p>
-
-
-                                <p>EXP. DATE: 12/23</p>
-
-
-                                <p>PRIMARY</p></li>
-                            <li><a href="#"><img src="/client/assets/images/del.png" className="del-icon new" /></a></li>
-
-                        </ul>
-                        <input type="radio" name="radio" checked="checked" />
-                        <div className="control_indicator-r"></div>
-                    </label>
-
-
-                    <label className="control-r control-radio">
-                        <ul className="card-detail new clearfix">
-                            <li><img src="/client/assets/images/card-two.png" className="card-im" /></li>
-                            <li><p>MASTERCARD - **** 4135</p>
-
-
-                                <p>EXP. DATE: 12/23</p>
-
-
-                                <p>MAKE PRIMARY</p></li>
-                            <li><a href="#"><img src="/client/assets/images/del.png" className="del-icon new" /></a></li>
-
-                        </ul>
-                        <input type="radio" name="radio" checked="checked" />
-                        <div className="control_indicator-r"></div>
-                    </label>
-
-                    <a href="#" className="grey-link"><img src="/client/assets/images/gray-plus.png" className="grey-icon" /> ADD CARD</a>
-
-                </div>
-                <div className="col-md-4 text-center">
-                    <h5 className="m-b">CREDITS IN CART</h5>
-                    <div className="input-area ft-sz">
-                        <input type="text" value="506" />
-                        <span className="total-f">($507 TOTAL)</span>
-                    </div>
-                    <a href="#" className="book-now-green">BUY NOW</a>
-                    <p className="f-small">BY CLICKING “BUY NOW” I AGREE TO THE TERMS OF SERVICE
-& UNDERSTAND THAT MY CREDIT CARD WILL BE CHARGED THE AMOUNT ABOVE</p>
-                </div>
-
-                <div className="col-md-4 text-center">
-                    <h5 className="m-b">BILLING HISTORY</h5>
-                    <div className="top-spc">
-                        <a href="#"><img src="/client/assets/images/pdf-icon.png" className="pd-icon" /> DOWNLOAD AS PDF</a>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-
-    );
 }
 
 const Booking = () => {
@@ -959,7 +956,7 @@ class Password extends React.Component {
         event.target.name === 'oldPassword' ? this.setState({ oldPasswordValidation: '' }) : '';
         event.target.name === 'confirmPassword' ? this.setState({ confirmPasswordValidation: '' }) : '';
         event.target.name === 'password' ? this.setState({ passwordValidation: '' }) : '';
-        //this.setState({ status: '' })
+        //this.setState({status: '' })
     }
 
     scrollApplication = () => {
@@ -1056,6 +1053,7 @@ class Account extends React.Component {
             firstName: '',
             dataEdit: {},
             userPhoto: '',
+            creditBalance: 0
         }
     }
 
@@ -1076,7 +1074,7 @@ class Account extends React.Component {
                 if (data.error) {
                     swal(data.error)
                 } else {
-                    this.setState({ firstName: data.firstName || '', displayName: data.displayName || '', dataEdit: { ...data, loading: false } });
+                    this.setState({ firstName: data.firstName || '', displayName: data.displayName || '', dataEdit: { ...data, loading: false }, creditBalance: data.creditBalance });
                 }
             })
         }
@@ -1084,7 +1082,11 @@ class Account extends React.Component {
 
     componentDidMount() {
         this.readUser();
-    } 
+    }
+
+    __refreshParent = () => {
+        this.readUser();
+    }
 
     updateUserParent_ = (user) => {
         const jwt = auth.isAuthenticated();
@@ -1099,7 +1101,7 @@ class Account extends React.Component {
             if (data.error) {
                 swal(data.error);
             } else {
-                this.setState({ firstName: data.firstName, displayName: data.displayName, dataEdit: { ...data, loading: false } });
+                this.setState({ firstName: data.firstName, displayName: data.displayName, dataEdit: { ...data, loading: false }, creditBalance: data.creditBalance });
 
                 let authLink = "/my-page/" + auth.isAuthenticated().user._id;
                 let actLink = window.location.pathname;
@@ -1130,14 +1132,14 @@ class Account extends React.Component {
                                             <div className="account-cov">
                                                 <div className="account-img float-lg-left">
                                                     <div className="__circular1">
-                                                      <img class="user-dp" src={this.state.userPhoto} />
+                                                        <img class="user-dp" src={this.state.userPhoto} />
                                                     </div>
                                                     <img class="profile-ring2" src="/client/assets/images/profile-ring.png" />
                                                 </div>
                                                 <div className="account-data float-lg-left">
                                                     <h3 style={{ color: 'white' }}>{this.state.displayName !== '' ? this.state.displayName : this.state.firstName}</h3>
                                                     <h5>GOLD MEMBER</h5>
-                                                    <h6>42 CREDITS</h6>
+                                                    <h6>{this.state.creditBalance} CREDITS</h6>
                                                 </div>
                                             </div>
                                             <div className="clearfix"></div>
@@ -1164,7 +1166,9 @@ class Account extends React.Component {
 
                                             <Billing />
 
-                                            <Credit />
+                                            <Credit
+                                                _refreshParent={this.__refreshParent}
+                                            />
 
                                             <Booking />
 

@@ -47,7 +47,7 @@ const image = (params, credentials, formData) => {
     .then((response) => {
       return response.json()
     }).catch((err) => console.log(err))
-} 
+}
 
 const update = (params, credentials, user) => {
   return fetch(link + '/api/users/' + params.userId, {
@@ -76,6 +76,21 @@ const remove = (params, credentials) => {
   }).catch((err) => console.log(err))
 }
 
+const payout = (params, credentials, order, token) => {
+  return fetch('http://localhost:8080/api/credit', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + credentials.t
+    },
+    body: JSON.stringify({ amount: order.amount, credit: order.credit, id: token, user: params.userId })
+  })
+    .then((response) => {
+      return response.json()
+    }).catch((err) => console.log(err))
+}
+
 
 const password = (params, credentials, user) => {
   return fetch(link + '/api/password/' + params.userId, {
@@ -98,5 +113,6 @@ export {
   update,
   remove,
   password,
-  image
+  image,
+  payout
 }
