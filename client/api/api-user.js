@@ -77,7 +77,7 @@ const remove = (params, credentials) => {
 }
 
 const payout = (params, credentials, order, token) => {
-  return fetch('http://localhost:8080/api/credit', {
+  return fetch(link + '/api/credit', {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
