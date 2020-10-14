@@ -742,7 +742,8 @@ class Credit extends React.Component {
         this.state = {
             checkout: false,
             stripe: null,
-            credit: 1
+            credit: 1,
+            creditBalance: 0
         }
     }
 
@@ -769,6 +770,14 @@ class Credit extends React.Component {
         }
     }
 
+    componentDidUpdate(prevProps) {
+        if (this.props._creditBalance !== prevProps._creditBalance) {
+            this.setState({creditBalance: this.props._creditBalance})
+        }
+    }
+
+
+
 
     refreshParent = () => {
         this.setState({ credit: 1 })
@@ -781,7 +790,7 @@ class Credit extends React.Component {
     render() {
         return (
             <div>
-                <h3 className="text-center white">CREDITS AVAILABLE: <br />42</h3>
+                <h3 className="text-center white">CREDITS AVAILABLE: {this.state.creditBalance}</h3>
                 <div className="row">
                     <div className="col-md-4 center-block">
                     </div>
@@ -807,7 +816,7 @@ class Credit extends React.Component {
                         <h5 className="m-b">CREDITS IN CART</h5>
                         <div className="input-area ft-sz">
                             <input type="text" value={this.state.credit} />
-                            <span className="total-f">({this.state.credit} TOTAL)</span>
+                            <span className="total-f">(${this.state.credit} TOTAL)</span>
                         </div>
 
                     </div>
@@ -1167,6 +1176,7 @@ class Account extends React.Component {
 
                                             <Credit
                                                 _refreshParent={this.__refreshParent}
+                                                _creditBalance={this.state.creditBalance}
                                             />
 
                                             <Booking />
