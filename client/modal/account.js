@@ -127,10 +127,7 @@ class AccountInfo extends React.Component {
         this.linkData.set('tiktokStatus', this.state.tiktokStatus)
 
 
-        if (!auth.isAuthenticated) {
-            window.location = '/'
-            return
-        } else {
+        if (auth.isAuthenticated()) {
             const jwt = auth.isAuthenticated();
             const userId = jwt.user._id;
             const token = jwt.token;
@@ -879,54 +876,53 @@ class Booking extends React.Component {
 
     _listBooking = () => {
 
-        if (!auth.isAuthenticated) {
-            window.location = '/'
-            return
+        if (auth.isAuthenticated()) {
+            const jwt = auth.isAuthenticated();
+            const userId = jwt.user._id;
+
+            listBooking({
+                user_id: userId
+            }).then((data) => {
+                if (data.error) {
+                    swal(data.error)
+                } else {
+                    this.setState({ meetings: data.booking })
+
+                    if ($('.owl-carousel').hasClass('owl-theme')) { //resize event was triggering an error, this if statement is to go around it
+
+
+                        $('.owl-carousel').trigger('destroy.owl.carousel'); //these 3 lines kill the owl, and returns the markup to the initial state
+                        $('.owl-carousel').find('.owl-stage-outer').children().unwrap();
+                        $('.owl-carousel').removeClass("owl-center owl-loaded owl-text-select-on");
+
+                        $(".owl-carousel").owlCarousel({
+                            margin: 30,
+                            nav: true,
+                            loop: false,
+                            singleItem: true,
+                            navText: ["<div class='nav-btn prev-btn'>Pre</div>", "<div class='nav-btn next-btn'>Next</div>"],
+                            dots: true,
+                            responsive: {
+                                0: {
+                                    items: 1,
+                                    margin: 5
+                                },
+                                1000: {
+                                    items: 2
+                                },
+                                1100: {
+                                    items: 3
+                                }
+
+                            },
+                        }); //re-initialise the owl
+                    }
+
+                }
+            })
         }
 
-        const jwt = auth.isAuthenticated();
-        const userId = jwt.user._id;
 
-        listBooking({
-            user_id: userId
-        }).then((data) => {
-            if (data.error) {
-                swal(data.error)
-            } else {
-                this.setState({ meetings: data.booking })
-
-                if ($('.owl-carousel').hasClass('owl-theme')) { //resize event was triggering an error, this if statement is to go around it
-
-
-                    $('.owl-carousel').trigger('destroy.owl.carousel'); //these 3 lines kill the owl, and returns the markup to the initial state
-                    $('.owl-carousel').find('.owl-stage-outer').children().unwrap();
-                    $('.owl-carousel').removeClass("owl-center owl-loaded owl-text-select-on");
-
-                    $(".owl-carousel").owlCarousel({
-                        margin: 30,
-                        nav: true,
-                        loop: false,
-                        singleItem: true,
-                        navText: ["<div class='nav-btn prev-btn'>Pre</div>", "<div class='nav-btn next-btn'>Next</div>"],
-                        dots: true,
-                        responsive: {
-                            0: {
-                                items: 1,
-                                margin: 5
-                            },
-                            1000: {
-                                items: 2
-                            },
-                            1100: {
-                                items: 3
-                            }
-
-                        },
-                    }); //re-initialise the owl
-                }
-
-            }
-        })
     }
 
     __moment = (time) => {
