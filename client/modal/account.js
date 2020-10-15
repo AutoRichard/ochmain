@@ -944,7 +944,7 @@ class Booking extends React.Component {
                                 <h5>DETAILS:</h5>
                                 <div className="line3"></div>
                                 <div className="time-icon"><img src="/client/assets/images/time-icon.png" /></div>
-                                <h5>{/*this.__moment(el.meeting_id.start_time)*/}</h5>
+                                <h5>{el.meeting_id.start_time}</h5>
                                 <div className="video-ic"><img src="/client/assets/images/video-cam.png" /></div>
                                 <h5>{el.meeting_id.topic}<br />(ZOOM SESSION)</h5>
                                 <div className="join-cover">
