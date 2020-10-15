@@ -76,3 +76,13 @@ function moveDate(param) {
 
     renderDate();
 }
+
+
+$(document).ready(function () {
+    $(document).on('click', '.icalendar__prev', function () {
+        moveDate('prev')
+    });
+    $(document).on('click', '.icalendar__next', function () {
+        moveDate('next')
+    });
+});

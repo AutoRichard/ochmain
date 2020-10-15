@@ -6,6 +6,8 @@ import swal from 'sweetalert'
 
 import { StripeProvider, Elements } from 'react-stripe-elements'
 import CheckoutForm from './checkout'
+import { listBooking } from './../api/api-booking';
+//import moment from 'moment';
 
 
 
@@ -772,7 +774,7 @@ class Credit extends React.Component {
 
     componentDidUpdate(prevProps) {
         if (this.props._creditBalance !== prevProps._creditBalance) {
-            this.setState({creditBalance: this.props._creditBalance})
+            this.setState({ creditBalance: this.props._creditBalance })
         }
     }
 
@@ -859,85 +861,112 @@ class Credit extends React.Component {
 
 }
 
-const Booking = () => {
-    return (
-        <div>
-            <div id="booking-list" className="owl-carousel owl-theme">
+class Booking extends React.Component {
 
-                <div className="item">
-                    <div className="border-box text-center">
-                        <img src="/client/assets/images/vc-1.png" className="user-dpz" />
-                        <div className="m-ab"><a href="#"><img src="/client/assets/images/msg.png" /></a></div>
-                        <h4>VOCAL LESSON <br />
+    constructor(props) {
+        super(props)
 
-W/JACKIE HISHMEH</h4>
+        this.state = {
+            meetings: []
+        }
+    }
 
-                        <h5>DETAILS:</h5>
-                        <div className="line3"></div>
-                        <div className="time-icon"><img src="/client/assets/images/time-icon.png" /></div>
-                        <h5>JULY 21, 2020 <br />
-10 AM - 11 AM (PST)</h5>
-                        <div className="video-ic"><img src="/client/assets/images/video-cam.png" /></div>
-                        <h5>V-STUDIO 9<br />
-(ZOOM SESSION)</h5>
-                        <div className="join-cover">
-                            <a href="#" className="g-btn">JOIN SESSION</a>
-                            <a href="#" className="red-btn">CANCEL</a>
+    componentDidMount() {
+        this._listBooking()
+    }
+
+    _listBooking = () => {
+
+        if (!auth.isAuthenticated) {
+            window.location = '/'
+            return
+        }
+
+        const jwt = auth.isAuthenticated();
+        const userId = jwt.user._id;
+
+        listBooking({
+            user_id: userId
+        }).then((data) => {
+            if (data.error) {
+                swal(data.error)
+            } else {
+                this.setState({ meetings: data.booking })
+
+                if ($('.owl-carousel').hasClass('owl-theme')) { //resize event was triggering an error, this if statement is to go around it
+
+
+                    $('.owl-carousel').trigger('destroy.owl.carousel'); //these 3 lines kill the owl, and returns the markup to the initial state
+                    $('.owl-carousel').find('.owl-stage-outer').children().unwrap();
+                    $('.owl-carousel').removeClass("owl-center owl-loaded owl-text-select-on");
+
+                    $(".owl-carousel").owlCarousel({
+                        margin: 30,
+                        nav: true,
+                        loop: false,
+                        singleItem: true,
+                        navText: ["<div class='nav-btn prev-btn'>Pre</div>", "<div class='nav-btn next-btn'>Next</div>"],
+                        dots: true,
+                        responsive: {
+                            0: {
+                                items: 1,
+                                margin: 5
+                            },
+                            1000: {
+                                items: 2
+                            },
+                            1100: {
+                                items: 3
+                            }
+
+                        },
+                    }); //re-initialise the owl
+                }
+
+            }
+        })
+    }
+
+    __moment = (time) => {
+        return time;
+    }
+
+    render() {
+        return (
+            <div>
+                <div id="booking-list" className="owl-carousel owl-theme">
+
+                    {this.state.meetings.map((el, i) =>
+
+                        <div className="item">
+                            <div className="border-box text-center">
+                                <img src={'https://ochbackend.herokuapp.com/api/usersPhoto/' + el.user_id._id} className="user-dpz" />
+                                <h4>{el.user_id.firstName}</h4>
+
+                                <h5>DETAILS:</h5>
+                                <div className="line3"></div>
+                                <div className="time-icon"><img src="/client/assets/images/time-icon.png" /></div>
+                                <h5>{/*this.__moment(el.meeting_id.start_time)*/}</h5>
+                                <div className="video-ic"><img src="/client/assets/images/video-cam.png" /></div>
+                                <h5>{el.meeting_id.topic}<br />(ZOOM SESSION)</h5>
+                                <div className="join-cover">
+                                    <a href={"/zoom.html?meeting_id=" + el.meeting_id._id} className="g-btn">JOIN SESSION</a>
+                                </div>
+                                <span>(UP TO 72 HOURS PRIOR)</span>
+                            </div>
                         </div>
-                        <span>(UP TO 72 HOURS PRIOR)</span>
-                    </div>
+
+                    )}
+
+
+
+
                 </div>
-                <div className="item">
-                    <div className="border-box text-center">
-                        <img src="/client/assets/images/gui1.png" className="user-dpz" />
-                        <div className="m-ab"><a href="#"><img src="/client/assets/images/msg.png" /></a></div>
-                        <h4>VOCAL LESSON <br />
-
-W/JACKIE HISHMEH</h4>
-
-                        <h5>DETAILS:</h5>
-                        <div className="line3"></div>
-                        <div className="time-icon"><img src="/client/assets/images/time-icon.png" /></div>
-                        <h5>JULY 21, 2020 <br />
-10 AM - 11 AM (PST)</h5>
-                        <div className="video-ic"><img src="/client/assets/images/video-cam.png" /></div>
-                        <h5>V-STUDIO 9<br />
-(ZOOM SESSION)</h5>
-                        <div className="join-cover">
-                            <a href="#" className="g-btn">JOIN SESSION</a>
-                            <a href="#" className="red-btn">CANCEL</a>
-                        </div>
-                        <span>(UP TO 72 HOURS PRIOR)</span>
-                    </div>
-                </div>
-                <div className="item">
-                    <div className="border-box text-center">
-                        <img src="/client/assets/images/cc1.png" className="user-dpz" />
-                        <div className="m-ab"><a href="#"><img src="/client/assets/images/msg.png" /></a></div>
-                        <h4>VOCAL LESSON <br />
-
-W/JACKIE HISHMEH</h4>
-
-                        <h5>DETAILS:</h5>
-                        <div className="line3"></div>
-                        <div className="time-icon"><img src="/client/assets/images/time-icon.png" /></div>
-                        <h5>JULY 21, 2020 <br />
-10 AM - 11 AM (PST)</h5>
-                        <div className="video-ic"><img src="/client/assets/images/video-cam.png" /></div>
-                        <h5>V-STUDIO 9<br />
-(ZOOM SESSION)</h5>
-                        <div className="join-cover">
-                            <a href="#" className="g-btn">JOIN SESSION</a>
-                            <a href="#" className="red-btn">CANCEL</a>
-                        </div>
-                        <span>(UP TO 72 HOURS PRIOR)</span>
-                    </div>
-                </div>
-
             </div>
-        </div>
 
-    );
+        );
+    }
+
 }
 
 class Password extends React.Component {

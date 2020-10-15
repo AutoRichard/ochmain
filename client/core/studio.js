@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Header } from './../menu/header';
 import { listMeeting } from './../api/api-meeting';
 import auth from './../auth/auth-helper';
-import Booking from './../modal/booking'
+import Booking from './../modal/booking';
+import { read } from './../api/api-user';
 
 
 
@@ -47,14 +48,15 @@ class Studios extends Component {
                         dots: true,
                         responsive: {
                             0: {
-                                items: 1
-                            },
-                            600: {
-                                items: 3
+                                items: 1,
+                                margin: 5
                             },
                             1000: {
-                                items: 4
+                                items: 2
                             },
+                            1100: {
+                                items: 3
+                            }
 
                         },
                     }); //re-initialise the owl
@@ -231,13 +233,45 @@ class Studio extends Component {
         this.state = {
             meeting_image: '',
             meeting_title: '',
+            meeting_id: '',
+            user_id: '',
+            creditBalance: 0
+        }
+
+
+    }
+
+    componentDidMount() {
+        if (!auth.isAuthenticated) {
+            window.location = '/'
+            return
+        } else {
+            this.readUser()
         }
 
 
     }
 
     openMeetings = (data) => {
-        this.setState({meeting_image: '/client/assets/images/v1.jpg', meeting_title: data.topic})
+        this.setState({ meeting_image: '/client/assets/images/v1.jpg', meeting_title: data.topic, meeting_id: data._id })
+    }
+
+
+    readUser = () => {
+        if (auth.isAuthenticated()) {
+            const jwt = auth.isAuthenticated();
+            const userId = jwt.user._id;
+            const token = jwt.token;
+            read({
+                userId: userId
+            }, { t: token }).then((data) => {
+                if (data.error) {
+                    swal(data.error)
+                } else {
+                    this.setState({ user_id: data._id || '', creditBalance: data.creditBalance || 0 });
+                }
+            })
+        }
     }
 
 
@@ -256,6 +290,9 @@ class Studio extends Component {
                 <Booking
                     meeting_image={this.state.meeting_image}
                     meeting_title={this.state.meeting_title}
+                    meeting_id={this.state.meeting_id}
+                    user_id={this.state.user_id}
+                    creditBalance={this.state.creditBalance}
                 />
 
 

@@ -1,5 +1,7 @@
 import React from 'react';
-
+import auth from './../auth/auth-helper';
+import swal from 'sweetalert'
+import { createBooking, checkBooking } from './../api/api-booking';
 
 
 
@@ -10,19 +12,77 @@ class Booking extends React.Component {
 
         this.state = {
             meeting_title: '',
-            meeting_image: ''
+            meeting_image: '',
+            credit: 1,
+            meeting_id: '',
+            user_id: '',
+            creditBalance: 0
         }
     }
 
 
     componentDidMount() {
+        this.BookingData = new FormData()
+    }
 
+    plus = () => {
+        if (this.state.creditBalance > this.state.credit) {
+            this.setState({ credit: this.state.credit + 1 })
+        }
+    }
+
+    minus = () => {
+        if (this.state.credit > 1) {
+            this.setState({ credit: this.state.credit - 1 })
+        }
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.meeting_title !== prevProps.meeting_title) {
-            this.setState({ meeting_image: this.props.meeting_image, meeting_title: this.props.meeting_title })
+        if (this.props.meeting_id !== prevProps.meeting_id) {
+
+            this.setState({ meeting_image: this.props.meeting_image, meeting_title: this.props.meeting_title, meeting_id: this.props.meeting_id, user_id: this.props.user_id, creditBalance: this.props.creditBalance })
         }
+    }
+
+    booking = (event) => {
+        event.preventDefault();
+
+        this.BookingData.set('meeting_id', this.state.meeting_id)
+        this.BookingData.set('user_id', this.state.user_id)
+        this.BookingData.set('hour', this.state.credit)
+
+        if (!auth.isAuthenticated) {
+            window.location = '/'
+            return
+        }
+
+        const jwt = auth.isAuthenticated();
+        const token = jwt.token;
+
+        checkBooking({
+            user_id: this.state.user_id,
+            meeting_id: this.state.meeting_id
+        }).then((data) => {
+            if (data.error) {
+                swal(data.error)
+            } else {
+                let countBooking = data.booking.length;
+                if (countBooking == 0) {
+                    createBooking({
+                        t: token
+                    }, this.BookingData).then((data) => {
+                        if (data.error) {
+                            console.log(data.error);
+                        } else {
+                            swal("Meeting Booked")
+                            window.location = '/studio'
+                        }
+                    });
+                } else if (countBooking > 0) {
+                    swal("Meeting Already Booked")
+                }
+            }
+        })
     }
 
     render() {
@@ -47,19 +107,19 @@ class Booking extends React.Component {
                                         </div>
                                         <div class="qty clearfix">
                                             <label># OF HOURS</label>
-                                            <span class="minus bg-dark">-</span>
-                                            <input type="number" class="count" name="qty" value="1" />
-                                            <span class="plus bg-dark">+</span>
+                                            <span onClick={this.minus} class="minus bg-dark">-</span>
+                                            <input type="number" class="count" name="qty" value={this.state.credit} />
+                                            <span onClick={this.plus} class="plus bg-dark">+</span>
                                         </div>
                                         <span class="s-text">FIRST HOUR FREE <br />
                                             THEN 1 CREDIT/HR</span>
 
-                                        <h3 class="total-p">TOTAL PRICE - 0 CREDits<br />
+                                        <h3 class="total-p">TOTAL PRICE - {this.state.credit} CREDits<br />
 
 
-                                                (42 Credits available)</h3>
-                                        <a href="#" class="book-now sp">BUY CREDITS</a>
-                                        <a href="#" class="book-now-green">BOOK NOW</a>
+                                                ({this.state.creditBalance} Credits available)</h3>
+                                        {/*<a href="#" class="book-now sp">BUY CREDITS</a>*/}
+                                        <a href="#" onClick={this.booking} class="book-now-green">BOOK NOW&#10094;</a>
                                     </div>
                                 </div>
                                 <div class="col-md-12 col-lg-4 spc">
@@ -67,7 +127,7 @@ class Booking extends React.Component {
                                     <div class="icalendar">
                                         <div class="icalendar__month">
                                             <div class="icalendar__prev" onclick="moveDate('prev')">
-                                                <span>&#10094</span>
+                                                <span>&#10094;</span>
                                             </div>
                                             <div class="icalendar__current-date">
                                                 <h2 id="icalendarMonth"></h2>
@@ -75,7 +135,7 @@ class Booking extends React.Component {
 
                                             </div>
                                             <div class="icalendar__next" onclick="moveDate('next')">
-                                                <span>&#10095</span>
+                                                <span>&#10095;</span>
                                             </div>
                                         </div>
                                         <div class="icalendar__week-days">
@@ -106,8 +166,8 @@ class Booking extends React.Component {
                                     </div>
 
                                     <div class="total-cost">
-                                        TOTAL COST 4 CREDITS (42 AVAILABLE)
-			</div>
+                                        {/*TOTAL COST 4 CREDITS (42 AVAILABLE)*/}
+                                    </div>
                                 </div>
 
                             </div>
