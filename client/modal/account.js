@@ -888,14 +888,14 @@ class Booking extends React.Component {
                 } else {
                     this.setState({ meetings: data.booking })
 
-                    if ($('.owl-carousel').hasClass('owl-theme')) { //resize event was triggering an error, this if statement is to go around it
+                    if ($('#booking-list').hasClass('owl-theme')) { //resize event was triggering an error, this if statement is to go around it
 
 
-                        $('.owl-carousel').trigger('destroy.owl.carousel'); //these 3 lines kill the owl, and returns the markup to the initial state
-                        $('.owl-carousel').find('.owl-stage-outer').children().unwrap();
-                        $('.owl-carousel').removeClass("owl-center owl-loaded owl-text-select-on");
+                        $('#booking-list').trigger('destroy.owl.carousel'); //these 3 lines kill the owl, and returns the markup to the initial state
+                        $('#booking-list').find('.owl-stage-outer').children().unwrap();
+                        $('#booking-list').removeClass("owl-center owl-loaded owl-text-select-on");
 
-                        $(".owl-carousel").owlCarousel({
+                        $("#booking-list").owlCarousel({
                             margin: 30,
                             nav: true,
                             loop: false,

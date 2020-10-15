@@ -33,13 +33,13 @@ class Studios extends Component {
 
                 //console.log(data)
 
-                if ($('.owl-carousel').hasClass('owl-theme')) { //resize event was triggering an error, this if statement is to go around it
+                if ($('#v-studio').hasClass('owl-theme')) { //resize event was triggering an error, this if statement is to go around it
 
-                    $('.owl-carousel').trigger('destroy.owl.carousel'); //these 3 lines kill the owl, and returns the markup to the initial state
-                    $('.owl-carousel').find('.owl-stage-outer').children().unwrap();
-                    $('.owl-carousel').removeClass("owl-center owl-loaded owl-text-select-on");
+                    $('#v-studio').trigger('destroy.owl.carousel'); //these 3 lines kill the owl, and returns the markup to the initial state
+                    $('#v-studio').find('.owl-stage-outer').children().unwrap();
+                    $('#v-studio').removeClass("owl-center owl-loaded owl-text-select-on");
 
-                    $(".owl-carousel").owlCarousel({
+                    $("#v-studio").owlCarousel({
                         margin: 30,
                         nav: true,
                         loop: false,
@@ -48,15 +48,14 @@ class Studios extends Component {
                         dots: true,
                         responsive: {
                             0: {
-                                items: 1,
-                                margin: 5
+                                items: 1
+                            },
+                            600: {
+                                items: 3
                             },
                             1000: {
-                                items: 2
+                                items: 4
                             },
-                            1100: {
-                                items: 3
-                            }
 
                         },
                     }); //re-initialise the owl
@@ -260,7 +259,7 @@ class Studio extends Component {
     readUser = () => {
         if (auth.isAuthenticated()) {
             const jwt = auth.isAuthenticated();
-            const userId = jwt.user._id;
+            const userId = jwt.user._id;            
             const token = jwt.token;
             read({
                 userId: userId
