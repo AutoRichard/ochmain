@@ -130,46 +130,48 @@ class AccountInfo extends React.Component {
         if (!auth.isAuthenticated) {
             window.location = '/'
             return
+        } else {
+            const jwt = auth.isAuthenticated();
+            const userId = jwt.user._id;
+            const token = jwt.token;
+
+            this.linkData.set('userId', userId);
+
+            checkLink({
+                userId: userId
+            }).then((data) => {
+                if (data.error) {
+                    swal(data.error)
+                } else {
+                    let countLink = data.link.length;
+                    let links = data.link;
+                    if (countLink > 0 && countLink == 1) {
+                        updateLinkStatus({ linkId: this.state.linkId }, { t: token }, this.linkData).then((data) => {
+                            if (data.error) {
+                                console.log(data.error);
+                            } else {
+                                this.props.updateUserParent(user);
+                                this.setState({ newLink: false, linkId: data._id });
+                            }
+                        });
+                    } else if (countLink == 0) {
+                        createLink({
+                            t: token
+                        }, this.linkData).then((data) => {
+                            if (data.error) {
+                                console.log(data.error);
+                            } else {
+                                this.props.updateUserParent(user);
+                                this.setState({ newLink: false, linkId: data._id });
+                            }
+                        });
+                    }
+                }
+            })
         }
 
 
-        const jwt = auth.isAuthenticated();
-        const userId = jwt.user._id;
-        const token = jwt.token;
 
-        this.linkData.set('userId', userId);
-
-        checkLink({
-            userId: userId
-        }).then((data) => {
-            if (data.error) {
-                swal(data.error)
-            } else {
-                let countLink = data.link.length;
-                let links = data.link;
-                if (countLink > 0 && countLink == 1) {
-                    updateLinkStatus({ linkId: this.state.linkId }, { t: token }, this.linkData).then((data) => {
-                        if (data.error) {
-                            console.log(data.error);
-                        } else {
-                            this.props.updateUserParent(user);
-                            this.setState({ newLink: false, linkId: data._id });
-                        }
-                    });
-                } else if (countLink == 0) {
-                    createLink({
-                        t: token
-                    }, this.linkData).then((data) => {
-                        if (data.error) {
-                            console.log(data.error);
-                        } else {
-                            this.props.updateUserParent(user);
-                            this.setState({ newLink: false, linkId: data._id });
-                        }
-                    });
-                }
-            }
-        })
     }
 
     closeUpdate = () => {
