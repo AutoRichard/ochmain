@@ -121,7 +121,7 @@ class Profile extends Component {
 
                 <div className="small-12 medium-2 large-2 columns">
                     <div className="circle">
-                        <img className="profile-pic" style={{ width: '100%' }} src={this.state.image} />
+                        <img className="profile-pic" style={{ width: '100%', height: '100%' }} src={this.state.image} />
                         <img class="profile-ring" src="/client/assets/images/profile-ring.png"></img>
 
                         <i className="fa fa-user fa-5x"></i>
