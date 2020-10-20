@@ -117,6 +117,7 @@ class Zoom extends React.Component {
                     <div class="container-fluid">
                         <div class="text-center studio">
                             <a className="navbar-brand" href="/"><img src="/client/assets/images/logo.png" className="img-responsive" /></a>
+                            <br/><br/>
                             <h1>{this.state.meeting_topic}</h1>
                             <div class="div-box"></div>
 
