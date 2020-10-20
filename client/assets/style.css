@@ -7,8 +7,27 @@
     font-display: swap;
 }
 
-
-
+.z-area a {
+    background: #fc4349;
+    padding: 15px 10px;
+    display: block;
+    width: 180px;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 600;
+    text-align: center;
+    border-radius: 39px;
+    margin: 0 auto;
+}
+.z-area a:hover {
+    background: #000;
+    color: #fff;
+}
+.z-area img {
+    margin: 70px auto;
+    display: block;
+    width: 200px;
+}
 @font-face {
     font-family: 'Arial';
     src: url('fonts/ArialMT.woff2') format('woff2'),
@@ -3124,11 +3143,31 @@ ul.card-detail.new.clearfix p {
     font-size: 20px;
     padding: 0px;
 }
+.input-area.cc-in {
+    margin-top: -4px;
+}
+.input-area.cc-in input[type=text] {
+    height: 50px;
+}
+.input-area.cc-in span {
+    font-weight: 800;
+    text-align: left;
+    font-size: 13px;
+    display: block;
+    margin-bottom: 7px;
+}
+.qty-new label {
+    width: 100%;
+    text-transform: uppercase;
+    font-size: 13px;
+    font-family: 'LuloCleanW01-One';
+    font-weight: 800;
+}
 h5.creditz {
     position: absolute;
     left: 0px;
     right: 0px;
-    top: 8px;
+ top: 38px;
     text-align: center;
     font-family: 'LuloCleanOne';
     color: #000 !important;
@@ -3982,7 +4021,7 @@ img.del-icon.new {
     font-size: 11px;
 }
 .input-box.text-center span a{
-    font-size: 11px; color:#fff; text-decoration:underline !important;
+    font-size: 11px; color:#fff; text-decoration:underline !important;    min-width: 75%;
 }
 .input-box.text-center {
     padding-top: 40px;
@@ -4150,12 +4189,12 @@ top: 19px;}
     min-height: 50px;
     text-align: center;
 }
-	h5.creditz {
+h5.creditz {
     position: absolute;
     left: 0px;
     right: 0px;
-    top: -22px;
-    text-align: center;
+    top: 86px;
+    text-align: left;
     font-family: 'LuloCleanOne';
     color: #fff !important;
     font-size: 14px;
@@ -4347,7 +4386,7 @@ a.book-now-green {
 	ul.package-list li {
     width: 58%;}
 	h5.creditz {
-    top: -23px;
+      top: 84px;
     color: #fff !important;
 }
 	.col-md-10.col-lg-4.padd-both.pd{
@@ -4358,7 +4397,7 @@ a.book-now-green {
     position: relative;
     width: 154px;
     margin-bottom: 30px;
-    margin: 0 auto 30px;
+    margin: 0 0px 30px;
 }
 	.resp-vtabs .resp-tabs-container {
     padding: 0px;
@@ -4672,6 +4711,12 @@ margin: 0px 0px;}
 
 
 @media (min-width: 320px) and (max-width: 767px) {
+	.qty-new label {
+    width: 100%;
+    text-align: center;}
+	.input-area.cc-in span {
+    font-weight: 800;
+    text-align: center;}
 	.account-img.float-lg-left {
     margin: 0px !important;
 }
@@ -4788,7 +4833,7 @@ ul.status-list img {
     position: absolute;
     left: 0px;
     right: 0px;
-    top: -23px;
+top: 87px;
     text-align: center;
     font-family: 'LuloCleanOne';
     color: #f0f0f0 !important;

@@ -792,66 +792,16 @@ class Credit extends React.Component {
         return (
             <div>
                 <h3 className="text-center white">CREDITS AVAILABLE: {this.state.creditBalance}</h3>
-                <div className="row">
-                    <div className="col-md-4 center-block">
-                    </div>
-                    <div className="col-md-4">
-                        <div className="qty-new clearfix">
-                            <h5 className="creditz">{this.state.credit} CREDITS</h5>
-                            <span onClick={this.minus} className="minus bg-dark">-</span>
-                            <input type="number" onChange={this.onChange} className="count" name="qty" value={this.state.credit} />
-                            <span onClick={this.plus} className="plus bg-dark">+</span>
-                        </div>
-                    </div>
-                    <div className="col-md-4 center-block">
-                    </div>
-
-                </div>
-
-                <div className="row">
-
-                    <div className="col-md-3 text-center">
-                    </div>
-
-                    <div className="col-md-6 text-center">
-                        <h5 className="m-b">CREDITS IN CART</h5>
-                        <div className="input-area ft-sz">
-                            <input type="text" value={this.state.credit} />
-                            <span className="total-f">(${this.state.credit} TOTAL)</span>
-                        </div>
-
-                    </div>
-
-
-                    {/*<div className="col-md-4 text-center">
-                        <h5 className="m-b">BILLING HISTORY</h5>
-                        <div className="top-spc">
-                            <a href="#"><img src="/client/assets/images/pdf-icon.png" className="pd-icon" /> DOWNLOAD AS PDF</a>
-                        </div>
-                    </div>*/}
-
-                    <div className="col-md-3 text-center">
-                    </div>
-
-                </div>
-
-                <div className="row">
-
-                    <div className="col-md-12 text-center">
-                        <StripeProvider stripe={this.state.stripe}>
-                            <Elements>
-                                <CheckoutForm
-                                    credit={this.state.credit}
-                                    _refresh={this.refreshParent}
-                                />
-                            </Elements>
-                        </StripeProvider>
-                    </div>
-
-
-
-
-                </div>
+                <StripeProvider stripe={this.state.stripe}>
+                    <Elements>
+                        <CheckoutForm
+                            credit={this.state.credit}
+                            _refresh={this.refreshParent}
+                            _plus={this.plus}
+                            _minus={this.minus}
+                        />
+                    </Elements>
+                </StripeProvider>
             </div>
 
 
@@ -900,7 +850,7 @@ class Booking extends React.Component {
                             nav: true,
                             loop: false,
                             singleItem: true,
-                            navText: ["<div class='nav-btn prev-btn'>Pre</div>", "<div class='nav-btn next-btn'>Next</div>"],
+                            navText: ["<div className='nav-btn prev-btn'>Pre</div>", "<div className='nav-btn next-btn'>Next</div>"],
                             dots: true,
                             responsive: {
                                 0: {
@@ -1167,9 +1117,9 @@ class Account extends React.Component {
                                             <div className="account-cov">
                                                 <div className="account-img float-lg-left">
                                                     <div className="__circular1">
-                                                        <img class="user-dp" src={this.state.userPhoto} />
+                                                        <img className="user-dp" src={this.state.userPhoto} />
                                                     </div>
-                                                    <img class="profile-ring2" src="/client/assets/images/profile-ring.png" />
+                                                    <img className="profile-ring2" src="/client/assets/images/profile-ring.png" />
                                                 </div>
                                                 <div className="account-data float-lg-left">
                                                     <h3 style={{ color: 'white' }}>{this.state.displayName !== '' ? this.state.displayName : this.state.firstName}</h3>

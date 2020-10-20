@@ -5,6 +5,8 @@ import { payout } from './../api/api-user';
 import auth from './../auth/auth-helper';
 
 
+
+
 class CardSection extends React.Component {
     render() {
 
@@ -93,17 +95,104 @@ class CheckoutForm extends React.Component {
         this.props._refresh()
     }
 
+    __minus = () => {
+        this.props._minus()
+    }
+
+    __plus = () => {
+        this.props._plus()
+    }
+
 
     render() {
         return (
-            <form>
-                <CardSection />
-                <a onClick={this.handleSubmit} href="#" className="book-now-green">
-                    Buy Now
-                </a>
-                <p className="f-small">BY CLICKING “BUY NOW” I AGREE TO THE TERMS OF SERVICE & UNDERSTAND THAT MY CREDIT CARD WILL BE CHARGED THE AMOUNT ABOVE</p>
-                    
-            </form>
+
+            <div>
+                <div className="row">
+                    <div className="col-md-4">
+                        <div className="qty-new clearfix">
+                            <label>Quantity</label>
+                            <h5 className="creditz">{this.state.amount} CREDITS</h5>
+                            <span onClick={this.__minus} className="minus bg-dark">-</span>
+                            <input type="number" onChange={this.onChange} className="count" name="qty" value={this.state.amount} />
+                            <span onClick={this.__plus} className="plus bg-dark">+</span>
+                        </div>
+                    </div>
+                    <div className="col-md-8">
+                        <label>Credit Card</label>
+                        <form>
+                            <CardSection />
+                        </form>
+                    </div>
+
+                </div>
+
+                <div className="row">
+
+                    <div className="col-md-6">
+
+                        <h5 className="m-b">CARD SELECTION</h5>
+                        <label className="control-r control-radio">
+                            <ul className="card-detail new clearfix">
+                                <li><img src="/client/assets/images/card-one.png" className="card-im" /></li>
+                                <li><p>VISA - **** 3432</p>
+
+
+                                    <p>EXP. DATE: 12/23</p>
+
+
+                                    <p>PRIMARY</p></li>
+                                <li><a href="#"><img src="/client/assets/images/del.png" className="del-icon new" /></a></li>
+
+                            </ul>
+                            <input type="radio" name="radio" checked="checked" />
+                            <div className="control_indicator-r"></div>
+                        </label>
+
+
+                        <label className="control-r control-radio">
+                            <ul className="card-detail new clearfix">
+                                <li><img src="/client/assets/images/card-two.png" className="card-im" /></li>
+                                <li><p>MASTERCARD - **** 4135</p>
+
+
+                                    <p>EXP. DATE: 12/23</p>
+
+
+                                    <p>MAKE PRIMARY</p></li>
+                                <li><a href="#"><img src="/client/assets/images/del.png" className="del-icon new" /></a></li>
+
+                            </ul>
+                            <input type="radio" name="radio" checked="checked" />
+                            <div className="control_indicator-r"></div>
+                        </label>
+
+                        <a href="#" className="grey-link"><img src="/client/assets/images/gray-plus.png" className="grey-icon" /> ADD CARD</a>
+
+                    </div>
+
+                    <div className="col-md-6 text-center">
+                        <h5 className="m-b">CREDITS IN CART</h5>
+                        <div className="input-area ft-sz">
+                            <input type="text" value={this.state.amount} />
+                            <span className="total-f">(${this.state.amount} TOTAL)</span>
+                        </div>
+                        <a onClick={this.handleSubmit} href="#" className="book-now-green">
+                            Buy Now
+                        </a>
+                        <p className="f-small">BY CLICKING “BUY NOW” I AGREE TO THE TERMS OF SERVICE & UNDERSTAND THAT MY CREDIT CARD WILL BE CHARGED THE AMOUNT ABOVE</p>
+
+
+                    </div>
+
+                    <div className="col-md-3 text-center">
+                    </div>
+
+                </div>
+
+
+            </div>
+
         );
     }
 }
