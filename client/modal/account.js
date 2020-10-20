@@ -1117,7 +1117,7 @@ class Account extends React.Component {
                                             <div className="account-cov">
                                                 <div className="account-img float-lg-left">
                                                     <div className="__circular1">
-                                                        <img className="user-dp" src={this.state.userPhoto} />
+                                                        <img style={{ height: '100%' }} className="user-dp" src={this.state.userPhoto} />
                                                     </div>
                                                     <img className="profile-ring2" src="/client/assets/images/profile-ring.png" />
                                                 </div>

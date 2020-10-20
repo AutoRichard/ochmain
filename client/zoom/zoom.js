@@ -14,13 +14,14 @@ class Zoom extends React.Component {
             meeting_number: '',
             meeting_pwd: '',
             link: 'https://ochbackend.herokuapp.com',
-            //link: 'http://localhost:8080'
+            //link: 'http://localhost:8080',
+            meeting_topic: 'MEETING'
         }
     }
 
     componentDidMount() {
 
-        if(!auth.isAuthenticated()){
+        if (!auth.isAuthenticated()) {
             window.location = '/'
         }
 
@@ -30,9 +31,9 @@ class Zoom extends React.Component {
 
         const page_type = urlParams.get('meeting_id')
 
-        if(page_type == '' || page_type == undefined){
+        if (page_type == '' || page_type == undefined) {
             window.location = '/'
-        }   
+        }
 
         fetch(this.state.link + '/api/meeting',
             {
@@ -46,9 +47,12 @@ class Zoom extends React.Component {
             }).then(result => result.json())
             .then(response => {
 
+
+
                 this.setState({
                     meeting_number: response.id,
-                    meeting_pwd: response.password
+                    meeting_pwd: response.password,
+                    meeting_topic: response.topic
                 })
 
                 ZoomMtg.preLoadWasm();
@@ -58,7 +62,9 @@ class Zoom extends React.Component {
                 console.log(JSON.stringify(ZoomMtg.checkSystemRequirements()));
 
                 testTool = window.testTool;
-                this.join()
+
+                setInterval(this.join(), 3000)
+                
             });
     }
 
@@ -107,7 +113,19 @@ class Zoom extends React.Component {
                 <input type="hidden" value="" id="meeting_email" />
                 <input type="hidden" value="en-US" id="meeting_lang" />
                 <input type="hidden" value="0" id="meeting_china" />
-                <a className="btn btn-primary" onClick={this.join}>Join</a>
+                <section class="padd-b padd-top">
+                    <div class="container-fluid">
+                        <div class="text-center studio">
+                            <h1>{this.state.meeting_topic}</h1>
+                            <div class="div-box"></div>
+
+                        </div>
+                        <div class="z-area">
+                            <img src="/client/assets/images/z-logo.png" alt="" class="img-fluid z-log" />
+                            <a href="#" onClick={this.join}>Join Now</a>
+                        </div>
+                    </div>
+                </section>
             </div>
         );
     }
