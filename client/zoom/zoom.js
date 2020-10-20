@@ -64,7 +64,7 @@ class Zoom extends React.Component {
                 testTool = window.testTool;
 
                 setInterval(this.join(), 3000)
-                
+
             });
     }
 
@@ -116,6 +116,7 @@ class Zoom extends React.Component {
                 <section class="padd-b padd-top">
                     <div class="container-fluid">
                         <div class="text-center studio">
+                            <a className="navbar-brand" href="/"><img src="/client/assets/images/logo.png" className="img-responsive" /></a>
                             <h1>{this.state.meeting_topic}</h1>
                             <div class="div-box"></div>
 
