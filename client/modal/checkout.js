@@ -119,7 +119,7 @@ class CheckoutForm extends React.Component {
                         </div>
                     </div>
                     <div className="col-md-8">
-                        <label>Credit Card</label>
+                        <label>CREDIT CARD</label>
                         <form>
                             <CardSection />
                         </form>
