@@ -1,6 +1,7 @@
 import React from 'react';
 import { image } from './../api/api-user';
 import auth from './../auth/auth-helper';
+import swal from 'sweetalert';
 
 
 
@@ -52,7 +53,7 @@ class PicBox extends React.Component {
             t: token
         }, this.userData).then((data) => {
             if (data.error) {
-                alert(data.error);
+                swal(data.error);
             } else {
                 console.log(data)
                 location.reload()

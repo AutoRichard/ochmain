@@ -750,7 +750,7 @@ class Credit extends React.Component {
 
 
     plus = () => {
-        this.setState({ credit: this.state.credit + 1 })
+        this.setState({ credit: +this.state.credit + 1 })
     }
 
     minus = () => {
@@ -758,6 +758,8 @@ class Credit extends React.Component {
             this.setState({ credit: this.state.credit - 1 })
         }
     }
+
+
 
 
     componentDidMount = () => {
@@ -775,6 +777,10 @@ class Credit extends React.Component {
         if (this.props._creditBalance !== prevProps._creditBalance) {
             this.setState({ creditBalance: this.props._creditBalance })
         }
+    }
+
+    __onChange = (data) => {
+        this.setState({ credit: data })
     }
 
 
@@ -799,6 +805,7 @@ class Credit extends React.Component {
                             _refresh={this.refreshParent}
                             _plus={this.plus}
                             _minus={this.minus}
+                            _onChange={this.__onChange}
                         />
                     </Elements>
                 </StripeProvider>

@@ -103,6 +103,18 @@ class CheckoutForm extends React.Component {
         this.props._plus()
     }
 
+    onChange = (event) => {
+
+        if(event.target.value == 0){
+            event.target.value = 1
+        }
+        this.setState({
+            [event.target.name]: event.target.value
+        });
+
+        this.props._onChange(event.target.value)
+    }
+
 
     render() {
         return (
@@ -114,7 +126,7 @@ class CheckoutForm extends React.Component {
                             <label>Quantity</label>
                             <h5 className="creditz">{this.state.amount} CREDITS</h5>
                             <span onClick={this.__minus} className="minus bg-dark">-</span>
-                            <input type="number" onChange={this.onChange} className="count" name="qty" value={this.state.amount} />
+                            <input type="number" onChange={this.onChange} className="count" name="amount" value={this.state.amount} />
                             <span onClick={this.__plus} className="plus bg-dark">+</span>
                         </div>
                     </div>
