@@ -68,7 +68,9 @@ class BillingAddress extends React.Component {
 
                     if (data.data.length > 0) {
                         let card = data.data[0]
-                        let exp = card.card.exp_month + '/' + card.card.exp_year;
+                        let year = card.card.exp_year
+                        let _year = year.toString().substr(2, 3)
+                        let exp = card.card.exp_month + '/' + _year;
 
 
 
@@ -123,16 +125,14 @@ class BillingAddress extends React.Component {
 
             <div>
                 <div className="row">
-                    <div className="col-md-5">
+                    <div className="col-md-6">
                         <h5>CARDS ON FILE</h5>
                         <ul className="card-detail clearfix">
                             {this.state.card_type == '' ? '': (<li><img src="/client/assets/images/card-one.png" className="card-im" /></li>)}
                             <li><p>{this.state.card_type.toLocaleUpperCase()} - **** {this.state.last_4}</p>
 
 
-                                <p>EXP. DATE : {this.state.exp_date}</p>
-
-                                <p>PRIMARY</p></li>
+                                <p>EXP. DATE : {this.state.exp_date}</p></li>
                             {/*<p>PRIMARY</p><li><a href="#"><img src="/client/assets/images/del.png" className="del-icon" /></a></li>*/}
 
                         </ul>
@@ -150,7 +150,7 @@ class BillingAddress extends React.Component {
                         </ul>
                         <a href="#" className="grey-link"><img src="/client/assets/images/gray-plus.png" className="grey-icon" /> ADD MORE</a>*/}
                     </div>
-                    <div className="col-md-7">
+                    <div className="col-md-6">
                         <label>CREDIT CARD</label>
                         <form>
                             <CardSection />
