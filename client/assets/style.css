@@ -3198,7 +3198,7 @@ ul.card-detail li {
 }
 ul.card-detail li:nth-child(2) {
     padding-left: 15px;
-    width: 55%;
+    width: 55% !important;
 }
 .row.f-sz label {
     font-size: 13px !important;
