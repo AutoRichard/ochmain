@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { Header, socket } from './../menu/header';
 import PicBox from './../modal/pic-box';
 import Art from './../modal/art';
-import Upgrade from './../modal/upgrade';
-import Plan from './../modal/plan';
 import { read, update } from './../api/api-user';
 import { checkLink, updateLinkAudio, deleteLinkAudio, updateLinkVideo, deleteLinkVideo } from './../api/api-link';
 import swal from 'sweetalert';
@@ -1137,8 +1135,6 @@ class Mypage extends Component {
                     renderImage={this.renderImage_}
                 />
                 <Art />
-                <Upgrade />
-                <Plan />
 
 
 

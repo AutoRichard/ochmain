@@ -1,4 +1,7 @@
 import React from 'react';
+import auth from './../auth/auth-helper';
+import { plan } from './../api/api-subscription';
+import Upgrade from './upgrade';
 
 
 
@@ -6,9 +9,54 @@ import React from 'react';
 
 class Plan extends React.Component {
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            silver: '',
+            gold: '',
+            platinum: '',
+            plan_id: ''
+        }
+    }
+
+    componentDidMount() {
+        if (auth.isAuthenticated()) {
+            const jwt = auth.isAuthenticated()
+            plan({
+                t: jwt.token
+            }).then((data) => {
+                if (data.error) {
+                    console.log(data.error)
+                    //this.setState({ error: data.error })
+                } else {
+                    if (data.data.length) {
+                        this.setState({
+                            silver: data.data[2].id, gold: data.data[1].id, platinum: data.data[0].id
+                        })
+                    }
+
+
+
+
+                }
+            })
+        }
+    }
+
+
+    __setPlan = (data) => {
+
+        this.setState({
+            plan_id: data
+        })
+    }
+
     render() {
         return (
             <div className="modal" id="change-plan">
+                <br /><br />
+                <br /><br />
                 <div className="modal-dialog modal-lg planning">
                     <div className="modal-content">
 
@@ -83,9 +131,9 @@ class Plan extends React.Component {
 
                                     <tr>
                                         <td></td>
-                                        <td data-column="Silver"><a data-toggle="modal" data-target="#upgrade-box" href="#" className="book-now">Downgrade</a></td>
-                                        <td data-column="Gold"><a href="#" data-toggle="modal" data-target="#upgrade-box" className="book-now gold">Current Plan</a></td>
-                                        <td data-column="Platinum"><a href="#" data-toggle="modal" data-target="#upgrade-box" className="book-now">Upgrade</a></td>
+                                        <td data-column="Silver"><a data-toggle="modal" onClick={this.__setPlan.bind(this, this.state.silver)} data-target="#upgrade-box" href="#" className="book-now">Choose Plan</a></td>
+                                        <td data-column="Gold"><a href="#" data-toggle="modal" onClick={this.__setPlan.bind(this, this.state.gold)} data-target="#upgrade-box" className="book-now gold">Choose Plan</a></td>
+                                        <td data-column="Platinum"><a href="#" data-toggle="modal" onClick={this.__setPlan.bind(this, this.state.platinum)} data-target="#upgrade-box" className="book-now">Choose Plan</a></td>
                                     </tr>
 
                                 </tbody>
@@ -96,6 +144,10 @@ class Plan extends React.Component {
 
                     </div>
                 </div>
+
+                <Upgrade
+                plan_id={this.state.plan_id}
+                />
             </div>
         );
     }

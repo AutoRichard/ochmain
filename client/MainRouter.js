@@ -22,6 +22,8 @@ import Account from './modal/account';
 import Cancel from './modal/cancel';
 import Meeting from './core/meeting';
 
+import Plan from './modal/plan';
+
 class MainRouter extends Component {
   render() {
     return (
@@ -45,7 +47,8 @@ class MainRouter extends Component {
         <ApplicationForm />
         <Thanks />
         <JoinSession />
-        <Detail />
+        <Detail />        
+        <Plan />
 
         <Account />
         <Cancel />

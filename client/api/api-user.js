@@ -92,6 +92,8 @@ const payout = (params, credentials, order, token) => {
 }
 
 
+
+
 const password = (params, credentials, user) => {
   return fetch(link + '/api/password/' + params.userId, {
     method: 'PUT',
@@ -114,5 +116,5 @@ export {
   remove,
   password,
   image,
-  payout
+  payout,
 }
