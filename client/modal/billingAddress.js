@@ -126,7 +126,7 @@ class BillingAddress extends React.Component {
                     <div className="col-md-5">
                         <h5>CARDS ON FILE</h5>
                         <ul className="card-detail clearfix">
-                            <li><img src="/client/assets/images/card-one.png" className="card-im" /></li>
+                            {this.state.card_type == '' ? '': (<li><img src="/client/assets/images/card-one.png" className="card-im" /></li>)}
                             <li><p>{this.state.card_type.toLocaleUpperCase()} - **** {this.state.last_4}</p>
 
 
