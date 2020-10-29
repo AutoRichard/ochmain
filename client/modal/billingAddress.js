@@ -129,10 +129,9 @@ class BillingAddress extends React.Component {
                         <h5>CARDS ON FILE</h5>
                         <ul className="card-detail clearfix">
                             {this.state.card_type == '' ? '': (<li><img src="/client/assets/images/card-one.png" className="card-im" /></li>)}
-                            <li><p>{this.state.card_type.toLocaleUpperCase()} - **** {this.state.last_4}</p>
-
-
-                                <p>EXP. DATE : {this.state.exp_date}</p></li>
+                            <li><p>{this.state.card_type.toLocaleUpperCase()} </p>
+                            <p> **** {this.state.last_4}</p>
+                            <p>EXP. DATE : {this.state.exp_date}</p></li>
                             {/*<p>PRIMARY</p><li><a href="#"><img src="/client/assets/images/del.png" className="del-icon" /></a></li>*/}
 
                         </ul>
