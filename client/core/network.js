@@ -96,6 +96,9 @@ class Feeds extends Component {
 
             this.socket.emit('send_comment', commentData)
             this.socket.on('fetch_comment', this.updateComment)
+
+            
+            this.setState({ sending: true, comment_text: '' })
         }
     }
 
