@@ -191,7 +191,7 @@ class Feeds extends Component {
                     <ul className="comments-area-two clearfix">
                         <li>
                             <a href="javascript:void(0)" onClick={this.like} className="like-btn"></a>
-                            <a href="javascript:void(0)" onClick={this.displayComment} id="msg-bar"><img src="/client/assets/images/msg-right.png" className="img-responsive m-r" />{this.props.likes.length} likes</a>
+                            <a href="javascript:void(0)" onClick={this.displayComment} id="msg-bar"><img src="/client/assets/images/msg-right.png" className="img-responsive m-r" />{this.state.likes.length} likes</a>
                         </li>
                         <li></li>
                         {/*<li><div className="dropdown-share">
