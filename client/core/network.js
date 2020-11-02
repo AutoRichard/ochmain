@@ -43,8 +43,8 @@ class Feeds extends Component {
             comment_text: '',
             sending: false,
             socketId: '',
-            //link: 'https://ochbackend.herokuapp.com/',
-            link: 'http://localhost:8080',
+            link: 'https://ochbackend.herokuapp.com/',
+            //link: 'http://localhost:8080',
             visible: 'none'
         }
 
