@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Header } from './../menu/header';
 import auth from './../auth/auth-helper';
 import swal from 'sweetalert';
-import { create, list, postComment } from './../api/api-post';
+import { create, list } from './../api/api-post';
 import openSocket from 'socket.io-client'
 
 
@@ -278,7 +278,7 @@ class Timeline extends Component {
 
             this.postData.set('postedBy', userId)
 
-            list(userId).then((data) => {
+            list().then((data) => {
                 if (data.error) {
                     console.log(data.error)
                 } else {
