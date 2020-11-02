@@ -43,8 +43,8 @@ class Feeds extends Component {
             comment_text: '',
             sending: false,
             socketId: '',
-            link: 'https://ochbackend.herokuapp.com/',
-            //link: 'http://localhost:8080',
+            //link: 'https://ochbackend.herokuapp.com/',
+            link: 'http://localhost:8080',
             visible: 'none'
         }
 
@@ -59,8 +59,6 @@ class Feeds extends Component {
 
             this.socket.on('fetch_like', this.updateLike)
         }
-
-        console.log(this.props.comments)
     }
 
     displayComment = () => {
@@ -117,7 +115,7 @@ class Feeds extends Component {
             if (data[this.props._id].result.likes.length != this.state.likes.length) {
                 this.setState({
                     likes: data[this.props._id].result.likes
-                })
+                });
             }
 
         }
