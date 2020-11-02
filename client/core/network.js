@@ -73,7 +73,7 @@ class Feeds extends Component {
 
     updateComment = data => {
         if (data[this.props._id] != undefined) {
-            if (data[this.props._id].result.comments.length != this.state.commentw.length) {
+            if (data[this.props._id].result.comments.length != this.state.comments.length) {
                 this.setState({
                     comments: data[this.props._id].result.comments
                 })
