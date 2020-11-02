@@ -98,7 +98,7 @@ class Feeds extends Component {
             this.socket.on('fetch_comment', this.updateComment)
 
             
-            this.setState({ sending: true, comment_text: '' })
+            this.setState({ sending: false, comment_text: '' })
         }
     }
 
