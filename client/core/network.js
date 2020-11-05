@@ -4,6 +4,9 @@ import auth from './../auth/auth-helper';
 import swal from 'sweetalert';
 import { create, list } from './../api/api-post';
 import openSocket from 'socket.io-client'
+import ContactList from '../chat/contact';
+import Chat from '../chat/chat';
+import Messages from '../chat/messages';
 
 
 class Comment extends Component {
@@ -23,7 +26,6 @@ class Comment extends Component {
         );
     }
 }
-
 
 class Feeds extends Component {
 
@@ -48,16 +50,16 @@ class Feeds extends Component {
             visible: 'none'
         }
 
-        this.socket = openSocket(this.state.link)
+        //this.socket = openSocket(this.state.link)
 
         if (auth.isAuthenticated()) {
 
-            this.socket.on('connect', () => {
-                this.setState({ socketId: this.socket.id });
+            this.props.socketConnection.on('connect', () => {
+                this.setState({ socketId: this.props.socketConnection.id });
             });
-            this.socket.on('fetch_comment', this.updateComment)
+            this.props.socketConnection.on('fetch_comment', this.updateComment)
 
-            this.socket.on('fetch_like', this.updateLike)
+            this.props.socketConnection.on('fetch_like', this.updateLike)
         }
     }
 
@@ -94,11 +96,11 @@ class Feeds extends Component {
             }
 
 
-            this.socket.emit('send_comment', commentData)
-            this.socket.on('fetch_comment', this.updateComment)
+            this.props.socketConnection.emit('send_comment', commentData)
+            this.props.socketConnection.on('fetch_comment', this.updateComment)
 
-            
-            this.setState({ sending: false, comment_text: '' })
+
+            this.setState({ comment_text: '' })
         }
     }
 
@@ -106,7 +108,7 @@ class Feeds extends Component {
         if (e.key === 'Enter') {
             if (this.state.comment_text != '') {
                 this.onSubmitComment()
-                this.setState({ sending: true })
+                //this.setState({ sending: true })
             } else {
                 swal('Comment field is required')
             }
@@ -136,8 +138,8 @@ class Feeds extends Component {
 
 
 
-            this.socket.emit('send_like', likeData)
-            this.socket.on('fetch_like', this.updateLike)
+            this.props.socketConnection.emit('send_like', likeData)
+            this.props.socketConnection.on('fetch_like', this.updateLike)
         }
     }
 
@@ -184,6 +186,8 @@ class Feeds extends Component {
                 <div className="clearfix"></div>
                 <div className="desc-box">
                     <p>{this.props.text}</p>
+
+                    {this.props.imageExist == true ? (<img src={"https://ochbackend.herokuapp.com/api/photo/" + this.props._id} width="100%" height="315" className="img-responsive" />) : ''}
 
                     {/*<iframe width="100%" height="315"
                         src="https://www.youtube.com/embed/tgbNymZ7vqY" frameBorder="0">
@@ -260,7 +264,24 @@ class Timeline extends Component {
             photo: '',
             idPhoto: '',
             sending: false,
-            timeline: []
+            timeline: [],
+            newtimeline: [],
+            socketId: '',
+            link: 'https://ochbackend.herokuapp.com/',
+            //link: 'http://localhost:8080',
+            newData: 'none',
+        }
+
+        this.socket = openSocket(this.state.link)
+
+        if (auth.isAuthenticated()) {
+
+            this.socket.on('connect', () => {
+                this.setState({ socketId: this.socket.id });
+            });
+
+            this.socket.on('fetch_post', this._fetchPost)
+            this.socket.on('fetch_posts', this._fetchNewPosts)
         }
     }
 
@@ -283,13 +304,64 @@ class Timeline extends Component {
                 if (data.error) {
                     console.log(data.error)
                 } else {
+
                     this.setState({
-                        timeline: data
+                        timeline: data.reverse()
                     })
+
+                    //console.log(data)
                 }
             })
         }
 
+    }
+
+    _fetchPost = data => {
+        if (data == true) {
+            if (auth.isAuthenticated()) {
+                const newPost = true
+
+
+                this.socket.emit('fetch_new_post', newPost)
+                this.socket.on('fetch_posts', this._fetchNewPosts)
+
+
+                this.setState({ sending: false, comment_text: '' })
+            }
+
+        }
+    }
+
+    _fetchNewPosts = data => {
+        if (data.length != this.state.timeline.length) {
+
+            this.setState({
+                newtimeline: data.reverse(),
+                newData: 'block'
+            })
+
+            //console.log(data)
+        }
+    }
+
+    loadNewTimeline = () => {
+        let empty = []
+        this.setState({
+            timeline: empty.reverse()
+        })
+
+        this.reloadnewTimeline()
+
+
+    }
+
+    reloadnewTimeline = () => {
+        this.setState({
+            timeline: this.state.newtimeline.reverse(),
+            newData: 'none'
+        })
+
+        $('div.msg-area').hide();
     }
 
 
@@ -351,11 +423,12 @@ class Timeline extends Component {
 
 
     render() {
+        const contactArea = {
+            height: '1250px',
+            overflow: 'auto'
+        }
         return (
             <div className="col-md-12 col-lg-6 padd-both">
-
-
-
 
 
                 <div className="white-box clearfix">
@@ -380,23 +453,201 @@ class Timeline extends Component {
 
                 </div>
 
-                {this.state.timeline.map((el, i) =>
+                <div className="likes-section suggest" style={contactArea}>
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-4">
+                            </div>
+                            <div className="col-6">
+                                <a href="javascript:void(0)" onClick={this.loadNewTimeline} style={{ display: this.state.newData }} className="g-btn"> New Post </a>
+                            </div>
+                        </div>
+                    </div>
 
-                    <Feeds
-                        fId={i}
-                        text={el.text}
-                        comments={el.comments}
-                        likes={el.likes}
-                        _id={el._id}
-                        postedBy_id={el.postedBy._id}
-                        postedBy_firstName={el.postedBy.firstNam}
-                        postedBy_lastName={el.postedBy.lastName}
-                        postedBy_displayName={el.postedBy.displayName}
-                        createDate={el.createDate}
-                    />
-                )}
+
+                    {this.state.timeline.map((el, i) =>
+
+                        <Feeds
+                            fId={el._id}
+                            text={el.text}
+                            comments={el.comments}
+                            likes={el.likes}
+                            _id={el._id}
+                            postedBy_id={el.postedBy._id}
+                            postedBy_firstName={el.postedBy.firstNam}
+                            postedBy_lastName={el.postedBy.lastName}
+                            postedBy_displayName={el.postedBy.displayName}
+                            createDate={el.createDate}
+                            imageExist={el.imageExist}
+                            socketConnection={this.socket}
+                        />
+                    )}
+                </div>
             </div>
 
+        );
+    }
+
+}
+
+class Contact extends Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            receiver: '',
+            check: false,
+            name: '',
+            userStatus: ''
+        }
+    }
+
+    componentDidMount() {
+        this.setState({ receiver: this.props.receiver, name: this.props.name })
+        if (auth.isAuthenticated()) {
+            this.setState({ check: true })
+        }
+
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.receiver !== prevProps.receiver) {
+            this.setState({ receiver: this.props.receiver, name: this.props.name, userStatus: this.props.userStatus })
+        }
+
+        if (this.props.userStatus !== prevProps.userStatus) {
+            this.setState({ userStatus: this.props.userStatus })
+
+        }
+    }
+
+    render() {
+        return (
+            <div className="bar">
+                <div className="container-fluid">
+                    <div className="row">
+                        <div className="col-md-4 col-lg-3 position-relative" id="add-cont">
+
+                            {/*<div id="popup-l" className="popup">
+                                <div className="pop-header">
+                                    <a href="javascript:void(0)" id="hide-l" className="close-pop"><i className="fa fa-times"
+                                        aria-hidden="true"></i></a>
+                                    <h1>CONTACTS</h1>
+                                </div>
+                                <div className="img-area clearfix">
+                                    <img src="/client/assets/images/user-four.png" className="img-responsive circled" />
+                                    <div className="cont w-100">
+                                        <b>Thomas Barsoe</b>
+    
+                                        <p>Active now - In The Studio</p>
+                                        <span className="green"></span>
+                                    </div>
+    
+                                </div>
+                                <div className="img-area clearfix">
+                                    <img src="/client/assets/images/elif.png" className="img-responsive circled" />
+                                    <div className="cont w-100">
+                                        <b>Ellie Soufi</b>
+    
+                                        <p>Active now - Available</p>
+                                        <span className="green"></span>
+                                    </div>
+    
+                                </div>
+                                <div className="img-area clearfix">
+                                    <img src="/client/assets/images/user-six.png" className="img-responsive circled" />
+                                    <div className="cont w-100">
+                                        <b>Cory Young</b>
+    
+                                        <p>Active now - Recording</p>
+                                        <span className="green"></span>
+                                    </div>
+    
+                                </div>
+                                <div className="img-area clearfix">
+                                    <img src="/client/assets/images/user-seven.png" className="img-responsive circled" />
+                                    <div className="cont w-100">
+                                        <b>Lars Halvor Jensen</b>
+    
+                                        <p>Active now - Busy</p>
+                                        <span className="green"></span>
+                                    </div>
+    
+                                </div>
+                                <div className="img-area clearfix">
+                                    <img src="/client/assets/images/user-eight.png" className="img-responsive circled" />
+                                    <div className="cont w-100">
+                                        <b>Jackie Hishmeh</b>
+    
+                                        <p>Active 1 hr ago</p>
+                                        <span></span>
+                                    </div>
+    
+                                </div>
+                                <div className="img-area clearfix">
+                                    <img src="/client/assets/images/user-nine.png" className="img-responsive circled" />
+                                    <div className="cont w-100">
+                                        <b>Robbie Dean</b>
+    
+                                        <p>Active 2 hrs ago</p>
+                                        <span></span>
+                                    </div>
+    
+                                </div>
+                            </div>
+    
+                            <div className="input-space">
+                                <a href="javascript:void(0)" className="icon-arrow" id="pop-left"><i
+                                    className="rotate fa fa-angle-right" aria-hidden="true"></i></a>
+                                <input type="text" placeholder="Search Network..." />
+                                <i className="fa fa-search" aria-hidden="true"></i>
+                            </div>*/}
+                        </div>
+
+                        <div className="col-md-4 col-lg-6">
+                            {/*<div id="chatbar" className="owl-carousel owl-theme">
+                                <div className="item">
+                                    <div className="position-relative"><a href="#" data-toggle="modal" data-target="#user-box"><img
+                                        src="/client/assets/images/user.png" className="img-responsive" /><span className="status"></span></a>
+                                    </div>
+                                </div>
+                                <div className="item">
+                                    <div className="position-relative"><a href="#" data-toggle="modal" data-target="#user-box"><img
+                                        src="/client/assets/images/user.png" className="img-responsive" /><span className="status"></span></a>
+                                    </div>
+                                </div>
+                                <div className="item">
+                                    <div className="position-relative"><a href="#" data-toggle="modal" data-target="#user-box"><img
+                                        src="/client/assets/images/user.png" className="img-responsive" /><span className="status"></span></a>
+                                    </div>
+                                </div>
+                                <div className="item">
+                                    <div className="position-relative"><a href="#" data-toggle="modal" data-target="#user-box"><img
+                                        src="/client/assets/images/user.png" className="img-responsive" /><span className="status"></span></a>
+                                    </div>
+                                </div>
+                                <div className="item">
+                                    <div className="position-relative"><a href="#" data-toggle="modal" data-target="#user-box"><img
+                                        src="/client/assets/images/user.png" className="img-responsive" /><span className="status"></span></a>
+                                    </div>
+                                </div>
+                                <div className="item">
+                                    <div className="position-relative"><a href="#" data-toggle="modal" data-target="#user-box"><img
+                                        src="/client/assets/images/user.png" className="img-responsive" /><span className="status"></span></a>
+                                    </div>
+                                </div>
+                            </div>
+                            */}
+                        </div>
+
+                        {this.state.check === true ? <Chat
+                            receiver={this.state.receiver}
+                            name={this.state.name}
+                            userStatus={this.state.userStatus}
+                        /> : ''}
+                    </div>
+                </div>
+            </div>
         );
     }
 
@@ -408,7 +659,28 @@ class Dashboard extends Component {
         super(props)
 
         this.state = {
+            check: false,
+            receiver: ''
+        }
+    }
 
+    componentDidMount() {
+        if (auth.isAuthenticated()) {
+            this.setState({ check: true });
+        }
+    }
+
+    parentOpenChat = (data) => {
+        this.props._parentOpenChat(data)
+    }
+
+    parentViewMessageArea = (data) => {
+        this.props.__parentOpenChat(data)
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.receiver !== prevProps.receiver) {
+            this.setState({ receiver: this.props.receiver })
         }
     }
 
@@ -474,122 +746,60 @@ class Dashboard extends Component {
                                 <a href="" className="btn-spc"><i className="fa fa-ellipsis-h" aria-hidden="true"></i> See More Pages</a>
                             </div>
 
-                            <div className="white-box">
-                                <h2 className="in-h">SUGGESTED CONNECTS</h2>
-                                <div className="line3 text-left"></div>
-                                <div className="likes-section suggest">
-                                    <div className="img-area clearfix">
-                                        <div className="img-c">
-                                            <img src="/client/assets/images/user.png" className="img-responsive circled" />
-                                            <span className="status"></span>
-                                        </div>
-                                        <div className="cont">
-                                            <b>Tyler Williams</b>
-
-                                            <p>Music Producer</p></div>
-                                        <a href="#chat-bx" id="pop-right">	<img src="/client/assets/images/msg.png" className="img-responsive wd" /></a>
-                                        <a href="">	<img src="/client/assets/images/add-user.png" className="img-responsive wd" /></a>
-                                    </div>
-                                    <div className="img-area clearfix">
-                                        <div className="img-c">
-                                            <img src="/client/assets/images/user.png" className="img-responsive circled" />
-                                            <span className="status"></span>
-                                        </div>
-                                        <div className="cont">
-                                            <b>Charlie Walk</b>
-
-                                            <p>A&R, Talent</p></div>
-                                        <a href="#">	<img src="/client/assets/images/msg.png" className="img-responsive wd" /></a>
-                                        <a href="#">	<img src="/client/assets/images/add-user.png" className="img-responsive wd" /></a>
-                                    </div>
-                                    <div className="img-area clearfix">
-                                        <div className="img-c">
-                                            <img src="/client/assets/images/user.png" className="img-responsive circled" />
-                                            <span className="status"></span>
-                                        </div>
-                                        <div className="cont">
-                                            <b>Alison McFee</b>
-
-                                            <p>Music Manager</p></div>
-                                        <a href="#">	<img src="/client/assets/images/msg.png" className="img-responsive wd" /></a>
-                                        <a href="#">	<img src="/client/assets/images/add-user.png" className="img-responsive wd" /></a>
-                                    </div>
-                                    <div className="img-area clearfix">
-                                        <div className="img-c">
-                                            <img src="/client/assets/images/user.png" className="img-responsive circled" />
-                                            <span className="status"></span>
-                                        </div>
-                                        <div className="cont">
-                                            <b>Michelle Jackson</b>
-
-                                            <p>Singer/Songwriter</p></div>
-                                        <a href="#">	<img src="/client/assets/images/msg.png" className="img-responsive wd" /></a>
-                                        <a href="#">	<img src="/client/assets/images/add-user.png" className="img-responsive wd" /></a>
-                                    </div>
-
-                                    <div className="img-area clearfix">
-                                        <div className="img-c">
-                                            <img src="/client/assets/images/user.png" className="img-responsive circled" />
-                                            <span className="status"></span>
-                                        </div>
-                                        <div className="cont">
-                                            <b>James Harlow</b>
-
-                                            <p>Singer/Songwriter</p></div>
-                                        <a href="#">	<img src="/client/assets/images/msg.png" className="img-responsive wd" /></a>
-                                        <a href="#">	<img src="/client/assets/images/add-user.png" className="img-responsive wd" /></a>
-                                    </div>
-                                </div>
-                            </div>
-
+                            {this.state.check === true ?
+                                (<ContactList
+                                    receiver={this.state.receiver}
+                                    _openChat={this.parentOpenChat}
+                                />) : ''}
                         </div>
 
                         <Timeline />
 
-                        <div className="col-lg-3 col-md-12 padd-left">		<div className="white-box">
-                            <h2 className="in-h">RECENT NOTIFICATIONS</h2>
-                            <div className="line3 text-left"></div>
-                            <div className="likes-section new">
+                        <div className="col-lg-3 col-md-12 padd-left">
+                            <div className="white-box">
+                                <h2 className="in-h">RECENT NOTIFICATIONS</h2>
+                                <div className="line3 text-left"></div>
+                                <div className="likes-section new">
 
 
 
-                                <div className="img-area clearfix">
-                                    <div className="img-c">
-                                        <img src="/client/assets/images/user-four.png" className="img-responsive circled" />
-                                        <span className="status"></span>
+                                    <div className="img-area clearfix">
+                                        <div className="img-c">
+                                            <img src="/client/assets/images/user-four.png" className="img-responsive circled" />
+                                            <span className="status"></span>
+                                        </div>
+                                        <div className="cont">
+                                            <b>Thomas Barsoe sent you</b>
+
+                                            <p>a message</p><span>35 min ago</span></div>
+
                                     </div>
-                                    <div className="cont">
-                                        <b>Thomas Barsoe sent you</b>
+                                    <div className="img-area clearfix">
+                                        <div className="img-c">
+                                            <img src="/client/assets/images/user-five.png" className="img-responsive circled" />
+                                            <span className="status red"></span>
+                                        </div>
+                                        <div className="cont">
+                                            <b>Marcus Miles sent you</b>
 
-                                        <p>a message</p><span>35 min ago</span></div>
+                                            <p>a message</p><span>56 mins ago</span></div>
 
-                                </div>
-                                <div className="img-area clearfix">
-                                    <div className="img-c">
-                                        <img src="/client/assets/images/user-five.png" className="img-responsive circled" />
-                                        <span className="status red"></span>
                                     </div>
-                                    <div className="cont">
-                                        <b>Marcus Miles sent you</b>
 
-                                        <p>a message</p><span>56 mins ago</span></div>
+                                    <div className="img-area clearfix">
+                                        <div className="img-c">
+                                            <img src="/client/assets/images/elif.png" className="img-responsive circled" />
+                                            <span className="status"></span>
+                                        </div>
+                                        <div className="cont">
+                                            <b>Ellie Soufi invited you</b>
 
-                                </div>
+                                            <p>in a session</p><span>2 hrs ago</span></div>
 
-                                <div className="img-area clearfix">
-                                    <div className="img-c">
-                                        <img src="/client/assets/images/elif.png" className="img-responsive circled" />
-                                        <span className="status"></span>
                                     </div>
-                                    <div className="cont">
-                                        <b>Ellie Soufi invited you</b>
-
-                                        <p>in a session</p><span>2 hrs ago</span></div>
-
                                 </div>
+                                <a href="" className="btn-spc"><i className="fa fa-ellipsis-h" aria-hidden="true"></i> See More Notifications</a>
                             </div>
-                            <a href="" className="btn-spc"><i className="fa fa-ellipsis-h" aria-hidden="true"></i> See More Notifications</a>
-                        </div>
 
                             <div className="white-box">
                                 <h2 className="in-h">MY EVENTS</h2>
@@ -643,43 +853,11 @@ class Dashboard extends Component {
                                 <a href="" className="btn-spc"><i className="fa fa-ellipsis-h" aria-hidden="true"></i> See More Notifications</a>
                             </div>
 
-                            <div className="white-box">
-                                <h2 className="in-h">MESSAGES</h2>
-                                <div className="line3 text-left"></div>
-                                <div className="likes-section new">
-                                    <div className="img-area clearfix">
-                                        <div className="img-c">
-                                            <img src="/client/assets/images/user-six.png" className="img-responsive circled" />
-                                            <span className="msg"></span>
-                                        </div>
-
-                                        <div className="cont w-70">
-                                            <b>Cory Young</b>
-
-                                            <p>Unread Message</p><p className="mins">2 mins ago</p></div>
-                                        <div className="msg-icon"><a href="#"><i className="fa fa-envelope" aria-hidden="true"></i></a></div>
-                                    </div>
-                                    <div className="img-area clearfix">
-                                        <div className="img-c">
-                                            <img src="/client/assets/images/user-six.png" className="img-responsive circled" />
-                                            <span className="msg"></span>
-                                        </div>
-
-                                        <div className="cont w-70">
-                                            <b>Cory Young</b>
-
-                                            <p>Unread Message</p><p className="mins">2 mins ago</p></div>
-                                        <div className="msg-icon grey"><a href="#"><i className="fa fa-envelope-open" aria-hidden="true"></i></a></div>
-                                    </div>
-
-
-
-
-
-                                </div>
-                                <a href="" className="btn-spc"><i className="fa fa-ellipsis-h" aria-hidden="true"></i> See More Messages</a>
-                            </div>
-
+                            {this.state.check === true ?
+                                (<Messages
+                                    _viewMessageArea={this.parentViewMessageArea}
+                                    receiver={this.state.receiver}
+                                />) : ''}
                         </div>
                     </div>
                 </div>
@@ -695,10 +873,58 @@ class Network extends Component {
         super(props);
 
         this.state = {
-
+            message: [],
+            receiver: '',
+            sender: '',
+            name: '',
+            open: false,
+            userStatus: ''
         }
 
 
+    }
+
+    _grandOpenChat = (data) => {
+
+        let user;
+        let _name
+        if (data.recipients[0]._id == auth.isAuthenticated().user._id) {
+            user = data.recipients[1]
+        } else {
+            user = data.recipients[0]
+        }
+
+        this.setState({ receiver: user._id, userStatus: user.userStatus })
+
+
+        if (user.displayName == '') {
+            _name = user.firstName + ' ' + user.lastName;
+        } else {
+            _name = user.displayName
+        }
+
+        this.setState({ name: _name })
+
+        document.getElementById('pop-right-msg').click()
+        this.setState({ open: true })
+
+    }
+
+    grandOpenChat = (data) => {
+        this.setState({ receiver: data._id, userStatus: data.userStatus })
+        let _name
+
+        if (data.displayName == '') {
+            _name = data.firstName + ' ' + data.lastName;
+        } else {
+            _name = data.displayName
+        }
+
+
+        this.setState({ name: _name })
+
+        document.getElementById('pop-right-msg').click()
+        this.setState({ open: true })
     }
 
 
@@ -710,7 +936,18 @@ class Network extends Component {
                     path={this.props.location.pathname}
                 />
 
-                <Dashboard />
+
+                <Dashboard
+                    _parentOpenChat={this.grandOpenChat}
+                    __parentOpenChat={this._grandOpenChat}
+                    receiver={this.state.receiver}
+                />
+
+                <Contact
+                    receiver={this.state.receiver}
+                    name={this.state.name}
+                    userStatus={this.state.userStatus}
+                />
 
 
 
