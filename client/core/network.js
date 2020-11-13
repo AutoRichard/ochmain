@@ -7,6 +7,8 @@ import openSocket from 'socket.io-client'
 import ContactList from '../chat/contact';
 import Chat from '../chat/chat';
 import Messages from '../chat/messages';
+import { read, update } from './../api/api-user';
+import { listBooking } from './../api/api-booking';
 
 
 class Comment extends Component {
@@ -47,7 +49,8 @@ class Feeds extends Component {
             socketId: '',
             link: 'https://ochbackend.herokuapp.com/',
             //link: 'http://localhost:8080',
-            visible: 'none'
+            visible: 'none',
+            userId: ''
         }
 
         //this.socket = openSocket(this.state.link)
@@ -61,6 +64,15 @@ class Feeds extends Component {
 
             this.props.socketConnection.on('fetch_like', this.updateLike)
         }
+    }
+
+    componentDidMount() {
+        if (auth.isAuthenticated()) {
+            const jwt = auth.isAuthenticated();
+            const user_id = jwt.user._id;
+            this.setState({ userId: user_id });
+        }
+
     }
 
     displayComment = () => {
@@ -156,12 +168,14 @@ class Feeds extends Component {
     }
 
     render() {
+        let imageView = 'https://ochbackend.herokuapp.com/api/usersPhoto/' + this.state.userId
+        //let imageView = 'http://localhost:8080/api/usersPhoto/' + this.state.userId;
         return (
             <div className="white-box clearfix">
 
                 <div className="left-img">
 
-                    <img src={'https://ochbackend.herokuapp.com/api/usersPhoto/' + this.props.postedBy_id} className="img-responsive circled no-b __circular2" />
+                    <img src={'https://ochbackend.herokuapp.com/api/usersPhoto/' + this.props.postedBy_id} className="img-responsive circled no-b __circular4" />
 
                 </div>
                 <div className="right-content position-relative">
@@ -218,7 +232,11 @@ class Feeds extends Component {
 
                     <div className={'msg-area ' + this.props.fId}>
                         <div className="left-img">
-                            <img src="/client/assets/images/user-two.png" className="img-responsive circled no-b" />
+
+
+                            <img src={imageView} className="img-responsive circled no-b __circular4" />
+
+
                         </div>
                         <div className="right-content">
                             <div className="search-area">
@@ -270,6 +288,8 @@ class Timeline extends Component {
             link: 'https://ochbackend.herokuapp.com/',
             //link: 'http://localhost:8080',
             newData: 'none',
+            userId: '',
+
         }
 
         this.socket = openSocket(this.state.link)
@@ -289,7 +309,15 @@ class Timeline extends Component {
         this.postData = new FormData();
 
         this.fetchPost()
+
+        if (auth.isAuthenticated()) {
+            const jwt = auth.isAuthenticated();
+            const user_id = jwt.user._id;
+            this.setState({ userId: user_id });
+        }
     }
+
+
 
 
     fetchPost = () => {
@@ -350,9 +378,7 @@ class Timeline extends Component {
             timeline: empty.reverse()
         })
 
-        this.reloadnewTimeline()
-
-
+        setTimeout(this.reloadnewTimeline, 1500)
     }
 
     reloadnewTimeline = () => {
@@ -417,9 +443,17 @@ class Timeline extends Component {
                 swal('Post field is required')
             }
         }
-
     }
 
+    upload = () => {
+        if (this.state.post != '') {
+            this.onSubmitPost()
+
+            this.setState({ sending: true })
+        } else {
+            swal('Post field is required')
+        }
+    }
 
 
     render() {
@@ -427,6 +461,8 @@ class Timeline extends Component {
             height: '1250px',
             overflow: 'auto'
         }
+        let imageView = 'https://ochbackend.herokuapp.com/api/usersPhoto/' + this.state.userId
+        //let imageView = 'http://localhost:8080/api/usersPhoto/' + this.state.userId;
         return (
             <div className="col-md-12 col-lg-6 padd-both">
 
@@ -435,17 +471,18 @@ class Timeline extends Component {
 
                     <div className="left-img">
 
-                        <img src="/client/assets/images/user-two.png" className="img-responsive circled no-b" />
+                        <img src={imageView} className="img-responsive circled no-b __circular4" />
 
                     </div>
                     <div className="right-content">
                         <div className="search-area">
-                            <input name="post" type="text" value={this.state.post} disabled={this.state.sending} onChange={this.onChangePost} onKeyDown={this._handleKeyDown} placeholder="Share your thoughts and your music..." />
+                            <input name="post" type="text" value={this.state.post} disabled={this.state.sending} onChange={this.onChangePost} placeholder="Share your thoughts and your music..." />
 
                             <div className="button-wrap btn">
                                 <label className="new-button" for="upload1"> <img src="/client/assets/images/pic-up.png" className="img-responsive upload" />
                                     <input onChange={this.handleChange} name="photo" id="upload1" type="file" />
                                 </label>
+                                <a href="javascript:void(0)" style={{ width: '40px', height: '70px' }} onClick={this.upload} class="fa fa-share"></a>
                             </div>
 
                         </div>
@@ -660,14 +697,52 @@ class Dashboard extends Component {
 
         this.state = {
             check: false,
-            receiver: ''
+            receiver: '',
+            userId: '',
+            fullName: '',
+            displayName: '',
+            meetings: []
         }
     }
 
     componentDidMount() {
         if (auth.isAuthenticated()) {
-            this.setState({ check: true });
+            const jwt = auth.isAuthenticated();
+            const user_id = jwt.user._id;
+            this.setState({ check: true, userId: user_id });
+
+            read({
+                userId: user_id
+            }).then((data) => {
+                if (data.error) {
+                    swal(data.error)
+                } else {
+                    this.setState({ fullName: data.fullName, displayName: data.displayName });
+                }
+            });
+
+            this._listBooking()
         }
+    }
+
+    _listBooking = () => {
+
+        if (auth.isAuthenticated()) {
+            const jwt = auth.isAuthenticated();
+            const userId = jwt.user._id;
+
+            listBooking({
+                user_id: userId
+            }).then((data) => {
+                if (data.error) {
+                    swal(data.error)
+                } else {
+                    this.setState({ meetings: data.booking })
+                }
+            })
+        }
+
+
     }
 
     parentOpenChat = (data) => {
@@ -687,6 +762,8 @@ class Dashboard extends Component {
 
 
     render() {
+        let imageView = 'https://ochbackend.herokuapp.com/api/usersPhoto/' + this.state.userId
+        //let imageView = 'http://localhost:8080/api/usersPhoto/' + this.state.userId;
         return (
             <section className="grey padd-b padd-top">
                 <div className="container-fluid">
@@ -695,15 +772,16 @@ class Dashboard extends Component {
                             <div className="white-box">
                                 <div className="user-box">
                                     <img src="/client/assets/images/user-bg.png" className="img-responsive bod" />
-                                    <img src="/client/assets/images/network-user.png" className="img-dp" />
+                                    <img src={imageView} className="img-dp __circular5" />
                                 </div>
                                 <div className="h-area">
-                                    <h2>BEAUX</h2>
-                                    <h3>	SINGER - SONGWRITER</h3>
-                                    <p>JOINED JUNE 2018</p>
+                                    <h2>{this.state.displayName}</h2>
+                                    <h3>{this.state.fullName}</h3>
+                                    {/*<p>JOINED JUNE 2018</p>*/}
                                 </div>
                             </div>
 
+                            {/*
                             <div className="white-box clearfix">
                                 <h2 className="in-h">PAGES YOU MAY LIKE</h2>
                                 <div className="line3 text-left"></div>
@@ -745,7 +823,7 @@ class Dashboard extends Component {
                                 </div>
                                 <a href="" className="btn-spc"><i className="fa fa-ellipsis-h" aria-hidden="true"></i> See More Pages</a>
                             </div>
-
+                            */}
                             {this.state.check === true ?
                                 (<ContactList
                                     receiver={this.state.receiver}
@@ -756,6 +834,7 @@ class Dashboard extends Component {
                         <Timeline />
 
                         <div className="col-lg-3 col-md-12 padd-left">
+                            {/*
                             <div className="white-box">
                                 <h2 className="in-h">RECENT NOTIFICATIONS</h2>
                                 <div className="line3 text-left"></div>
@@ -801,25 +880,29 @@ class Dashboard extends Component {
                                 <a href="" className="btn-spc"><i className="fa fa-ellipsis-h" aria-hidden="true"></i> See More Notifications</a>
                             </div>
 
+                            */}
+
+
                             <div className="white-box">
                                 <h2 className="in-h">MY EVENTS</h2>
                                 <div className="line3 text-left"></div>
                                 <div className="likes-section new">
-                                    <div className="img-area clearfix">
+                                    {this.state.meetings.map((el, i) => <div className="img-area clearfix">
                                         <div className="img-c">
-                                            <img src="/client/assets/images/user-four.png" className="img-responsive circled" />
-                                            <span className="status"></span>
+                                            <img src={'https://ochbackend.herokuapp.com/api/usersPhoto/' + el.user_id._id} className="img-responsive __circular3" />
+                                            {/*<span className="status"></span>*/}
                                         </div>
                                         <div className="cont w-100">
-                                            <b>Session w/Thomas Barsoe</b>
+                                            <b>Session w/{el.user_id.firstName}</b>
 
-                                            <p>Now - V-Studio 1</p>
-                                            <a href="#" data-toggle="modal" data-target="#join-session" className="g-btn">JOIN SESSION</a>
-                                            <a href="#" data-toggle="modal" data-target="#cancel-box" className="red-btn">CANCEL</a>
+                                            <p>{el.meeting_id.start_time} - {el.meeting_id.topic}</p>
+                                            <a href={"/zoom.html?meeting_id=" + el.meeting_id._id} data-toggle="modal" data-target="#join-session" className="g-btn">JOIN SESSION</a>
+                                            {/*<a href="#" data-toggle="modal" data-target="#cancel-box" className="red-btn">CANCEL</a>*/}
                                         </div>
 
-                                    </div>
-                                    <div className="img-area clearfix">
+
+                                    </div>)}
+                                    {/*<div className="img-area clearfix">
                                         <div className="img-c">
                                             <img src="/client/assets/images/user-six.png" className="img-responsive circled" />
                                             <span className="status"></span>
@@ -848,7 +931,7 @@ class Dashboard extends Component {
                                         </div>
 
                                     </div>
-
+                                    */}
                                 </div>
                                 <a href="" className="btn-spc"><i className="fa fa-ellipsis-h" aria-hidden="true"></i> See More Notifications</a>
                             </div>
@@ -859,6 +942,8 @@ class Dashboard extends Component {
                                     receiver={this.state.receiver}
                                 />) : ''}
                         </div>
+
+
                     </div>
                 </div>
             </section>
