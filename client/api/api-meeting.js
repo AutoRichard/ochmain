@@ -1,5 +1,5 @@
-//const link = 'http://localhost:8080';
-const link = 'https://ochbackend.herokuapp.com';
+const link = 'http://localhost:8080';
+//const link = 'https://ochbackend.herokuapp.com';
 
 const create = (params) => {
     return fetch(link + '/api/meetings', {
@@ -22,6 +22,14 @@ const listMeeting = () => {
     }).catch((err) => console.log(err))
 }
 
+const listMeetingByUser = (userId) => {
+    return fetch(link + '/api/meeting/' + userId, {
+        method: 'GET',
+    }).then(response => {
+        return response.json()
+    }).catch((err) => console.log(err))
+}
+
 export {
-    create, listMeeting
+    create, listMeeting, listMeetingByUser
 }

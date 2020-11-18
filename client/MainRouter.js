@@ -4,6 +4,7 @@ import Home from './core/home';
 import About from './core/about';
 import Services from './core/services';
 import Studio from './core/studio';
+import MyStudio from './core/my-studio'
 import News from './core/news';
 import Network from './core/network';
 import Mypage from './core/my-page';
@@ -33,7 +34,8 @@ class MainRouter extends Component {
           <Route exact path="/" component={Home} />
           <Route path="/about" component={About} />
           <Route path="/services" component={Services} />
-          <PrivateRoute path="/studio" component={Studio} />
+          <PrivateRoute path="/studio" component={Studio} />          
+          <PrivateRoute path="/my-studio" component={MyStudio} />
           <Route path="/news" component={News} />
           <PrivateRoute path="/meeting" component={Meeting} />
           <PrivateRoute path="/network" component={Network} />

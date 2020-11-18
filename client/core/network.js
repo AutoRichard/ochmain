@@ -9,6 +9,8 @@ import Chat from '../chat/chat';
 import Messages from '../chat/messages';
 import { read, update } from './../api/api-user';
 import { listBooking } from './../api/api-booking';
+import Booking from './../modal/booking';
+import { listInviteByUser, deleteInvite } from './../api/api-invite'
 
 
 class Comment extends Component {
@@ -701,7 +703,14 @@ class Dashboard extends Component {
             userId: '',
             fullName: '',
             displayName: '',
-            meetings: []
+            meetings: [],
+            meetingsInvite: [],
+            meeting_image: '',
+            meeting_title: '',
+            meeting_id: '',
+            user_id: '',
+            creditBalance: 0,
+            owner_id: ''
         }
     }
 
@@ -717,11 +726,12 @@ class Dashboard extends Component {
                 if (data.error) {
                     swal(data.error)
                 } else {
-                    this.setState({ fullName: data.fullName, displayName: data.displayName });
+                    this.setState({ fullName: data.fullName, displayName: data.displayName, user_id: data._id || '', creditBalance: data.creditBalance || 0 });
                 }
             });
 
             this._listBooking()
+            this._listInvite()
         }
     }
 
@@ -737,12 +747,46 @@ class Dashboard extends Component {
                 if (data.error) {
                     swal(data.error)
                 } else {
+
+                    console.log(data.booking)
                     this.setState({ meetings: data.booking })
                 }
             })
         }
 
 
+    }
+
+    _listInvite = () => {
+        if (auth.isAuthenticated()) {
+            const jwt = auth.isAuthenticated();
+            const userId = jwt.user._id;
+
+            listInviteByUser(userId).then((data) => {
+                if (data.error) {
+                    swal(data.error)
+                } else {
+                    this.setState({ meetingsInvite: data })
+                }
+            })
+        }
+    }
+
+    removeInvite = (data, el) => {
+        if (auth.isAuthenticated()) {
+
+            let inviteData = {
+                invite_id: data._id
+            }
+
+            deleteInvite(inviteData).then((data) => {
+                if (data.error) {
+                    swal(data.error)
+                } else {
+                    this._listInvite();
+                }
+            })
+        }
     }
 
     parentOpenChat = (data) => {
@@ -757,6 +801,10 @@ class Dashboard extends Component {
         if (this.props.receiver !== prevProps.receiver) {
             this.setState({ receiver: this.props.receiver })
         }
+    }
+
+    openMeeting = (data) => {
+        this.setState({ meeting_image: '/client/assets/images/v1.jpg', meeting_title: data.topic, meeting_id: data.meeting_id._id, owner_id: data.owner_id._id })
     }
 
 
@@ -889,19 +937,46 @@ class Dashboard extends Component {
                                 <div className="likes-section new">
                                     {this.state.meetings.map((el, i) => <div className="img-area clearfix">
                                         <div className="img-c">
-                                            <img src={'https://ochbackend.herokuapp.com/api/usersPhoto/' + el.user_id._id} className="img-responsive __circular3" />
+                                            <img src={'https://ochbackend.herokuapp.com/api/usersPhoto/' + el.owner_id._id} className="img-responsive __circular3" />
                                             {/*<span className="status"></span>*/}
                                         </div>
                                         <div className="cont w-100">
-                                            <b>Session w/{el.user_id.firstName}</b>
+                                            <b>Session w/{el.owner_id.firstName}</b>
 
                                             <p>{el.meeting_id.start_time} - {el.meeting_id.topic}</p>
-                                            <a href={"/zoom.html?meeting_id=" + el.meeting_id._id} data-toggle="modal" data-target="#join-session" className="g-btn">JOIN SESSION</a>
+                                            <a href={"/zoom.html?meeting_id=" + el.meeting_id._id} className="g-btn">JOIN SESSION</a>
                                             {/*<a href="#" data-toggle="modal" data-target="#cancel-box" className="red-btn">CANCEL</a>*/}
                                         </div>
 
 
                                     </div>)}
+
+                                    {this.state.meetingsInvite.map((el, i) => <div className="img-area clearfix">
+                                        <div className="img-c">
+                                            <img src={'https://ochbackend.herokuapp.com/api/usersPhoto/' + el.owner_id._id} className="img-responsive __circular3" />
+                                            {/*<span className="status"></span>*/}
+                                        </div>
+                                        <div className="cont w-100">
+                                            <b>Session w/{el.owner_id.firstName}</b>
+
+                                            <p>{el.meeting_id.start_time} - {el.meeting_id.topic}</p>
+                                            <a href="javascript:void(0)" onClick={this.openMeeting.bind(this, el)} data-toggle="modal" data-target="#v-st" class="g-btn">ACCEPT</a>
+                                            <a href="#" onClick={this.removeInvite.bind(this, el)} data-toggle="modal" data-target="#cancel-box" className="red-btn">CANCEL</a>
+                                        </div>
+
+
+                                    </div>)}
+
+                                    <Booking
+                                        meeting_image={this.state.meeting_image}
+                                        meeting_title={this.state.meeting_title}
+                                        meeting_id={this.state.meeting_id}
+                                        user_id={this.state.user_id}
+                                        owner_id={this.state.owner_id}
+                                        creditBalance={this.state.creditBalance}
+                                    />
+
+
                                     {/*<div className="img-area clearfix">
                                         <div className="img-c">
                                             <img src="/client/assets/images/user-six.png" className="img-responsive circled" />
@@ -933,7 +1008,7 @@ class Dashboard extends Component {
                                     </div>
                                     */}
                                 </div>
-                                <a href="" className="btn-spc"><i className="fa fa-ellipsis-h" aria-hidden="true"></i> See More Notifications</a>
+                                {this.state.meetings.length == 0 && this.state.meetingsInvite.length == 0 ? 'NO EVENT' : <a href="" className="btn-spc"><i className="fa fa-ellipsis-h" aria-hidden="true"></i> See More Notifications</a>}
                             </div>
 
                             {this.state.check === true ?

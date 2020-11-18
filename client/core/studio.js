@@ -104,6 +104,8 @@ class Studios extends Component {
 
 
 
+
+
                         {/*<div className="item">
                             <div className="v-box">
                                 <h3>V-STUDIO 2</h3>
@@ -146,6 +148,10 @@ class Studios extends Component {
                           */}
 
                     </div>
+                    <div className="text-center st-head">
+                        <div className="text-center"><a href="/my-studio" className="watch-btn marg m-s">GO TO MY STUDIO</a></div>
+                    </div>
+
 
 
                     <div className="text-center st-head">
@@ -234,7 +240,8 @@ class Studio extends Component {
             meeting_title: '',
             meeting_id: '',
             user_id: '',
-            creditBalance: 0
+            creditBalance: 0,
+            owner_id: ''
         }
 
 
@@ -252,14 +259,15 @@ class Studio extends Component {
     }
 
     openMeetings = (data) => {
-        this.setState({ meeting_image: '/client/assets/images/v1.jpg', meeting_title: data.topic, meeting_id: data._id })
+        console.log(data)
+        this.setState({ meeting_image: '/client/assets/images/v1.jpg', meeting_title: data.topic, meeting_id: data._id, owner_id: data.owner })
     }
 
 
     readUser = () => {
         if (auth.isAuthenticated()) {
             const jwt = auth.isAuthenticated();
-            const userId = jwt.user._id;            
+            const userId = jwt.user._id;
             const token = jwt.token;
             read({
                 userId: userId
@@ -291,6 +299,7 @@ class Studio extends Component {
                     meeting_title={this.state.meeting_title}
                     meeting_id={this.state.meeting_id}
                     user_id={this.state.user_id}
+                    owner_id={this.state.owner_id}
                     creditBalance={this.state.creditBalance}
                 />
 

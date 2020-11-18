@@ -39,7 +39,7 @@ const postComment = (credentials, params) => {
 }
 
 
-const list = (userId) => {
+const list = () => {
     return fetch(link + '/api/post', {
         method: 'GET',
     }).then(response => {

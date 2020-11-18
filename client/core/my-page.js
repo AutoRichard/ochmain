@@ -6,6 +6,8 @@ import { read, update } from './../api/api-user';
 import { checkLink, updateLinkAudio, deleteLinkAudio, updateLinkVideo, deleteLinkVideo } from './../api/api-link';
 import swal from 'sweetalert';
 import auth from './../auth/auth-helper';
+import { create, listByUser } from './../api/api-post';
+import openSocket from 'socket.io-client'
 
 class Profile extends Component {
 
@@ -776,6 +778,521 @@ class Video extends Component {
 }
 /*Video*/
 
+class Comment extends Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            postedBy: this.props.name,
+            text: this.props.text
+        }
+    }
+
+
+    render() {
+        return (
+            <p className="p-b"><b>{this.state.postedBy}</b> {this.state.text}</p>
+        );
+    }
+}
+
+class Feeds extends Component {
+
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            text: '',
+            comments: this.props.comments,
+            likes: this.props.likes,
+            _id: '',
+            postedBy_id: '',
+            postedBy_firstName: '',
+            postedBy_lastName: '',
+            postedBy_displayName: '',
+            createDate: '',
+            comment_text: '',
+            sending: false,
+            socketId: '',
+            link: 'https://ochbackend.herokuapp.com/',
+            //link: 'http://localhost:8080',
+            visible: 'none',
+            userId: ''
+        }
+
+        //this.socket = openSocket(this.state.link)
+
+        if (auth.isAuthenticated()) {
+
+            this.props.socketConnection.on('connect', () => {
+                this.setState({ socketId: this.props.socketConnection.id });
+            });
+            this.props.socketConnection.on('fetch_comment', this.updateComment)
+
+            this.props.socketConnection.on('fetch_like', this.updateLike)
+        }
+    }
+
+    componentDidMount() {
+        if (auth.isAuthenticated()) {
+            const jwt = auth.isAuthenticated();
+            const user_id = jwt.user._id;
+            this.setState({ userId: user_id });
+        }
+
+    }
+
+    displayComment = () => {
+        $('.' + this.props.fId).toggle(500);
+    }
+
+    onChangeComment = (event) => {
+        this.setState({
+            [event.target.name]: event.target.value
+        });
+    }
+
+    updateComment = data => {
+        if (data[this.props._id] != undefined) {
+            if (data[this.props._id].result.comments.length != this.state.comments.length) {
+                this.setState({
+                    comments: data[this.props._id].result.comments
+                })
+            }
+
+        }
+    }
+
+    onSubmitComment = () => {
+        if (auth.isAuthenticated()) {
+            const jwt = auth.isAuthenticated();
+            const userId = jwt.user._id;
+
+            let commentData = {
+                postId: this.props._id,
+                userId: userId,
+                comment: this.state.comment_text
+            }
+
+
+            this.props.socketConnection.emit('send_comment', commentData)
+            this.props.socketConnection.on('fetch_comment', this.updateComment)
+
+
+            this.setState({ comment_text: '' })
+        }
+    }
+
+    _handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            if (this.state.comment_text != '') {
+                this.onSubmitComment()
+                //this.setState({ sending: true })
+            } else {
+                swal('Comment field is required')
+            }
+        }
+    }
+
+    updateLike = data => {
+        if (data[this.props._id] != undefined) {
+            if (data[this.props._id].result.likes.length != this.state.likes.length) {
+                this.setState({
+                    likes: data[this.props._id].result.likes
+                });
+            }
+
+        }
+    }
+
+    like = () => {
+        if (auth.isAuthenticated()) {
+            const jwt = auth.isAuthenticated();
+            const userId = jwt.user._id;
+
+            let likeData = {
+                postId: this.props._id,
+                userId: userId,
+            }
+
+
+
+            this.props.socketConnection.emit('send_like', likeData)
+            this.props.socketConnection.on('fetch_like', this.updateLike)
+        }
+    }
+
+    viewComment = () => {
+        if (this.state.visible == 'none') {
+            this.setState({
+                visible: ''
+            })
+        } else {
+            this.setState({
+                visible: 'none'
+            })
+        }
+    }
+
+    render() {
+        let imageView = 'https://ochbackend.herokuapp.com/api/usersPhoto/' + this.state.userId
+        //let imageView = 'http://localhost:8080/api/usersPhoto/' + this.state.userId;
+        return (
+            <div className="white-box clearfix">
+
+                <div className="left-img">
+
+                    <img src={'https://ochbackend.herokuapp.com/api/usersPhoto/' + this.props.postedBy_id} className="img-responsive circled no-b __circular4" />
+
+                </div>
+                <div className="right-content position-relative">
+                    <b>{this.props.postedBy_firstName} {this.props.postedBy_lastName}</b>
+                    <span>{this.props.createDate}</span>
+                    <div className="dots-a">
+                        {/*<div className="dropdown-share">
+                            <span><i className="fa fa-ellipsis-h" aria-hidden="true"></i></span>
+                            <div className="dropdown-share-content">
+                                <b><a href="#">Hide Post</a></b>
+                                <p>Remove this post from your feed</p>
+
+                                <b><a href="#">Unfollow Ellie Soufi</a></b>
+                                <p>Stop seeing Ellie’s posts but stay connected</p>
+
+                                <b><a href="#">Report Post</a></b>
+                                <p>Something about this post concerns me</p>
+                            </div>
+        </div>*/}
+                    </div>
+                </div>
+                <div className="clearfix"></div>
+                <div className="desc-box">
+                    <p>{this.props.text}</p>
+
+                    {this.props.imageExist == true ? (<img src={"https://ochbackend.herokuapp.com/api/photo/" + this.props._id} width="100%" height="315" className="img-responsive" />) : ''}
+
+                    {/*<iframe width="100%" height="315"
+                        src="https://www.youtube.com/embed/tgbNymZ7vqY" frameBorder="0">
+                        </iframe>*/}
+
+                    <ul className="comments-area-two clearfix">
+                        <li>
+                            <a href="javascript:void(0)" onClick={this.like} className="like-btn"></a>
+                            <a href="javascript:void(0)" onClick={this.displayComment} id="msg-bar"><img src="/client/assets/images/msg-right.png" className="img-responsive m-r" />{this.state.likes.length} likes</a>
+                        </li>
+                        <li></li>
+                        {/*<li><div className="dropdown-share">
+                            <span><img src="/client/assets/images/f-share.png" className="img-responsive share" /></span>
+                            <div className="dropdown-share-content">
+                                <b><a href="#">Share Now</a></b>
+                                <p>Instantly post to your content feed</p>
+
+                                <b><a href="#">Write Post</a></b>
+                                <p>Write new post based on this post</p>
+
+                                <b><a href="#">Send As Direct Message</a></b>
+                                <p>Send to one or more contacts directly </p>
+                            </div>
+                    </div></li>*/}
+                    </ul>
+
+
+
+                    <div className={'msg-area ' + this.props.fId}>
+                        <div className="left-img">
+
+
+                            <img src={imageView} className="img-responsive circled no-b __circular4" />
+
+
+                        </div>
+                        <div className="right-content">
+                            <div className="search-area">
+                                <input type="text" name="comment_text" disabled={this.state.sending} onKeyDown={this._handleKeyDown} value={this.state.comment_text} onChange={this.onChangeComment} placeholder="Be the first to write a comment..." />
+
+                                {/*<div className="button-wrap btn">
+                                    <label className="new-button" for="upload2"> <img src="/client/assets/images/pic-up.png" className="img-responsive upload" />
+                                        <input id="upload2" type="file" />
+                                    </label></div>
+                                <a className="smly"><i className="fa fa-smile-o" aria-hidden="true"></i></a>*/}
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <a onClick={this.viewComment} className="grey" href="javascript:void(0)">View all {this.state.comments.length} comments</a>
+                    <div style={{ display: this.state.visible }}>
+                        {this.state.comments.map((el, i) =>
+                            <Comment
+                                text={el.text}
+                                name={el.postedBy.firstName || el.postedBy.lastName || el.postedBy.displayName}
+                            />
+                        )}
+
+                    </div>
+                </div>
+            </div>
+
+        );
+    }
+
+}
+
+class FeedTimeline extends Component {
+
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            post: '',
+            photo: '',
+            idPhoto: '',
+            sending: false,
+            timeline: [],
+            newtimeline: [],
+            socketId: '',
+            link: 'https://ochbackend.herokuapp.com/',
+            //link: 'http://localhost:8080',
+            newData: 'none',
+            userId: '',
+
+        }
+
+        this.socket = openSocket(this.state.link)
+
+        if (auth.isAuthenticated()) {
+
+            this.socket.on('connect', () => {
+                this.setState({ socketId: this.socket.id });
+            });
+
+            this.socket.on('fetch_post', this._fetchPost)
+            this.socket.on('fetch_posts', this._fetchNewPosts)
+        }
+    }
+
+    componentDidMount() {
+        this.postData = new FormData();
+
+        this.fetchPost()
+
+        if (auth.isAuthenticated()) {
+            const jwt = auth.isAuthenticated();
+            const user_id = jwt.user._id;
+            this.setState({ userId: user_id });
+        }
+    }
+
+
+
+
+    fetchPost = () => {
+        if (auth.isAuthenticated()) {
+            const jwt = auth.isAuthenticated();
+            const userId = jwt.user._id;
+
+            this.postData.set('postedBy', userId)
+
+            listByUser(userId).then((data) => {
+                if (data.error) {
+                    console.log(data.error)
+                } else {
+
+                    this.setState({
+                        timeline: data.reverse()
+                    })
+
+                    //console.log(data)
+                }
+            })
+        }
+
+    }
+
+    _fetchPost = data => {
+        if (data == true) {
+            if (auth.isAuthenticated()) {
+                const newPost = true
+
+
+                this.socket.emit('fetch_new_post', newPost)
+                this.socket.on('fetch_posts', this._fetchNewPosts)
+
+
+                this.setState({ sending: false, comment_text: '' })
+            }
+
+        }
+    }
+
+    _fetchNewPosts = data => {
+        if (data.length != this.state.timeline.length) {
+
+            this.setState({
+                newtimeline: data.reverse(),
+                newData: 'block'
+            })
+
+            //console.log(data)
+        }
+    }
+
+    loadNewTimeline = () => {
+        let empty = []
+        this.setState({
+            timeline: empty.reverse()
+        })
+
+        setTimeout(this.reloadnewTimeline, 1500)
+    }
+
+    reloadnewTimeline = () => {
+        this.setState({
+            timeline: this.state.newtimeline.reverse(),
+            newData: 'none'
+        })
+
+        $('div.msg-area').hide();
+    }
+
+
+    onChangePost = (event) => {
+        this.setState({
+            [event.target.name]: event.target.value
+        });
+    }
+
+    handleChange = (event) => {
+        const value = event.target.name === 'photo'
+            ? event.target.files[0]
+            : event.target.value
+
+        this.postData.set(event.target.name, value)
+        this.setState({ idPhoto: URL.createObjectURL(event.target.files[0]) });
+    }
+
+
+    onSubmitPost() {
+        if (auth.isAuthenticated()) {
+            this.postData.set('text', this.state.post)
+            const jwt = auth.isAuthenticated();
+            const userId = jwt.user._id;
+            const token = jwt.token
+
+            this.postData.set('postedBy', userId)
+
+            create({
+                t: token
+            }, this.postData).then((data) => {
+                if (data.error) {
+                    console.log(data.error)
+                } else {
+                    //console.log(data)
+
+                    this.postData.set('photo', '')
+                    this.setState({ sending: false, post: '' })
+                }
+            })
+        }
+
+    }
+
+    _handleKeyDown = (e) => {
+
+        if (e.key === 'Enter') {
+            if (this.state.post != '') {
+                this.onSubmitPost()
+
+                this.setState({ sending: true })
+            } else {
+                swal('Post field is required')
+            }
+        }
+    }
+
+    upload = () => {
+        if (this.state.post != '') {
+            this.onSubmitPost()
+
+            this.setState({ sending: true })
+        } else {
+            swal('Post field is required')
+        }
+    }
+
+
+    render() {
+        const contactArea = {
+            height: '1250px',
+            overflow: 'auto'
+        }
+        let imageView = 'https://ochbackend.herokuapp.com/api/usersPhoto/' + this.state.userId
+        //let imageView = 'http://localhost:8080/api/usersPhoto/' + this.state.userId;
+        return (
+            <div className="col-md-12 col-lg-6 padd-both">
+
+
+                <div className="white-box clearfix">
+
+                    <div className="left-img">
+
+                        <img src={imageView} className="img-responsive circled no-b __circular4" />
+
+                    </div>
+                    <div className="right-content">
+                        <div className="search-area">
+                            <input name="post" type="text" value={this.state.post} disabled={this.state.sending} onChange={this.onChangePost} placeholder="Share your thoughts and your music..." />
+
+                            <div className="button-wrap btn">
+                                <label className="new-button" for="upload1"> <img src="/client/assets/images/pic-up.png" className="img-responsive upload" />
+                                    <input onChange={this.handleChange} name="photo" id="upload1" type="file" />
+                                </label>
+                                <a href="javascript:void(0)" style={{ width: '40px', height: '70px' }} onClick={this.upload} class="fa fa-share"></a>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div className="likes-section suggest" style={contactArea}>
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-4">
+                            </div>
+                            <div className="col-6">
+                                <a href="javascript:void(0)" onClick={this.loadNewTimeline} style={{ display: this.state.newData }} className="g-btn"> New Post </a>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    {this.state.timeline.map((el, i) =>
+
+                        <Feeds
+                            fId={el._id}
+                            text={el.text}
+                            comments={el.comments}
+                            likes={el.likes}
+                            _id={el._id}
+                            postedBy_id={el.postedBy._id}
+                            postedBy_firstName={el.postedBy.firstNam}
+                            postedBy_lastName={el.postedBy.lastName}
+                            postedBy_displayName={el.postedBy.displayName}
+                            createDate={el.createDate}
+                            imageExist={el.imageExist}
+                            socketConnection={this.socket}
+                        />
+                    )}
+                </div>
+            </div>
+
+        );
+    }
+
+}
+
 
 class Timeline extends Component {
     constructor(props) {
@@ -901,104 +1418,7 @@ class Timeline extends Component {
 
 
                         {/*Timeline*/}
-                        <div className="col-md-12 col-lg-6 padd-both" >
-                            <div className="white-box clearfix">
-
-                                <div className="left-img">
-
-
-                                    <img src={this.state.imageLink} className="img-responsive circled no-b __circular2" />
-
-                                </div>
-                                <div className="right-content">
-                                    <div className="search-area">
-                                        <input type="text" placeholder="Share your thoughts and your music..." />
-
-                                        <div className="button-wrap btn" style={{ display: "none" }}>
-                                            <label className="new-button" for="upload1"> <img src="/client/assets/images/pic-up.png" className="img-responsive upload" />
-                                                <input id="upload1" type="file" />
-                                            </label>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div style={{ display: "none" }} className="white-box clearfix">
-
-                                <div className="left-img">
-
-                                    <img src="/client/assets/images/elif.png" className="img-responsive circled no-b" />
-
-                                </div>
-                                <div className="right-content position-relative">
-                                    <b>Ellie Soufl</b>
-                                    <span>5 min ago</span>
-                                    <div className="dots-a">
-                                        <div className="dropdown-share">
-                                            <span><i className="fa fa-ellipsis-h" aria-hidden="true"></i></span>
-                                            <div className="dropdown-share-content">
-                                                <b><a href="javascript:void0">Hide Post</a></b>
-                                                <p>Remove this post from your feed</p>
-
-                                                <b><a href="javascript:void0">Unfollow Ellie Soufi</a></b>
-                                                <p>Stop seeing Ellie’s posts but stay connected</p>
-
-                                                <b><a href="javascript:void0">Report Post</a></b>
-                                                <p>Something about this post concerns me</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="clearfix"></div>
-                                <div className="desc-box">
-                                    <p>Lorem Ipsum</p>
-
-                                    <iframe width="100%" height="315"
-                                        src="https://www.youtube.com/embed/tgbNymZ7vqY" frameBorder="0">
-                                    </iframe>
-
-                                    <ul className="comments-area-two clearfix">
-                                        <li><a href="javascript:void0" className="like-btn"></a> <a href="javascript:void(0)" id="msg-bar-two"><img src="/client/assets/images/msg-right.png" className="img-responsive m-r" /> You and 267 others liked this</a></li>
-
-                                        <li><div className="dropdown-share">
-                                            <span><img src="/client/assets/images/f-share.png" className="img-responsive share" /></span>
-                                            <div className="dropdown-share-content">
-                                                <b><a href="javascript:void0">Share Now</a></b>
-                                                <p>Instantly post to your content feed</p>
-
-                                                <b><a href="javascript:void0">Write Post</a></b>
-                                                <p>Write new post based on this post</p>
-
-                                                <b><a href="javascript:void0">Send As Direct Message</a></b>
-                                                <p>Send to one or more contacts directly </p>
-                                            </div>
-                                        </div></li>
-                                    </ul>
-                                    <div className="msg-area-two clearfix">
-                                        <div className="left-img">
-
-                                            <img src="/client/assets/images/user-two.png" className="img-responsive circled no-b" />
-
-                                        </div>
-                                        <div className="right-content">
-                                            <div className="search-area">
-                                                <input type="text" placeholder="Be the first to write a comment..." />
-
-                                                <div className="button-wrap btn">
-                                                    <label className="new-button" for="upload2"> <img src="/client/assets/images/pic-up.png" className="img-responsive upload" />
-                                                        <input id="upload2" type="file" />
-                                                    </label></div>
-                                                <a className="smly"><i className="fa fa-smile-o" aria-hidden="true"></i></a>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <p className="p-b"><b>robbiedean</b> So proud of this record! Let’s write another one!</p>
-                                    <a className="grey" href="javascript:void0">View all 6 comments</a>
-                                </div>
-                            </div>
-                        </div>
+                        <FeedTimeline />
                         {/*Timeline*/}
 
 
