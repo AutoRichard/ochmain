@@ -21,6 +21,8 @@
     <link rel="stylesheet" href="/client/assets/css/owl.carousel.min.css">
     <link rel="stylesheet" href="/client/assets/css/simpleLightbox.min.css">
     <link rel="stylesheet" href="/client/assets/css/easy-responsive-tabs.css">
+    
+    <link rel="stylesheet" href="/client/assets/css/instagram.css">
     <!--Template-->
 
 </head>
@@ -747,6 +749,22 @@
             });
         });
     </script>
+
+    <!-- BEGIN - FC Instagram - Script -->
+    <script src="/client/assets/js/instagram.js"></script>
+    <script>
+        jQuery.fn.FCInstagram.accessData = {
+            accessToken: "AQCmkcLFKMg4J35s_TWe0H_Wo6RsiJdEoIYWWuSeY5yLm3bMt1417oUlwx1GuXt0VXYoV8gsXu4aSVqij7gvQiMdlYkyviHdZ2_ZZLxmoPnR_yeMKT1DNBk_9VGu93UoJ1zS5GoYxlrJ7HhASO_OH5F6v6_FDSHWR_8ISao_aLeECQCsuEeNIYAxudF223H4ugYOZsB4x4vDisDGxNOHyMCNSUbqpWufCv-RJRdhY29TJw", // Token
+        };
+        $('#instafeed').FCInstagram({
+            max: 4, // A number between 1 and 25 of photos to show. Default: 9
+            autoplay: true, // Set autoplay video: true/false. Default: false
+            complete: function () { // A callback function to execute after the display of the photos.
+                console.log('completed');
+            }
+        });
+    </script>
+    <!-- END - FC Instagram - Script -->
 
 
 </body>

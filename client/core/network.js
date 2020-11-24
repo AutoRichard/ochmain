@@ -11,6 +11,7 @@ import { read, update } from './../api/api-user';
 import { listBooking } from './../api/api-booking';
 import Booking from './../modal/booking';
 import { listInviteByUser, deleteInvite } from './../api/api-invite'
+import moment from "moment";
 
 
 class Comment extends Component {
@@ -182,7 +183,7 @@ class Feeds extends Component {
                 </div>
                 <div className="right-content position-relative">
                     <b>{this.props.postedBy_firstName} {this.props.postedBy_lastName}</b>
-                    <span>{this.props.createDate}</span>
+                    <span>{moment(this.props.createDate).fromNow()}</span>
                     <div className="dots-a">
                         {/*<div className="dropdown-share">
                             <span><i className="fa fa-ellipsis-h" aria-hidden="true"></i></span>
@@ -943,7 +944,7 @@ class Dashboard extends Component {
                                         <div className="cont w-100">
                                             <b>Session w/{el.owner_id.firstName}</b>
 
-                                            <p>{el.meeting_id.start_time} - {el.meeting_id.topic}</p>
+                                            <p>{moment(el.meeting_id.start_time).format("YYYY-MM-DD HH:mm")} <br/> {el.meeting_id.topic}</p>
                                             <a href={"/zoom.html?meeting_id=" + el.meeting_id._id} className="g-btn">JOIN SESSION</a>
                                             {/*<a href="#" data-toggle="modal" data-target="#cancel-box" className="red-btn">CANCEL</a>*/}
                                         </div>
@@ -959,7 +960,7 @@ class Dashboard extends Component {
                                         <div className="cont w-100">
                                             <b>Session w/{el.owner_id.firstName}</b>
 
-                                            <p>{el.meeting_id.start_time} - {el.meeting_id.topic}</p>
+                                            <p>{moment(el.meeting_id.start_time).format("YYYY-MM-DD HH:mm")} <br/> {el.meeting_id.topic}</p>
                                             <a href="javascript:void(0)" onClick={this.openMeeting.bind(this, el)} data-toggle="modal" data-target="#v-st" class="g-btn">ACCEPT</a>
                                             <a href="#" onClick={this.removeInvite.bind(this, el)} data-toggle="modal" data-target="#cancel-box" className="red-btn">CANCEL</a>
                                         </div>

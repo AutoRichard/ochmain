@@ -8,6 +8,7 @@ import swal from 'sweetalert';
 import auth from './../auth/auth-helper';
 import { create, listByUser } from './../api/api-post';
 import openSocket from 'socket.io-client'
+import moment from "moment";
 
 class Profile extends Component {
 
@@ -947,7 +948,7 @@ class Feeds extends Component {
                 </div>
                 <div className="right-content position-relative">
                     <b>{this.props.postedBy_firstName} {this.props.postedBy_lastName}</b>
-                    <span>{this.props.createDate}</span>
+                    <span>{moment(this.props.createDate).fromNow()}</span>
                     <div className="dots-a">
                         {/*<div className="dropdown-share">
                             <span><i className="fa fa-ellipsis-h" aria-hidden="true"></i></span>

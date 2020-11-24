@@ -18,6 +18,11 @@
     "webclient",
     "WebSDK"
   ],
+  "repository": {
+    "name": "my-application",
+    "version": "0.0.1",
+    "private": true
+  },
   "author": "Jack Yang",
   "license": "ISC",
   "dependencies": {
@@ -46,6 +51,7 @@
     "html-webpack-plugin": "^4.3.0",
     "jquery": "^3.4.1",
     "lodash": "^4.17.14",
+    "moment": "^2.29.1",
     "path": "^0.12.7",
     "react": "16.8.6",
     "react-dom": "16.8.6",
