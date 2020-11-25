@@ -7,7 +7,7 @@ import openSocket from 'socket.io-client'
 import ContactList from '../chat/contact';
 import Chat from '../chat/chat';
 import Messages from '../chat/messages';
-import { read, update } from './../api/api-user';
+import { read, update, listUser } from './../api/api-user';
 import { listBooking } from './../api/api-booking';
 import Booking from './../modal/booking';
 import { listInviteByUser, deleteInvite } from './../api/api-invite'
@@ -538,14 +538,72 @@ class Contact extends Component {
             receiver: '',
             check: false,
             name: '',
-            userStatus: ''
+            userStatus: '',
+            _id: '',
+            contact: []
         }
+    }
+
+    readUsers = () => {
+
+        let jwt, authId;
+
+        if (auth.isAuthenticated()) {
+            jwt = auth.isAuthenticated();
+            authId = jwt.user._id;
+        } else {
+            authId = '';
+        }
+
+        this.setState({ _id: authId });
+        console.log(1234)
+
+        listUser().then((data) => {
+            if (data.error) {
+                swal(data.error)
+            } else {
+                this.setState({
+                    contact: data
+                })
+
+                if ($('#chatbar').hasClass('owl-theme')) { //resize event was triggering an error, this if statement is to go around it
+
+
+                    $('#chatbar').trigger('destroy.owl.carousel'); //these 3 lines kill the owl, and returns the markup to the initial state
+                    $('#chatbar').find('.owl-stage-outer').children().unwrap();
+                    $('#chatbar').removeClass("owl-center owl-loaded owl-text-select-on");
+
+                    $("#chatbar").owlCarousel({
+                        margin: 30,
+                        nav: true,
+                        loop: false,
+                        singleItem: true,
+                        navText: ["<div class='nav-btn prev-btn'>Pre</div>", "<div class='nav-btn next-btn'>Next</div>"],
+                        dots: true,
+                        responsive: {
+                            0: {
+                                items: 3
+                            },
+                            600: {
+                                items: 4
+                            },
+                            1000: {
+                                items: 6
+                            },
+
+                        },
+                    }); //re-initialise the owl
+                }
+            }
+        });
     }
 
     componentDidMount() {
         this.setState({ receiver: this.props.receiver, name: this.props.name })
         if (auth.isAuthenticated()) {
             this.setState({ check: true })
+
+            this.readUsers();
         }
 
     }
@@ -559,6 +617,10 @@ class Contact extends Component {
             this.setState({ userStatus: this.props.userStatus })
 
         }
+    }
+
+    openChat = (data, e) => {
+        this.props._parentOpenChat(data)
     }
 
     render() {
@@ -645,39 +707,24 @@ class Contact extends Component {
                         </div>
 
                         <div className="col-md-4 col-lg-6">
-                            {/*<div id="chatbar" className="owl-carousel owl-theme">
-                                <div className="item">
-                                    <div className="position-relative"><a href="#" data-toggle="modal" data-target="#user-box"><img
-                                        src="/client/assets/images/user.png" className="img-responsive" /><span className="status"></span></a>
-                                    </div>
-                                </div>
-                                <div className="item">
-                                    <div className="position-relative"><a href="#" data-toggle="modal" data-target="#user-box"><img
-                                        src="/client/assets/images/user.png" className="img-responsive" /><span className="status"></span></a>
-                                    </div>
-                                </div>
-                                <div className="item">
-                                    <div className="position-relative"><a href="#" data-toggle="modal" data-target="#user-box"><img
-                                        src="/client/assets/images/user.png" className="img-responsive" /><span className="status"></span></a>
-                                    </div>
-                                </div>
-                                <div className="item">
-                                    <div className="position-relative"><a href="#" data-toggle="modal" data-target="#user-box"><img
-                                        src="/client/assets/images/user.png" className="img-responsive" /><span className="status"></span></a>
-                                    </div>
-                                </div>
-                                <div className="item">
-                                    <div className="position-relative"><a href="#" data-toggle="modal" data-target="#user-box"><img
-                                        src="/client/assets/images/user.png" className="img-responsive" /><span className="status"></span></a>
-                                    </div>
-                                </div>
-                                <div className="item">
-                                    <div className="position-relative"><a href="#" data-toggle="modal" data-target="#user-box"><img
-                                        src="/client/assets/images/user.png" className="img-responsive" /><span className="status"></span></a>
-                                    </div>
-                                </div>
+                            <div id="chatbar" className="owl-carousel owl-theme">
+
+                                {this.state.contact.map((el, i) =>
+                                    el._id == auth.isAuthenticated().user._id ? '' : (
+                                        <div className="item">
+                                            <div className="position-relative"><a href="#" onClick={this.openChat.bind(this, el)} value={el._id} data-toggle="modal" data-target="#user-box"><img
+                                                src={'https://ochbackend.herokuapp.com/api/usersPhoto/' + el._id} className="img-responsive __circular3" /><span className="status"></span></a>
+                                            </div>
+                                        </div>
+
+                                    )
+
+                                )}
+
+
+
                             </div>
-                            */}
+
                         </div>
 
                         {this.state.check === true ? <Chat
@@ -944,7 +991,7 @@ class Dashboard extends Component {
                                         <div className="cont w-100">
                                             <b>Session w/{el.owner_id.firstName}</b>
 
-                                            <p>{moment(el.meeting_id.start_time).format("YYYY-MM-DD HH:mm")} <br/> {el.meeting_id.topic}</p>
+                                            <p>{moment(el.meeting_id.start_time).format("YYYY-MM-DD HH:mm")} <br /> {el.meeting_id.topic}</p>
                                             <a href={"/zoom.html?meeting_id=" + el.meeting_id._id} className="g-btn">JOIN SESSION</a>
                                             {/*<a href="#" data-toggle="modal" data-target="#cancel-box" className="red-btn">CANCEL</a>*/}
                                         </div>
@@ -960,7 +1007,7 @@ class Dashboard extends Component {
                                         <div className="cont w-100">
                                             <b>Session w/{el.owner_id.firstName}</b>
 
-                                            <p>{moment(el.meeting_id.start_time).format("YYYY-MM-DD HH:mm")} <br/> {el.meeting_id.topic}</p>
+                                            <p>{moment(el.meeting_id.start_time).format("YYYY-MM-DD HH:mm")} <br /> {el.meeting_id.topic}</p>
                                             <a href="javascript:void(0)" onClick={this.openMeeting.bind(this, el)} data-toggle="modal" data-target="#v-st" class="g-btn">ACCEPT</a>
                                             <a href="#" onClick={this.removeInvite.bind(this, el)} data-toggle="modal" data-target="#cancel-box" className="red-btn">CANCEL</a>
                                         </div>
@@ -1088,6 +1135,25 @@ class Network extends Component {
         this.setState({ open: true })
     }
 
+    grandOpenChatP = (data) => {
+        this.setState({ receiver: data._id, userStatus: data.userStatus })
+        let _name
+
+        if (data.displayName == '') {
+            _name = data.firstName + ' ' + data.lastName;
+        } else {
+            _name = data.displayName
+        }
+
+
+        this.setState({ name: _name })
+    }
+
+    __grandOpenChatP = () => {
+        document.getElementById('pop-right-msg').click()
+        this.setState({ open: true })
+    }
+
 
     render() {
         return (
@@ -1108,6 +1174,14 @@ class Network extends Component {
                     receiver={this.state.receiver}
                     name={this.state.name}
                     userStatus={this.state.userStatus}
+                    _parentOpenChat={this.grandOpenChatP}
+                />
+
+                <UserBox
+                    receiver={this.state.receiver}
+                    name={this.state.name}
+                    userStatus={this.state.userStatus}
+                    openChat={this.__grandOpenChatP}
                 />
 
 
@@ -1115,6 +1189,73 @@ class Network extends Component {
             </div>
         )
     }
+}
+
+
+class UserBox extends Component {
+
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            receiver: '',
+            check: false,
+            name: '',
+            userStatus: '',
+        }
+    }
+
+    componentDidMount() {
+        this.setState({ receiver: this.props.receiver, name: this.props.name })
+        if (auth.isAuthenticated()) {
+            this.setState({ check: true })
+        }
+
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.receiver !== prevProps.receiver) {
+            this.setState({ receiver: this.props.receiver, name: this.props.name, userStatus: this.props.userStatus })
+        }
+
+        if (this.props.userStatus !== prevProps.userStatus) {
+            this.setState({ userStatus: this.props.userStatus })
+
+        }
+    }
+
+    _openChat = () => {
+        document.getElementById('pop-close-msg').click()
+        this.props.openChat()
+    }
+
+    viewProfile = () => {
+        window.location = '/my-page/'+ this.state.receiver
+    }
+
+    render() {
+        return (
+            <div class="modal" id="user-box">
+                <div class="modal-dialog modal-dialog-centered ex-small-box">
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+
+                            <button type="button" id="pop-close-msg" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        <div class="modal-body bg-white e-small-m">
+                            <img src="/client/assets/images/hut.png" class="hut-right" onClick={this.viewProfile} />
+                            <img src="/client/assets/images/msg.png" class="msg-left" onClick={this._openChat} />
+                            <img src={'https://ochbackend.herokuapp.com/api/usersPhoto/' + this.state.receiver} class="f-ring"  />
+                            <h1>{this.state.name}</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
 }
 
 export default Network;

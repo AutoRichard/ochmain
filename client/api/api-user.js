@@ -23,6 +23,14 @@ const list = () => {
   }).catch((err) => console.log(err))
 }
 
+const listUser = () => {
+  return fetch(link + '/api/users', {
+    method: 'GET',
+  }).then(response => {
+    return response.json()
+  }).catch((err) => console.log(err))
+}
+
 const read = (params) => {
   return fetch(link + '/api/users/' + params.userId, {
     method: 'GET',
@@ -117,4 +125,5 @@ export {
   password,
   image,
   payout,
+  listUser
 }

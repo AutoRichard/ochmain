@@ -1057,6 +1057,7 @@ class FeedTimeline extends Component {
             //link: 'http://localhost:8080',
             newData: 'none',
             userId: '',
+            _userId: ''
 
         }
 
@@ -1076,8 +1077,6 @@ class FeedTimeline extends Component {
     componentDidMount() {
         this.postData = new FormData();
 
-        this.fetchPost()
-
         if (auth.isAuthenticated()) {
             const jwt = auth.isAuthenticated();
             const user_id = jwt.user._id;
@@ -1085,17 +1084,30 @@ class FeedTimeline extends Component {
         }
     }
 
+    componentDidUpdate(prevProps) {
+        if (this.props._id !== prevProps._id) {
+            this.setState({
+                _userId: this.props._id
+            })
+
+            this.fetchPost(this.props._id)
+        }
+
+    }
 
 
 
-    fetchPost = () => {
+
+    fetchPost = (id) => {
         if (auth.isAuthenticated()) {
             const jwt = auth.isAuthenticated();
             const userId = jwt.user._id;
 
             this.postData.set('postedBy', userId)
 
-            listByUser(userId).then((data) => {
+
+
+            listByUser(id).then((data) => {
                 if (data.error) {
                     console.log(data.error)
                 } else {
@@ -1320,7 +1332,8 @@ class Timeline extends Component {
             audio: [],
             video: [],
             imageLink: '',
-            title: ''
+            title: '',
+            userId: ''
         }
     }
 
@@ -1329,6 +1342,9 @@ class Timeline extends Component {
             let user = this.props.userData;
             this.updateLink(user._id);
             this.updateUser(user);
+            this.setState({
+                userId: this.props._id
+            })
         }
     }
 
@@ -1419,7 +1435,9 @@ class Timeline extends Component {
 
 
                         {/*Timeline*/}
-                        <FeedTimeline />
+                        <FeedTimeline
+                            _id={this.state.userId}
+                        />
                         {/*Timeline*/}
 
 
@@ -1548,6 +1566,7 @@ class Mypage extends Component {
                     />
 
                     <Timeline
+                        _id={this.state._id}
                         userData={this.state.dataEdit}
                     />
                 </div>
