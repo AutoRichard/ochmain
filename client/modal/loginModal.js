@@ -3,7 +3,7 @@ import { signin } from './../auth/api-auth';
 import auth from './../auth/auth-helper';
 import swal from 'sweetalert';
 
- 
+
 
 
 
@@ -49,9 +49,23 @@ class LoginModal extends React.Component {
                     this.setState({ loading: false });
                     swal(data.error)
                 } else {
-                    auth.authenticate(data, () => {
-                        window.location = '/'
-                    })
+
+                    if (data.user.suspend == false && data.user.approve == true) {
+                        auth.authenticate(data, () => {
+                            window.location = '/'
+                        })
+                    } else {
+                        if (data.user.suspend == true) {
+                            this.setState({ loading: false });                            
+                            swal("Account Suspended")
+                        }
+                        if (data.user.approve == false) {
+                            this.setState({ loading: false });
+                            swal("Account Under Review, we will contact you using the email address you provided")
+                        }
+
+                    }
+
                 }
             });
         }
