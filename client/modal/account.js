@@ -439,7 +439,7 @@ class Billing extends React.Component {
     }
 
     closeAccount = () => {
-        document.getElementById('closeUpdate').click()
+        //document.getElementById('closeUpdate').click()
     }
 
 

@@ -49,11 +49,12 @@ class MainRouter extends Component {
         <ApplicationForm />
         <Thanks />
         <JoinSession />
-        <Detail />        
-        <Plan />
+        <Detail /> 
 
         <Account />
         <Cancel />
+               
+        <Plan />
       </div>
     );
   }
