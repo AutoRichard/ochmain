@@ -540,7 +540,9 @@ class Contact extends Component {
             name: '',
             userStatus: '',
             _id: '',
-            contact: []
+            contact: [],
+            searchContact: [],
+            searchValue: ''
         }
     }
 
@@ -622,6 +624,38 @@ class Contact extends Component {
     openChat = (data, e) => {
         this.props._parentOpenChat(data)
     }
+    _openChat = (data, e) => {
+
+        this.props._parentOpenChat(data)
+        this.props.__parentOpenChat()
+
+
+        document.getElementById('chatInput').style.display = '';
+    }
+
+    onSearch = (event) => {
+
+        this.setState({
+            [event.target.name]: event.target.value
+        })
+
+
+
+    }
+
+    searchContact = () => {
+
+        let { contact } = this.state;
+        var searchV = this.state.searchValue.toLowerCase()
+
+        const matches = contact.filter(v => v.displayName && (v.displayName.toLowerCase().includes(searchV)) || v.firstName && (v.firstName.toLowerCase().includes(searchV)) || v.lastName && (v.lastName.toLowerCase().includes(searchV)));
+        this.setState({
+            searchContact: matches
+        })
+
+        document.getElementById('pop-left').click()
+    }
+
 
     render() {
         return (
@@ -630,80 +664,38 @@ class Contact extends Component {
                     <div className="row">
                         <div className="col-md-4 col-lg-3 position-relative" id="add-cont">
 
-                            {/*<div id="popup-l" className="popup">
+                            <div id="popup-l" className="popup">
                                 <div className="pop-header">
                                     <a href="javascript:void(0)" id="hide-l" className="close-pop"><i className="fa fa-times"
                                         aria-hidden="true"></i></a>
                                     <h1>CONTACTS</h1>
                                 </div>
-                                <div className="img-area clearfix">
-                                    <img src="/client/assets/images/user-four.png" className="img-responsive circled" />
-                                    <div className="cont w-100">
-                                        <b>Thomas Barsoe</b>
-    
-                                        <p>Active now - In The Studio</p>
-                                        <span className="green"></span>
-                                    </div>
-    
-                                </div>
-                                <div className="img-area clearfix">
-                                    <img src="/client/assets/images/elif.png" className="img-responsive circled" />
-                                    <div className="cont w-100">
-                                        <b>Ellie Soufi</b>
-    
-                                        <p>Active now - Available</p>
-                                        <span className="green"></span>
-                                    </div>
-    
-                                </div>
-                                <div className="img-area clearfix">
-                                    <img src="/client/assets/images/user-six.png" className="img-responsive circled" />
-                                    <div className="cont w-100">
-                                        <b>Cory Young</b>
-    
-                                        <p>Active now - Recording</p>
-                                        <span className="green"></span>
-                                    </div>
-    
-                                </div>
-                                <div className="img-area clearfix">
-                                    <img src="/client/assets/images/user-seven.png" className="img-responsive circled" />
-                                    <div className="cont w-100">
-                                        <b>Lars Halvor Jensen</b>
-    
-                                        <p>Active now - Busy</p>
-                                        <span className="green"></span>
-                                    </div>
-    
-                                </div>
-                                <div className="img-area clearfix">
-                                    <img src="/client/assets/images/user-eight.png" className="img-responsive circled" />
-                                    <div className="cont w-100">
-                                        <b>Jackie Hishmeh</b>
-    
-                                        <p>Active 1 hr ago</p>
-                                        <span></span>
-                                    </div>
-    
-                                </div>
-                                <div className="img-area clearfix">
-                                    <img src="/client/assets/images/user-nine.png" className="img-responsive circled" />
-                                    <div className="cont w-100">
-                                        <b>Robbie Dean</b>
-    
-                                        <p>Active 2 hrs ago</p>
-                                        <span></span>
-                                    </div>
-    
-                                </div>
+
+
+                                {this.state.searchContact.map((el, i) =>
+
+                                    el._id == auth.isAuthenticated().user._id ? '' :
+                                        (<div className="img-area clearfix">
+                                            <div className="img-c">
+                                                <img src={'https://ochbackend.herokuapp.com/api/usersPhoto/' + el._id} className="img-responsive circled __circular3" />
+                                                <span className={"msg" + el.userStatus}></span>
+                                            </div>
+                                            <div className="cont w-70">
+                                                <b>{el.displayName}</b>
+                                                <p>{el.firstName} {el.lastName}</p>
+                                            </div>
+                                            <a onClick={this._openChat.bind(this, el)} value={el._id} href="#chat-bx" id="pop-right"> <img src="/client/assets/images/msg.png"
+                                                className="img-responsive wd" /></a>
+                                        </div>)
+                                )}
                             </div>
-    
+
                             <div className="input-space">
                                 <a href="javascript:void(0)" className="icon-arrow" id="pop-left"><i
                                     className="rotate fa fa-angle-right" aria-hidden="true"></i></a>
-                                <input type="text" placeholder="Search Network..." />
-                                <i className="fa fa-search" aria-hidden="true"></i>
-                            </div>*/}
+                                <input type="text" name="searchValue" onChange={this.onSearch} placeholder="Search Network..." />
+                                <a href="javascript:void(0)" onClick={this.searchContact}><i className="fa fa-search" aria-hidden="true"></i></a>
+                            </div>
                         </div>
 
                         <div className="col-md-4 col-lg-6">
@@ -718,7 +710,7 @@ class Contact extends Component {
                                         </div>
 
                                     )
- 
+
                                 )}
 
 
@@ -1175,6 +1167,7 @@ class Network extends Component {
                     name={this.state.name}
                     userStatus={this.state.userStatus}
                     _parentOpenChat={this.grandOpenChatP}
+                    __parentOpenChat={this.__grandOpenChatP}
                 />
 
                 <UserBox
@@ -1230,7 +1223,7 @@ class UserBox extends Component {
     }
 
     viewProfile = () => {
-        window.location = '/my-page/'+ this.state.receiver
+        window.location = '/my-page/' + this.state.receiver
     }
 
     render() {
@@ -1247,7 +1240,7 @@ class UserBox extends Component {
                         <div class="modal-body bg-white e-small-m">
                             <img src="/client/assets/images/hut.png" class="hut-right" onClick={this.viewProfile} />
                             <img src="/client/assets/images/msg.png" class="msg-left" onClick={this._openChat} />
-                            <img src={'https://ochbackend.herokuapp.com/api/usersPhoto/' + this.state.receiver} class="f-ring"  />
+                            <img src={'https://ochbackend.herokuapp.com/api/usersPhoto/' + this.state.receiver} class="f-ring" />
                             <h1>{this.state.name}</h1>
                         </div>
                     </div>
