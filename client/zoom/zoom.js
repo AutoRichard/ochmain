@@ -13,7 +13,7 @@ class Zoom extends React.Component {
         this.state = {
             meeting_number: '',
             meeting_pwd: '',
-            link: 'https://ochbackend.herokuapp.com',
+            link: 'https://ochback.herokuapp.com',
             //link: 'http://localhost:8080',
             meeting_topic: 'MEETING'
         }
@@ -71,7 +71,7 @@ class Zoom extends React.Component {
 
     join = () => {
         //const link = 'http://localhost:8080';
-        const link = 'https://ochbackend.herokuapp.com';
+        const link = 'https://ochback.herokuapp.com';
 
 
         fetch(link + '/api/signature', {

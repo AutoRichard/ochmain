@@ -647,7 +647,7 @@ class Booking extends React.Component {
 
                         <div className="item">
                             <div className="border-box text-center">
-                                <img src={'https://ochbackend.herokuapp.com/api/usersPhoto/' + el.user_id._id} className="user-dpz" />
+                                <img src={'https://ochback.herokuapp.com/api/usersPhoto/' + el.user_id._id} className="user-dpz" />
                                 <h4>{el.user_id.firstName}</h4>
 
                                 <h5>DETAILS:</h5>
@@ -807,7 +807,7 @@ class Account extends React.Component {
             const jwt = auth.isAuthenticated();
             const userId = jwt.user._id;
             const token = jwt.token;
-            let link1 = 'https://ochbackend.herokuapp.com/api/usersPhoto/';
+            let link1 = 'https://ochback.herokuapp.com/api/usersPhoto/';
             //let link1 = 'http://localhost:8080/api/usersPhoto/'
             let link = link1 + userId;
 

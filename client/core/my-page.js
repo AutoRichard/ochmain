@@ -97,7 +97,7 @@ class Profile extends Component {
     }
 
     updateUser = (data) => {
-        let imageView = 'https://ochbackend.herokuapp.com/api/usersPhoto/' + data._id
+        let imageView = 'https://ochback.herokuapp.com/api/usersPhoto/' + data._id
         //let imageView = 'http://localhost:8080/api/usersPhoto/' + data._id;
         this.setState({
             fullName: data.fullName || '', displayName: data.displayName || '', phoneNumber: data.phoneNumber || '', about: data.about || '', loading: data.loading, _id: data._id, auth: data.auth, image: imageView, userStatus: data.userStatus
@@ -522,7 +522,7 @@ class VideoList extends Component {
         const _jwt = auth.isAuthenticated();
         const _userId = _jwt.user._id;
 
-        let imageView = 'https://ochbackend.herokuapp.com/api/linkthumbnail/' + this.props.thumbnail
+        let imageView = 'https://ochback.herokuapp.com/api/linkthumbnail/' + this.props.thumbnail
         //let imageView = 'http://localhost:8080/api/linkthumbnail/' + this.props.thumbnail;
 
         let videoView = 'https://www.youtube.com/embed/' + this.props.link
@@ -815,7 +815,7 @@ class Feeds extends Component {
             comment_text: '',
             sending: false,
             socketId: '',
-            link: 'https://ochbackend.herokuapp.com/',
+            link: 'https://ochback.herokuapp.com/',
             //link: 'http://localhost:8080',
             visible: 'none',
             userId: ''
@@ -936,14 +936,14 @@ class Feeds extends Component {
     }
 
     render() {
-        let imageView = 'https://ochbackend.herokuapp.com/api/usersPhoto/' + this.state.userId
+        let imageView = 'https://ochback.herokuapp.com/api/usersPhoto/' + this.state.userId
         //let imageView = 'http://localhost:8080/api/usersPhoto/' + this.state.userId;
         return (
             <div className="white-box clearfix">
 
                 <div className="left-img">
 
-                    <img src={'https://ochbackend.herokuapp.com/api/usersPhoto/' + this.props.postedBy_id} className="img-responsive circled no-b __circular4" />
+                    <img src={'https://ochback.herokuapp.com/api/usersPhoto/' + this.props.postedBy_id} className="img-responsive circled no-b __circular4" />
 
                 </div>
                 <div className="right-content position-relative">
@@ -969,7 +969,7 @@ class Feeds extends Component {
                 <div className="desc-box">
                     <p>{this.props.text}</p>
 
-                    {this.props.imageExist == true ? (<img src={"https://ochbackend.herokuapp.com/api/photo/" + this.props._id} width="100%" height="315" className="img-responsive" />) : ''}
+                    {this.props.imageExist == true ? (<img src={"https://ochback.herokuapp.com/api/photo/" + this.props._id} width="100%" height="315" className="img-responsive" />) : ''}
 
                     {/*<iframe width="100%" height="315"
                         src="https://www.youtube.com/embed/tgbNymZ7vqY" frameBorder="0">
@@ -1053,7 +1053,7 @@ class FeedTimeline extends Component {
             timeline: [],
             newtimeline: [],
             socketId: '',
-            link: 'https://ochbackend.herokuapp.com/',
+            link: 'https://ochback.herokuapp.com/',
             //link: 'http://localhost:8080',
             newData: 'none',
             userId: '',
@@ -1240,7 +1240,7 @@ class FeedTimeline extends Component {
             height: '1250px',
             overflow: 'auto'
         }
-        let imageView = 'https://ochbackend.herokuapp.com/api/usersPhoto/' + this.state.userId
+        let imageView = 'https://ochback.herokuapp.com/api/usersPhoto/' + this.state.userId
         //let imageView = 'http://localhost:8080/api/usersPhoto/' + this.state.userId;
         return (
             <div className="col-md-12 col-lg-6 padd-both">
@@ -1349,7 +1349,7 @@ class Timeline extends Component {
     }
 
     updateUser = (data) => {
-        let imageView = 'https://ochbackend.herokuapp.com/api/usersPhoto/' + data._id
+        let imageView = 'https://ochback.herokuapp.com/api/usersPhoto/' + data._id
         //let imageView = 'http://localhost:8080/api/usersPhoto/' + data._id;
         this.setState({
             loading: data.loading, _id: data._id, auth: data.auth, imageLink: imageView

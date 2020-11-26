@@ -121,7 +121,7 @@ class Feeds extends Component {
                         {this.state.news.map((el, i) =>
                             <div className="item">
                                 <div className="box-img black">
-                                    <img src={'https://ochbackend.herokuapp.com/api/newsPhoto/' + el._id} className="img-responsive" />
+                                    <img src={'https://ochback.herokuapp.com/api/newsPhoto/' + el._id} className="img-responsive" />
                                     <div className="heading-area">
                                         <h6>{moment(el.created).format('ll')}</h6>
                                         <div className="div-box"></div>

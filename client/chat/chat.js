@@ -18,7 +18,7 @@ class Chat extends React.Component {
             name: '',
             msg: '',
             scroll: false,
-            link: 'https://ochbackend.herokuapp.com/',
+            link: 'https://ochback.herokuapp.com/',
             //link: 'http://localhost:8080',
             userStatus: '',
             intervalId: '',
@@ -189,7 +189,7 @@ class Chat extends React.Component {
                     <div className="pop-header message-pop">
                         <a href="javascript:void(0)" id="hide-r" className="close-pop"><i className="fa fa-times"
                             aria-hidden="true"></i></a>
-                        <div className="user-im"><img src={'https://ochbackend.herokuapp.com/api/usersPhoto/' + this.state.receiver} className="img-responsive __circular4" />
+                        <div className="user-im"><img src={'https://ochback.herokuapp.com/api/usersPhoto/' + this.state.receiver} className="img-responsive __circular4" />
                             <div className={"st" + this.state.userStatus}></div>
                         </div>
                         <a href="javascript:void(0)" id="_hide-r" className="arrow-left"><i className="fa fa-angle-left"

@@ -13,7 +13,7 @@ class ContactList extends React.Component {
         this.state = {
             sender: '',
             mesageList: [],
-            link: 'https://ochbackend.herokuapp.com/',
+            link: 'https://ochback.herokuapp.com/',
             //link: 'http://localhost:8080',
             intervalId: '',
             check: 0,
@@ -217,7 +217,7 @@ class ContactList extends React.Component {
                             return (
                                 <div className="img-area clearfix" onClick={this.viewMessageArea.bind(this, el)}>
                                     <div className="img-c">
-                                        <img src={'https://ochbackend.herokuapp.com/api/usersPhoto/' + user._id} className="img-responsive circled __circular3" />
+                                        <img src={'https://ochback.herokuapp.com/api/usersPhoto/' + user._id} className="img-responsive circled __circular3" />
                                         <span className={"msg" + user.userStatus}></span>
                                     </div>
 

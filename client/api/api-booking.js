@@ -1,5 +1,5 @@
 //const link = 'http://localhost:8080';
-const link = 'https://ochbackend.herokuapp.com';
+const link = 'https://ochback.herokuapp.com';
 
 const createBooking = (credentials, formData) => {
     return fetch(link + '/api/booking', {

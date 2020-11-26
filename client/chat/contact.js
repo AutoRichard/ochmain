@@ -66,7 +66,7 @@ class ContactList extends React.Component {
                         el._id == auth.isAuthenticated().user._id ? '' :
                             (<div className="img-area clearfix">
                                 <div className="img-c">
-                                    <img src={'https://ochbackend.herokuapp.com/api/usersPhoto/' + el._id} className="img-responsive circled __circular3" />
+                                    <img src={'https://ochback.herokuapp.com/api/usersPhoto/' + el._id} className="img-responsive circled __circular3" />
                                     <span className={"msg"+el.userStatus}></span>
                                 </div>
                                 <div className="cont">

@@ -51,7 +51,7 @@ class Meeting extends React.Component {
         };
 
         //const link =  'http://localhost:8080';
-        const link = 'https://ochbackend.herokuapp.com';
+        const link = 'https://ochback.herokuapp.com';
 
 
         fetch(link + '/api/check', {

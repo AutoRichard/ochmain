@@ -33,7 +33,7 @@ class PicBox extends React.Component {
     componentDidUpdate(prevProps) {
         if (this.props._id !== prevProps._id) {
             //const link = 'http://localhost:8080/api/usersPhoto/' + this.props._id;
-            const link = 'https://ochbackend.herokuapp.com/api/usersPhoto/' + this.props._id;
+            const link = 'https://ochback.herokuapp.com/api/usersPhoto/' + this.props._id;
             this.setState({ id: link })
         }
     }

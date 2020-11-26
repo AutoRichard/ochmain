@@ -50,7 +50,7 @@ class Feeds extends Component {
             comment_text: '',
             sending: false,
             socketId: '',
-            link: 'https://ochbackend.herokuapp.com/',
+            link: 'https://ochback.herokuapp.com/',
             //link: 'http://localhost:8080',
             visible: 'none',
             userId: ''
@@ -171,14 +171,14 @@ class Feeds extends Component {
     }
 
     render() {
-        let imageView = 'https://ochbackend.herokuapp.com/api/usersPhoto/' + this.state.userId
+        let imageView = 'https://ochback.herokuapp.com/api/usersPhoto/' + this.state.userId
         //let imageView = 'http://localhost:8080/api/usersPhoto/' + this.state.userId;
         return (
             <div className="white-box clearfix">
 
                 <div className="left-img">
 
-                    <img src={'https://ochbackend.herokuapp.com/api/usersPhoto/' + this.props.postedBy_id} className="img-responsive circled no-b __circular4" />
+                    <img src={'https://ochback.herokuapp.com/api/usersPhoto/' + this.props.postedBy_id} className="img-responsive circled no-b __circular4" />
 
                 </div>
                 <div className="right-content position-relative">
@@ -204,7 +204,7 @@ class Feeds extends Component {
                 <div className="desc-box">
                     <p>{this.props.text}</p>
 
-                    {this.props.imageExist == true ? (<img src={"https://ochbackend.herokuapp.com/api/photo/" + this.props._id} width="100%" height="315" className="img-responsive" />) : ''}
+                    {this.props.imageExist == true ? (<img src={"https://ochback.herokuapp.com/api/photo/" + this.props._id} width="100%" height="315" className="img-responsive" />) : ''}
 
                     {/*<iframe width="100%" height="315"
                         src="https://www.youtube.com/embed/tgbNymZ7vqY" frameBorder="0">
@@ -288,7 +288,7 @@ class Timeline extends Component {
             timeline: [],
             newtimeline: [],
             socketId: '',
-            link: 'https://ochbackend.herokuapp.com/',
+            link: 'https://ochback.herokuapp.com/',
             //link: 'http://localhost:8080',
             newData: 'none',
             userId: '',
@@ -464,7 +464,7 @@ class Timeline extends Component {
             height: '1250px',
             overflow: 'auto'
         }
-        let imageView = 'https://ochbackend.herokuapp.com/api/usersPhoto/' + this.state.userId
+        let imageView = 'https://ochback.herokuapp.com/api/usersPhoto/' + this.state.userId
         //let imageView = 'http://localhost:8080/api/usersPhoto/' + this.state.userId;
         return (
             <div className="col-md-12 col-lg-6 padd-both">
@@ -677,7 +677,7 @@ class Contact extends Component {
                                     el._id == auth.isAuthenticated().user._id ? '' :
                                         (<div className="img-area clearfix">
                                             <div className="img-c">
-                                                <img src={'https://ochbackend.herokuapp.com/api/usersPhoto/' + el._id} className="img-responsive circled __circular3" />
+                                                <img src={'https://ochback.herokuapp.com/api/usersPhoto/' + el._id} className="img-responsive circled __circular3" />
                                                 <span className={"msg" + el.userStatus}></span>
                                             </div>
                                             <div className="cont w-70">
@@ -705,7 +705,7 @@ class Contact extends Component {
                                     el._id == auth.isAuthenticated().user._id ? '' : (
                                         <div className="item">
                                             <div className="position-relative"><a href="#" onClick={this.openChat.bind(this, el)} value={el._id} data-toggle="modal" data-target="#user-box"><img
-                                                src={'https://ochbackend.herokuapp.com/api/usersPhoto/' + el._id} className="img-responsive __circular3" /><span className="status"></span></a>
+                                                src={'https://ochback.herokuapp.com/api/usersPhoto/' + el._id} className="img-responsive __circular3" /><span className="status"></span></a>
                                             </div>
                                         </div>
 
@@ -850,7 +850,7 @@ class Dashboard extends Component {
 
 
     render() {
-        let imageView = 'https://ochbackend.herokuapp.com/api/usersPhoto/' + this.state.userId
+        let imageView = 'https://ochback.herokuapp.com/api/usersPhoto/' + this.state.userId
         //let imageView = 'http://localhost:8080/api/usersPhoto/' + this.state.userId;
         return (
             <section className="grey padd-b padd-top">
@@ -977,7 +977,7 @@ class Dashboard extends Component {
                                 <div className="likes-section new">
                                     {this.state.meetings.map((el, i) => <div className="img-area clearfix">
                                         <div className="img-c">
-                                            <img src={'https://ochbackend.herokuapp.com/api/usersPhoto/' + el.owner_id._id} className="img-responsive __circular3" />
+                                            <img src={'https://ochback.herokuapp.com/api/usersPhoto/' + el.owner_id._id} className="img-responsive __circular3" />
                                             {/*<span className="status"></span>*/}
                                         </div>
                                         <div className="cont w-100">
@@ -993,7 +993,7 @@ class Dashboard extends Component {
 
                                     {this.state.meetingsInvite.map((el, i) => <div className="img-area clearfix">
                                         <div className="img-c">
-                                            <img src={'https://ochbackend.herokuapp.com/api/usersPhoto/' + el.owner_id._id} className="img-responsive __circular3" />
+                                            <img src={'https://ochback.herokuapp.com/api/usersPhoto/' + el.owner_id._id} className="img-responsive __circular3" />
                                             {/*<span className="status"></span>*/}
                                         </div>
                                         <div className="cont w-100">
@@ -1240,7 +1240,7 @@ class UserBox extends Component {
                         <div class="modal-body bg-white e-small-m">
                             <img src="/client/assets/images/hut.png" class="hut-right" onClick={this.viewProfile} />
                             <img src="/client/assets/images/msg.png" class="msg-left" onClick={this._openChat} />
-                            <img src={'https://ochbackend.herokuapp.com/api/usersPhoto/' + this.state.receiver} class="f-ring" />
+                            <img src={'https://ochback.herokuapp.com/api/usersPhoto/' + this.state.receiver} class="f-ring" />
                             <h1>{this.state.name}</h1>
                         </div>
                     </div>
