@@ -4,6 +4,8 @@ import auth from './../auth/auth-helper'
 import ContactList from '../chat/contact';
 import Chat from '../chat/chat';
 import Messages from '../chat/messages';
+import { listNews } from './../api/api-news'
+import moment from 'moment'
 
 
 const SVG = () => {
@@ -328,23 +330,56 @@ const News = () => {
     );
 }
 
-const VideoNews = () => {
-    return (
-        <section className="video-section">
-            <div className="container-fluid">
-                <div className="heading-area">
-                    <h1>30 JUNE, 2020</h1>
-                    <div className="div-box"></div>
-                    <h2>OCHA ARTIST ZHAVIA ACHIEVES PLATINUM STATUS</h2>
+class VideoNews extends React.Component {
 
-                    <p>For the single "Welcome To The Party", lead single from Deadpool 2 where she performed alongside
-                    Diplo, French Montana & Lil Pump
-				</p>
-                    <a href="#" className="watch-btn">Watch the Video</a>
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            _id: '',
+            news: [],
+            view: false,
+        }
+
+
+    }
+
+    readNews = () => {
+
+        if (auth.isAuthenticated()) {
+            listNews().then((data) => {
+                if (data.error) {
+                    alert(data.error)
+                } else {
+                    this.setState({
+                        news: data[0],
+                    })
+                }
+            });
+        }
+    }
+
+    componentDidMount() {
+        this.readNews();
+    }
+
+    render() {
+        return (
+            <section className="video-section">
+                <div className="container-fluid">
+                    <div className="heading-area">
+                        <h1>{moment(this.state.news.created).format('ll')}</h1>
+                        <div className="div-box"></div>
+                        <h2>{this.state.news.title}</h2>
+
+                        <p>{this.state.news.text}
+                        </p>
+                        <a href="/news" className="watch-btn">Go to News</a>
+                    </div>
                 </div>
-            </div>
-        </section>
-    );
+            </section>
+        );
+    }
 }
 
 const MainNews = () => {
@@ -363,7 +398,7 @@ const MainNews = () => {
                                 <p>For the single "Welcome To The Party", lead single from Deadpool 2 where she performed
                                 alongside Diplo, French Montana & Lil Pump
 							</p>
-                                <a href="#" className="watch-btn-small">Watch the Video</a>
+                                <a href="/news" className="watch-btn-small">Watch the Video</a>
                             </div>
                         </div>
                     </div>
@@ -440,8 +475,8 @@ const Instagram = () => {
     return (
         <section className="studio padd-small light">
             <div className="container-fluid">
-                <h1>INSTAGRAM FEED</h1>
-                {/*<div id="insta-feed" className="owl-carousel owl-theme">
+                {/*<h1>INSTAGRAM FEED</h1>
+                <div id="insta-feed" className="owl-carousel owl-theme">
                 </div>*/}
 
                 <div id="instafeed" class="instagram-gallery-medium"></div>
@@ -601,8 +636,6 @@ class Home extends React.Component {
                 <News />
 
                 <VideoNews />
-
-                <MainNews />
 
                 <Instagram />
 
