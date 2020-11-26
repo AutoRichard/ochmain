@@ -55,8 +55,6 @@ class Plan extends React.Component {
     render() {
         return (
             <div className="modal" id="change-plan">
-                <br /><br />
-                <br /><br />
                 <div className="modal-dialog modal-lg planning">
                     <div className="modal-content">
 
