@@ -1,108 +1,145 @@
 import React, { Component } from 'react';
 import { Header } from './../menu/header';
 
-const Headline = () => {
-    return (
-        <section className="video-section">
-            <div className="container-fluid">
-                <div className="heading-area">
-                    <h1>30 JUNE, 2020</h1>
-                    <div className="div-box"></div>
-                    <h2>OCHA ARTIST ZHAVIA ACHIEVES PLATINUM STATUS</h2>
+import { listNews } from './../api/api-news'
+import moment from 'moment'
 
-                    <p>For the single "Welcome To The Party", lead single from Deadpool 2 where she performed alongside Diplo, French  Montana & Lil Pump
-		            </p>
-                    <a href="#" data-toggle="modal" data-target="#exampleModal" className="watch-btn">Watch the Video</a>
+import auth from './../auth/auth-helper';
+
+class Headline extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            news: [],
+        }
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.dataNews != prevProps.dataNews) {
+            this.setState({
+                news: this.props.dataNews[0]
+            })
+
+            console.log(this.props.dataNews)
+        }
+    }
+
+
+
+    render() {
+        return (
+            <section className="video-section">
+                <div className="container-fluid">
+                    <div className="heading-area">
+                        <h1>{moment(this.state.news.created).format('ll')}</h1>
+                        <div className="div-box"></div>
+                        <h2>{this.state.news.title}</h2>
+
+                        <p>{this.state.news.text}
+                        </p>
+                        <a href={this.state.news.mediaLink} target="_black" className="watch-btn">Watch the Video</a>
+                    </div>
                 </div>
-            </div>
-        </section>
-    );
+            </section>
+        );
+    }
+
 }
 
-const Feeds = () => {
-    return (
-        <section className="posts padd-both">
-            <div className="container-fluid">
+class Feeds extends Component {
 
-                <div id="owl-main" className="owl-carousel owl-theme">
-                    <div className="item">
-                        <div className="box-img">
-                            <img src="/client/assets/images/t1.jpg" className="img-responsive" />
-                            <div className="heading-area">
-                                <h6>29 JUNE, 2020</h6>
-                                <div className="div-box"></div>
-                                <h2>"DREAM WARRIOR" VIDEO OUT NOW!</h2>
+    constructor(props) {
+        super(props);
 
-                                <p>For the single "Welcome To The Party", lead single from Deadpool 2 where she performed alongside Diplo, French  Montana & Lil Pump
-		</p>
-                                <a href="#" className="watch-btn-small">Watch the Video</a>
+        this.state = {
+            _id: '',
+            news: [],
+            view: false,
+        }
+
+
+    }
+
+    readNews = () => {
+
+        if (auth.isAuthenticated()) {
+            listNews().then((data) => {
+                if (data.error) {
+                    alert(data.error)
+                } else {
+                    this.setState({
+                        news: data,
+                    })
+
+                    if ($('#owl-main').hasClass('owl-theme')) { //resize event was triggering an error, this if statement is to go around it
+
+
+                        $('#owl-main').trigger('destroy.owl.carousel'); //these 3 lines kill the owl, and returns the markup to the initial state
+                        $('#owl-main').find('.owl-stage-outer').children().unwrap();
+                        $('#owl-main').removeClass("owl-center owl-loaded owl-text-select-on");
+
+                        $("#owl-main").owlCarousel({
+                            margin: 30,
+                            nav: true,
+                            loop: false,
+                            singleItem: true,
+                            navText: ["<div class='nav-btn prev-btn'>Pre</div>", "<div class='nav-btn next-btn'>Next</div>"],
+                            dots: true,
+                            responsive: {
+                                0: {
+                                    items: 1
+                                },
+                                600: {
+                                    items: 3
+                                },
+                                1000: {
+                                    items: 4
+                                }
+                            },
+                        }); //re-initialise the owl
+                    }
+
+                    this.props.updateParent(data)
+                }
+            });
+        }
+    }
+
+    componentDidMount() {
+        this.readNews();
+    }
+
+    render() {
+        return (
+            <section className="posts padd-both">
+                <div className="container-fluid">
+
+                    <div id="owl-main" className="owl-carousel owl-theme">
+
+                        {this.state.news.map((el, i) =>
+                            <div className="item">
+                                <div className="box-img black">
+                                    <img src={'https://ochbackend.herokuapp.com/api/newsPhoto/' + el._id} className="img-responsive" />
+                                    <div className="heading-area">
+                                        <h6>{moment(el.created).format('ll')}</h6>
+                                        <div className="div-box"></div>
+                                        <h2>{el.title}</h2>
+
+                                        <p>{el.text}</p>
+                                        <a href={el.mediaLink} target="_black" className="watch-btn-small">CHECK PAGE</a>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div className="item">
-                        <div className="box-img black">
-                            <img src="/client/assets/images/t2.jpg" className="img-responsive" />
-                            <div className="heading-area">
-                                <h6>28 JUNE, 2020</h6>
-                                <div className="div-box"></div>
-                                <h2>NEW BEAUX EP RELEASE <br />
-                                    DATE SET FOR 7/31/20!</h2>
 
-                                <p>Our uber-taented songbird Beaux is releasing her very first EP next monht!</p>
-                                <a href="#" className="watch-btn-small">CHECK BEAUX’S PAGE</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="item">
-                        <div className="box-img">
-                            <img src="/client/assets/images/t3.jpg" className="img-responsive" />
-                            <div className="heading-area">
-                                <h6>27 JUNE, 2020</h6>
-                                <div className="div-box"></div>
-                                <h2>OC HIT ACADEMY PARTNERS UP WITH SPOTIFY</h2>
-
-                                <p>OCHA is strengthening its position as a leader
-
-
-                                when it comes to new talent and music by
-
-
-                                partnering with the biggest streaming service
-
-
-                                in the world to provide exclusive first look
-
-
-                                access to all new single releases on Spotify
-		</p>
-                                <a href="#" className="watch-btn-small">READ THE FULL STORY</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="item">
-                        <div className="box-img">
-                            <img src="/client/assets/images/t4.jpg" className="img-responsive" />
-                            <div className="heading-area">
-                                <h6>24 JUNE, 2020</h6>
-                                <div className="div-box"></div>
-                                <h2>SUPERSTAR NE-YO JOINING OUR FALL CAMP</h2>
-
-                                <p>Songwriter and artist extraordinaire Ne-Y
-
-
-                                will be joining our exclusive cam in Augist -
-
-
-                                only few spots left!
-		</p>
-                                <a href="#" className="watch-btn-small">Book Now</a>
-                            </div>
-                        </div>
+                        )}
                     </div>
                 </div>
-            </div>
-        </section>
-    );
+            </section>
+        );
+    }
+
 }
 
 const Instagram = () => {
@@ -150,10 +187,16 @@ class News extends Component {
         super(props);
 
         this.state = {
-
+            news: []
         }
 
 
+    }
+
+    _updateParent = (data) => {
+        this.setState({
+            news: data
+        })
     }
 
 
@@ -173,13 +216,13 @@ class News extends Component {
                     </div>
                 </section>
 
-                <Headline />
+                <Headline
+                    dataNews={this.state.news}
+                />
 
-                <Feeds />
-
-                <Instagram />
-
-                <Press />
+                <Feeds
+                    updateParent={this._updateParent}
+                />
 
 
 
