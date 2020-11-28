@@ -64,7 +64,7 @@ class Feeds extends Component {
 
     readNews = () => {
 
-        if (auth.isAuthenticated()) {
+        if (/*auth.isAuthenticated()*/true) {
             listNews().then((data) => {
                 if (data.error) {
                     alert(data.error)
