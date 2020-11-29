@@ -112,7 +112,9 @@ class BillingAddress extends React.Component {
                         } else {
                             console.log(data)
                             swal("Billing Credential Save...")
-                            location.reload()
+                            //location.reload()
+
+                            this.props.subscriptions()
                         }
                     })
                 }

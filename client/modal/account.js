@@ -466,7 +466,7 @@ class Billing extends React.Component {
 
                     </div>
                     <div className="col-md-4 text-center">
-                        {this.state.plan_active == true ? (<a href="#" data-toggle="modal" onClick={this.closeAccount} data-target="#change-plan" className="book-now-font">CHANGE PLAN</a>) : ('')}
+                        {this.state.plan_active == true ? (<a href="#" data-toggle="modal" onClick={this.closeAccount} data-target="#change-plan" className="book-now-font">CHANGE PLAN</a>) : ("")}
                     </div>
                     <div className="clearfix"></div>
 
@@ -474,7 +474,9 @@ class Billing extends React.Component {
 
                 <StripeProvider stripe={this.state.stripe}>
                     <Elements>
-                        <BillingAddress />
+                        <BillingAddress
+                        subscriptions={this.userSubscription}
+                        /> 
                     </Elements>
                 </StripeProvider>
 

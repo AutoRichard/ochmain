@@ -1069,8 +1069,10 @@ class FeedTimeline extends Component {
                 this.setState({ socketId: this.socket.id });
             });
 
+            //this.socket.on('fetch_singlle_user', user)
+
             this.socket.on('fetch_post', this._fetchPost)
-            this.socket.on('fetch_posts', this._fetchNewPosts)
+            //this.socket.on('fetch_posts', this._fetchNewPosts)
         }
     }
 
@@ -1130,7 +1132,9 @@ class FeedTimeline extends Component {
 
 
                 this.socket.emit('fetch_new_post', newPost)
-                this.socket.on('fetch_posts', this._fetchNewPosts)
+
+                this._fetchNewPosts(this.state._userId)
+                //this.socket.on('fetch_posts', this._fetchNewPosts)
 
 
                 this.setState({ sending: false, comment_text: '' })
@@ -1139,16 +1143,28 @@ class FeedTimeline extends Component {
         }
     }
 
-    _fetchNewPosts = data => {
-        if (data.length != this.state.timeline.length) {
+    _fetchNewPosts = (id) => {
 
-            this.setState({
-                newtimeline: data.reverse(),
-                newData: 'block'
+        if (auth.isAuthenticated()) {
+
+            listByUser(id).then((data) => {
+                if (data.error) {
+                    console.log(data.error)
+                } else {
+
+                    if (data.length != this.state.timeline.length) {
+
+                        this.setState({
+                            newtimeline: data,
+                            newData: 'block'
+                        })
+
+                        //console.log(data)
+                    }
+                }
             })
-
-            //console.log(data)
         }
+
     }
 
     loadNewTimeline = () => {
