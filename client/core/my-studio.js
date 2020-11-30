@@ -111,7 +111,7 @@ class Studios extends Component {
                         </div>
                     }
                     <p className="text-center">If you have any questions regarding studio bookings, don’t hesitate to contact us by clicking the button below.</p>
-                    <div className="text-center"><a href="#" className="watch-btn marg m-s">CONTACT US</a></div>
+                    <div className="text-center"><a href="/contact" className="watch-btn marg m-s">CONTACT US</a></div>
                 </div>
             </section>
         );

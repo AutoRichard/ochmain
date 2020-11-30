@@ -41,7 +41,7 @@ class MainRouter extends Component {
           <PrivateRoute path="/meeting" component={Meeting} />
           <PrivateRoute path="/network" component={Network} />
           <PrivateRoute path="/my-page/:userId" component={Mypage} />
-          <PrivateRoute path="/contact" component={Contact} />
+          <Route path="/contact" component={Contact} />
         </Switch>
 
 

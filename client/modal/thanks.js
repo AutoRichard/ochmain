@@ -30,7 +30,7 @@ class Thanks extends React.Component {
 
 						additional material, songs or videos, click the link below.</p>
 
-                            <a href="#" className="watch-btn marg lg m-sm">CONTACT US</a>
+                            <a href="/contact" className="watch-btn marg lg m-sm">CONTACT US</a>
                         </div>
 
 
