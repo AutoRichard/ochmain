@@ -22,6 +22,7 @@ import Detail from './modal/detail';
 import Account from './modal/account';
 import Cancel from './modal/cancel';
 import Meeting from './core/meeting';
+import Contact from './core/contact';
 
 import Plan from './modal/plan';
 
@@ -40,6 +41,7 @@ class MainRouter extends Component {
           <PrivateRoute path="/meeting" component={Meeting} />
           <PrivateRoute path="/network" component={Network} />
           <PrivateRoute path="/my-page/:userId" component={Mypage} />
+          <PrivateRoute path="/contact" component={Contact} />
         </Switch>
 
 

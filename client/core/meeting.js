@@ -63,7 +63,7 @@ class Meeting extends Component {
 
                 create(meeting).then((data) => {
                     if(data.error){
-                        swal(error)
+                        swal(data.error)
                     }else{
                         this.setState({topic: '', duration: '', start_time: ''})
                         swal(data.status)
