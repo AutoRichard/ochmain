@@ -58,7 +58,7 @@ class ContactList extends React.Component {
 
         return (
             <div className="white-box">
-                <h2 className="in-h">SUGGESTED CONNECTS</h2>
+                <h2 className="in-h">MY CONNECTS</h2>
                 <div className="line3 text-left"></div>
                 <div className="likes-section suggest" style={contactArea}>
                     {this.state.contact.map((el, i) =>
