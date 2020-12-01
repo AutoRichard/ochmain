@@ -1,8 +1,12 @@
 'use strict';
-let dt = new Date();
+//let dt = new Date(document.getElementsByClassName("icalendar").innerHTML);
+//let dt = document.getElementsByClassName("icalendar").innerHTML
+let dt = $(".icalendar").attr('data-time')
 
 function renderDate() {
     let dateString = new Date();
+    console.log(dt)
+    console.log(123)
 
     dt.setDate(1);
     let day = dt.getDay();

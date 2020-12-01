@@ -4,6 +4,7 @@ import { listMeeting } from './../api/api-meeting';
 import auth from './../auth/auth-helper';
 import Booking from './../modal/booking';
 import { read } from './../api/api-user';
+import moment from 'moment';
 
 
 
@@ -30,6 +31,10 @@ class Studios extends Component {
                 this.setState({
                     meetings: data
                 })
+
+                console.log(data)
+
+                console.log(moment(new Date()).isAfter("2020-12-01T20:32:47Z"))
 
                 //console.log(data)
 
@@ -87,19 +92,21 @@ class Studios extends Component {
 
                         {this.state.meetings.map((el, i) =>
 
-
-                            <div className="item">
-                                <div className="v-box">
-                                    <h3>{el.topic.substring(0, 15)}</h3>
-                                    <div className="request-box">
-                                        <img src="/client/assets/images/v1.jpg" className="img-responsive" />
-                                        <div className="request-text animate__animated animate__fadeIn">
-                                            {/*<h5>SESSION IN PROGRESS</h5>*/}<a href={"/zoom.html?meeting_id=" + el._id} className="book-now">JOIN NOW</a>
+                            moment(new Date()).isAfter(new Date(el.start_time)) !== true ?
+                                (< div className="item" >
+                                    <div className="v-box">
+                                        <h3>{el.topic.substring(0, 15)}</h3>
+                                        <div className="request-box">
+                                            <img src="/client/assets/images/v1.jpg" className="img-responsive" />
+                                            <div className="request-text animate__animated animate__fadeIn">
+                                                <a href="javascript:void(0)" className="book-now">IN PROGRESS</a>
+                                            </div>
                                         </div>
+
+
+                                        <a href="#" onClick={this.openMeeting.bind(this, el)} data-toggle="modal" data-target="#v-st" class="book-now">BOOK NOW</a>
                                     </div>
-                                    <a href="#" onClick={this.openMeeting.bind(this, el)} data-toggle="modal" data-target="#v-st" class="book-now">BOOK NOW</a>
-                                </div>
-                            </div>
+                                </div>) : ('')
                         )}
 
 
@@ -224,7 +231,7 @@ class Studios extends Component {
                     <p className="text-center">If you have any questions regarding studio bookings, don’t hesitate to contact us by clicking the button below.</p>
                     <div className="text-center"><a href="#" className="watch-btn marg m-s">CONTACT US</a></div>
                 </div>
-            </section>
+            </section >
         );
     }
 
@@ -241,7 +248,8 @@ class Studio extends Component {
             meeting_id: '',
             user_id: '',
             creditBalance: 0,
-            owner_id: ''
+            owner_id: '',
+            start_time: ''
         }
 
 
@@ -260,7 +268,7 @@ class Studio extends Component {
 
     openMeetings = (data) => {
         console.log(data)
-        this.setState({ meeting_image: '/client/assets/images/v1.jpg', meeting_title: data.topic, meeting_id: data._id, owner_id: data.owner })
+        this.setState({ meeting_image: '/client/assets/images/v1.jpg', meeting_title: data.topic, meeting_id: data._id, owner_id: data.owner, start_time: data.start_time })
     }
 
 
@@ -301,6 +309,7 @@ class Studio extends Component {
                     user_id={this.state.user_id}
                     owner_id={this.state.owner_id}
                     creditBalance={this.state.creditBalance}
+                    start_time={this.state.start_time}
                 />
 
 

@@ -59,13 +59,11 @@ class Meeting extends Component {
                     start_time: this.state.start_time
                 }
 
-                console.log(meeting)
-
                 create(meeting).then((data) => {
-                    if(data.error){
+                    if (data.error) {
                         swal(data.error)
-                    }else{
-                        this.setState({topic: '', duration: '', start_time: ''})
+                    } else {
+                        this.setState({ topic: '', duration: '', start_time: '' })
                         swal(data.status)
                     }
                 })
@@ -95,16 +93,18 @@ class Meeting extends Component {
                                     <input name="topic" type="text" value={this.state.topic} onChange={this.onchange} />
                                 </div>
                             </div>
-                            <div className="col-md-6">
-                                <div className="input-spacez">
-                                    <label>Start Time <span id="validationError">{this.state.start_timeValidation}</span></label>
-                                    <input name="start_time" type="time" value={this.state.start_time} onChange={this.onchange} />
-                                </div>
-                            </div>
+
                             <div className="col-md-6">
                                 <div className="input-spacez">
                                     <label>Duration in Minutes <span id="validationError">{this.state.durationValidation}</span></label>
                                     <input name="duration" type="text" value={this.state.duration} onChange={this.onchange} />
+                                </div>
+                            </div>
+
+                            <div className="col-md-6">
+                                <div className="input-spacez">
+                                    <label>Start Time <span id="validationError">{this.state.start_timeValidation}</span></label>
+                                    <input name="start_time" type="datetime-local" value={this.state.start_time} onChange={this.onchange} />
                                 </div>
                             </div>
                         </div>

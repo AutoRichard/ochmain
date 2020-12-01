@@ -422,16 +422,16 @@ class Billing extends React.Component {
                     } else {
                         let __data = data.subscriptions.data[0]
 
-                        if(data.subscriptions.data.length > 0){
-                            this.setState({ status: __data.plan.active, amount: __data.plan.amount, renew: new Date(__data.current_period_end * 1000).toUTCString(), plan: __data.plan.nickname, plan_active: true  })
-                        }else{
+                        if (data.subscriptions.data.length > 0) {
+                            this.setState({ status: __data.plan.active, amount: __data.plan.amount, renew: new Date(__data.current_period_end * 1000).toUTCString(), plan: __data.plan.nickname, plan_active: true })
+                        } else {
                             this.setState({ status: false, amount: 0, renew: '---', plan: 'NO', plan_active: true })
                         }
 
                         //console.log(data)
                         //console.log(new Date(__data.created * 1000).toUTCString())
 
-                        }
+                    }
                 }
             })
         }
@@ -475,8 +475,8 @@ class Billing extends React.Component {
                 <StripeProvider stripe={this.state.stripe}>
                     <Elements>
                         <BillingAddress
-                        subscriptions={this.userSubscription}
-                        /> 
+                            subscriptions={this.userSubscription}
+                        />
                     </Elements>
                 </StripeProvider>
 
@@ -658,9 +658,9 @@ class Booking extends React.Component {
                                 <h5>{moment(el.meeting_id.start_time).format("YYYY-MM-DD HH:mm")}</h5>
                                 <div className="video-ic"><img src="/client/assets/images/video-cam.png" /></div>
                                 <h5>{el.meeting_id.topic}<br />(ZOOM SESSION)</h5>
-                                <div className="join-cover">
+                                {moment(new Date()).isAfter(new Date(el.meeting_id.start_time)) !== true ? (<div className="join-cover">
                                     <a href={"/zoom.html?meeting_id=" + el.meeting_id._id} className="g-btn">JOIN SESSION</a>
-                                </div>
+                                </div>) : ('')}
                                 <span>(UP TO 72 HOURS PRIOR)</span>
                             </div>
                         </div>
