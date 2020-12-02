@@ -244,7 +244,7 @@ class Feeds extends Component {
 
                     <ul className="comments-area-two clearfix">
                         <li>
-                            <a href="javascript:void(0)" onClick={this.like}><span class="unlove-btn">&#x2764;</span></a>
+                            <a href="javascript:void(0)" onClick={this.like}></a>
                             <a href="javascript:void(0)" onClick={this.displayComment} id="msg-bar"><img src="/client/assets/images/msg-right.png" className="img-responsive m-r" />{this.state.likes.length} likes</a>
                         </li>
                         <li></li>
