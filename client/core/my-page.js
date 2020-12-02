@@ -818,7 +818,8 @@ class Feeds extends Component {
             link: 'https://ochback.herokuapp.com/',
             //link: 'http://localhost:8080',
             visible: 'none',
-            userId: ''
+            userId: '',
+            _liked: false
         }
 
         //this.socket = openSocket(this.state.link)
@@ -839,8 +840,35 @@ class Feeds extends Component {
             const jwt = auth.isAuthenticated();
             const user_id = jwt.user._id;
             this.setState({ userId: user_id });
+
+            setTimeout(this.checkLike, 200)
         }
 
+    }
+
+    checkLike = () => {
+        if (auth.isAuthenticated()) {
+            const jwt = auth.isAuthenticated();
+            const user_id = jwt.user._id;
+            let likes = this.state.likes.reverse()
+
+            const matches = likes.filter(v => { return v.postedBy && (v.postedBy._id == user_id) });
+
+            if (matches.length > 0) {
+
+                this.setState({
+                    _liked: true
+                })
+
+                return true
+            } else {
+                this.setState({
+                    _liked: false
+                })
+
+                return false
+            }
+        }
     }
 
     displayComment = () => {
@@ -916,6 +944,10 @@ class Feeds extends Component {
                 userId: userId,
             }
 
+            this.setState({
+                _liked: true
+            })
+
 
 
             this.props.socketConnection.emit('send_like', likeData)
@@ -977,7 +1009,7 @@ class Feeds extends Component {
 
                     <ul className="comments-area-two clearfix">
                         <li>
-                            <a href="javascript:void(0)" onClick={this.like} className="like-btn"></a>
+                            <a href="javascript:void(0)" onClick={this.like}>{this.state._liked == true ? (<i class="fa fa-heart love-btn" aria-hidden="true"></i>) : (<i class="fa fa-heart unlove-btn" aria-hidden="true"></i>)}</a>
                             <a href="javascript:void(0)" onClick={this.displayComment} id="msg-bar"><img src="/client/assets/images/msg-right.png" className="img-responsive m-r" />{this.state.likes.length} likes</a>
                         </li>
                         <li></li>
