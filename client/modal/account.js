@@ -658,12 +658,12 @@ class Booking extends React.Component {
                                 <h5>{moment(el.meeting_id.start_time).format("YYYY-MM-DD HH:mm")}</h5>
                                 <div className="video-ic"><img src="/client/assets/images/video-cam.png" /></div>
                                 <h5>{el.meeting_id.topic}<br />(ZOOM SESSION)</h5>
-                                <div className="join-cover">
+                                {/*<div className="join-cover">
                                     <a href={"/zoom.html?meeting_id=" + el.meeting_id._id} className="g-btn">JOIN SESSION</a>
-                                </div>
-                                {/*moment(new Date()).isAfter(new Date(el.meeting_id.start_time)) === false ? (<div className="join-cover">
-                                    <a href={"/zoom.html?meeting_id=" + el.meeting_id._id} className="g-btn">JOIN SESSION</a>
-                                </div>) : ('')*/}
+                                </div>*/}
+                                {moment(new Date()).isAfter(new Date(el.meeting_id.start_time)) === true ? (<div className="join-cover">
+                                    {moment(new Date(el.meeting_id.start_time)).add(el.meeting_id.dureation, 'minutes').isAfter(new Date) == true ? (<a href={"/zoom.html?meeting_id=" + el.meeting_id._id} className="g-btn">JOIN SESSION</a>) : <a href="javascript:void(0)" className="g-btn">EXPIRED</a>}
+                                </div>) : ('')}
                                 <span>(UP TO 72 HOURS PRIOR)</span>
                             </div>
                         </div>

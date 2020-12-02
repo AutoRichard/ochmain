@@ -1100,8 +1100,9 @@ class Dashboard extends Component {
                                             <b>Session w/{el.owner_id.firstName}</b>
 
                                             <p>{moment(el.meeting_id.start_time).format("YYYY-MM-DD HH:mm")} <br /> {el.meeting_id.topic}</p>
-                                            <a href={"/zoom.html?meeting_id=" + el.meeting_id._id} className="g-btn">JOIN SESSION</a>
-                                            {/*<a href="#" data-toggle="modal" data-target="#cancel-box" className="red-btn">CANCEL</a>*/}
+                                            {moment(new Date()).isAfter(new Date(el.meeting_id.start_time)) === true ? (<div>
+                                                {moment(new Date(el.meeting_id.start_time)).add(el.meeting_id.dureation, 'minutes').isAfter(new Date) == true ? (<a href={"/zoom.html?meeting_id=" + el.meeting_id._id} className="g-btn">JOIN SESSION</a>) : <a href="javascript:void(0)" className="g-btn">EXPIRED</a>}
+                                            </div>) : ('')}
                                         </div>
 
 
