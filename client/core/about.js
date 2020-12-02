@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import {Header} from './../menu/header';
+import { Header } from './../menu/header';
+import { createNews } from './../api/api-newsletter'
+import swal from 'sweetalert'
 
 
 const Description = () => {
@@ -115,7 +117,7 @@ const Talent = () => {
             </div>
         </section>
     );
-}
+} 
 
 const Mvideo = () => {
     return (
@@ -494,20 +496,62 @@ const TGallery = () => {
     );
 }
 
-const News = () => {
-    return (
-        <section className="newsletter text-center">
-            <div className="container">
-                <h1>NEWSLETTER</h1>
-                <p>STAY UP TO DATE - SIGN UP TO OUR NEWSLETTER</p>
-                <div className="news-input">
-                    <input type="text" placeholder="YOUR EMAIL ADDRESS" />
-                    <a href="#" className="book-now">SIGN UP</a>
+class News extends Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            email: '',
+            emailValidation: ''
+        }
+    }
+
+    newsletter = () => {
+        if (this.state.email == '') {
+            this.state.email == '' ? this.setState({ emailValidation: 'EMAIL IS REQUIRED' }) : '';
+        } else {
+            let news = {
+                email: this.state.email
+            }
+
+            createNews(news).then((data) => {
+                if (data.error) {
+                    this.setState({ emailValidation: data.error })
+                } else {
+                    this.setState({ email: '' })
+                    swal("Email submitted for newsletter")
+                }
+            })
+
+        }
+    }
+
+    onChangeNews = (event) => {
+        this.setState({
+            [event.target.name]: event.target.value
+        });
+
+        event.target.name == 'email' ? this.setState({ emailValidation: '' }) : '';
+    }
+
+
+    render() {
+        return (
+            <section className="newsletter text-center">
+                <div className="container">
+                    <h1>NEWSLETTER</h1>
+                    <p>STAY UP TO DATE - SIGN UP TO OUR NEWSLETTER</p>
+                    <div className="news-input">
+                        <input type="text" name="email" onChange={this.onChangeNews} value={this.state.email} placeholder="YOUR EMAIL ADDRESS" />
+                        <br/>
+                        <strong style={{ color: 'red' }}>{this.state.emailValidation}</strong>
+                        <a href="javascript:void(0)" onClick={this.newsletter} className="book-now">SIGN UP</a>
+                    </div>
+                    <a href="/contact" className="watch-btn marg big">CONTACT US</a>
                 </div>
-                <a href="#" className="watch-btn marg big">CONTACT US</a>
-            </div>
-        </section>
-    );
+            </section>
+        );
+    }
 }
 
 class About extends Component {

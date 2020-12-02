@@ -7,7 +7,7 @@ import openSocket from 'socket.io-client'
 import ContactList from '../chat/contact';
 import Chat from '../chat/chat';
 import Messages from '../chat/messages';
-import { read, update, listUser } from './../api/api-user';
+import { read, update, listUser, unfollow } from './../api/api-user';
 import { listBooking } from './../api/api-booking';
 import Booking from './../modal/booking';
 import { listInviteByUser, deleteInvite } from './../api/api-invite'
@@ -53,7 +53,8 @@ class Feeds extends Component {
             link: 'https://ochback.herokuapp.com/',
             //link: 'http://localhost:8080',
             visible: 'none',
-            userId: ''
+            userId: '',
+            _liked: false
         }
 
         //this.socket = openSocket(this.state.link)
@@ -74,8 +75,35 @@ class Feeds extends Component {
             const jwt = auth.isAuthenticated();
             const user_id = jwt.user._id;
             this.setState({ userId: user_id });
+
+            setTimeout(this.checkLike, 200)
         }
 
+    }
+
+    checkLike = () => {
+        if (auth.isAuthenticated()) {
+            const jwt = auth.isAuthenticated();
+            const user_id = jwt.user._id;
+            let likes = this.state.likes.reverse()
+
+            const matches = likes.filter(v => { return v.postedBy && (v.postedBy._id == user_id) });
+
+            if (matches.length > 0) {
+
+                this.setState({
+                    _liked: true
+                })
+
+                return true
+            } else {
+                this.setState({
+                    _liked: false
+                })
+
+                return false
+            }
+        }
     }
 
     displayComment = () => {
@@ -151,6 +179,10 @@ class Feeds extends Component {
                 userId: userId,
             }
 
+            this.setState({
+                _liked: true
+            })
+
 
 
             this.props.socketConnection.emit('send_like', likeData)
@@ -212,7 +244,7 @@ class Feeds extends Component {
 
                     <ul className="comments-area-two clearfix">
                         <li>
-                            <a href="javascript:void(0)" onClick={this.like} className="like-btn"></a>
+                            <a href="javascript:void(0)" onClick={this.like}>{this.state._liked == true ? (<span class="love-btn">&#x2764;</span>) : (<span class="unlove-btn">&#x2764;</span>)}</a>
                             <a href="javascript:void(0)" onClick={this.displayComment} id="msg-bar"><img src="/client/assets/images/msg-right.png" className="img-responsive m-r" />{this.state.likes.length} likes</a>
                         </li>
                         <li></li>
@@ -542,7 +574,10 @@ class Contact extends Component {
             _id: '',
             contact: [],
             searchContact: [],
-            searchValue: ''
+            searchValue: '',
+            refresh: '',
+            _refresh2: '',
+            contacts: ''
         }
     }
 
@@ -557,15 +592,14 @@ class Contact extends Component {
             authId = '';
         }
 
-        this.setState({ _id: authId });
-        console.log(1234)
+        //this.setState({ _id: authId });
 
         listUser().then((data) => {
             if (data.error) {
                 swal(data.error)
             } else {
                 this.setState({
-                    contact: data
+                    contacts: data
                 })
 
                 if ($('#chatbar').hasClass('owl-theme')) { //resize event was triggering an error, this if statement is to go around it
@@ -600,12 +634,74 @@ class Contact extends Component {
         });
     }
 
+
+    readUser = () => {
+        if (auth.isAuthenticated()) {
+            let jwt = auth.isAuthenticated();
+            let user_id = jwt.user._id;
+
+            this.setState({
+                _id: user_id
+            })
+
+
+            read({
+                userId: user_id
+            }).then((data) => {
+                if (data.error) {
+                    swal(data.error)
+                } else {
+
+                    this.setState({
+                        contact: data.following
+                    })
+
+                    if ($('#chatbar').hasClass('owl-theme')) { //resize event was triggering an error, this if statement is to go around it
+
+
+                        $('#chatbar').trigger('destroy.owl.carousel'); //these 3 lines kill the owl, and returns the markup to the initial state
+                        $('#chatbar').find('.owl-stage-outer').children().unwrap();
+                        $('#chatbar').removeClass("owl-center owl-loaded owl-text-select-on");
+
+                        $("#chatbar").owlCarousel({
+                            margin: 30,
+                            nav: true,
+                            loop: false,
+                            singleItem: true,
+                            navText: ["<div class='nav-btn prev-btn'>Pre</div>", "<div class='nav-btn next-btn'>Next</div>"],
+                            dots: true,
+                            responsive: {
+                                0: {
+                                    items: 3
+                                },
+                                600: {
+                                    items: 4
+                                },
+                                1000: {
+                                    items: 6
+                                },
+
+                            },
+                        }); //re-initialise the owl
+                    }
+                    //this.setState({ fullName: data.fullName, displayName: data.displayName, user_id: data._id || '', creditBalance: data.creditBalance || 0 });
+                }
+            });
+        } else {
+            this.setState({
+                _id: ""
+            })
+        }
+    }
+
+
     componentDidMount() {
         this.setState({ receiver: this.props.receiver, name: this.props.name })
         if (auth.isAuthenticated()) {
             this.setState({ check: true })
 
             this.readUsers();
+            this.readUser();
         }
 
     }
@@ -617,6 +713,14 @@ class Contact extends Component {
 
         if (this.props.userStatus !== prevProps.userStatus) {
             this.setState({ userStatus: this.props.userStatus })
+        }
+
+        if (this.props._refresh !== prevProps._refresh) {
+            this.readUser();
+        }
+        if (this.props._refresh2 !== prevProps._refresh2) {
+            //this.readUsers();
+            location.reload()
 
         }
     }
@@ -645,16 +749,19 @@ class Contact extends Component {
 
     searchContact = () => {
 
-        let { contact } = this.state;
+        let { contacts } = this.state;
         var searchV = this.state.searchValue.toLowerCase()
 
-        const matches = contact.filter(v => v.displayName && (v.displayName.toLowerCase().includes(searchV)) || v.firstName && (v.firstName.toLowerCase().includes(searchV)) || v.lastName && (v.lastName.toLowerCase().includes(searchV)));
+        const matches = contacts.filter(v => v.displayName && (v.displayName.toLowerCase().includes(searchV)) || v.firstName && (v.firstName.toLowerCase().includes(searchV)) || v.lastName && (v.lastName.toLowerCase().includes(searchV)));
         this.setState({
             searchContact: matches
         })
 
         document.getElementById('pop-left').click()
     }
+
+
+
 
 
     render() {
@@ -693,7 +800,7 @@ class Contact extends Component {
                             <div className="input-space">
                                 <a href="javascript:void(0)" className="icon-arrow" id="pop-left"><i
                                     className="rotate fa fa-angle-right" aria-hidden="true"></i></a>
-                                <input type="text" name="searchValue" onChange={this.onSearch} placeholder="Search Network..." />
+                                <input type="text" name="searchValue" onChange={this.onSearch} placeholder="Search NETWORK..." />
                                 <a href="javascript:void(0)" onClick={this.searchContact}><i className="fa fa-search" aria-hidden="true"></i></a>
                             </div>
                         </div>
@@ -750,7 +857,8 @@ class Dashboard extends Component {
             meeting_id: '',
             user_id: '',
             creditBalance: 0,
-            owner_id: ''
+            owner_id: '',
+            refresh: ''
         }
     }
 
@@ -787,8 +895,6 @@ class Dashboard extends Component {
                 if (data.error) {
                     swal(data.error)
                 } else {
-
-                    console.log(data.booking)
                     this.setState({ meetings: data.booking })
                 }
             })
@@ -841,10 +947,18 @@ class Dashboard extends Component {
         if (this.props.receiver !== prevProps.receiver) {
             this.setState({ receiver: this.props.receiver })
         }
+
+        if (this.props._refresh2 !== prevProps._refresh2) {
+            this.setState({ refresh: this.props._refresh2 })
+        }
     }
 
     openMeeting = (data) => {
         this.setState({ meeting_image: '/client/assets/images/v1.jpg', meeting_title: data.topic, meeting_id: data.meeting_id._id, owner_id: data.owner_id._id })
+    }
+
+    _refreshUser = () => {
+        this.props.__refreshUser();
     }
 
 
@@ -916,6 +1030,8 @@ class Dashboard extends Component {
                                 (<ContactList
                                     receiver={this.state.receiver}
                                     _openChat={this.parentOpenChat}
+                                    refreshUser={this._refreshUser}
+                                    _refresh={this.state.refresh}
                                 />) : ''}
                         </div>
 
@@ -1078,7 +1194,9 @@ class Network extends Component {
             sender: '',
             name: '',
             open: false,
-            userStatus: ''
+            userStatus: '',
+            refresh: '',
+            refresh2: ''
         }
 
 
@@ -1146,6 +1264,16 @@ class Network extends Component {
         this.setState({ open: true })
     }
 
+    refreshUserParent = () => {
+        this.setState({ refresh: Math.floor((Math.random() * 10) + 1) })
+    }
+
+    _unfollowusers = () => {
+        this.setState({ refresh2: Math.floor((Math.random() * 10) + 1) })
+    }
+
+
+
 
     render() {
         return (
@@ -1160,6 +1288,8 @@ class Network extends Component {
                     _parentOpenChat={this.grandOpenChat}
                     __parentOpenChat={this._grandOpenChat}
                     receiver={this.state.receiver}
+                    __refreshUser={this.refreshUserParent}
+                    _refresh2={this.state.refresh2}
                 />
 
                 <Contact
@@ -1168,6 +1298,8 @@ class Network extends Component {
                     userStatus={this.state.userStatus}
                     _parentOpenChat={this.grandOpenChatP}
                     __parentOpenChat={this.__grandOpenChatP}
+                    _refresh={this.state.refresh}
+                    _refresh2={this.state.refresh2}
                 />
 
                 <UserBox
@@ -1175,6 +1307,7 @@ class Network extends Component {
                     name={this.state.name}
                     userStatus={this.state.userStatus}
                     openChat={this.__grandOpenChatP}
+                    unfollowusers={this._unfollowusers}
                 />
 
 
@@ -1226,6 +1359,27 @@ class UserBox extends Component {
         window.location = '/my-page/' + this.state.receiver
     }
 
+    unfollowUser = () => {
+        let jwt, authId;
+
+        if (auth.isAuthenticated()) {
+            jwt = auth.isAuthenticated();
+            unfollow({
+                userId: jwt.user._id
+            }, {
+                t: jwt.token
+            }, this.state.receiver).then((data) => {
+                if (data.error) {
+                    swal(data.error)
+                } else {
+                    this.props.unfollowusers()
+                }
+            })
+
+        }
+
+    }
+
     render() {
         return (
             <div class="modal" id="user-box">
@@ -1242,6 +1396,7 @@ class UserBox extends Component {
                             <img src="/client/assets/images/msg.png" class="msg-left" onClick={this._openChat} />
                             <img src={'https://ochback.herokuapp.com/api/usersPhoto/' + this.state.receiver} class="f-ring" />
                             <h1>{this.state.name}</h1>
+                            <a href="javascript:void(0)" id="pop-close-msg" data-dismiss="modal" onClick={this.unfollowUser}>UNFOLLOW</a>
                         </div>
                     </div>
                 </div>

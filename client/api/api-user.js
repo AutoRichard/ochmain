@@ -116,6 +116,53 @@ const password = (params, credentials, user) => {
   }).catch((err) => console.log(err))
 }
 
+
+const follow = (params, credentials, followId) => {
+  return fetch(link + '/api/userfollow/', {
+    method: 'PUT',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + credentials.t
+    },
+    body: JSON.stringify({ userId: params.userId, followId: followId })
+  }).then((response) => {
+    return response.json()
+  }).catch((err) => {
+    console.log(err)
+  })
+}
+
+const unfollow = (params, credentials, unfollowId) => {
+  return fetch(link + '/api/userunfollow/', {
+    method: 'PUT',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + credentials.t
+    },
+    body: JSON.stringify({ userId: params.userId, unfollowId: unfollowId })
+  }).then((response) => {
+    return response.json()
+  }).catch((err) => {
+    console.log(err)
+  })
+}
+
+const findFollower = (params, credentials) => {
+  return fetch(link + '/api/listuser/' + params.userId, {
+    method: 'GET',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + credentials.t
+    }
+  }).then((response) => {
+    return response.json()
+  }).catch((err) => console.log(err))
+}
+
+
 export {
   create,
   list,
@@ -125,5 +172,8 @@ export {
   password,
   image,
   payout,
-  listUser
+  listUser,
+  follow,
+  unfollow,
+  findFollower
 }

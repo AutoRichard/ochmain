@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="/client/assets/css/owl.carousel.min.css">
     <link rel="stylesheet" href="/client/assets/css/simpleLightbox.min.css">
     <link rel="stylesheet" href="/client/assets/css/easy-responsive-tabs.css">
-    
+
     <link rel="stylesheet" href="/client/assets/css/instagram.css">
     <!--Template-->
 
@@ -259,6 +259,19 @@
         }
 
 
+        .love-btn {
+            border-color: #b12f27;
+            color: #f64136;
+            font-size: 30px;
+        }
+
+        .unlove-btn {
+            border-color: #666;
+            color: #dbdbdb;
+            font-size: 30px;
+        }
+
+
 
         .__circular4 {
             display: inline-block;
@@ -289,6 +302,11 @@
                 overflow: hidden;
                 margin: 0px 0px !important;
             }
+        }
+
+        .disableFollow {
+            pointer-events: none;
+            cursor: default;
         }
 
         @media (min-width: 1205px) and (max-width: 1360px) {
@@ -430,7 +448,7 @@
             $("#pop-left").click(function () {
                 $("#popup-l").slideToggle();
             });
-            
+
             $("#hide-l").click(function () {
                 $("#popup-l").slideToggle();
             });
@@ -499,6 +517,26 @@
             });
 
 
+        });
+
+        $("#music-gal").owlCarousel({
+
+            margin: 20,
+            nav: true,
+            loop: true,
+            navText: ["<div class='nav-btn prev-btn'>Pre</div>", "<div class='nav-btn next-btn'>Next</div>"],
+            dots: true,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 3
+                },
+                1000: {
+                    items: 3
+                }
+            }
         });
     </script>
 
