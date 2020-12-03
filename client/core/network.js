@@ -213,7 +213,7 @@ class Feeds extends Component {
                     <img src={'https://ochback.herokuapp.com/api/usersPhoto/' + this.props.postedBy_id} className="img-responsive circled no-b __circular4" />
 
                 </div>
-                <div className="right-content position-relative">
+                <div className="right-content position-relative networkStyling">
                     <b>{this.props.postedBy_firstName} {this.props.postedBy_lastName}</b>
                     <span>{moment(this.props.createDate).fromNow()}</span>
                     <div className="dots-a">
@@ -233,7 +233,7 @@ class Feeds extends Component {
                     </div>
                 </div>
                 <div className="clearfix"></div>
-                <div className="desc-box">
+                <div className="desc-box networkStyling">
                     <p>{this.props.text}</p>
 
                     {this.props.imageExist == true ? (<img src={"https://ochback.herokuapp.com/api/photo/" + this.props._id} width="100%" height="315" className="img-responsive" />) : ''}
@@ -782,7 +782,7 @@ class Contact extends Component {
                                 {this.state.searchContact.map((el, i) =>
 
                                     el._id == auth.isAuthenticated().user._id ? '' :
-                                        (<div className="img-area clearfix">
+                                        (<div className="img-area clearfix networkStyling">
                                             <div className="img-c">
                                                 <img src={'https://ochback.herokuapp.com/api/usersPhoto/' + el._id} className="img-responsive circled __circular3" />
                                                 <span className={"msg" + el.userStatus}></span>
@@ -797,7 +797,7 @@ class Contact extends Component {
                                 )}
                             </div>
 
-                            <div className="input-space">
+                            <div className="input-space networkStyling">
                                 <a href="javascript:void(0)" className="icon-arrow" id="pop-left"><i
                                     className="rotate fa fa-angle-right" aria-hidden="true"></i></a>
                                 <input type="text" name="searchValue" onChange={this.onSearch} placeholder="Search NETWORK..." />
@@ -1090,7 +1090,7 @@ class Dashboard extends Component {
                             <div className="white-box">
                                 <h2 className="in-h">MY EVENTS</h2>
                                 <div className="line3 text-left"></div>
-                                <div className="likes-section new">
+                                <div className="likes-section new networkStyling">
                                     {this.state.meetings.map((el, i) => <div className="img-area clearfix">
                                         <div className="img-c">
                                             <img src={'https://ochback.herokuapp.com/api/usersPhoto/' + el.owner_id._id} className="img-responsive __circular3" />

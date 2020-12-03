@@ -208,7 +208,7 @@ class ContactList extends React.Component {
                     <source src="/client/assets/audio/ring4.mp3" type="audio/mpeg" />
                 </audio>
                 <div className="line3 text-left"></div>
-                <div className="likes-section new" style={contactArea}>
+                <div className="likes-section new networkStyling" style={contactArea}>
 
                     {this.state.mesageList.map((el, i) => {
                         let user;

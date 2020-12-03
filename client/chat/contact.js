@@ -112,7 +112,7 @@ class ContactList extends React.Component {
             <div className="white-box" style={contactArea}>
                 <h2 className="in-h">MY CONNECTS</h2>
                 <div className="line3 text-left"></div>
-                <div className="likes-section suggest" >
+                <div className="likes-section suggest networkStyling" >
                     {this.state.contact.map((el, i) =>
 
                         el._id == auth.isAuthenticated().user._id ? '' :

@@ -184,7 +184,7 @@ class Chat extends React.Component {
         }
 
         return (
-            <div className="col-md-4 col-lg-3 position-relative" id="chat-bx">
+            <div className="col-md-4 col-lg-3 position-relative networkStyling" id="chat-bx">
                 <div className="popup" id="popup-r">
                     <div className="pop-header message-pop">
                         <a href="javascript:void(0)" id="hide-r" className="close-pop"><i className="fa fa-times"
