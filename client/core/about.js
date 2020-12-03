@@ -117,7 +117,7 @@ const Talent = () => {
             </div>
         </section>
     );
-} 
+}
 
 const Mvideo = () => {
     return (
@@ -506,7 +506,12 @@ class News extends Component {
         }
     }
 
-    newsletter = () => {
+    newsletter = (e) => {
+
+        e.preventDefault()
+
+        let thankYou = document.getElementById('thanksnewsletter');
+
         if (this.state.email == '') {
             this.state.email == '' ? this.setState({ emailValidation: 'EMAIL IS REQUIRED' }) : '';
         } else {
@@ -516,10 +521,15 @@ class News extends Component {
 
             createNews(news).then((data) => {
                 if (data.error) {
-                    this.setState({ emailValidation: data.error })
+                    if (data.error.length > 1) {
+                        this.setState({ emailValidation: data.error[1] })
+                    } else {
+                        this.setState({ emailValidation: data.error })
+                    }
                 } else {
                     this.setState({ email: '' })
-                    swal("Email submitted for newsletter")
+                    thankYou.click()
+                    //swal("Email submitted for newsletter")
                 }
             })
 
@@ -541,9 +551,14 @@ class News extends Component {
                 <div className="container">
                     <h1>NEWSLETTER</h1>
                     <p>STAY UP TO DATE - SIGN UP TO OUR NEWSLETTER</p>
+
+
+                    
+
+                    <a id="thanksnewsletter" href="#" data-toggle="modal" data-target="#newsletter"></a>
                     <div className="news-input">
                         <input type="text" name="email" onChange={this.onChangeNews} value={this.state.email} placeholder="YOUR EMAIL ADDRESS" />
-                        <br/>
+                        <br />
                         <strong style={{ color: 'red' }}>{this.state.emailValidation}</strong>
                         <a href="javascript:void(0)" onClick={this.newsletter} className="book-now">SIGN UP</a>
                     </div>

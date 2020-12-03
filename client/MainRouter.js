@@ -16,6 +16,7 @@ import Copyright from './menu/copyright';
 import LoginModal from './modal/loginModal';
 import ApplicationForm from './modal/application';
 import Thanks from './modal/thanks';
+import ThanksNewsletter from './modal/newletter'
 import JoinSession from './modal/join';
 import Detail from './modal/detail';
 
@@ -35,7 +36,7 @@ class MainRouter extends Component {
           <Route exact path="/" component={Home} />
           <Route path="/about" component={About} />
           {/*<Route path="/services" component={Services} />*/}
-          <PrivateRoute path="/studio" component={Studio} />          
+          <PrivateRoute path="/studio" component={Studio} />
           <PrivateRoute path="/my-studio" component={MyStudio} />
           <Route path="/news" component={News} />
           <PrivateRoute path="/meeting" component={Meeting} />
@@ -50,12 +51,13 @@ class MainRouter extends Component {
         <LoginModal />
         <ApplicationForm />
         <Thanks />
+        <ThanksNewsletter />
         <JoinSession />
-        <Detail /> 
+        <Detail />
 
         <Account />
         <Cancel />
-               
+
         <Plan />
       </div>
     );
