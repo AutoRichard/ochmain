@@ -161,7 +161,7 @@ class Studios extends Component {
 
 
 
-                    <div className="text-center st-head">
+                    {/*<div className="text-center st-head">
                         <h2 className="text-center">VIRTUAL AUDITORIUMS (ZOOM)</h2>
                         <span>(ZOOM VIDEO MEETING - UP TO 500 PEOPLE)</span>
                         <div className="line2"></div>
@@ -227,7 +227,7 @@ class Studios extends Component {
                                 <span>(3 CREDits per hour)</span>
                             </div>
                         </div>
-                    </div>
+                        </div>*/}
                     <p className="text-center">If you have any questions regarding studio bookings, don’t hesitate to contact us by clicking the button below.</p>
                     <div className="text-center"><a href="#" className="watch-btn marg m-s">CONTACT US</a></div>
                 </div>

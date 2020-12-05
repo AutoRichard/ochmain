@@ -97,7 +97,7 @@ class Contact extends Component {
                             </div>
                             <div className="col-md-12">
                                 <div className="input-area sp">
-                                    <textarea name="text" value={this.state.text} onChange={this.onchange} placeholder="Enter Message"></textarea>                                    
+                                    <textarea name="text" className="textArea" value={this.state.text} onChange={this.onchange} placeholder="Enter Message"></textarea>                                    
                                     <label><span id="validationError">{this.state.textValidation}</span></label>
                                 </div>
                             </div>

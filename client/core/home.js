@@ -176,7 +176,7 @@ const MusicVideo = () => {
 
                 </div>
                 <div className="text-center">
-                    <a href="#" className="watch-btn marg sp lg">THE TEAM</a><a href="#" className="watch-btn marg lg">CONTACT
+                    {/*<a href="#" className="watch-btn marg sp lg">THE TEAM</a>*/}<a href="/contact" className="watch-btn marg lg">CONTACT
 					US</a>
                 </div>
             </div>
@@ -206,7 +206,7 @@ const Service = () => {
                             <p>Group classes, artist development & <br />
 							songwriting camps
 						</p>
-                            <a href="#">BROWSE CLASSES</a>
+                            <a href="/studio">BROWSE CLASSES</a>
                         </div>
                     </div>
                     <div className="col-md-3">
@@ -216,7 +216,7 @@ const Service = () => {
                             <p>Vocal, piano, guitar, music production,
                             career coaching & dance/performance
 						</p>
-                            <a href="#">BOOK A SESSION</a>
+                            <a href="/studio">BOOK A SESSION</a>
                         </div>
                     </div>
                     <div className="col-md-3">
@@ -226,7 +226,7 @@ const Service = () => {
                             <p>For the ulitmate experience, join our
                             silver, gold or platinum plan
 						</p>
-                            <a href="#">PICK YOUR PLAN</a>
+                            <a href="#" data-toggle="modal" data-target="#change-plan">PICK YOUR PLAN</a>
                         </div>
                     </div>
                     <div className="col-md-3">
@@ -236,7 +236,7 @@ const Service = () => {
                             <p>We provide world-class EP & Music video
                             production - contact us for details
 						</p>
-                            <a href="#">CONTACT US</a>
+                            <a href="/contact">CONTACT US</a>
                         </div>
                     </div>
                 </div>
@@ -598,6 +598,16 @@ class Home extends React.Component {
             //name: '',
             //open: false,
             //userStatus: ''
+
+            checkAuthenticated: false
+        }
+    }
+
+    componentDidMount() {
+        if (auth.isAuthenticated()) {
+            this.setState({ checkAuthenticated: true })
+        } else {
+            this.setState({ checkAuthenticated: false });
         }
     }
 
@@ -615,7 +625,8 @@ class Home extends React.Component {
                     <div className="caption-text">
                         <h1>DEVELOP YOUR <span>CREATIVITY</span><br />
                             EXPAND YOUR <span>NETWORK</span></h1>
-                        <a onClick={this._viewMessage} href="#">Apply Now</a>
+
+                        {this.state.checkAuthenticated == false ? (<a onClick={this._viewMessage} data-toggle="modal" data-target="#applicaion-form" href="#">Apply Now</a>) : ('')}
                     </div>
 
                     <SVG />
