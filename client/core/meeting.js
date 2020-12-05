@@ -16,7 +16,9 @@ class Meeting extends Component {
             duration: '',
             durationValidation: '',
             start_time: '',
-            start_timeValidation: ''
+            start_timeValidation: '',
+            category: '1',
+            categoryValidation: ''
         }
     }
 
@@ -40,11 +42,12 @@ class Meeting extends Component {
     }
 
     submitMeeting = () => {
-        if (this.state.topic == '' || this.state.start_time == '' || this.state.duration == '' || isNaN(this.state.duration)) {
+        if (this.state.topic == '' || this.state.start_time == '' || this.state.duration == '' || isNaN(this.state.duration || this.state.category)) {
             //this.setState({ loading: false });
             this.state.topic === '' ? (this.setState({ topicValidation: 'MEETING TOPIC IS REQUIRED' })) : this.setState({ topicValidation: '' });
             this.state.start_time === '' ? (this.setState({ start_timeValidation: 'MEETING START TIME IS REQUIRED' })) : this.setState({ start_timeValidation: '' });
             this.state.duration === '' ? (this.setState({ durationValidation: 'MEETING DURATION IS REQUIRED' })) : this.setState({ durationValidation: '' });
+            this.state.category === '' ? (this.setState({ categoryValidation: 'CATEGORY IS REQUIRED' })) : (this.setState({ categoryValidation: '' }));
 
             if (this.state.duration != '' && isNaN(this.state.duration)) {
                 this.setState({ durationValidation: 'DURATION SHOULD BE IN NUMBER' })
@@ -56,7 +59,8 @@ class Meeting extends Component {
                     topic: this.state.topic,
                     duration: this.state.duration,
                     owner: this.state.owner,
-                    start_time: this.state.start_time
+                    start_time: this.state.start_time,
+                    category: this.state.category
                 }
 
                 create(meeting).then((data) => {
@@ -100,6 +104,19 @@ class Meeting extends Component {
                                     <input name="duration" type="text" value={this.state.duration} onChange={this.onchange} />
                                 </div>
                             </div>
+
+                            <div className="col-md-6">
+                                <div className="input-spacez">
+                                    <label>Category </label>
+                                    <select id="mySelect" name="category" onChange={this.onchange} value={this.state.category} data-show-content="true" className="form-control textArea">
+                                        <option >Select Category</option>
+                                        <option selected value="1">VIRTUAL STUDIOS</option>
+                                        <option value="2">VIRTUAL AUDITORIUMS</option>
+                                        <option value="3">RECORDING STUDIOS</option>
+                                    </select>
+                                </div>
+                            </div>
+
 
                             <div className="col-md-6">
                                 <div className="input-spacez">

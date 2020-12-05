@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Header } from './../menu/header';
-import { listMeeting } from './../api/api-meeting';
+import { listMeeting, meetingsByCategory } from './../api/api-meeting';
 import auth from './../auth/auth-helper';
 import Booking from './../modal/booking';
 import { read } from './../api/api-user';
@@ -14,25 +14,34 @@ class Studios extends Component {
         super(props);
 
         this.state = {
-            meetings: []
+            meetingVS: [],
+            meetingVA: [],
+            meetingRS: []
         }
     }
 
 
     componentDidMount() {
-        this.fetchMeetiong()
+        this.fetchMeetiongVS()
+        this.fetchMeetiongVA()
+        this.fetchMeetiongRS()
     }
 
-    fetchMeetiong = () => {
-        listMeeting().then((data) => {
+    fetchMeetiongVS = () => {
+
+        let meeting = {
+            category: '1'
+        }
+
+
+
+        meetingsByCategory(meeting).then((data) => {
             if (data.error) {
                 swal(data.error)
             } else {
                 this.setState({
-                    meetings: data
+                    meetingVS: data
                 })
-
-                console.log(data)
 
                 console.log(moment(new Date()).isAfter("2020-12-01T20:32:47Z"))
 
@@ -45,6 +54,107 @@ class Studios extends Component {
                     $('#v-studio').removeClass("owl-center owl-loaded owl-text-select-on");
 
                     $("#v-studio").owlCarousel({
+                        margin: 30,
+                        nav: true,
+                        loop: false,
+                        singleItem: true,
+                        navText: ["<div class='nav-btn prev-btn'>Pre</div>", "<div class='nav-btn next-btn'>Next</div>"],
+                        dots: true,
+                        responsive: {
+                            0: {
+                                items: 1
+                            },
+                            600: {
+                                items: 3
+                            },
+                            1000: {
+                                items: 4
+                            },
+
+                        },
+                    }); //re-initialise the owl
+                }
+            }
+        });
+    }
+
+    fetchMeetiongVA = () => {
+
+        let meeting = {
+            category: '2'
+        }
+
+
+
+        meetingsByCategory(meeting).then((data) => {
+            if (data.error) {
+                swal(data.error)
+            } else {
+                this.setState({
+                    meetingVA: data
+                })
+
+                //console.log(data)
+
+                if ($('#v-audi').hasClass('owl-theme')) { //resize event was triggering an error, this if statement is to go around it
+
+                    $('#v-audi').trigger('destroy.owl.carousel'); //these 3 lines kill the owl, and returns the markup to the initial state
+                    $('#v-audi').find('.owl-stage-outer').children().unwrap();
+                    $('#v-audi').removeClass("owl-center owl-loaded owl-text-select-on");
+
+                    $("#v-audi").owlCarousel({
+                        margin: 30,
+                        nav: true,
+                        loop: false,
+                        singleItem: true,
+                        navText: ["<div class='nav-btn prev-btn'>Pre</div>", "<div class='nav-btn next-btn'>Next</div>"],
+                        dots: true,
+                        responsive: {
+                            0: {
+                                items: 1
+                            },
+                            600: {
+                                items: 3
+                            },
+                            1000: {
+                                items: 4
+                            },
+
+                        },
+                    }); //re-initialise the owl
+                }
+            }
+        });
+    }
+
+
+    fetchMeetiongRS = () => {
+
+        let meeting = {
+            category: '3'
+        }
+
+
+
+        meetingsByCategory(meeting).then((data) => {
+            if (data.error) {
+                swal(data.error)
+            } else {
+                this.setState({
+                    meetingRS: data
+                })
+
+                console.log(data)
+
+                //console.log(data)
+
+                if ($('#v-record').hasClass('owl-theme')) { //resize event was triggering an error, this if statement is to go around it
+
+                    $('#v-record').trigger('destroy.owl.carousel'); //these 3 lines kill the owl, and returns the markup to the initial state
+                    $('#v-record').find('.owl-stage-outer').children().unwrap();
+                    $('#v-record').removeClass("owl-center owl-loaded owl-text-select-on");
+
+                    $("#v-record").owlCarousel({
                         margin: 30,
                         nav: true,
                         loop: false,
@@ -90,7 +200,7 @@ class Studios extends Component {
                     </div>
                     <div id="v-studio" className="owl-carousel owl-theme">
 
-                        {this.state.meetings.map((el, i) =>
+                        {this.state.meetingVS.map((el, i) =>
 
                             moment(new Date()).isAfter(new Date(el.start_time)) !== true ?
                                 (< div className="item" >
@@ -109,126 +219,69 @@ class Studios extends Component {
                                 </div>) : ('')
                         )}
 
-
-
-
-
-                        {/*<div className="item">
-                            <div className="v-box">
-                                <h3>V-STUDIO 2</h3>
-                                <div className="request-box">
-                                    <img src="/client/assets/images/v2.jpg" className="img-responsive" />
-                                    <div className="request-text animate__animated animate__fadeIn">
-                                        <h5>SESSION IN PROGRESS</h5>
-                                        <a href="#" className="book-now">REQUEST ACCESS</a>
-                                    </div>
-                                </div>
-                                <a href={"/meeting.html?meeting_id"+el._id} data-toggle="modal" data-target="#v-st" className="book-now">JOIN NOW</a>
-                            </div>
-                        </div>
-                        <div className="item">
-                            <div className="v-box">
-                                <h3>V-STUDIO 3</h3>
-                                <div className="request-box">
-                                    <img src="/client/assets/images/v3.jpg" className="img-responsive" />
-                                    <div className="request-text animate__animated animate__fadeIn">
-                                        <h5>SESSION IN PROGRESS</h5>
-                                        <a href="#" className="book-now">REQUEST ACCESS</a>
-                                    </div>
-                                </div>
-                                <a href="#" className="book-now">BOOK NOW</a>
-                            </div>
-                        </div>
-                        <div className="item">
-                            <div className="v-box">
-                                <h3>V-STUDIO 4</h3>
-                                <div className="request-box">
-                                    <img src="/client/assets/images/v4.jpg" className="img-responsive" />
-                                    <div className="request-text animate__animated animate__fadeIn">
-                                        <h5>SESSION IN PROGRESS</h5>
-                                        <a href="#" className="book-now">REQUEST ACCESS</a>
-                                    </div>
-                                </div>
-                                <a href="#" className="book-now">BOOK NOW</a>
-                            </div>
-                        </div>
-                          */}
-
                     </div>
+
+
+
+
                     <div className="text-center st-head">
-                        <div className="text-center"><a href="/my-studio" className="watch-btn marg m-s">GO TO MY STUDIO</a></div>
-                    </div>
-
-
-
-                    {/*<div className="text-center st-head">
                         <h2 className="text-center">VIRTUAL AUDITORIUMS (ZOOM)</h2>
                         <span>(ZOOM VIDEO MEETING - UP TO 500 PEOPLE)</span>
                         <div className="line2"></div>
                     </div>
-                    <div className="row">
-                        <div className="col-md-3">
+                    <div id="v-audi" className="owl-carousel owl-theme">
 
-                        </div>
-                        <div className="col-md-3">
-                            <div className="v-box">
-                                <h3>V-HALL 1</h3>
-                                <img src="/client/assets/images/vh1.jpg" className="img-responsive" />
-                                <a href="#" className="book-now">BOOK NOW</a>
-                            </div>
-                        </div>
-                        <div className="col-md-3">
-                            <div className="v-box">
-                                <h3>V-HALL 2</h3>
-                                <img src="/client/assets/images/vh2.jpg" className="img-responsive" />
-                                <a href="#" className="book-now">BOOK NOW</a>
-                            </div>
-                        </div>
-                        <div className="col-md-3">
+                        {this.state.meetingVA.map((el, i) =>
 
-                        </div>
+                            moment(new Date()).isAfter(new Date(el.start_time)) !== true ?
+                                (< div className="item" >
+                                    <div className="v-box">
+                                        <h3>{el.topic.substring(0, 15)}</h3>
+                                        <div className="request-box">
+                                            <img src="/client/assets/images/vh1.jpg" className="img-responsive" />
+                                            <div className="request-text animate__animated animate__fadeIn">
+                                                <a href="javascript:void(0)" className="book-now">IN PROGRESS</a>
+                                            </div>
+                                        </div>
+
+
+                                        <a href="#" onClick={this.openMeeting.bind(this, el)} data-toggle="modal" data-target="#v-st" class="book-now">BOOK NOW</a>
+                                    </div>
+                                </div>) : ('')
+                        )}
+
                     </div>
-
                     <div className="text-center rs">
                         <h1>RECORDING STUDIOS</h1>
                         <p>(TUSTIN, ORANGE COUNTY, USA & COPENHAGEN, DENMARK)</p>
                         <div className="line2"></div>
                     </div>
-                    <div className="row">
-                        <div className="col-md-3">
-                            <div className="v-box n-f">
-                                <h3>OC STUDIO 1</h3>
-                                <img src="/client/assets/images/r1.jpg" className="img-responsive" />
-                                <a href="#" className="book-now">BOOK NOW</a>
-                                <span>(3 CREDits per hour)</span>
-                            </div>
-                        </div>
-                        <div className="col-md-3">
-                            <div className="v-box n-f">
-                                <h3>OC STUDIO 2</h3>
-                                <img src="/client/assets/images/r2.jpg" className="img-responsive" />
-                                <a href="#" className="book-now">BOOK NOW</a>
-                                <span>(2 CREDits per hour)</span>
-                            </div>
-                        </div>
-                        <div className="col-md-3">
-                            <div className="v-box n-f">
-                                <h3>OC STUDIO 3</h3>
-                                <img src="/client/assets/images/r3.jpg" className="img-responsive" />
-                                <a href="#" className="book-now">BOOK NOW</a>
-                                <span>(2 CREDits per hour)</span>
-                            </div>
-                        </div>
-                        <div className="col-md-3">
-                            <div className="v-box n-f">
-                                <h3>DK STUDIO 1</h3>
-                                <img src="/client/assets/images/r4.jpg" className="img-responsive" />
-                                <a href="#" className="book-now">BOOK NOW</a>
-                                <span>(3 CREDits per hour)</span>
-                            </div>
-                        </div>
-                        </div>*/}
-                    <p className="text-center">If you have any questions regarding studio bookings, don’t hesitate to contact us by clicking the button below.</p>
+                    <div id="v-record" className="owl-carousel owl-theme">
+
+                        {this.state.meetingRS.map((el, i) =>
+
+                            moment(new Date()).isAfter(new Date(el.start_time)) !== true ?
+                                (< div className="item" >
+                                    <div className="v-box">
+                                        <h3>{el.topic.substring(0, 15)}</h3>
+                                        <div className="request-box">
+                                            <img src="/client/assets/images/r1.jpg" className="img-responsive" />
+                                            <div className="request-text animate__animated animate__fadeIn">
+                                                <a href="javascript:void(0)" className="book-now">IN PROGRESS</a>
+                                            </div>
+                                        </div>
+
+
+                                        <a href="#" onClick={this.openMeeting.bind(this, el)} data-toggle="modal" data-target="#v-st" class="book-now">BOOK NOW</a>
+                                    </div>
+                                </div>) : ('')
+                        )}
+
+                    </div><p className="text-center">If you have any questions regarding studio bookings, don’t hesitate to contact us by clicking the button below.</p>
+
+                    <div className="text-center st-head">
+                        <div className="text-center"><a href="/my-studio" className="watch-btn marg m-s">GO TO MY STUDIO</a></div>
+                    </div>
                     <div className="text-center"><a href="#" className="watch-btn marg m-s">CONTACT US</a></div>
                 </div>
             </section >
@@ -249,7 +302,8 @@ class Studio extends Component {
             user_id: '',
             creditBalance: 0,
             owner_id: '',
-            start_time: ''
+            start_time: '',
+            category: ''
         }
 
 
@@ -267,8 +321,24 @@ class Studio extends Component {
     }
 
     openMeetings = (data) => {
-        console.log(data)
-        this.setState({ meeting_image: '/client/assets/images/v1.jpg', meeting_title: data.topic, meeting_id: data._id, owner_id: data.owner, start_time: data.start_time })
+        this.setState({ meeting_title: data.topic, meeting_id: data._id, owner_id: data.owner, start_time: data.start_time, category: data.category })
+
+        
+        if (data.category === '1') {
+            this.setState({ meeting_image: '/client/assets/images/v1.jpg' })
+            
+        } else if (data.category === '2') {
+            this.setState({ meeting_image: '/client/assets/images/vh1.jpg' })
+            
+        } else if (data.category === '3') {
+            this.setState({ meeting_image: '/client/assets/images/r1.jpg' })
+            
+        } else {
+            this.setState({ meeting_image: '/client/assets/images/v1.jpg' })
+            
+        }
+
+
     }
 
 
@@ -310,6 +380,7 @@ class Studio extends Component {
                     owner_id={this.state.owner_id}
                     creditBalance={this.state.creditBalance}
                     start_time={this.state.start_time}
+                    category={this.state.category}
                 />
 
 

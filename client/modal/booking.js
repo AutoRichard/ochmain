@@ -19,7 +19,8 @@ class Booking extends React.Component {
             user_id: '',
             creditBalance: 0,
             owner_id: '',
-            start_time: ''
+            start_time: '',
+            category: ''
 
         }
     }
@@ -45,6 +46,7 @@ class Booking extends React.Component {
         if (this.props.meeting_id !== prevProps.meeting_id) {
 
             this.setState({ meeting_image: this.props.meeting_image, meeting_title: this.props.meeting_title, meeting_id: this.props.meeting_id, user_id: this.props.user_id, creditBalance: this.props.creditBalance, owner_id: this.props.owner_id, start_time: this.props.start_time })
+            console.log(this.props.meeting_image)
         }
     }
 

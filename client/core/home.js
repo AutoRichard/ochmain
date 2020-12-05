@@ -650,6 +650,8 @@ class Home extends React.Component {
 
                 <Instagram />
 
+                <Press />
+
                 <Modal />
 
                 <ContactModal />
