@@ -65,11 +65,11 @@ class Footer extends React.Component {
                             <div className="footer-logo"><img src="/client/assets/images/logo.png" className="img-responsive" /></div>
                             <ul className="social-list">
 
-                                {/*<li><a href="#"><img src="/client/assets/images/facebook.png" className="img-responsive" /></a></li>
+                                <li><a href="#"><img src="/client/assets/images/facebook.png" className="img-responsive" /></a></li>
                                 <li><a href="#"><img src="/client/assets/images/insta.png" className="img-responsive" /></a></li>
                                 <li><a href="#"><img src="/client/assets/images/spotify.png" className="img-responsive" /></a></li>
                                 <li><a href="#"><img src="/client/assets/images/twitter.png" className="img-responsive" /></a></li>
-                                <li><a href="#"><img src="/client/assets/images/youtube.png" className="img-responsive" /></a></li>*/}
+                                <li><a href="#"><img src="/client/assets/images/youtube.png" className="img-responsive" /></a></li>
 
                             </ul>
                         </div>

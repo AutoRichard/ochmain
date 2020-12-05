@@ -642,7 +642,7 @@ class Home extends React.Component {
 
                 <MusicVideo />
 
-                <Service />
+                {this.state.checkAuthenticated == true ? (<Service />) : ('')}
 
                 <News />
 
