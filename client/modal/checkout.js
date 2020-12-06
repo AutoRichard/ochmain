@@ -55,7 +55,7 @@ class CheckoutForm extends React.Component {
 
     componentDidUpdate(prevProps) {
         if (this.props.credit !== prevProps.credit) {
-            this.setState({ amount: this.props.credit })
+            this.setState({ amount: Number(this.props.credit) })
         }
     }
 
