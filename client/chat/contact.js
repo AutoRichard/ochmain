@@ -108,7 +108,7 @@ class ContactList extends React.Component {
             width: '104%'
         }
 
-        return (
+        return ( 
             <div className="white-box" style={contactArea}>
                 <h2 className="in-h">MY CONNECTS</h2>
                 <div className="line3 text-left"></div>
@@ -126,7 +126,7 @@ class ContactList extends React.Component {
                                     <p>{el.firstName} {el.lastName}</p>
                                 </div>
                                 <a onClick={this.openChat.bind(this, el)} value={el._id} href="#chat-bx" id="pop-right"> <img src="/client/assets/images/msg.png"
-                                    className="img-responsive wd" /></a><a href="#" class={this.state.followButton} onClick={this.followUser.bind(this, el)} >	<img src="/client/assets/images/add-user.png" class="img-responsive wd" /></a>
+                                    className="img-responsive wd" /></a><a href="#chatbar" class={this.state.followButton} onClick={this.followUser.bind(this, el)} >	<img src="/client/assets/images/add-user.png" class="img-responsive wd" /></a>
                             </div>)
                     )}
 
