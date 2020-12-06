@@ -570,7 +570,7 @@ class VideoList extends Component {
                 <div className="video-c" id={'#' + this.props.thumbnail}>
                     <img src={imageView} className="img-responsive" style={thumbnailStyle} />
                     {/*<img src="/client/assets/images/video-thumbz.png" className="img-responsive" style={thumbnailStyle} />*/}
-                    <img src="/client/assets/images/video-frame.png" class="img-responsive v-frame" style={{ height: '80% !important' }}></img>
+                    <img src="/client/assets/images/video-frame.png" class="img-responsive v-frame" style={{ height: '85% !important' }}></img>
                     <a href="javascript:void0" onClick={this.displayVideo}>	<img src="/client/assets/images/play-btn.png" className="img-responsive ply" /></a>
                 </div>
 
@@ -637,8 +637,17 @@ class Video extends Component {
             ? event.target.files[0]
             : event.target.value
 
-        this.linkData.set(event.target.name, value)
-        this.setState({ id: URL.createObjectURL(event.target.files[0]) });
+
+        if (value.size < 75900) {
+            this.linkData.set(event.target.name, value)
+            this.setState({ id: URL.createObjectURL(event.target.files[0]) });
+        } else {
+            swal("IMAGE SIZE TO BIG, (max file size is 75kb)")
+        }
+
+
+
+
     }
 
 
@@ -759,7 +768,9 @@ class Video extends Component {
                                     </div>
                                     <div className="btn-b e-wd">
                                         <label for="profile"><a className="outline-btn">Thumbnail</a></label>
+
                                     </div>
+                                    <small>NB: thumbnail Max file size 75kb</small>
 
                                     <input type="text" name="title" onChange={this.onChangeLink} value={this.state.title} placeholder="Enter Title" />
 
