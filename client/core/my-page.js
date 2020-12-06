@@ -570,7 +570,7 @@ class VideoList extends Component {
                 <div className="video-c" id={'#' + this.props.thumbnail}>
                     <img src={imageView} className="img-responsive" style={thumbnailStyle} />
                     {/*<img src="/client/assets/images/video-thumbz.png" className="img-responsive" style={thumbnailStyle} />*/}
-                    <img src="/client/assets/images/video-frame.png" class="img-responsive v-frame" style={{ height: '85% !important' }}></img>
+                    <img src="/client/assets/images/video-frame.png" class="img-responsive v-frame" style={{ height: '100% !important' }}></img>
                     <a href="javascript:void0" onClick={this.displayVideo}>	<img src="/client/assets/images/play-btn.png" className="img-responsive ply" /></a>
                 </div>
 
