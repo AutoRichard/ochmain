@@ -60,11 +60,12 @@ class Plan extends React.Component {
 
                         <div className="modal-header">
 
-                            <button type="button" className="close" data-dismiss="modal">&times;</button>
+
                         </div>
 
                         <div className="modal-body">
                             <table className="table-responsive">
+                                <button type="button" className="close" data-dismiss="modal">&times;</button>
 
                                 <tbody>
                                     <tr className="d-n">
@@ -144,7 +145,7 @@ class Plan extends React.Component {
                 </div>
 
                 <Upgrade
-                plan_id={this.state.plan_id}
+                    plan_id={this.state.plan_id}
                 />
             </div>
         );
