@@ -83,14 +83,14 @@ class Footer extends React.Component {
                                     <a href="/contact">CONTACT US</a></li>
 
                             </ul>
-                            {/*<h2>ONLINE SERVICES</h2>
+                            <h2>ONLINE SERVICES</h2>
                             <ul className="list">
 
                                 <li><a href="#">TERMS OF SERVICE</a></li>
                                 <li><a href="#">PRIVACY POLICY</a></li>
                                 <li><a href="#">FAQ</a></li>
 
-                            </ul>*/}
+                            </ul>
 
                         </div>
                     </div>
