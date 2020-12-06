@@ -714,7 +714,6 @@ class Contact extends Component {
         if (this.props.userStatus !== prevProps.userStatus) {
             this.setState({ userStatus: this.props.userStatus })
         }
-
         if (this.props._refresh !== prevProps._refresh) {
             this.readUser();
         }
@@ -812,7 +811,7 @@ class Contact extends Component {
                                     el._id == auth.isAuthenticated().user._id ? '' : (
                                         <div className="item">
                                             <div className="position-relative"><a href="#" onClick={this.openChat.bind(this, el)} value={el._id} data-toggle="modal" data-target="#user-box"><img
-                                                src={'https://ochback.herokuapp.com/api/usersPhoto/' + el._id} className="img-responsive __circular3" /><span className="status"></span></a>
+                                                src={'https://ochback.herokuapp.com/api/usersPhoto/' + el._id} className="img-responsive __circular6" /><span className="status"></span></a>
                                             </div>
                                         </div>
 
@@ -1197,7 +1196,8 @@ class Network extends Component {
             open: false,
             userStatus: '',
             refresh: '',
-            refresh2: ''
+            refresh2: '',
+            check: 'false'
         }
 
 
@@ -1263,6 +1263,8 @@ class Network extends Component {
     __grandOpenChatP = () => {
         document.getElementById('pop-right-msg').click()
         this.setState({ open: true })
+
+        document.getElementById('chatInput').style.display = '';
     }
 
     refreshUserParent = () => {
