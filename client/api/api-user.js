@@ -1,5 +1,5 @@
-const link = 'http://localhost:8080';
-//const link = 'https://ochback.herokuapp.com';
+//const link = 'http://localhost:8080';
+const link = 'https://ochback.herokuapp.com';
 
 const create = (user) => {
   return fetch(link + '/api/users', {
