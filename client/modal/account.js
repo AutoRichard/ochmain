@@ -662,9 +662,9 @@ class Booking extends React.Component {
                                     <a href={"/zoom.html?meeting_id=" + el.meeting_id._id} className="g-btn">JOIN SESSION</a>
                                 </div>*/}
                                 {moment(new Date()).isAfter(new Date(el.meeting_id.start_time)) === true ? (<div className="join-cover">
-                                    {moment(new Date(el.meeting_id.start_time)).add(el.meeting_id.dureation, 'minutes').isAfter(new Date) == true ? (<a href={"/zoom.html?meeting_id=" + el.meeting_id._id} className="g-btn">JOIN SESSION</a>) : <a href="javascript:void(0)" className="g-btn">EXPIRED</a>}
+                                    {moment(new Date(el.meeting_id.start_time)).add(el.meeting_id.duration, 'minutes').isAfter(new Date) == true ? (<a href={"/zoom.html?meeting_id=" + el.meeting_id._id} className="g-btn">JOIN SESSION</a>) : <a href="javascript:void(0)" className="g-btn">EXPIRED</a>}
                                 </div>) : ('')}
-                                {moment(new Date()).isAfter(new Date(el.meeting_id.start_time)) === false ? (<span>(Start {moment(el.meeting_id.start_time).fromNow()} PRIOR)</span>) : ('Not Available')}
+                                {moment(new Date()).isAfter(new Date(el.meeting_id.start_time)) === false ? (<span>(START {moment(el.meeting_id.start_time).fromNow()} PRIOR)</span>) : ('Not Available')}
                             </div>
                         </div>
 
