@@ -11,7 +11,7 @@ import BillingAddress from './billingAddress';
 //import moment from 'moment';
 
 import { UserAndSubscription } from './../api/api-subscription'
-import moment from "moment"; 
+import moment from "moment";
 
 
 
@@ -599,19 +599,20 @@ class Booking extends React.Component {
                 } else {
                     this.setState({ meetings: data.booking })
 
-                    if ($('#booking-list').hasClass('owl-theme')) { //resize event was triggering an error, this if statement is to go around it
+                    if ($('#booking-lists').hasClass('owl-theme')) {
+                        //resize event was triggering an error, this if statement is to go around it
 
 
-                        $('#booking-list').trigger('destroy.owl.carousel'); //these 3 lines kill the owl, and returns the markup to the initial state
-                        $('#booking-list').find('.owl-stage-outer').children().unwrap();
+                        $('#booking-lists').trigger('destroy.owl.carousel'); //these 3 lines kill the owl, and returns the markup to the initial state
+                        $('#booking-lists').find('.owl-stage-outer').children().unwrap();
                         $('#booking-list').removeClass("owl-center owl-loaded owl-text-select-on");
 
-                        $("#booking-list").owlCarousel({
-                            margin: 30,
+                        $("#booking-lists").owlCarousel({
+                            margin: 20,
                             nav: true,
                             loop: false,
                             singleItem: true,
-                            navText: ["<div className='nav-btn prev-btn'>Pre</div>", "<div className='nav-btn next-btn'>Next</div>"],
+                            navText: ["<div class='nav-btn prev-btn'>Pre</div>", "<div class='nav-btn next-btn'>Next</div>"],
                             dots: true,
                             responsive: {
                                 0: {
@@ -624,8 +625,7 @@ class Booking extends React.Component {
                                 1100: {
                                     items: 3
                                 }
-
-                            },
+                            }
                         }); //re-initialise the owl
                     }
 
@@ -643,7 +643,7 @@ class Booking extends React.Component {
     render() {
         return (
             <div>
-                <div id="booking-list" className="owl-carousel owl-theme">
+                <div id="booking-lists" className="owl-carousel owl-theme">
 
                     {this.state.meetings.map((el, i) =>
 
@@ -664,7 +664,7 @@ class Booking extends React.Component {
                                 {moment(new Date()).isAfter(new Date(el.meeting_id.start_time)) === true ? (<div className="join-cover">
                                     {moment(new Date(el.meeting_id.start_time)).add(el.meeting_id.dureation, 'minutes').isAfter(new Date) == true ? (<a href={"/zoom.html?meeting_id=" + el.meeting_id._id} className="g-btn">JOIN SESSION</a>) : <a href="javascript:void(0)" className="g-btn">EXPIRED</a>}
                                 </div>) : ('')}
-                                <span>(UP TO 72 HOURS PRIOR)</span>
+                                {moment(new Date()).isAfter(new Date(el.meeting_id.start_time)) === false ? (<span>(Start {moment(el.meeting_id.start_time).fromNow()} PRIOR)</span>) : ('Not Available')}
                             </div>
                         </div>
 
