@@ -124,7 +124,6 @@ class Booking extends React.Component {
                                             <span onClick={this.plus} class="plus bg-dark">+</span>
                                         </div>
                                         <span class="s-text">START TIME : {moment(this.state.start_time).format("YYYY-MM-DD HH:mm")}</span>
-                                        <span class="s-text">Eastern Time (US and Canada)</span>
 
                                         <h3 class="total-p">TOTAL PRICE - {this.state.credit} CREDits<br />
 

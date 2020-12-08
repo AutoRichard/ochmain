@@ -209,12 +209,12 @@ class Studios extends Component {
                                         <div className="request-box">
                                             <img src="/client/assets/images/v1.jpg" className="img-responsive" />
                                             <div className="request-text animate__animated animate__fadeIn">
-                                                <a href="javascript:void(0)" className="book-now">IN PROGRESS</a>
+                                                <a href="javascript:void(0)" onClick={this.openMeeting.bind(this, el)} data-toggle="modal" data-target="#v-st" class="book-now">BOOK NOW</a>
                                             </div>
                                         </div>
 
 
-                                        <a href="#" onClick={this.openMeeting.bind(this, el)} data-toggle="modal" data-target="#v-st" class="book-now">BOOK NOW</a>
+
                                     </div>
                                 </div>) : ('')
                         )}
@@ -240,12 +240,12 @@ class Studios extends Component {
                                         <div className="request-box">
                                             <img src="/client/assets/images/vh1.jpg" className="img-responsive" />
                                             <div className="request-text animate__animated animate__fadeIn">
-                                                <a href="javascript:void(0)" className="book-now">IN PROGRESS</a>
+                                                <a href="javascript:void(0)" onClick={this.openMeeting.bind(this, el)} data-toggle="modal" data-target="#v-st" class="book-now">BOOK NOW</a>
                                             </div>
                                         </div>
 
 
-                                        <a href="#" onClick={this.openMeeting.bind(this, el)} data-toggle="modal" data-target="#v-st" class="book-now">BOOK NOW</a>
+
                                     </div>
                                 </div>) : ('')
                         )}
@@ -267,12 +267,12 @@ class Studios extends Component {
                                         <div className="request-box">
                                             <img src="/client/assets/images/r1.jpg" className="img-responsive" />
                                             <div className="request-text animate__animated animate__fadeIn">
-                                                <a href="javascript:void(0)" className="book-now">IN PROGRESS</a>
+                                                <a href="javascript:void(0)" onClick={this.openMeeting.bind(this, el)} data-toggle="modal" data-target="#v-st" class="book-now">BOOK NOW</a>
                                             </div>
                                         </div>
 
 
-                                        <a href="#" onClick={this.openMeeting.bind(this, el)} data-toggle="modal" data-target="#v-st" class="book-now">BOOK NOW</a>
+
                                     </div>
                                 </div>) : ('')
                         )}
@@ -282,7 +282,7 @@ class Studios extends Component {
                     <div className="text-center st-head">
                         <div className="text-center"><a href="/my-studio" className="watch-btn marg m-s">GO TO MY STUDIO</a></div>
                     </div>
-                    <div className="text-center"><a href="#" className="watch-btn marg m-s">CONTACT US</a></div>
+                    <div className="text-center"><a href="javascript:void(0)" className="watch-btn marg m-s">CONTACT US</a></div>
                 </div>
             </section >
         );
@@ -323,19 +323,19 @@ class Studio extends Component {
     openMeetings = (data) => {
         this.setState({ meeting_title: data.topic, meeting_id: data._id, owner_id: data.owner, start_time: data.start_time, category: data.category })
 
-        
+
         if (data.category === '1') {
             this.setState({ meeting_image: '/client/assets/images/v1.jpg' })
-            
+
         } else if (data.category === '2') {
             this.setState({ meeting_image: '/client/assets/images/vh1.jpg' })
-            
+
         } else if (data.category === '3') {
             this.setState({ meeting_image: '/client/assets/images/r1.jpg' })
-            
+
         } else {
             this.setState({ meeting_image: '/client/assets/images/v1.jpg' })
-            
+
         }
 
 

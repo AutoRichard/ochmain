@@ -656,7 +656,6 @@ class Booking extends React.Component {
                                 <div className="line3"></div>
                                 <div className="time-icon"><img src="/client/assets/images/time-icon.png" /></div>
                                 <h5>{moment(el.meeting_id.start_time).format("YYYY-MM-DD HH:mm")}</h5>
-                                <span class="s-text">Eastern Time (US and Canada)</span>
                                 <div className="video-ic"><img src="/client/assets/images/video-cam.png" /></div>
                                 <h5>{el.meeting_id.topic}<br />(ZOOM SESSION)</h5>
                                 {/*<div className="join-cover">
