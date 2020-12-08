@@ -56,22 +56,24 @@ class Meeting extends Component {
 
             if (auth.isAuthenticated()) {
 
-                /*let d = new Date(this.state.start_time)
+                let d = new Date(this.state.start_time)
 
-                let b = new Date(d.setHours(d.getHours() - 1))
+                let timeZone = d.getTimezoneOffset() / 60
+
+                let b = new Date(d.setHours(d.getHours() + timeZone))
                 let month = d.getMonth() + 1
                 let DayOfMonth = d.getDate();
                 let Year = d.getFullYear();
                 let Hours = d.getHours();
                 let Minutes = d.getMinutes();
-                let start_time = Year + '-' + month + '-' + DayOfMonth + 'T' + Hours + ':' + Minutes*/
+                let start_time = Year + '-' + month + '-' + DayOfMonth + 'T' + Hours + ':' + Minutes
 
 
                 let meeting = {
                     topic: this.state.topic,
                     duration: this.state.duration,
                     owner: this.state.owner,
-                    start_time: this.state.start_time,
+                    start_time: start_time,
                     category: this.state.category
                 }
 

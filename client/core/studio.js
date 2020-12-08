@@ -43,6 +43,8 @@ class Studios extends Component {
                     meetingVS: data
                 })
 
+                console.log(data)
+
                 console.log(moment(new Date()).isAfter("2020-12-01T20:32:47Z"))
 
                 //console.log(data)
