@@ -43,6 +43,8 @@ class Meeting extends Component {
 
     submitMeeting = () => {
 
+        console.log(this.state.start_time)
+
         if (this.state.topic == '' || this.state.start_time == '' || this.state.duration == '' || isNaN(this.state.duration || this.state.category)) {
             //this.setState({ loading: false });
             this.state.topic === '' ? (this.setState({ topicValidation: 'MEETING TOPIC IS REQUIRED' })) : this.setState({ topicValidation: '' });
@@ -72,7 +74,7 @@ class Meeting extends Component {
                     topic: this.state.topic,
                     duration: this.state.duration,
                     owner: this.state.owner,
-                    start_time: start_time,
+                    start_time: this.state.start_time,
                     category: this.state.category
                 }
 
