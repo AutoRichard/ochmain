@@ -1090,7 +1090,7 @@ class Dashboard extends Component {
                                 <h2 className="in-h">MY EVENTS</h2>
                                 <div className="line3 text-left"></div>
                                 <div className="likes-section new networkStyling">
-                                    {this.state.meetings.map((el, i) => <div className="img-area clearfix">
+                                    {this.state.meetings.map((el, i) => moment(new Date(el.meeting_id.start_time)).add(el.meeting_id.dureation, 'minutes').isAfter(new Date) == true ? (<div className="img-area clearfix">
                                         <div className="img-c">
                                             <img src={'https://ochback.herokuapp.com/api/usersPhoto/' + el.owner_id._id} className="img-responsive __circular3" />
                                             {/*<span className="status"></span>*/}
@@ -1105,9 +1105,9 @@ class Dashboard extends Component {
                                         </div>
 
 
-                                    </div>)}
+                                    </div>) : (''))}
 
-                                    {this.state.meetingsInvite.map((el, i) => <div className="img-area clearfix">
+                                    {this.state.meetingsInvite.map((el, i) => moment(new Date(el.meeting_id.start_time)).add(el.meeting_id.dureation, 'minutes').isAfter(new Date) == true ? (<div className="img-area clearfix">
                                         <div className="img-c">
                                             <img src={'https://ochback.herokuapp.com/api/usersPhoto/' + el.owner_id._id} className="img-responsive __circular3" />
                                             {/*<span className="status"></span>*/}
@@ -1121,7 +1121,7 @@ class Dashboard extends Component {
                                         </div>
 
 
-                                    </div>)}
+                                    </div>) : (''))}
 
                                     <Booking
                                         meeting_image={this.state.meeting_image}
@@ -1164,7 +1164,7 @@ class Dashboard extends Component {
                                     </div>
                                     */}
                                 </div>
-                                {this.state.meetings.length == 0 && this.state.meetingsInvite.length == 0 ? 'NO EVENT' : <a href="" className="btn-spc"><i className="fa fa-ellipsis-h" aria-hidden="true"></i> See More Notifications</a>}
+                                {this.state.meetings.length == 0 && this.state.meetingsInvite.length == 0 ? 'NO EVENT' : <a href="" className="btn-spc"><i className="fa fa-ellipsis-h" aria-hidden="true"></i></a>}
                             </div>
 
                             {this.state.check === true ?
