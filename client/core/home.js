@@ -628,7 +628,7 @@ class Home extends React.Component {
 
                         {this.state.checkAuthenticated == false ? (<a onClick={this._viewMessage} data-toggle="modal" data-target="#applicaion-form" href="#">Apply Now</a>) : ('')}
                     </div>
-
+  
                     <SVG />
 
                     <Video />

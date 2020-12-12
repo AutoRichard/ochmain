@@ -284,7 +284,7 @@ class Studios extends Component {
                     <div className="text-center st-head">
                         <div className="text-center"><a href="/my-studio" className="watch-btn marg m-s">GO TO MY STUDIO</a></div>
                     </div>
-                    <div className="text-center"><a href="javascript:void(0)" className="watch-btn marg m-s">CONTACT US</a></div>
+                    <div className="text-center"><a href="/contact" className="watch-btn marg m-s">CONTACT US</a></div>
                 </div>
             </section >
         );

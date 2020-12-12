@@ -132,6 +132,7 @@ class Profile extends Component {
 
                     </div>
                 </div>
+                <br />
                 <div className="heading-areaz">
                     <h1>{this.state.displayName}</h1>
                     <h2>{this.state.fullName}</h2>
@@ -191,7 +192,8 @@ class AudioList extends Component {
         super(props);
 
         this.state = {
-            linkUrl: ''
+            linkUrl: '',
+            keep: 'none'
         }
 
     }
@@ -259,6 +261,20 @@ class AudioList extends Component {
         }
     }
 
+    keepV = () => {
+
+        if (this.state.keep == '') {
+            this.setState({
+                keep: 'none'
+            })
+        } else {
+            this.setState({
+                keep: ''
+            })
+        }
+
+    }
+
 
 
 
@@ -287,15 +303,15 @@ class AudioList extends Component {
                             <p>Copy song link to the Copy/Paste buffer</p>
                         </div>
                     </div>*/}
-                    {this.props.userId === _userId ? (<div className="dropdown-share del-share"><a href="#"><img src="/client/assets/images/del.png" className="img-responsive" /></a>
+                    {this.props.userId === _userId ? (<div className="dropdown-share del-share"><a href="javascript:void0" onClick={this.keepV}><img src="/client/assets/images/del.png" className="img-responsive" /></a>
 
-                        <div className="dropdown-share-content sharee">
+                        <div className="dropdown-share-content sharee" style={{ display: this.state.keep }}>
                             <div className="cancel-bx">
                                 <b className="d-block text-center bold">Do you want to delete the song?</b>
                                 <div className="line3"></div>
                                 <div className="btn-del">
-                                    <a href="javascript:void0" className="outline-btn">NO - KEEP IT</a>
-                                    <a onClick={this.deleteLink} className="cancel-small">YES - DELETE IT</a>
+                                    <a href="javascript:void0" className="outline-btn" onClick={this.keepV}>NO - KEEP IT</a>
+                                    <a href="javascript:void0" onClick={this.deleteLink} className="cancel-small">YES - DELETE IT</a>
                                 </div>
                             </div>
                         </div>
@@ -455,16 +471,16 @@ class Audio extends Component {
                     <li>
 
                         {this.state.auth == true ? (<div className="dropdown-share">
-                            <a href="#" className="play-btn"><img src="/client/assets/images/plus-btn.png" /> Add Song</a>
+                            <a href="javascript:void(0)" className="play-btn"><img src="/client/assets/images/plus-btn.png" /> Add Song</a>
                             <div className="dropdown-share-content add-song">
                                 {/*<b><a href="javascript:void0">Add Song from File</a></b>*/}
                                 <p>Create new post containing link to the song</p>
 
                                 <b><a href="#">Add Song via Link</a></b>
                                 <input type="text" name="title" onChange={this.onChangeLink} value={this.state.title} placeholder="Enter/Paste Songs Title" />
-                                <input type="text" name="linkUrl" onChange={this.onChangeLink} value={this.state.linkUrl} placeholder="Enter/Paste Soundcloud or Spotify Link..." />
+                                <input type="text" name="linkUrl" onChange={this.onChangeLink} value={this.state.linkUrl} placeholder="Enter/Paste Soundcloud Link..." />
                                 <span id="validationError">{this.state.linkUrlValidation}</span>
-                                <a onClick={this.onSubmitAudio} className="save-btn btm">ADD LINK</a>
+                                <a href="javascript:void(0)" onClick={this.onSubmitAudio} className="save-btn btm">ADD LINK</a>
 
                             </div>
                         </div>) : ''}
@@ -485,7 +501,8 @@ class VideoList extends Component {
         super(props)
 
         this.state = {
-            link: ''
+            link: '',
+            keep: 'none'
         }
     }
 
@@ -518,6 +535,20 @@ class VideoList extends Component {
         document.getElementById('12' + this.props.thumbnail).style.display = 'inline'
     }
 
+    keepV = () => {
+
+        if (this.state.keep == '') {
+            this.setState({
+                keep: 'none'
+            })
+        } else {
+            this.setState({
+                keep: ''
+            })
+        }
+
+    }
+
     render() {
         const _jwt = auth.isAuthenticated();
         const _userId = _jwt.user._id;
@@ -528,7 +559,7 @@ class VideoList extends Component {
         let videoView = 'https://www.youtube.com/embed/' + this.props.link
 
         const thumbnailStyle = {
-            width: '100% !important',
+            width: '95% !important',
         }
 
         return (
@@ -553,14 +584,14 @@ class VideoList extends Component {
                         </div>
                     </div>*/}
 
-                    {this.props.userId === _userId ? (<div className="dropdown-share del-share"><a href="javascript:void0"><img src="/client/assets/images/del.png" className="img-responsive" /></a>
-                        <div className="dropdown-share-content sharee">
+                    {this.props.userId === _userId ? (<div className="dropdown-share del-share"><a href="javascript:void0" onClick={this.keepV}><img src="/client/assets/images/del.png" className="img-responsive" /></a>
+                        <div className="dropdown-share-content sharee" style={{ display: this.state.keep }}>
                             <div className="cancel-bx">
                                 <b className="d-block text-center bold">Do you want to delete the video?</b>
                                 <div className="line3"></div>
                                 <div className="btn-del">
-                                    <a href="javascript:void0" className="outline-btn">NO - KEEP IT</a>
-                                    <a onClick={this.deleteLink} className="cancel-small">YES - DELETE IT</a>
+                                    <a href="javascript:void0" className="outline-btn" onClick={this.keepV}>NO - KEEP IT</a>
+                                    <a href="javascript:void0" onClick={this.deleteLink} className="cancel-small">YES - DELETE IT</a>
                                 </div>
                             </div>
                         </div>
@@ -570,17 +601,22 @@ class VideoList extends Component {
                 <div className="video-c" id={'#' + this.props.thumbnail}>
                     <img src={imageView} className="img-responsive" style={thumbnailStyle} />
                     {/*<img src="/client/assets/images/video-thumbz.png" className="img-responsive" style={thumbnailStyle} />*/}
-                    <img src="/client/assets/images/video-frame.png" class="img-responsive v-frame" style={{ height: '100% !important' }}></img>
+                    <img src="/client/assets/images/video-frame.png" class="img-responsive v-frame"></img>
                     <a href="javascript:void0" onClick={this.displayVideo}>	<img src="/client/assets/images/play-btn.png" className="img-responsive ply" /></a>
                 </div>
 
                 <br id={'12' + this.props.thumbnail} style={{ display: 'none' }} />
                 <iframe id={this.props.thumbnail} style={{ display: 'none' }} width="100%" height="100%"
-                    src={videoView}>
+                    src={videoView} allowfullscreen="allowfullscreen"
+                    mozallowfullscreen="mozallowfullscreen"
+                    msallowfullscreen="msallowfullscreen"
+                    oallowfullscreen="oallowfullscreen"
+                    webkitallowfullscreen="webkitallowfullscreen">
                 </iframe>
 
                 <div className="clearfix"></div>
             </li>
+
 
         )
     }
@@ -640,14 +676,30 @@ class Video extends Component {
 
         if (value.size < 75900) {
             this.linkData.set(event.target.name, value)
-            this.setState({ id: URL.createObjectURL(event.target.files[0]) });
+            var img = new Image;
+            img.src = URL.createObjectURL(event.target.files[0]);
+            img.uploadImage = this.uploadValidate(event, value)
+
+            img.onload = function () {
+                var picWidth = this.width;
+                var picHeight = this.height;
+
+                if(picHeight > 240 || picWidth > 320){
+                    swal("IMAGE DIMENSION TO BIG, (max 320x240)")
+                }else{
+                    this.uploadImage
+                }
+            }
         } else {
             swal("IMAGE SIZE TO BIG, (max file size is 75kb)")
         }
+    }
+
+    uploadValidate = (event, value) => {
+        this.linkData.set(event.target.name, value)
 
 
-
-
+        this.setState({ id: URL.createObjectURL(event.target.files[0]) });
     }
 
 
@@ -758,19 +810,19 @@ class Video extends Component {
                     <li>
                         {this.state.auth == true ? (
                             <div className="dropdown-share">
-                                <a className="play-btn"><img src="/client/assets/images/plus-btn.png" /> Add Video...</a>
+                                <a href="javascript:void(0)" className="play-btn"><img src="/client/assets/images/plus-btn.png" /> Add Video...</a>
                                 <div className="dropdown-share-content add-song">
                                     <p>Create new post containing link to the video</p>
                                     {/*<p>format: https://www.youtube.com/embed/watch?v=kiyi-C7NQrQ</p>*/}
                                     <div className="pic-cvr">
-                                        {this.state.id == '' ? '' : (<img style={imageStyle} src={this.state.id} />)}
+                                        {this.state.id == '' ? '' : (<img style={imageStyle} src={this.state.id} id="thumbUpload" />)}
                                         <input name="photo" onChange={this.handleChange} id="profile" type="file" style={{ position: "unset" }} />
                                     </div>
                                     <div className="btn-b e-wd">
                                         <label for="profile"><a className="outline-btn">Thumbnail</a></label>
 
                                     </div>
-                                    <small>NB: thumbnail Max file size 75kb</small>
+                                    <small>NB: thumbnail (max 320x240 and 75 kb)</small>
 
                                     <input type="text" name="title" onChange={this.onChangeLink} value={this.state.title} placeholder="Enter Title" />
 
@@ -830,7 +882,13 @@ class Feeds extends Component {
             //link: 'http://localhost:8080',
             visible: 'none',
             userId: '',
-            _liked: false
+            _liked: false,
+            commentShow: 0,
+            more: '',
+            moreState: this.props.comments.length >= 1 ? 'View comments' : 'No comments',
+            youtubeLink: '',
+            youtubeExist: false,
+            icomment: false
         }
 
         //this.socket = openSocket(this.state.link)
@@ -852,9 +910,30 @@ class Feeds extends Component {
             const user_id = jwt.user._id;
             this.setState({ userId: user_id });
 
+
+            this.checkLink()
             setTimeout(this.checkLike, 200)
         }
 
+    }
+
+    checkLink = () => {
+        var url = this.props.text
+        if (url != undefined || url != '') {
+            var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([^#\&\?]{10,12}).*/;
+            var match = url.match(regExp);
+            if (match) {
+                // Do anything for being valid
+                // if need to change the url to embed url then use below line            
+                //$('#videoObject').attr('src', 'https://www.youtube.com/embed/' + match[2] + '?autoplay=1&enablejsapi=1');
+
+                let youtube = 'https://www.youtube.com/embed/' + match[2]
+                this.setState({ youtubeLink: youtube, youtubeExist: true })
+
+            } else {
+                // Do anything for not being valid
+            }
+        }
     }
 
     checkLike = () => {
@@ -898,6 +977,18 @@ class Feeds extends Component {
                 this.setState({
                     comments: data[this.props._id].result.comments
                 })
+
+                if (this.state.icomment == true) {
+                    if (data[this.props._id].result.comments.length > 0) {
+                        this.setState({
+                            visible: '',
+                            icomment: false,
+                            more: 'more',
+                            commentShow: this.state.commentShow + 3,
+                            moreState: data[this.props._id].result.comments.length > this.state.commentShow + 3 ? 'View more comments' : 'Close comments'
+                        })
+                    }
+                }
             }
 
         }
@@ -919,7 +1010,9 @@ class Feeds extends Component {
             this.props.socketConnection.on('fetch_comment', this.updateComment)
 
 
-            this.setState({ comment_text: '' })
+            this.setState({ comment_text: '', icomment: true })
+
+
         }
     }
 
@@ -967,14 +1060,36 @@ class Feeds extends Component {
     }
 
     viewComment = () => {
-        if (this.state.visible == 'none') {
-            this.setState({
-                visible: ''
-            })
-        } else {
-            this.setState({
-                visible: 'none'
-            })
+
+        let commentS = this.state.comments.length
+
+        if (this.state.comments.length > 0) {
+            if (this.state.visible == 'none') {
+
+                this.setState({
+                    visible: '',
+                    more: 'more',
+                    commentShow: this.state.commentShow + 3,
+                    moreState: commentS >= this.state.commentShow ? 'View more comments' : 'View comments'
+                })
+
+            } else {
+                if (this.state.commentShow >= commentS) {
+                    this.setState({
+                        visible: 'none',
+                        more: '',
+                        commentShow: 0,
+                        moreState: 'View comments'
+                    })
+                } else {
+                    this.setState({
+                        visible: '',
+                        more: 'more',
+                        commentShow: this.state.commentShow + 3,
+                        moreState: this.state.commentShow + 3 >= commentS ? 'Close comments' : 'View more comments'
+                    })
+                }
+            }
         }
     }
 
@@ -1012,7 +1127,14 @@ class Feeds extends Component {
                 <div className="desc-box">
                     <p>{this.props.text}</p>
 
-                    {this.props.imageExist == true ? (<img src={"https://ochback.herokuapp.com/api/photo/" + this.props._id} width="100%" height="315" className="img-responsive" />) : ''}
+                    {this.props.imageExist == true ? (<img src={"https://ochback.herokuapp.com/api/photo/" + this.props._id} width="100%" height="100%" className="img-responsive" />) : (
+                        this.state.youtubeExist == true ? (<iframe width='100%' height='100%' scrolling="no" frameborder="no" allow="autoplay" src={this.state.youtubeLink} allowfullscreen="allowfullscreen" mozallowfullscreen="mozallowfullscreen"
+                            msallowfullscreen="msallowfullscreen"
+                            oallowfullscreen="oallowfullscreen"
+                            webkitallowfullscreen="webkitallowfullscreen"
+                        ></iframe>) : ('')
+                    )}
+
 
                     {/*<iframe width="100%" height="315"
                         src="https://www.youtube.com/embed/tgbNymZ7vqY" frameBorder="0">
@@ -1065,12 +1187,13 @@ class Feeds extends Component {
 
 
 
-                    <a onClick={this.viewComment} className="grey" href="javascript:void(0)">View all {this.state.comments.length} comments</a>
+                    <a onClick={this.viewComment} className="grey" href="javascript:void(0)">{this.state.moreState}</a>
                     <div style={{ display: this.state.visible }}>
-                        {this.state.comments.map((el, i) =>
+                        {[...this.state.comments].reverse().map((el, i) =>
                             <Comment
                                 text={el.text}
                                 name={el.postedBy.firstName || el.postedBy.lastName || el.postedBy.displayName}
+                                key={el._id}
                             />
                         )}
 
@@ -1100,7 +1223,8 @@ class FeedTimeline extends Component {
             //link: 'http://localhost:8080',
             newData: 'none',
             userId: '',
-            _userId: ''
+            _userId: '',
+            mine: false
 
         }
 
@@ -1197,10 +1321,19 @@ class FeedTimeline extends Component {
 
                     if (data.length != this.state.timeline.length) {
 
-                        this.setState({
-                            newtimeline: data,
-                            newData: 'block'
-                        })
+                        if (this.state.mine == true) {
+                            this.setState({
+                                timeline: data.reverse(),
+                            })
+
+                            this.setState({ mine: false })
+                        } else {
+                            this.setState({
+                                newtimeline: data,
+                                newData: 'block'
+                            })
+                        }
+
 
                         //console.log(data)
                     }
@@ -1263,7 +1396,7 @@ class FeedTimeline extends Component {
                     //console.log(data)
 
                     this.postData.set('photo', '')
-                    this.setState({ sending: false, post: '' })
+                    this.setState({ sending: false, post: '', mine: true })
                 }
             })
         }
@@ -1314,13 +1447,13 @@ class FeedTimeline extends Component {
                     </div>
                     <div className="right-content">
                         <div className="search-area">
-                            <input name="post" type="text" value={this.state.post} disabled={this.state.sending} onChange={this.onChangePost} placeholder="Share your thoughts and your music..." />
+                            <input name="post" type="text" value={this.state.post} disabled={this.state.sending} onKeyDown={this._handleKeyDown} onChange={this.onChangePost} placeholder="Share your thoughts and your music..." />
 
                             <div className="button-wrap btn">
                                 <label className="new-button" for="upload1"> <img src="/client/assets/images/pic-up.png" className="img-responsive upload" />
                                     <input onChange={this.handleChange} name="photo" id="upload1" type="file" />
                                 </label>
-                                <a href="javascript:void(0)" style={{ width: '40px', height: '70px' }} onClick={this.upload} class="fa fa-share"></a>
+                                <a href="javascript:void(0)" onClick={this.upload}><span style={{ width: '40px', height: 'auto', fontSize: '25px' }} class="fa fa-share"></span></a>
                             </div>
 
                         </div>
@@ -1355,6 +1488,7 @@ class FeedTimeline extends Component {
                             createDate={el.createDate}
                             imageExist={el.imageExist}
                             socketConnection={this.socket}
+                            key={el._id}
                         />
                     )}
                 </div>

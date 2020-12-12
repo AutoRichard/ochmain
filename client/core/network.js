@@ -54,7 +54,13 @@ class Feeds extends Component {
             //link: 'http://localhost:8080',
             visible: 'none',
             userId: '',
-            _liked: false
+            _liked: false,
+            commentShow: 0,
+            more: '',
+            moreState: this.props.comments.length >= 1 ? 'View comments' : 'No comments',
+            youtubeLink: '',
+            youtubeExist: false,
+            icomment: false
         }
 
         //this.socket = openSocket(this.state.link)
@@ -76,9 +82,29 @@ class Feeds extends Component {
             const user_id = jwt.user._id;
             this.setState({ userId: user_id });
 
+            this.checkLink()
             setTimeout(this.checkLike, 200)
         }
 
+    }
+
+    checkLink = () => {
+        var url = this.props.text
+        if (url != undefined || url != '') {
+            var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([^#\&\?]{10,12}).*/;
+            var match = url.match(regExp);
+            if (match) {
+                // Do anything for being valid
+                // if need to change the url to embed url then use below line            
+                //$('#videoObject').attr('src', 'https://www.youtube.com/embed/' + match[2] + '?autoplay=1&enablejsapi=1');
+
+                let youtube = 'https://www.youtube.com/embed/' + match[2]
+                this.setState({ youtubeLink: youtube, youtubeExist: true })
+
+            } else {
+                // Do anything for not being valid
+            }
+        }
     }
 
     checkLike = () => {
@@ -122,6 +148,18 @@ class Feeds extends Component {
                 this.setState({
                     comments: data[this.props._id].result.comments
                 })
+
+                if(this.state.icomment == true){
+                    if (data[this.props._id].result.comments.length > 0) {
+                        this.setState({
+                            visible: '',
+                            icomment: false,
+                            more: 'more',
+                            commentShow: this.state.commentShow + 3,
+                            moreState: data[this.props._id].result.comments.length > this.state.commentShow + 3 ? 'View more comments' : 'Close comments'
+                        })
+                    }
+                }                
             }
 
         }
@@ -142,8 +180,7 @@ class Feeds extends Component {
             this.props.socketConnection.emit('send_comment', commentData)
             this.props.socketConnection.on('fetch_comment', this.updateComment)
 
-
-            this.setState({ comment_text: '' })
+            this.setState({ comment_text: '', icomment: true })
         }
     }
 
@@ -191,14 +228,36 @@ class Feeds extends Component {
     }
 
     viewComment = () => {
-        if (this.state.visible == 'none') {
-            this.setState({
-                visible: ''
-            })
-        } else {
-            this.setState({
-                visible: 'none'
-            })
+
+        let commentS = this.state.comments.length
+
+        if (this.state.comments.length > 0) {
+            if (this.state.visible == 'none') {
+
+                this.setState({
+                    visible: '',
+                    more: 'more',
+                    commentShow: this.state.commentShow + 3,
+                    moreState: commentS >= this.state.commentShow + 3 ? 'View more comments' : 'Close comments'
+                })
+
+            } else {
+                if (this.state.commentShow >= commentS) {
+                    this.setState({
+                        visible: 'none',
+                        more: '',
+                        commentShow: 0,
+                        moreState: 'View comments'
+                    })
+                } else {
+                    this.setState({
+                        visible: '',
+                        more: 'more',
+                        commentShow: this.state.commentShow + 3,
+                        moreState: this.state.commentShow + 3 >= commentS ? 'Close comments' : 'View more comments'
+                    })
+                }
+            }
         }
     }
 
@@ -236,8 +295,13 @@ class Feeds extends Component {
                 <div className="desc-box networkStyling">
                     <p>{this.props.text}</p>
 
-                    {this.props.imageExist == true ? (<img src={"https://ochback.herokuapp.com/api/photo/" + this.props._id} width="100%" height="315" className="img-responsive" />) : ''}
-
+                    {this.props.imageExist == true ? (<img src={"https://ochback.herokuapp.com/api/photo/" + this.props._id} width="100%" height="100%" className="img-responsive" />) : (
+                        this.state.youtubeExist == true ? (<iframe width='100%' height='100%' scrolling="no" frameborder="no" allow="autoplay" src={this.state.youtubeLink} allowfullscreen="allowfullscreen" mozallowfullscreen="mozallowfullscreen"
+                            msallowfullscreen="msallowfullscreen"
+                            oallowfullscreen="oallowfullscreen"
+                            webkitallowfullscreen="webkitallowfullscreen"
+                        ></iframe>) : ('')
+                    )}
                     {/*<iframe width="100%" height="315"
                         src="https://www.youtube.com/embed/tgbNymZ7vqY" frameBorder="0">
                         </iframe>*/}
@@ -275,7 +339,7 @@ class Feeds extends Component {
                         </div>
                         <div className="right-content">
                             <div className="search-area">
-                                <input type="text" name="comment_text" disabled={this.state.sending} onKeyDown={this._handleKeyDown} value={this.state.comment_text} onChange={this.onChangeComment} placeholder="Be the first to write a comment..." />
+                                <input type="text" name="comment_text" disabled={this.state.sending} onKeyDown={this._handleKeyDown} value={this.state.comment_text} onChange={this.onChangeComment} placeholder={this.state.comments.length <= 0 ? "Be the first to write a comment..." : "Write comment"} />
 
                                 {/*<div className="button-wrap btn">
                                     <label className="new-button" for="upload2"> <img src="/client/assets/images/pic-up.png" className="img-responsive upload" />
@@ -289,12 +353,13 @@ class Feeds extends Component {
 
 
 
-                    <a onClick={this.viewComment} className="grey" href="javascript:void(0)">View all {this.state.comments.length} comments</a>
+                    <a onClick={this.viewComment} className="grey" href="javascript:void(0)">{this.state.moreState}</a>
                     <div style={{ display: this.state.visible }}>
-                        {this.state.comments.map((el, i) =>
+                        {[...this.state.comments].reverse().slice(0, this.state.commentShow).map((el, i) =>
                             <Comment
                                 text={el.text}
                                 name={el.postedBy.firstName || el.postedBy.lastName || el.postedBy.displayName}
+                                key={el._id}
                             />
                         )}
 
@@ -324,7 +389,7 @@ class Timeline extends Component {
             //link: 'http://localhost:8080',
             newData: 'none',
             userId: '',
-
+            mine: false,
         }
 
         this.socket = openSocket(this.state.link)
@@ -398,10 +463,18 @@ class Timeline extends Component {
     _fetchNewPosts = data => {
         if (data.length != this.state.timeline.length) {
 
-            this.setState({
-                newtimeline: data.reverse(),
-                newData: 'block'
-            })
+            if (this.state.mine == true) {
+                this.setState({
+                    timeline: data.reverse(),
+                })
+
+                this.setState({ mine: false })
+            } else {
+                this.setState({
+                    newtimeline: data,
+                    newData: 'block'
+                })
+            }
 
             //console.log(data)
         }
@@ -460,7 +533,7 @@ class Timeline extends Component {
                     //console.log(data)
 
                     this.postData.set('photo', '')
-                    this.setState({ sending: false, post: '' })
+                    this.setState({ sending: false, post: '', mine: true })
                 }
             })
         }
@@ -511,7 +584,7 @@ class Timeline extends Component {
                     </div>
                     <div className="right-content">
                         <div className="search-area">
-                            <input name="post" type="text" value={this.state.post} disabled={this.state.sending} onChange={this.onChangePost} placeholder="Share your thoughts and your music..." />
+                            <input name="post" type="text" value={this.state.post} onKeyDown={this._handleKeyDown} disabled={this.state.sending} onChange={this.onChangePost} placeholder="Share your thoughts and your music..." />
 
                             <div className="button-wrap btn">
                                 <label className="new-button" for="upload1"> <img src="/client/assets/images/pic-up.png" className="img-responsive upload" />
@@ -552,6 +625,7 @@ class Timeline extends Component {
                             createDate={el.createDate}
                             imageExist={el.imageExist}
                             socketConnection={this.socket}
+                            key={el._id}
                         />
                     )}
                 </div>
