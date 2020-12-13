@@ -116,6 +116,7 @@ class LoginModal extends React.Component {
                                 {this.state.loading == true ? (<a href="javascript:void(0)" className="white-btn red">SIGN IN<img style={loadingStyle} src="/client/assets/images/loading4.gif" /></a>) : (<a href="javascript:void(0)" className="white-btn red" onClick={this.signIn}>SIGN IN</a>)}
                                 <h5>Not a member yet? <a href="#" data-toggle="modal" onClick={this.closeLogin} data-target="#applicaion-form">APPLY
 								NOW</a></h5>
+                                <h5>Forgot Password? <a href="/resetpassword">Reset Password</a></h5>
                             </div>
                         </div>
 
