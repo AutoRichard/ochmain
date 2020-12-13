@@ -37,7 +37,7 @@ class Contact extends Component {
             //this.setState({ loading: false });
             this.state.name === '' ? (this.setState({ nameValidation: 'NAME IS REQUIRED' })) : this.setState({ nameValidation: '' });
             this.state.text === '' ? (this.setState({ textValidation: 'MESSAGE IS REQUIRED' })) : this.setState({ textValidation: '' });
-            this.state.email === '' ? (this.setState({ emailValidation: 'MESSAGE IS REQUIRED' })) : this.setState({ emailValidation: '' });
+            this.state.email === '' ? (this.setState({ emailValidation: 'EMAIL IS REQUIRED' })) : this.setState({ emailValidation: '' });
             this.state.phoneNumber === '' ? (this.setState({ phoneValidation: 'PHONE NUMBER IS REQUIRED' })) : this.setState({ phoneValidation: '' });
 
         } else {

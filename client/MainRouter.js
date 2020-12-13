@@ -10,7 +10,7 @@ import Network from './core/network';
 import Mypage from './core/my-page';
 //import SignIn from './auth/Signin';
 import PrivateRoute from './auth/PrivateRoute';
-//import AuthRoute from './auth/AuthRoute';
+import AuthRoute from './auth/AuthRoute';
 import Footer from './menu/footer';
 import Copyright from './menu/copyright';
 import LoginModal from './modal/loginModal';
@@ -24,7 +24,8 @@ import Account from './modal/account';
 import Cancel from './modal/cancel';
 import Meeting from './core/meeting';
 import Contact from './core/contact';
-
+import ResetPassword from './core/resetpassword'
+import Password from './core/password'
 import Plan from './modal/plan';
 
 class MainRouter extends Component {
@@ -43,6 +44,8 @@ class MainRouter extends Component {
           <PrivateRoute path="/network" component={Network} />
           <PrivateRoute path="/my-page/:userId" component={Mypage} />
           <Route path="/contact" component={Contact} />
+          <AuthRoute path="/resetpassword" component={ResetPassword} />
+          <AuthRoute path="/reset/:token" component={Password} />
         </Switch>
 
 

@@ -169,7 +169,7 @@ h6 {
     margin-bottom: 20px;
 }
 /*Meeting Page*/
-.input-spacez input[type=text], .input-spacez input[type=time] {
+.input-spacez input[type=text], .input-spacez input[type=time], .input-spacez input[type=password] {
     width: 100%; padding-left:15px;
     background: #fff;
     height: 50px;

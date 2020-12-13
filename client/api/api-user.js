@@ -163,6 +163,32 @@ const findFollower = (params, credentials) => {
 }
 
 
+const resetPasswordEmail = (user) => {
+  return fetch(link + '/api/resetpasswordemail', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(user)
+  }).then((response) => {
+    return response.json()
+  }).catch((err) => console.log(err))
+}
+
+const resetPassword = (user) => {
+  return fetch(link + '/api/resetpasswordemail', {
+    method: 'PUT',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(user)
+  }).then((response) => {
+    return response.json()
+  }).catch((err) => console.log(err))
+}
+
 export {
   create,
   list,
@@ -175,5 +201,7 @@ export {
   listUser,
   follow,
   unfollow,
-  findFollower
+  findFollower,
+  resetPasswordEmail,
+  resetPassword
 }
