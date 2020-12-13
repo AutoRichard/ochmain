@@ -78,7 +78,7 @@ class Footer extends React.Component {
                             <ul className="list">
 
                                 <li className={this.props.path == '/about' ? "nav-item active" : "nav-item"}>
-                                    <a href="/about">ABOUT OCT HIT ACADEMY</a></li>
+                                    <a href="/about">ABOUT OC HIT ACADEMY</a></li>
                                 <li className={this.props.path == '/contact' ? "nav-item active" : "nav-item"}>
                                     <a href="/contact">CONTACT US</a></li>
 

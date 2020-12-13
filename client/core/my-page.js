@@ -673,33 +673,30 @@ class Video extends Component {
             ? event.target.files[0]
             : event.target.value
 
+        //this.linkData.set(event.target.name, value)
+        var img = new Image;
+        img.src = URL.createObjectURL(event.target.files[0]);
+        img.uploadImage = this.uploadValidate
+        img.value = value
 
-        if (value.size < 75900) {
-            this.linkData.set(event.target.name, value)
-            var img = new Image;
-            img.src = URL.createObjectURL(event.target.files[0]);
-            img.uploadImage = this.uploadValidate(event, value)
+        img.onload = function () {
+            var picWidth = this.width;
+            var picHeight = this.height;
 
-            img.onload = function () {
-                var picWidth = this.width;
-                var picHeight = this.height;
-
-                if(picHeight > 240 || picWidth > 320){
-                    swal("IMAGE DIMENSION TO BIG, (max 320x240)")
-                }else{
-                    this.uploadImage
-                }
+            if (picHeight == 120 || picWidth == 200) {
+                this.uploadImage(this.src, this.value)
+            } else {
+                swal("IMAGE RESOLUTION(320x240)")                
             }
-        } else {
-            swal("IMAGE SIZE TO BIG, (max file size is 75kb)")
         }
+
     }
 
-    uploadValidate = (event, value) => {
-        this.linkData.set(event.target.name, value)
+    uploadValidate = (src, value) => {
+        this.linkData.set("photo", value)
 
 
-        this.setState({ id: URL.createObjectURL(event.target.files[0]) });
+        this.setState({ id: src});
     }
 
 
@@ -822,7 +819,7 @@ class Video extends Component {
                                         <label for="profile"><a className="outline-btn">Thumbnail</a></label>
 
                                     </div>
-                                    <small>NB: thumbnail (max 320x240 and 75 kb)</small>
+                                    <small>NB: thumbnail (Image Resolution 320x240)</small>
 
                                     <input type="text" name="title" onChange={this.onChangeLink} value={this.state.title} placeholder="Enter Title" />
 
