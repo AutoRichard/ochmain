@@ -7,7 +7,7 @@ import openSocket from 'socket.io-client'
 import ContactList from '../chat/contact';
 import Chat from '../chat/chat';
 import Messages from '../chat/messages';
-import { read, update, listUser, unfollow } from './../api/api-user';
+import { read, update, listUser, unfollow, follow } from './../api/api-user';
 import { listBooking } from './../api/api-booking';
 import Booking from './../modal/booking';
 import { listInviteByUser, deleteInvite } from './../api/api-invite'
@@ -149,7 +149,7 @@ class Feeds extends Component {
                     comments: data[this.props._id].result.comments
                 })
 
-                if(this.state.icomment == true){
+                if (this.state.icomment == true) {
                     if (data[this.props._id].result.comments.length > 0) {
                         this.setState({
                             visible: '',
@@ -159,7 +159,7 @@ class Feeds extends Component {
                             moreState: data[this.props._id].result.comments.length > this.state.commentShow + 3 ? 'View more comments' : 'Close comments'
                         })
                     }
-                }                
+                }
             }
 
         }
@@ -651,7 +651,8 @@ class Contact extends Component {
             searchValue: '',
             refresh: '',
             _refresh2: '',
-            contacts: ''
+            contacts: '',
+            followButton: ''
         }
     }
 
@@ -834,6 +835,32 @@ class Contact extends Component {
     }
 
 
+    followUser = (data, e) => {
+        let jwt, authId;
+
+        this.setState({
+            followButton: 'disableFollow'
+        })
+
+        if (auth.isAuthenticated()) {
+            jwt = auth.isAuthenticated();
+            follow({
+                userId: jwt.user._id
+            }, {
+                t: jwt.token
+            }, data._id).then((data) => {
+                if (data.error) {
+                    swal(data.error)
+                } else {
+                    this.readUser()                    
+                }
+            })
+
+        }
+
+    }
+
+
 
 
 
@@ -865,7 +892,7 @@ class Contact extends Component {
                                                 <p>{el.firstName} {el.lastName}</p>
                                             </div>
                                             <a onClick={this._openChat.bind(this, el)} value={el._id} href="#chat-bx" id="pop-right"> <img src="/client/assets/images/msg.png"
-                                                className="img-responsive wd" /></a>
+                                                className="img-responsive wd" /></a><a href="#chatbar" class={this.state.followButton} onClick={this.followUser.bind(this, el)} >	<img src="/client/assets/images/add-user.png" class="img-responsive wd" /></a>
                                         </div>)
                                 )}
                             </div>
