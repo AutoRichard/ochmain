@@ -683,10 +683,10 @@ class Video extends Component {
             var picWidth = this.width;
             var picHeight = this.height;
 
-            if (picHeight == 120 || picWidth == 200) {
+            if (picHeight == 200 || picWidth == 300) {
                 this.uploadImage(this.src, this.value)
             } else {
-                swal("IMAGE RESOLUTION(320x240)")                
+                swal("IMAGE RESOLUTION(300x200)")                
             }
         }
 
@@ -819,7 +819,7 @@ class Video extends Component {
                                         <label for="profile"><a className="outline-btn">Thumbnail</a></label>
 
                                     </div>
-                                    <small>NB: thumbnail (Image Resolution 320x240)</small>
+                                    <small>NB: thumbnail (Image Resolution 300x200)</small>
 
                                     <input type="text" name="title" onChange={this.onChangeLink} value={this.state.title} placeholder="Enter Title" />
 

@@ -860,6 +860,15 @@ class Contact extends Component {
 
     }
 
+    _handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            if (this.state.searchValue != '') {
+                this.searchContact()
+                //this.setState({ sending: true })
+            }
+        }
+    }
+
 
 
 
@@ -900,7 +909,7 @@ class Contact extends Component {
                             <div className="input-space networkStyling">
                                 <a href="javascript:void(0)" className="icon-arrow" id="pop-left"><i
                                     className="rotate fa fa-angle-right" aria-hidden="true"></i></a>
-                                <input type="text" name="searchValue" onChange={this.onSearch} placeholder="Search NETWORK..." />
+                                <input type="text" name="searchValue" onChange={this.onSearch} onKeyDown={this._handleKeyDown} placeholder="Search NETWORK..." />
                                 <a href="javascript:void(0)" onClick={this.searchContact}><i className="fa fa-search" aria-hidden="true"></i></a>
                             </div>
                         </div>
