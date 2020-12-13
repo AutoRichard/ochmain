@@ -35,10 +35,6 @@ class Plan extends React.Component {
                             silver: data.data[2].id, gold: data.data[1].id, platinum: data.data[0].id
                         })
                     }
-
-
-
-
                 }
             })
         }
@@ -146,6 +142,9 @@ class Plan extends React.Component {
 
                 <Upgrade
                     plan_id={this.state.plan_id}
+                    silver={this.state.silver}
+                    gold={this.state.gold}
+                    platinum={this.state.platinum}
                 />
             </div>
         );

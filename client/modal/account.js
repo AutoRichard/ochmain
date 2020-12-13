@@ -402,7 +402,7 @@ class Billing extends React.Component {
         }
 
         this.userSubscription()
-    }
+    } 
 
 
     userSubscription = () => {

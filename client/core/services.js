@@ -1,58 +1,61 @@
 import React, { Component } from 'react';
 import { Header } from './../menu/header';
- 
+import auth from './../auth/auth-helper';
+import { plan } from './../api/api-subscription';
+import Upgrade from './../modal/upgrade';
+
 
 const ServiceList = () => {
     return (
-        <section className="plans padd-b padd-top">
+        <section className="plans padd-t">
             <div className="container-fluid">
                 <div className="heading-area">
                     <h1>SERVICES</h1>
                     <div className="div-box"></div>
 
-                    <p className="grey">We offer group classes, artist development & songwriting camps, individual sessions <br />
-in-person as well as Zoom video sessions, EP & music video production</p>
+                    <p>We offer group classes, artist development & songwriting camps, individual sessions <br />
+					in-person as well as Zoom video sessions, EP & music video production</p>
                 </div>
 
                 <div className="row">
-                    <div className="col-md-6 col-lg-3">
+                    <div className="col-md-3">
                         <div className="session-box">
                             <img src="/client/assets/images/c1.jpg" className="img-responsive" />
                             <h2>GROUP SESSIONS</h2>
                             <p>Group classes, artist development & <br />
-				songwriting camps
-				</p>
-                            <a href="#">BROWSE CLASSES</a>
+							songwriting camps
+						</p>
+                            <a href="/studio">BROWSE CLASSES</a>
                         </div>
                     </div>
-                    <div className="col-md-6 col-lg-3">
+                    <div className="col-md-3">
                         <div className="session-box">
                             <img src="/client/assets/images/c2.jpg" className="img-responsive" />
                             <h2>INDIVIDUAL SESSIONS</h2>
                             <p>Vocal, piano, guitar, music production,
                             career coaching & dance/performance
-				</p>
-                            <a href="#">BOOK A SESSION</a>
+						</p>
+                            <a href="/studio">BOOK A SESSION</a>
                         </div>
                     </div>
-                    <div className="col-md-6 col-lg-3">
+                    <div className="col-md-3">
                         <div className="session-box">
                             <img src="/client/assets/images/c3.jpg" className="img-responsive" />
                             <h2>PREMIUM PLANS</h2>
                             <p>For the ulitmate experience, join our
                             silver, gold or platinum plan
-				</p>
-                            <a href="#">PICK YOUR PLAN</a>
+						</p>
+                            <a href="#" data-toggle="modal" data-target="#change-plan">PICK YOUR PLAN</a>
                         </div>
                     </div>
-                    <div className="col-md-6 col-lg-3">
+                    <div className="col-md-3">
                         <div className="session-box">
                             <img src="/client/assets/images/c4.jpg" className="img-responsive" />
                             <h2>PRODUCTION</h2>
                             <p>We provide world-class EP & Music video
                             production - contact us for details
-				</p>
-                            <a href="#">CONTACT US</a>
+						</p>
+                            <a href="/contact">CONTACT US</a>
                         </div>
                     </div>
                 </div>
@@ -505,99 +508,146 @@ N/A</h6>
     );
 }
 
-const Plan = () => {
-    return (
-        <section className=" text-center">
-            <h1>PREMIUM PLANS</h1>
-            <div className="line2"></div>
+class Plan extends Component {
+    constructor(props) {
+        super(props);
 
-            <div className="container-fluid">
+        this.state = {
+            silver: '',
+            gold: '',
+            platinum: '',
+            plan_id: ''
+        }
+    }
 
-                <table>
-                    <thead>
-                        <tr style={{ background: "transparent" }}>
-                            <th className="img-n"><img src="/client/assets/images/plans-logo.png" className="img-responsive" /></th>
-                            <th><img src="/client/assets/images/silver.png" className="img-responsive" /></th>
-                            <th><img src="/client/assets/images/gold.png" className="img-responsive" /></th>
-                            <th><img src="/client/assets/images/platinum.png" className="img-responsive" /></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr className="d-n">
-                            <td className="plan-heading">PLAN</td>
-                            <td className="plan-heading silver">SILVER</td>
-                            <td className="plan-heading gold">GOLD</td>
-                            <td className="plan-heading plat">PLATINUM</td>
-                        </tr>
-                        <tr>
-                            <td className="p-emp">CREDITS PER MONTH</td>
-                            <td data-column="Silver">60</td>
-                            <td data-column="Gold">120</td>
-                            <td data-column="Platinum">200</td>
-                        </tr>
-
-                        <tr>
-                            <td className="p-emp">MIN. NUMBER OF MONTHS</td>
-                            <td data-column="Silver">3</td>
-                            <td data-column="Gold">3</td>
-                            <td data-column="Platinum">6</td>
-                        </tr>
-
-                        <tr>
-                            <td className="p-emp">EXPERT CONSULTATIONS</td>
-                            <td data-column="Silver">1 PER 3 MONTHS</td>
-                            <td data-column="Gold">1 PER 2 MONTHS</td>
-                            <td data-column="Platinum">1 PER MONTH</td>
-                        </tr>
-
-                        <tr>
-                            <td className="p-emp">PRODUCTIONS INCLUDED</td>
-                            <td data-column="Silver">1 PER 6 MONTHS</td>
-                            <td data-column="Gold">1 PER 3 MONTHS</td>
-                            <td data-column="Platinum">2 PER 3 MONTHS</td>
-                        </tr>
-
-                        <tr>
-                            <td className="p-emp">ADVANCE EVENT BOOKING</td>
-                            <td data-column="Silver">24 HR</td>
-                            <td data-column="Gold">48 HR</td>
-                            <td data-column="Platinum">72 HR</td>
-                        </tr>
-
-                        <tr>
-                            <td className="p-emp">MUSIC VIDEO</td>
-                            <td></td>
-                            <td></td>
-                            <td data-column="Platinum">1 PER 6 MONTHS</td>
-                        </tr>
-                        <tr>
-                            <td className="p-emp">SOCIAL MEDIA PACKAGE</td>
-                            <td></td>
-                            <td></td>
-                            <td data-column="Platinum">INCLUDED</td>
-                        </tr>
-                        <tr>
-                            <td className="p-emp">PRICE PER MONTH</td>
-                            <td data-column="Silver">$999</td>
-                            <td data-column="Gold">$1,999</td>
-                            <td data-column="Platinum">$2,999</td>
-                        </tr>
-
-                        <tr>
-                            <td></td>
-                            <td data-column="Silver"><a href="#" className="book-now">Downgrade</a></td>
-                            <td data-column="Gold"><a href="#" className="book-now gold">Current Plan</a></td>
-                            <td data-column="Platinum"><a href="#" className="book-now">Upgrade</a></td>
-                        </tr>
-
-                    </tbody>
-                </table>
+    componentDidMount() {
+        if (auth.isAuthenticated()) {
+            const jwt = auth.isAuthenticated()
+            plan({
+                t: jwt.token
+            }).then((data) => {
+                if (data.error) {
+                    console.log(data.error)
+                    //this.setState({ error: data.error })
+                } else {
+                    if (data.data.length) {
+                        this.setState({
+                            silver: data.data[2].id, gold: data.data[1].id, platinum: data.data[0].id
+                        })
+                    }
+                }
+            })
+        }
+    }
 
 
+    __setPlan = (data) => {
 
-            </div>
-        </section>
-    );
+        this.setState({
+            plan_id: data
+        })
+    }
+
+    render() {
+        return (
+            <section className=" text-center">
+                <h1>PREMIUM PLANS</h1>
+                <div className="line2"></div>
+
+                <div className="container-fluid">
+
+                    <table>
+                        <thead>
+                            <tr style={{ background: "transparent" }}>
+                                <th className="img-n"><img src="/client/assets/images/plans-logo.png" className="img-responsive" /></th>
+                                <th><img src="/client/assets/images/silver.png" className="img-responsive" /></th>
+                                <th><img src="/client/assets/images/gold.png" className="img-responsive" /></th>
+                                <th><img src="/client/assets/images/platinum.png" className="img-responsive" /></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr className="d-n">
+                                <td className="plan-heading">PLAN</td>
+                                <td className="plan-heading silver">SILVER</td>
+                                <td className="plan-heading gold">GOLD</td>
+                                <td className="plan-heading plat">PLATINUM</td>
+                            </tr>
+                            <tr>
+                                <td className="p-emp">CREDITS PER MONTH</td>
+                                <td data-column="Silver">60</td>
+                                <td data-column="Gold">120</td>
+                                <td data-column="Platinum">200</td>
+                            </tr>
+
+                            <tr>
+                                <td className="p-emp">MIN. NUMBER OF MONTHS</td>
+                                <td data-column="Silver">3</td>
+                                <td data-column="Gold">3</td>
+                                <td data-column="Platinum">6</td>
+                            </tr>
+
+                            <tr>
+                                <td className="p-emp">EXPERT CONSULTATIONS</td>
+                                <td data-column="Silver">1 PER 3 MONTHS</td>
+                                <td data-column="Gold">1 PER 2 MONTHS</td>
+                                <td data-column="Platinum">1 PER MONTH</td>
+                            </tr>
+
+                            <tr>
+                                <td className="p-emp">PRODUCTIONS INCLUDED</td>
+                                <td data-column="Silver">1 PER 6 MONTHS</td>
+                                <td data-column="Gold">1 PER 3 MONTHS</td>
+                                <td data-column="Platinum">2 PER 3 MONTHS</td>
+                            </tr>
+
+                            <tr>
+                                <td className="p-emp">ADVANCE EVENT BOOKING</td>
+                                <td data-column="Silver">24 HR</td>
+                                <td data-column="Gold">48 HR</td>
+                                <td data-column="Platinum">72 HR</td>
+                            </tr>
+
+                            <tr>
+                                <td className="p-emp">MUSIC VIDEO</td>
+                                <td></td>
+                                <td></td>
+                                <td data-column="Platinum">1 PER 6 MONTHS</td>
+                            </tr>
+                            <tr>
+                                <td className="p-emp">SOCIAL MEDIA PACKAGE</td>
+                                <td></td>
+                                <td></td>
+                                <td data-column="Platinum">INCLUDED</td>
+                            </tr>
+                            <tr>
+                                <td className="p-emp">PRICE PER MONTH</td>
+                                <td data-column="Silver">$999</td>
+                                <td data-column="Gold">$1,999</td>
+                                <td data-column="Platinum">$2,999</td>
+                            </tr>
+
+                            <tr>
+                                <td></td>
+                                <td data-column="Silver"><a data-toggle="modal" onClick={this.__setPlan.bind(this, this.state.silver)} data-target="#upgrade-box" href="#" className="book-now">Choose Plan</a></td>
+                                <td data-column="Gold"><a href="#" data-toggle="modal" onClick={this.__setPlan.bind(this, this.state.gold)} data-target="#upgrade-box" className="book-now gold">Choose Plan</a></td>
+                                <td data-column="Platinum"><a href="#" data-toggle="modal" onClick={this.__setPlan.bind(this, this.state.platinum)} data-target="#upgrade-box" className="book-now">Choose Plan</a></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                    <Upgrade
+                        plan_id={this.state.plan_id}
+                        silver={this.state.silver}
+                        gold={this.state.gold}
+                        platinum={this.state.platinum}
+                    />
+                </div>
+            </section>
+        );
+    }
+
+
 }
 
 const Production = () => {
@@ -620,7 +670,7 @@ const Production = () => {
                 <p>Since September 2013, OCHA has produced/co-written more than 100 EPs and numerous music videos for both upcoming and established artists. Our team consists of professional record producers of all levels, incl. international producers with production credits ranging from Diddy/Lil Wayne, Pitbull, Jason Derulo, Jordin Sparks, NKOTB, Boyz II Men, Super Junior, f(X), EXO and many more...</p>
 
                 <p>Contact us for more information about how to get your music and/or music videos produced! </p>
-                <a href="#" className="watch-btn marg mt">CONTACT US</a>
+                <a href="/contact" className="watch-btn marg mt">CONTACT US</a>
             </div>
 
 
@@ -628,11 +678,6 @@ const Production = () => {
         </section>
     );
 }
-
-
-
-
-
 
 class Services extends Component {
     constructor(props) {
@@ -657,11 +702,6 @@ class Services extends Component {
                 <ServiceList />
 
                 <Session />
-
-                <Events />
-
-
-                <Coaching />
 
                 <Plan />
 

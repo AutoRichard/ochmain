@@ -49,7 +49,10 @@ class MainRouter extends Component {
         </Switch>
 
 
+        <Plan />
+
         <Footer />
+
         <Copyright />
         <LoginModal />
         <ApplicationForm />
@@ -61,7 +64,6 @@ class MainRouter extends Component {
         <Account />
         <Cancel />
 
-        <Plan />
       </div>
     );
   }
