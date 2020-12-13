@@ -213,7 +213,7 @@ class Chat extends React.Component {
                                         <div className="w-ar">
                                             <div className="chat-bubble grey">
                                                 {el.body}
-                                            </div>
+                                            </div> 
                                             <b className="d-block text-right">received</b>
                                         </div>
                                     </div>)
