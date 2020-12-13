@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Header } from './../menu/header';
 import auth from './../auth/auth-helper';
 import { plan } from './../api/api-subscription';
-import Upgrade from './../modal/upgrade';
+import UpgradePlan from './../modal/upgradeplan';
 
 
 const ServiceList = () => {
@@ -546,6 +546,8 @@ class Plan extends Component {
         this.setState({
             plan_id: data
         })
+
+        console.log(data)
     }
 
     render() {
@@ -555,6 +557,14 @@ class Plan extends Component {
                 <div className="line2"></div>
 
                 <div className="container-fluid">
+
+                    <UpgradePlan
+                        plan_id={this.state.plan_id}
+                        silver={this.state.silver}
+                        gold={this.state.gold}
+                        platinum={this.state.platinum}
+
+                    />
 
                     <table>
                         <thead>
@@ -628,20 +638,15 @@ class Plan extends Component {
 
                             <tr>
                                 <td></td>
-                                <td data-column="Silver"><a data-toggle="modal" onClick={this.__setPlan.bind(this, this.state.silver)} data-target="#upgrade-box" href="#" className="book-now">Choose Plan</a></td>
-                                <td data-column="Gold"><a href="#" data-toggle="modal" onClick={this.__setPlan.bind(this, this.state.gold)} data-target="#upgrade-box" className="book-now gold">Choose Plan</a></td>
-                                <td data-column="Platinum"><a href="#" data-toggle="modal" onClick={this.__setPlan.bind(this, this.state.platinum)} data-target="#upgrade-box" className="book-now">Choose Plan</a></td>
+                                <td data-column="Silver"><a data-toggle="modal" onClick={this.__setPlan.bind(this, this.state.silver)} data-target="#upgrade-boxes" href="#" className="book-now">Choose Plan</a></td>
+                                <td data-column="Gold"><a href="#" data-toggle="modal" onClick={this.__setPlan.bind(this, this.state.gold)} data-target="#upgrade-boxes" className="book-now gold">Choose Plan</a></td>
+                                <td data-column="Platinum"><a href="#" data-toggle="modal" onClick={this.__setPlan.bind(this, this.state.platinum)} data-target="#upgrade-boxes" className="book-now">Choose Plan</a></td>
                             </tr>
 
                         </tbody>
                     </table>
 
-                    <Upgrade
-                        plan_id={this.state.plan_id}
-                        silver={this.state.silver}
-                        gold={this.state.gold}
-                        platinum={this.state.platinum}
-                    />
+
                 </div>
             </section>
         );

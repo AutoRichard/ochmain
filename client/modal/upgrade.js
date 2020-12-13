@@ -24,7 +24,7 @@ class Upgrade extends React.Component {
             gold: this.props.gold,
             platinum: this.props.platinum,
             activePlan: '',
-            yes: 'YES - CHANGE PLAN',
+            yes: 'CHANGE PLAN',
             activeT: false
         }
     }
@@ -33,11 +33,13 @@ class Upgrade extends React.Component {
         if (this.props.plan_id !== prevProps.plan_id) {
             this.setState({ plan_id: this.props.plan_id })
 
+            console.log(this.props.plan_id)
+
             if (this.state.activePlan != '') {
                 if (this.props.silver == this.state.activePlan) {
                     if (this.props.plan_id == this.props.gold || this.props.plan_id == this.props.platinum) {
                         this.setState({
-                            yes: "YES - UPGRADE ME",
+                            yes: "UPGRADE ME",
                             activeT: false
                         })
                     } else {
@@ -49,7 +51,7 @@ class Upgrade extends React.Component {
                 } else if (this.props.gold == this.state.activePlan) {
                     if (this.props.plan_id == this.props.platinum) {
                         this.setState({
-                            yes: "YES - UPGRADE",
+                            yes: "UPGRADE",
                             activeT: false
                         })
                     } else if (this.props.plan_id == this.props.gold) {
@@ -59,7 +61,7 @@ class Upgrade extends React.Component {
                         })
                     } else if (this.props.plan_id == this.props.silver) {
                         this.setState({
-                            yes: "YES - DOWNGRADE",
+                            yes: "DOWNGRADE",
                             activeT: false
                         })
                     }
@@ -71,7 +73,7 @@ class Upgrade extends React.Component {
                         })
                     } else if (this.props.plan_id == this.props.gold || this.props.plan_id == this.props.silver) {
                         this.setState({
-                            yes: "YES - DOWNGRADE",
+                            yes: "DOWNGRADE",
                             activeT: false
                         })
                     }
@@ -149,11 +151,11 @@ class Upgrade extends React.Component {
 
                         <div className="modal-body bg-black  small-m">
                             <div className="adsf">
-                                <b className="d-block text-center bold">ARE YOU SURE YOU WANT TO UPGRADE?{this.props.plan_id}</b>
+                                <b className="d-block text-center bold">ARE YOU SURE YOU WANT TO UPGRADE?</b>
 
                                 <div className="btn-b">
                                     <a href="#" className="outline-btn close" data-dismiss="modal">NO - CANCEL</a>
-                                    <a href="#" onClick={this.setPlan} className="cancel-small">{this.state.yes}</a>
+                                    {this.state.activeT == true ? (<a href="javascript:void(0)" className="cancel-small close" data-dismiss="modal">{this.state.yes}</a>) : (<a href="javascript:void(0)" data-dismiss="modal" onClick={this.setPlan} className="cancel-small">{this.state.yes}</a>)}
                                 </div>
                             </div>
                         </div>
