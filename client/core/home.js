@@ -475,13 +475,20 @@ const Instagram = () => {
     return (
         <section className="studio padd-small light">
             <div className="container-fluid">
-                {/*<h1>INSTAGRAM FEED</h1>
+                <h1>INSTAGRAM FEED</h1>
                 <div id="insta-feed" className="owl-carousel owl-theme">
-                </div>*/}
-
-                <div id="instafeed" class="instagram-gallery-medium"></div>
+                    <div className="item"><img src="/client/assets/images/i1.jpg" className="img-responsive" /></div>
+                    <div className="item"><img src="/client/assets/images/i2.jpg" className="img-responsive" /></div>
+                    <div className="item"><img src="/client/assets/images/i3.jpg" className="img-responsive" /></div>
+                    <div className="item"><img src="/client/assets/images/i4.jpg" className="img-responsive" /></div>
+                    <div className="item"><img src="/client/assets/images/i5.jpg" className="img-responsive" /></div>
+                    <div className="item"><img src="/client/assets/images/i6.jpg" className="img-responsive" /></div>
+                </div>
             </div>
-        </section>
+
+            {/*<div id="instafeed" className="instagram-gallery-medium"></div>*/}
+
+        </section >
     );
 }
 
@@ -492,12 +499,12 @@ const Press = () => {
             <div className="container-fluid">
                 <h1>PRESS</h1>
                 <div id="press" className="owl-carousel owl-theme">
-                    <div className="item"><img src="/client/assets/images/p1.jpg" className="img-responsive" /></div>
-                    <div className="item"><img src="/client/assets/images/p2.jpg" className="img-responsive" /></div>
-                    <div className="item"><img src="/client/assets/images/p3.jpg" className="img-responsive" /></div>
-                    <div className="item"><img src="/client/assets/images/p4.jpg" className="img-responsive" /></div>
-                    <div className="item"><img src="/client/assets/images/p5.jpg" className="img-responsive" /></div>
-                    <div className="item"><img src="/client/assets/images/p6.jpg" className="img-responsive" /></div>
+                    <div className="item"><a href="http://www.ocweekly.com/music/oc-hit-factory-builds-an-academy-for-homegrown-pop-stars-7274935" target="_blank"><img src="/client/assets/images/p1.jpg" className="img-responsive" /></a></div>
+                    <div className="item"><a href="http://www.ocweekly.com/music/the-rise-of-zhavia-a-look-inside-foxs-fiercest-competitor-on-the-four-8723570" target="_blank"><img src="/client/assets/images/p2.jpg" className="img-responsive" /></a></div>
+                    <div className="item"><a href="http://www.ocweekly.com/music/the-rise-of-zhavia-a-look-inside-foxs-fiercest-competitor-on-the-four-8723570" target="_blank"><img src="/client/assets/images/p3.jpg" className="img-responsive" /></a></div>
+                    <div className="item"><a href="https://localemagazine.com/thomas-barsoe-of-oc-hit-factory-develops-young-talent-into-professional-musicians/" target="_blank"><img src="/client/assets/images/p4.jpg" className="img-responsive" /></a></div>
+                    <div className="item"><a href="https://www.ocregister.com/2015/11/02/photos-oc-hit-factory-celebrates-its-grand-opening/" target="_blank"><img src="/client/assets/images/p5.jpg" className="img-responsive" /></a></div>
+                    <div className="item"><a href="http://www.ocweekly.com/music/oc-hit-factory-builds-an-academy-for-homegrown-pop-stars-7274935" target="_blank"><img src="/client/assets/images/p6.jpg" className="img-responsive" /></a></div>
                 </div>
             </div>
         </section>
@@ -628,7 +635,7 @@ class Home extends React.Component {
 
                         {this.state.checkAuthenticated == false ? (<a onClick={this._viewMessage} data-toggle="modal" data-target="#applicaion-form" href="#">Apply Now</a>) : ('')}
                     </div>
-  
+
                     <SVG />
 
                     <Video />
