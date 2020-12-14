@@ -226,7 +226,7 @@ class Chat extends React.Component {
                 <div id="chatInput" style={{ display: 'none' }} className="input-space">
                     <a className="icon-arrow" id="pop-right-msg"><i className="rotate fa fa-angle-right"
                         aria-hidden="true"></i></a>
-                    <input type="text" name="msg" value={this.state.msg} onKeyDown={e => {
+                    <input type="text" name="msg" style={{width: '92%'}} value={this.state.msg} onKeyDown={e => {
                         if (e.keyCode === 13) {
                             this.sentMessage();
                             e.preventDefault();

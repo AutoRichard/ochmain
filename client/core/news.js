@@ -121,7 +121,7 @@ class Feeds extends Component {
                         {this.state.news.map((el, i) =>
                             <div className="item">
                                 <div className="box-img">
-                                    <img src={'https://ochback.herokuapp.com/api/newsPhoto/' + el._id} style={{height: '400px', width: 'auto'}} className="img-responsive" />
+                                    <img src={'https://ochback.herokuapp.com/api/newsPhoto/' + el._id} style={{ height: '400px', width: 'auto' }} className="img-responsive" />
                                     <div className="heading-area">
                                         <h6>{moment(el.created).format('ll')}</h6>
                                         <div className="div-box"></div>
@@ -223,6 +223,9 @@ class News extends Component {
                 <Feeds
                     updateParent={this._updateParent}
                 />
+
+                <Instagram />
+                <Press />
 
 
 

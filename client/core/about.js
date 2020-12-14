@@ -143,7 +143,7 @@ const TGallery = () => {
     return (
         <section className="team-area">
             <div className="container-fluid">
-                <h1>TEAM</h1>
+                <h1>TEAM</h1> 
 
                 <div className="row">
                     <div className="col-md-4">
