@@ -157,6 +157,11 @@ const Instagram = () => {
                     <div className="item"><img src="/client/assets/images/i5.jpg" className="img-responsive" /></div>
                     <div className="item"><img src="/client/assets/images/i6.jpg" className="img-responsive" /></div>
                 </div>
+
+                <div className="text-center">
+                    <a href="https://www.instagram.com/ochfacademy" target="_blank" className="watch-btn marg mt">INSTAGRAM</a>
+                </div>
+
             </div>
         </section>
     );
@@ -168,14 +173,14 @@ const Press = () => {
             <div className="container-fluid">
                 <div className=" m-tp">
                     <h1>PRESS</h1>
-                    <div className="line3"></div></div>
-                <div id="press" className="owl-carousel owl-theme">
-                    <div className="item"><img src="/client/assets/images/p1.jpg" className="img-responsive" /></div>
-                    <div className="item"><img src="/client/assets/images/p2.jpg" className="img-responsive" /></div>
-                    <div className="item"><img src="/client/assets/images/p3.jpg" className="img-responsive" /></div>
-                    <div className="item"><img src="/client/assets/images/p4.jpg" className="img-responsive" /></div>
-                    <div className="item"><img src="/client/assets/images/p5.jpg" className="img-responsive" /></div>
-                    <div className="item"><img src="/client/assets/images/p6.jpg" className="img-responsive" /></div>
+                    <div id="press" className="owl-carousel owl-theme">
+                        <div className="item"><a href="http://www.ocweekly.com/music/oc-hit-factory-builds-an-academy-for-homegrown-pop-stars-7274935" target="_blank"><img src="/client/assets/images/p1.jpg" className="img-responsive" /></a></div>
+                        <div className="item"><a href="http://www.ocweekly.com/music/the-rise-of-zhavia-a-look-inside-foxs-fiercest-competitor-on-the-four-8723570" target="_blank"><img src="/client/assets/images/p2.jpg" className="img-responsive" /></a></div>
+                        <div className="item"><a href="http://www.ocweekly.com/music/the-rise-of-zhavia-a-look-inside-foxs-fiercest-competitor-on-the-four-8723570" target="_blank"><img src="/client/assets/images/p3.jpg" className="img-responsive" /></a></div>
+                        <div className="item"><a href="https://localemagazine.com/thomas-barsoe-of-oc-hit-factory-develops-young-talent-into-professional-musicians/" target="_blank"><img src="/client/assets/images/p4.jpg" className="img-responsive" /></a></div>
+                        <div className="item"><a href="https://www.ocregister.com/2015/11/02/photos-oc-hit-factory-celebrates-its-grand-opening/" target="_blank"><img src="/client/assets/images/p5.jpg" className="img-responsive" /></a></div>
+                        <div className="item"><a href="http://www.ocweekly.com/music/oc-hit-factory-builds-an-academy-for-homegrown-pop-stars-7274935" target="_blank"><img src="/client/assets/images/p6.jpg" className="img-responsive" /></a></div>
+                    </div>
                 </div>
             </div>
         </section>

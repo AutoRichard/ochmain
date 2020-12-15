@@ -470,8 +470,6 @@ const MainNews = () => {
 
 
 const Instagram = () => {
-    //access_token=747835755717033|03d55d810a52dad374ac7a538378e06d
-    //IGQVJVb2oyWkR0S1dYOXVNUEpfMkpLdnc0cWJva1JxN2FEemNMSUNxd2tUVHZAuRnByTHZAFVkp1YklWdG1KeXdVMV9NYV9TNUxsTzFQQ1l5WU50aUwxcHg0UHJsNUpUOEJocEsyNEtLS0ktMGJBSDlVTQZDZD
     return (
         <section className="studio padd-small light">
             <div className="container-fluid">
@@ -486,7 +484,9 @@ const Instagram = () => {
                 </div>
             </div>
 
-            {/*<div id="instafeed" className="instagram-gallery-medium"></div>*/}
+            <div className="text-center">
+                <a href="https://www.instagram.com/ochfacademy" target="_blank" className="watch-btn marg mt">INSTAGRAM</a>
+            </div>
 
         </section >
     );
@@ -496,17 +496,21 @@ const Instagram = () => {
 const Press = () => {
     return (
         <section className="studio padd-small light">
-            <div className="container-fluid">
-                <h1>PRESS</h1>
-                <div id="press" className="owl-carousel owl-theme">
-                    <div className="item"><a href="http://www.ocweekly.com/music/oc-hit-factory-builds-an-academy-for-homegrown-pop-stars-7274935" target="_blank"><img src="/client/assets/images/p1.jpg" className="img-responsive" /></a></div>
-                    <div className="item"><a href="http://www.ocweekly.com/music/the-rise-of-zhavia-a-look-inside-foxs-fiercest-competitor-on-the-four-8723570" target="_blank"><img src="/client/assets/images/p2.jpg" className="img-responsive" /></a></div>
-                    <div className="item"><a href="http://www.ocweekly.com/music/the-rise-of-zhavia-a-look-inside-foxs-fiercest-competitor-on-the-four-8723570" target="_blank"><img src="/client/assets/images/p3.jpg" className="img-responsive" /></a></div>
-                    <div className="item"><a href="https://localemagazine.com/thomas-barsoe-of-oc-hit-factory-develops-young-talent-into-professional-musicians/" target="_blank"><img src="/client/assets/images/p4.jpg" className="img-responsive" /></a></div>
-                    <div className="item"><a href="https://www.ocregister.com/2015/11/02/photos-oc-hit-factory-celebrates-its-grand-opening/" target="_blank"><img src="/client/assets/images/p5.jpg" className="img-responsive" /></a></div>
-                    <div className="item"><a href="http://www.ocweekly.com/music/oc-hit-factory-builds-an-academy-for-homegrown-pop-stars-7274935" target="_blank"><img src="/client/assets/images/p6.jpg" className="img-responsive" /></a></div>
+            <section className="studio padd-small light">
+                <div className="container-fluid">
+                    <div className=" m-tp">
+                        <h1>PRESS</h1>
+                        <div id="press" className="owl-carousel owl-theme">
+                            <div className="item"><a href="http://www.ocweekly.com/music/oc-hit-factory-builds-an-academy-for-homegrown-pop-stars-7274935" target="_blank"><img src="/client/assets/images/p1.jpg" className="img-responsive" /></a></div>
+                            <div className="item"><a href="http://www.ocweekly.com/music/the-rise-of-zhavia-a-look-inside-foxs-fiercest-competitor-on-the-four-8723570" target="_blank"><img src="/client/assets/images/p2.jpg" className="img-responsive" /></a></div>
+                            <div className="item"><a href="http://www.ocweekly.com/music/the-rise-of-zhavia-a-look-inside-foxs-fiercest-competitor-on-the-four-8723570" target="_blank"><img src="/client/assets/images/p3.jpg" className="img-responsive" /></a></div>
+                            <div className="item"><a href="https://localemagazine.com/thomas-barsoe-of-oc-hit-factory-develops-young-talent-into-professional-musicians/" target="_blank"><img src="/client/assets/images/p4.jpg" className="img-responsive" /></a></div>
+                            <div className="item"><a href="https://www.ocregister.com/2015/11/02/photos-oc-hit-factory-celebrates-its-grand-opening/" target="_blank"><img src="/client/assets/images/p5.jpg" className="img-responsive" /></a></div>
+                            <div className="item"><a href="http://www.ocweekly.com/music/oc-hit-factory-builds-an-academy-for-homegrown-pop-stars-7274935" target="_blank"><img src="/client/assets/images/p6.jpg" className="img-responsive" /></a></div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </section>
         </section>
     );
 }
