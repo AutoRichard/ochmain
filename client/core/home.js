@@ -485,7 +485,7 @@ const Instagram = () => {
             </div>
 
             <div className="text-center">
-                <a href="https://www.instagram.com/ochfacademy" target="_blank" className="watch-btn marg mt">INSTAGRAM</a>
+                <a href="https://www.instagram.com/ochfacademy" target="_blank" className="watch-btn marg mt">FOLLOW ON INSTAGRAM</a>
             </div>
 
         </section >
