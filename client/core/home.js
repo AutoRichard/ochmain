@@ -474,6 +474,7 @@ const Instagram = () => {
         <section className="studio padd-small light">
             <div className="container-fluid">
                 <h1>INSTAGRAM FEED</h1>
+                <div className="line3"></div>
                 <div id="insta-feed" className="owl-carousel owl-theme">
                     <div className="item"><img src="/client/assets/images/i1.jpg" className="img-responsive" /></div>
                     <div className="item"><img src="/client/assets/images/i2.jpg" className="img-responsive" /></div>
