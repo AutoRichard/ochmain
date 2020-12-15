@@ -501,6 +501,7 @@ const Press = () => {
                 <div className="container-fluid">
                     <div className=" m-tp">
                         <h1>PRESS</h1>
+                        <div className="line3"></div>
                         <div id="press" className="owl-carousel owl-theme">
                             <div className="item"><a href="http://www.ocweekly.com/music/oc-hit-factory-builds-an-academy-for-homegrown-pop-stars-7274935" target="_blank"><img src="/client/assets/images/p1.jpg" className="img-responsive" /></a></div>
                             <div className="item"><a href="http://www.ocweekly.com/music/the-rise-of-zhavia-a-look-inside-foxs-fiercest-competitor-on-the-four-8723570" target="_blank"><img src="/client/assets/images/p2.jpg" className="img-responsive" /></a></div>
