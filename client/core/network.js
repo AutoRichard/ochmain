@@ -1084,7 +1084,9 @@ class Dashboard extends Component {
                                 <div className="user-box">
                                     <img src="/client/assets/images/user-bg.png" className="img-responsive bod" />
                                     <img src={imageView} className="img-dp __circular5" />
+                                    <img class="profile-ring3" src="/client/assets/images/profile-ring.png"/>
                                 </div>
+                                <br/>
                                 <div className="h-area">
                                     <h2>{this.state.displayName}</h2>
                                     <h3>{this.state.fullName}</h3>
