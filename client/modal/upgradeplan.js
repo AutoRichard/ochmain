@@ -152,7 +152,7 @@ class UpgradePlan extends React.Component {
                                 <b className="d-block text-center bold">ARE YOU SURE YOU WANT TO UPGRADE?</b>
 
                                 <div className="btn-b">
-                                    <a href="#" className="outline-btn close" data-dismiss="modal">NO - CANCEL</a>
+                                    <a href="#" className="outline-btn close" style={{lineHeight: '2', textShadow: 'none', opacity: '1'}} data-dismiss="modal">NO - CANCEL</a>
                                     {this.state.activeT == true ? (<a href="javascript:void(0)" data-dismiss="modal" className="cancel-small close">{this.state.yes}</a>) : (<a href="javascript:void(0)" data-dismiss="modal" onClick={this.setPlan} className="cancel-small">{this.state.yes}</a>)}
                                 </div>
                             </div>
