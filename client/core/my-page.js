@@ -1447,7 +1447,7 @@ class FeedTimeline extends Component {
                             <input name="post" type="text" value={this.state.post} disabled={this.state.sending} onKeyDown={this._handleKeyDown} onChange={this.onChangePost} placeholder="Share your thoughts and your music..." />
 
                             <div className="button-wrap btn">
-                                <label className="new-button" for="upload1"> <img src="/client/assets/images/pic-up.png" className="img-responsive upload" />
+                                <label className="new-button" for="upload1"> <img src="/client/assets/images/pic-up.png" style={{paddingBottom: '15px'}} className="img-responsive upload" />
                                     <input onChange={this.handleChange} name="photo" id="upload1" type="file" />
                                 </label>
                                 <a href="javascript:void(0)" onClick={this.upload}><span style={{ width: '40px', height: 'auto', fontSize: '25px' }} class="fa fa-share"></span></a>

@@ -587,7 +587,7 @@ class Timeline extends Component {
                             <input name="post" type="text" value={this.state.post} onKeyDown={this._handleKeyDown} disabled={this.state.sending} onChange={this.onChangePost} placeholder="Share your thoughts and your music..." />
 
                             <div className="button-wrap btn">
-                                <label className="new-button" for="upload1"> <img src="/client/assets/images/pic-up.png" className="img-responsive upload" />
+                                <label className="new-button" for="upload1"> <img src="/client/assets/images/pic-up.png" style={{paddingBottom: '15px'}} className="img-responsive upload" />
                                     <input onChange={this.handleChange} name="photo" id="upload1" type="file" />
                                 </label>
                                 <a href="javascript:void(0)" style={{ width: '40px', height: '70px' }} onClick={this.upload} class="fa fa-share"></a>
