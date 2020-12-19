@@ -606,7 +606,7 @@ class VideoList extends Component {
                 </div>
 
                 <br id={'12' + this.props.thumbnail} style={{ display: 'none' }} />
-                <iframe id={this.props.thumbnail} style={{ display: 'none' }} width="100%" height="100%"
+                <iframe id={this.props.thumbnail} style={{ display: 'none', width: '100%', height: '250px' }} width="100%" height="100%"
                     src={videoView} allowfullscreen="allowfullscreen"
                     mozallowfullscreen="mozallowfullscreen"
                     msallowfullscreen="msallowfullscreen"
@@ -1170,7 +1170,7 @@ class Feeds extends Component {
                         </div>
                         <div className="right-content">
                             <div className="search-area">
-                                <input type="text" name="comment_text" disabled={this.state.sending} onKeyDown={this._handleKeyDown} value={this.state.comment_text} onChange={this.onChangeComment} placeholder="Be the first to write a comment..." />
+                                <input type="text" name="comment_text" disabled={this.state.sending} onKeyDown={this._handleKeyDown} value={this.state.comment_text} onChange={this.onChangeComment} placeholder={this.state.comments.length <= 0 ? "Be the first to write a comment..." : "Write a comment"}/>
 
                                 {/*<div className="button-wrap btn">
                                     <label className="new-button" for="upload2"> <img src="/client/assets/images/pic-up.png" className="img-responsive upload" />
