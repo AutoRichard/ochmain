@@ -156,7 +156,7 @@ class Feeds extends Component {
                             icomment: false,
                             more: 'more',
                             commentShow: this.state.commentShow + 3,
-                            moreState: data[this.props._id].result.comments.length > this.state.commentShow + 3 ? 'View more comments' : 'Close comments'
+                            moreState: data[this.props._id].result.comments.length > this.state.commentShow + 3 ? 'View more comments' : 'Hide comments'
                         })
                     }
                 }
@@ -238,7 +238,7 @@ class Feeds extends Component {
                     visible: '',
                     more: 'more',
                     commentShow: this.state.commentShow + 3,
-                    moreState: commentS >= this.state.commentShow + 3 ? 'View more comments' : 'Close comments'
+                    moreState: commentS >= this.state.commentShow + 3 ? 'View more comments' : 'Hide comments'
                 })
 
             } else {
@@ -254,7 +254,7 @@ class Feeds extends Component {
                         visible: '',
                         more: 'more',
                         commentShow: this.state.commentShow + 3,
-                        moreState: this.state.commentShow + 3 >= commentS ? 'Close comments' : 'View more comments'
+                        moreState: this.state.commentShow + 3 >= commentS ? 'Hide comments' : 'View more comments'
                     })
                 }
             }
