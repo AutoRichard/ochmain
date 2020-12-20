@@ -683,7 +683,7 @@ class Video extends Component {
             var picWidth = this.width;
             var picHeight = this.height;
 
-            if (picHeight == 200 || picWidth == 300) {
+            if (picHeight == 200 && picWidth == 300) {
                 this.uploadImage(this.src, this.value)
             } else {
                 swal("IMAGE RESOLUTION(300x200)")                
