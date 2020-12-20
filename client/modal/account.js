@@ -886,7 +886,7 @@ class Account extends React.Component {
                                                     <img className="profile-ring2" src="/client/assets/images/profile-ring.png" />
                                                 </div>
                                                 <div className="account-data float-lg-left">
-                                                    <h3 style={{ color: 'white' }}>{this.state.displayName !== '' ? this.state.displayName : this.state.firstName}</h3>
+                                                    <h3 style={{ color: 'white', fontSize: '29px !important' }}>{this.state.displayName !== '' ? this.state.displayName : this.state.firstName}</h3>
                                                     <h5>GOLD MEMBER</h5>
                                                     <h6>{this.state.creditBalance} CREDITS</h6>
                                                 </div>
