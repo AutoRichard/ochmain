@@ -1125,7 +1125,7 @@ class Feeds extends Component {
                     <p>{this.props.text}</p>
 
                     {this.props.imageExist == true ? (<img src={"https://ochback.herokuapp.com/api/photo/" + this.props._id} width="100%" height="100%" className="img-responsive" />) : (
-                        this.state.youtubeExist == true ? (<iframe width='100%' height='100%' scrolling="no" frameborder="no" allow="autoplay" src={this.state.youtubeLink} allowfullscreen="allowfullscreen" mozallowfullscreen="mozallowfullscreen"
+                        this.state.youtubeExist == true ? (<iframe style={{width: '100%', height: '370px'}} scrolling="no" frameborder="no" allow="autoplay" src={this.state.youtubeLink} allowfullscreen="allowfullscreen" mozallowfullscreen="mozallowfullscreen"
                             msallowfullscreen="msallowfullscreen"
                             oallowfullscreen="oallowfullscreen"
                             webkitallowfullscreen="webkitallowfullscreen"
