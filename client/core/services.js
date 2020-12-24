@@ -25,6 +25,8 @@ const ServiceList = () => {
                             <p>Group classes, artist development & <br />
 							songwriting camps
 						</p>
+
+                            <br />
                             <a href="/studio">BROWSE CLASSES</a>
                         </div>
                     </div>
@@ -35,6 +37,8 @@ const ServiceList = () => {
                             <p>Vocal, piano, guitar, music production,
                             career coaching & dance/performance
 						</p>
+
+                            <br />
                             <a href="/studio">BOOK A SESSION</a>
                         </div>
                     </div>
@@ -45,6 +49,8 @@ const ServiceList = () => {
                             <p>For the ulitmate experience, join our
                             silver, gold or platinum plan
 						</p>
+
+                            <br />
                             <a href="#" data-toggle="modal" data-target="#change-plan">PICK YOUR PLAN</a>
                         </div>
                     </div>
@@ -55,6 +61,8 @@ const ServiceList = () => {
                             <p>We provide world-class EP & Music video
                             production - contact us for details
 						</p>
+
+                            <br />
                             <a href="/contact">CONTACT US</a>
                         </div>
                     </div>
