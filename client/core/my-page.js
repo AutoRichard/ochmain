@@ -530,9 +530,9 @@ class VideoList extends Component {
     }
 
     displayVideo = () => {
-        document.getElementById(this.props.thumbnail).style.display = 'inline'
-        document.getElementById('#' + this.props.thumbnail).style.display = 'none'
-        document.getElementById('12' + this.props.thumbnail).style.display = 'inline'
+        //document.getElementById(this.props.thumbnail).style.display = 'inline'
+        //document.getElementById('#' + this.props.thumbnail).style.display = 'none'
+        //document.getElementById('12' + this.props.thumbnail).style.display = 'inline'
     }
 
     keepV = () => {
@@ -598,15 +598,15 @@ class VideoList extends Component {
                     </div>) : ('')}
                 </div>
                 <div className="clearfix"></div>
-                <div className="video-c" id={'#' + this.props.thumbnail}>
+                {/*<div className="video-c" id={'#' + this.props.thumbnail}>
                     <img src={imageView} className="img-responsive" style={thumbnailStyle} />
-                    {/*<img src="/client/assets/images/video-thumbz.png" className="img-responsive" style={thumbnailStyle} />*/}
+                    <img src="/client/assets/images/video-thumbz.png" className="img-responsive" style={thumbnailStyle} />
                     <img src="/client/assets/images/video-frame.png" class="img-responsive v-frame"></img>
                     <a href="javascript:void0" onClick={this.displayVideo}>	<img src="/client/assets/images/play-btn.png" className="img-responsive ply" /></a>
-                </div>
+                </div>*/}
 
-                <br id={'12' + this.props.thumbnail} style={{ display: 'none' }} />
-                <iframe id={this.props.thumbnail} style={{ display: 'none', width: '100%', height: '250px' }} width="100%" height="100%"
+                <br id={'12' + this.props.thumbnail} />
+                <iframe id={this.props.thumbnail} style={{ width: '100%', height: '250px' }} width="100%" height="100%"
                     src={videoView} allowfullscreen="allowfullscreen"
                     mozallowfullscreen="mozallowfullscreen"
                     msallowfullscreen="msallowfullscreen"
@@ -686,7 +686,7 @@ class Video extends Component {
             if (picHeight == 200 && picWidth == 300) {
                 this.uploadImage(this.src, this.value)
             } else {
-                swal("IMAGE RESOLUTION(300x200)")                
+                swal("IMAGE RESOLUTION(300x200)")
             }
         }
 
@@ -696,12 +696,12 @@ class Video extends Component {
         this.linkData.set("photo", value)
 
 
-        this.setState({ id: src});
+        this.setState({ id: src });
     }
 
 
     onSubmitVideo = () => {
-        if (this.state.linkUrl === '' || this.state.title === '' || this.linkData.get('photo') === '') {
+        if (this.state.linkUrl === '' || this.state.title === '') {
             this.state.linkUrl === '' ? (this.setState({ linkUrlValidation: 'LINK IS REQUIRED' })) : this.setState({ linkUrlValidation: '' });
         } else {
             this.validateYouTubeUrl();
@@ -811,7 +811,7 @@ class Video extends Component {
                                 <div className="dropdown-share-content add-song">
                                     <p>Create new post containing link to the video</p>
                                     {/*<p>format: https://www.youtube.com/embed/watch?v=kiyi-C7NQrQ</p>*/}
-                                    <div className="pic-cvr">
+                                    {/*<div className="pic-cvr">
                                         {this.state.id == '' ? '' : (<img style={imageStyle} src={this.state.id} id="thumbUpload" />)}
                                         <input name="photo" onChange={this.handleChange} id="profile" type="file" style={{ position: "unset" }} />
                                     </div>
@@ -819,7 +819,7 @@ class Video extends Component {
                                         <label for="profile"><a className="outline-btn">Thumbnail</a></label>
 
                                     </div>
-                                    <small>NB: thumbnail (Image Resolution 300x200)</small>
+                                    <small>NB: thumbnail (Image Resolution 300x200)</small>*/}
 
                                     <input type="text" name="title" onChange={this.onChangeLink} value={this.state.title} placeholder="Enter Title" />
 
@@ -1102,7 +1102,7 @@ class Feeds extends Component {
 
                 </div>
                 <div className="right-content position-relative">
-                    <b>{this.props.postedBy_firstName} {this.props.postedBy_lastName}</b>
+                    <b>{this.props.postedBy_displayName} {/*this.props.postedBy_firstName*/} {/*this.props.postedBy_lastName*/}</b>
                     <span>{moment(this.props.createDate).fromNow()}</span>
                     <div className="dots-a">
                         {/*<div className="dropdown-share">
@@ -1125,7 +1125,7 @@ class Feeds extends Component {
                     <p>{this.props.text}</p>
 
                     {this.props.imageExist == true ? (<img src={"https://ochback.herokuapp.com/api/photo/" + this.props._id} width="100%" height="100%" className="img-responsive" />) : (
-                        this.state.youtubeExist == true ? (<iframe style={{width: '100%', height: '370px'}} scrolling="no" frameborder="no" allow="autoplay" src={this.state.youtubeLink} allowfullscreen="allowfullscreen" mozallowfullscreen="mozallowfullscreen"
+                        this.state.youtubeExist == true ? (<iframe style={{ width: '100%', height: '370px' }} scrolling="no" frameborder="no" allow="autoplay" src={this.state.youtubeLink} allowfullscreen="allowfullscreen" mozallowfullscreen="mozallowfullscreen"
                             msallowfullscreen="msallowfullscreen"
                             oallowfullscreen="oallowfullscreen"
                             webkitallowfullscreen="webkitallowfullscreen"
@@ -1170,7 +1170,7 @@ class Feeds extends Component {
                         </div>
                         <div className="right-content">
                             <div className="search-area">
-                                <input type="text" name="comment_text" disabled={this.state.sending} onKeyDown={this._handleKeyDown} value={this.state.comment_text} onChange={this.onChangeComment} placeholder={this.state.comments.length <= 0 ? "Be the first to write a comment..." : "Write a comment"}/>
+                                <input type="text" name="comment_text" disabled={this.state.sending} onKeyDown={this._handleKeyDown} value={this.state.comment_text} onChange={this.onChangeComment} placeholder={this.state.comments.length <= 0 ? "Be the first to write a comment..." : "Write a comment"} />
 
                                 {/*<div className="button-wrap btn">
                                     <label className="new-button" for="upload2"> <img src="/client/assets/images/pic-up.png" className="img-responsive upload" />
@@ -1189,7 +1189,7 @@ class Feeds extends Component {
                         {[...this.state.comments].reverse().map((el, i) =>
                             <Comment
                                 text={el.text}
-                                name={el.postedBy.firstName || el.postedBy.lastName || el.postedBy.displayName}
+                                name={el.postedBy.displayName}
                                 key={el._id}
                             />
                         )}
@@ -1447,7 +1447,7 @@ class FeedTimeline extends Component {
                             <input name="post" type="text" value={this.state.post} disabled={this.state.sending} onKeyDown={this._handleKeyDown} onChange={this.onChangePost} placeholder="Share your thoughts and your music..." />
 
                             <div className="button-wrap btn">
-                                <label className="new-button" for="upload1"> <img src="/client/assets/images/pic-up.png" style={{paddingBottom: '15px'}} className="img-responsive upload" />
+                                <label className="new-button" for="upload1"> <img src="/client/assets/images/pic-up.png" style={{ paddingBottom: '15px' }} className="img-responsive upload" />
                                     <input onChange={this.handleChange} name="photo" id="upload1" type="file" />
                                 </label>
                                 <a href="javascript:void(0)" onClick={this.upload}><span style={{ width: '40px', height: 'auto', fontSize: '25px' }} class="fa fa-share"></span></a>
@@ -1479,7 +1479,7 @@ class FeedTimeline extends Component {
                             likes={el.likes}
                             _id={el._id}
                             postedBy_id={el.postedBy._id}
-                            postedBy_firstName={el.postedBy.firstNam}
+                            postedBy_firstName={el.postedBy.firstName}
                             postedBy_lastName={el.postedBy.lastName}
                             postedBy_displayName={el.postedBy.displayName}
                             createDate={el.createDate}

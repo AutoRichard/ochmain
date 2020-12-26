@@ -273,7 +273,7 @@ class Feeds extends Component {
 
                 </div>
                 <div className="right-content position-relative networkStyling">
-                    <b>{this.props.postedBy_firstName} {this.props.postedBy_lastName}</b>
+                    <b>{this.props.postedBy_displayName}{/*this.props.postedBy_firstName*/} {/*this.props.postedBy_lastName*/}</b>
                     <span>{moment(this.props.createDate).fromNow()}</span>
                     <div className="dots-a">
                         {/*<div className="dropdown-share">
@@ -296,7 +296,7 @@ class Feeds extends Component {
                     <p>{this.props.text}</p>
 
                     {this.props.imageExist == true ? (<img src={"https://ochback.herokuapp.com/api/photo/" + this.props._id} width="100%" height="100%" className="img-responsive" />) : (
-                        this.state.youtubeExist == true ? (<iframe style={{width: '100%', height: '370px'}} scrolling="no" frameborder="no" allow="autoplay" src={this.state.youtubeLink} allowfullscreen="allowfullscreen" mozallowfullscreen="mozallowfullscreen"
+                        this.state.youtubeExist == true ? (<iframe style={{ width: '100%', height: '370px' }} scrolling="no" frameborder="no" allow="autoplay" src={this.state.youtubeLink} allowfullscreen="allowfullscreen" mozallowfullscreen="mozallowfullscreen"
                             msallowfullscreen="msallowfullscreen"
                             oallowfullscreen="oallowfullscreen"
                             webkitallowfullscreen="webkitallowfullscreen"
@@ -358,7 +358,7 @@ class Feeds extends Component {
                         {[...this.state.comments].reverse().slice(0, this.state.commentShow).map((el, i) =>
                             <Comment
                                 text={el.text}
-                                name={el.postedBy.firstName || el.postedBy.lastName || el.postedBy.displayName}
+                                name={el.postedBy.displayName}
                                 key={el._id}
                             />
                         )}
@@ -587,7 +587,7 @@ class Timeline extends Component {
                             <input name="post" type="text" value={this.state.post} onKeyDown={this._handleKeyDown} disabled={this.state.sending} onChange={this.onChangePost} placeholder="Share your thoughts and your music..." />
 
                             <div className="button-wrap btn">
-                                <label className="new-button" for="upload1"> <img src="/client/assets/images/pic-up.png" style={{paddingBottom: '15px'}} className="img-responsive upload" />
+                                <label className="new-button" for="upload1"> <img src="/client/assets/images/pic-up.png" style={{ paddingBottom: '15px' }} className="img-responsive upload" />
                                     <input onChange={this.handleChange} name="photo" id="upload1" type="file" />
                                 </label>
                                 <a href="javascript:void(0)" style={{ width: '40px', height: '70px' }} onClick={this.upload} class="fa fa-share"></a>
@@ -619,7 +619,7 @@ class Timeline extends Component {
                             likes={el.likes}
                             _id={el._id}
                             postedBy_id={el.postedBy._id}
-                            postedBy_firstName={el.postedBy.firstNam}
+                            postedBy_firstName={el.postedBy.firstName}
                             postedBy_lastName={el.postedBy.lastName}
                             postedBy_displayName={el.postedBy.displayName}
                             createDate={el.createDate}
@@ -852,7 +852,7 @@ class Contact extends Component {
                 if (data.error) {
                     swal(data.error)
                 } else {
-                    this.readUser()                    
+                    this.readUser()
                 }
             })
 
@@ -909,7 +909,7 @@ class Contact extends Component {
                             <div className="input-space networkStyling">
                                 <a href="javascript:void(0)" className="icon-arrow" id="pop-left"><i
                                     className="rotate fa fa-angle-right" aria-hidden="true"></i></a>
-                                <input type="text" name="searchValue" style={{width:'92%'}} onChange={this.onSearch} onKeyDown={this._handleKeyDown} placeholder="Search NETWORK..." />
+                                <input type="text" name="searchValue" style={{ width: '92%' }} onChange={this.onSearch} onKeyDown={this._handleKeyDown} placeholder="Search NETWORK..." />
                                 <a href="javascript:void(0)" onClick={this.searchContact}><i className="fa fa-search" aria-hidden="true"></i></a>
                             </div>
                         </div>
@@ -1084,9 +1084,9 @@ class Dashboard extends Component {
                                 <div className="user-box">
                                     <img src="/client/assets/images/user-bg.png" className="img-responsive bod" />
                                     <img src={imageView} className="img-dp __circular5" />
-                                    <img class="profile-ring3" src="/client/assets/images/profile-ring.png"/>
+                                    <img class="profile-ring3" src="/client/assets/images/profile-ring.png" />
                                 </div>
-                                <br/>
+                                <br />
                                 <div className="h-area">
                                     <h2>{this.state.displayName}</h2>
                                     <h3>{this.state.fullName}</h3>
