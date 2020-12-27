@@ -16,15 +16,21 @@ class Studios extends Component {
         this.state = {
             meetingVS: [],
             meetingVA: [],
-            meetingRS: []
+            meetingRS: [],
+            user_id: ''
         }
     }
 
 
     componentDidMount() {
-        this.fetchMeetiongVS()
-        this.fetchMeetiongVA()
-        this.fetchMeetiongRS()
+        if (auth.isAuthenticated()) {
+            const jwt = auth.isAuthenticated();
+            const userId = jwt.user._id;
+            this.fetchMeetiongVS()
+            this.fetchMeetiongVA()
+            this.fetchMeetiongRS()
+            this.setState({user_id: userId})
+        }
     }
 
     fetchMeetiongVS = () => {
@@ -202,9 +208,9 @@ class Studios extends Component {
                     </div>
                     <div id="v-studio" className="owl-carousel owl-theme">
 
-                        {this.state.meetingVS.map((el, i) =>
+                        {this.state.meetingVS.reverse().map((el, i) =>
 
-                            moment(new Date()).isAfter(new Date(el.start_time)) !== true ?
+                            moment(new Date()).isAfter(new Date(el.start_time)) !== true && el.owner !== this.state.user_id ?
                                 (< div className="item" >
                                     <div className="v-box">
                                         <h3>{el.topic.substring(0, 15)}</h3>
@@ -214,9 +220,6 @@ class Studios extends Component {
                                                 <a href="javascript:void(0)" onClick={this.openMeeting.bind(this, el)} data-toggle="modal" data-target="#v-st" class="book-now">BOOK NOW</a>
                                             </div>
                                         </div>
-
-
-
                                     </div>
                                 </div>) : ('')
                         )}
@@ -233,9 +236,9 @@ class Studios extends Component {
                     </div>
                     <div id="v-audi" className="owl-carousel owl-theme">
 
-                        {this.state.meetingVA.map((el, i) =>
+                        {this.state.meetingVA.reverse().map((el, i) =>
 
-                            moment(new Date()).isAfter(new Date(el.start_time)) !== true ?
+                            moment(new Date()).isAfter(new Date(el.start_time)) !== true && el.owner !== this.state.user_id ?
                                 (< div className="item" >
                                     <div className="v-box">
                                         <h3>{el.topic.substring(0, 15)}</h3>
@@ -260,9 +263,9 @@ class Studios extends Component {
                     </div>
                     <div id="v-record" className="owl-carousel owl-theme">
 
-                        {this.state.meetingRS.map((el, i) =>
+                        {this.state.meetingRS.reverse().map((el, i) =>
 
-                            moment(new Date()).isAfter(new Date(el.start_time)) !== true ?
+                            moment(new Date()).isAfter(new Date(el.start_time)) !== true && el.owner !== this.state.user_id ?
                                 (< div className="item" >
                                     <div className="v-box">
                                         <h3>{el.topic.substring(0, 15)}</h3>

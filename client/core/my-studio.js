@@ -4,6 +4,7 @@ import { listMeetingByUser, meetingByCategory } from './../api/api-meeting';
 import auth from './../auth/auth-helper';
 import Invite from './../modal/invite';
 import { read } from './../api/api-user';
+import moment from 'moment'
 
 
 
@@ -47,7 +48,7 @@ class Studios extends Component {
                     swal(data.error)
                 } else {
                     this.setState({
-                        meetingVS: data, meetingsLengthVS: data.length
+                        meetingVS: data.reverse(), meetingsLengthVS: data.length
                     })
 
                     if ($('#v-studio').hasClass('owl-theme')) { //resize event was triggering an error, this if statement is to go around it
@@ -100,7 +101,7 @@ class Studios extends Component {
                     swal(data.error)
                 } else {
                     this.setState({
-                        meetingVA: data, meetingsLengthVA: data.length
+                        meetingVA: data.reverse(), meetingsLengthVA: data.length
                     })
 
                     if ($('#v-audi').hasClass('owl-theme')) { //resize event was triggering an error, this if statement is to go around it
@@ -153,7 +154,7 @@ class Studios extends Component {
                     swal(data.error)
                 } else {
                     this.setState({
-                        meetingRS: data, meetingsLengthRS: data.length
+                        meetingRS: data.reverse(), meetingsLengthRS: data.length
                     })
 
                     if ($('#v-record').hasClass('owl-theme')) { //resize event was triggering an error, this if statement is to go around it
@@ -219,8 +220,14 @@ class Studios extends Component {
                                         <h3>{el.topic.substring(0, 15)}</h3>
                                         <div className="request-box">
                                             <img src="/client/assets/images/v1.jpg" className="img-responsive" />
+                                            <div className="request-text animate__animated animate__fadeIn">
+                                                {moment(new Date()).isAfter(new Date(el.start_time)) === false ? (<h5>(START {moment(el.start_time).fromNow()} PRIOR)</h5>) : (<h5></h5>)}
+                                                {moment(new Date()).isAfter(new Date(el.start_time)) === true ? (<div>
+                                                    {moment(new Date(el.start_time)).add(el.duration, 'minutes').isAfter(new Date) == true ? (<a href={"/zoom.html?meeting_id=" + el._id} className="book-now">JOIN SESSION</a>) : <a href="javascript:void(0)" className="book-now">EXPIRED</a>}
+                                                </div>) : ('')}
+                                            </div>
                                         </div>
-                                        <a href="#" onClick={this.openMeeting.bind(this, el)} data-toggle="modal" data-target="#v-st" class="book-now">INVITE</a>
+                                        <a href="#" onClick={this.openMeeting.bind(this, el)} data-toggle="modal" data-target="#v-st" className="book-now">INVITE</a>
                                     </div>
                                 </div>
                             )}
@@ -236,7 +243,7 @@ class Studios extends Component {
                     {this.state.meetingsLengthVA == 0 ? <div className="text-center">NO MEETING CREATED YET <a href="/meeting" className="watch-btn marg m-s">CREATE MEETING</a></div> :
                         <div id="v-audi" className="owl-carousel owl-theme">
 
-                            {this.state.meetingVaA.map((el, i) =>
+                            {this.state.meetingVA.reverse().map((el, i) =>
 
 
                                 <div className="item">
@@ -244,8 +251,14 @@ class Studios extends Component {
                                         <h3>{el.topic.substring(0, 15)}</h3>
                                         <div className="request-box">
                                             <img src="/client/assets/images/vh1.jpg" className="img-responsive" />
+                                            <div className="request-text animate__animated animate__fadeIn">
+                                                {moment(new Date()).isAfter(new Date(el.start_time)) === false ? (<h5>(START {moment(el.start_time).fromNow()} PRIOR)</h5>) : (<h5></h5>)}
+                                                {moment(new Date()).isAfter(new Date(el.start_time)) === true ? (<div>
+                                                    {moment(new Date(el.start_time)).add(el.duration, 'minutes').isAfter(new Date) == true ? (<a href={"/zoom.html?meeting_id=" + el._id} className="book-now">JOIN SESSION</a>) : <a href="javascript:void(0)" className="book-now">EXPIRED</a>}
+                                                </div>) : ('')}
+                                            </div>
                                         </div>
-                                        <a href="#" onClick={this.openMeeting.bind(this, el)} data-toggle="modal" data-target="#v-st" class="book-now">INVITE</a>
+                                        <a href="#" onClick={this.openMeeting.bind(this, el)} data-toggle="modal" data-target="#v-st" className="book-now">INVITE</a>
                                     </div>
                                 </div>
                             )}
@@ -260,14 +273,20 @@ class Studios extends Component {
                     </div>
                     {this.state.meetingsLengthRS == 0 ? <div className="text-center">NO MEETING CREATED YET <a href="/meeting" className="watch-btn marg m-s">CREATE MEETING</a></div> :
                         <div id="v-record" className="owl-carousel owl-theme">
-                            {this.state.meetingRS.map((el, i) =>
+                            {this.state.meetingRS.reverse().map((el, i) =>
                                 <div className="item">
                                     <div className="v-box">
                                         <h3>{el.topic.substring(0, 15)}</h3>
                                         <div className="request-box">
                                             <img src="/client/assets/images/r1.jpg" className="img-responsive" />
+                                            <div className="request-text animate__animated animate__fadeIn">
+                                                {moment(new Date()).isAfter(new Date(el.start_time)) === false ? (<h5>(START {moment(el.start_time).fromNow()} PRIOR)</h5>) : (<h5></h5>)}
+                                                {moment(new Date()).isAfter(new Date(el.start_time)) === true ? (<div>
+                                                    {moment(new Date(el.start_time)).add(el.duration, 'minutes').isAfter(new Date) == true ? (<a href={"/zoom.html?meeting_id=" + el._id} className="book-now">JOIN SESSION</a>) : <a href="javascript:void(0)" className="book-now">EXPIRED</a>}
+                                                </div>) : ('')}
+                                            </div>
                                         </div>
-                                        <a href="#" onClick={this.openMeeting.bind(this, el)} data-toggle="modal" data-target="#v-st" class="book-now">INVITE</a>
+                                        <a href="#" onClick={this.openMeeting.bind(this, el)} data-toggle="modal" data-target="#v-st" className="book-now">INVITE</a>
                                     </div>
                                 </div>
                             )}
