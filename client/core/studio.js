@@ -46,10 +46,8 @@ class Studios extends Component {
                 swal(data.error)
             } else {
                 this.setState({
-                    meetingVS: data
+                    meetingVS: data.reverse()
                 })
-
-                console.log(data)
 
                 console.log(moment(new Date()).isAfter("2020-12-01T20:32:47Z"))
 
@@ -99,7 +97,7 @@ class Studios extends Component {
                 swal(data.error)
             } else {
                 this.setState({
-                    meetingVA: data
+                    meetingVA: data.reverse()
                 })
 
                 //console.log(data)
@@ -149,10 +147,8 @@ class Studios extends Component {
                 swal(data.error)
             } else {
                 this.setState({
-                    meetingRS: data
+                    meetingRS: data.reverse()
                 })
-
-                console.log(data)
 
                 //console.log(data)
 
@@ -208,7 +204,7 @@ class Studios extends Component {
                     </div>
                     <div id="v-studio" className="owl-carousel owl-theme">
 
-                        {this.state.meetingVS.reverse().map((el, i) =>
+                        {this.state.meetingVS.map((el, i) =>
 
                             moment(new Date()).isAfter(new Date(el.start_time)) !== true && el.owner !== this.state.user_id ?
                                 (< div className="item" >
@@ -236,7 +232,7 @@ class Studios extends Component {
                     </div>
                     <div id="v-audi" className="owl-carousel owl-theme">
 
-                        {this.state.meetingVA.reverse().map((el, i) =>
+                        {this.state.meetingVA.map((el, i) =>
 
                             moment(new Date()).isAfter(new Date(el.start_time)) !== true && el.owner !== this.state.user_id ?
                                 (< div className="item" >
@@ -263,7 +259,7 @@ class Studios extends Component {
                     </div>
                     <div id="v-record" className="owl-carousel owl-theme">
 
-                        {this.state.meetingRS.reverse().map((el, i) =>
+                        {this.state.meetingRS.map((el, i) =>
 
                             moment(new Date()).isAfter(new Date(el.start_time)) !== true && el.owner !== this.state.user_id ?
                                 (< div className="item" >
