@@ -227,7 +227,7 @@ class Studios extends Component {
                                                 </div>) : ('')}
                                             </div>
                                         </div>
-                                        <a href="#" onClick={this.openMeeting.bind(this, el)} data-toggle="modal" data-target="#v-st" className="book-now">INVITE</a>
+                                        {moment(new Date(el.start_time)).add(el.duration, 'minutes').isAfter(new Date) == true ? (<a href="#" onClick={this.openMeeting.bind(this, el)} data-toggle="modal" data-target="#v-st" className="book-now">INVITE</a>) : ('')}
                                     </div>
                                 </div>
                             )}
@@ -258,7 +258,7 @@ class Studios extends Component {
                                                 </div>) : ('')}
                                             </div>
                                         </div>
-                                        <a href="#" onClick={this.openMeeting.bind(this, el)} data-toggle="modal" data-target="#v-st" className="book-now">INVITE</a>
+                                        {moment(new Date(el.start_time)).add(el.duration, 'minutes').isAfter(new Date) == true ? (<a href="#" onClick={this.openMeeting.bind(this, el)} data-toggle="modal" data-target="#v-st" className="book-now">INVITE</a>) : ('')}
                                     </div>
                                 </div>
                             )}
@@ -286,7 +286,7 @@ class Studios extends Component {
                                                 </div>) : ('')}
                                             </div>
                                         </div>
-                                        <a href="#" onClick={this.openMeeting.bind(this, el)} data-toggle="modal" data-target="#v-st" className="book-now">INVITE</a>
+                                        {moment(new Date(el.start_time)).add(el.duration, 'minutes').isAfter(new Date) == true ? (<a href="#" onClick={this.openMeeting.bind(this, el)} data-toggle="modal" data-target="#v-st" className="book-now">INVITE</a>) : ('')}
                                     </div>
                                 </div>
                             )}
