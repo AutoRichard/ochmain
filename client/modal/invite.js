@@ -102,7 +102,7 @@ class Invite extends React.Component {
 
             const jwt = auth.isAuthenticated();
             const userId = jwt.user._id;
-            
+
             let invite = {
                 meeting_id: meeting_id,
                 user_id: user_id,
@@ -117,6 +117,8 @@ class Invite extends React.Component {
                     this.setState({
                         contact: this.state.contact
                     })
+
+                    swal('Invitate sent to ' + this.state.contact[key].displayName || this.state.contact[key].firstName || this.state.contact[key].lastName)
                 }
             })
 

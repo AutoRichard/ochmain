@@ -26,8 +26,31 @@ class PicBox extends React.Component {
             ? event.target.files[0]
             : event.target.value
 
-        this.userData.set(event.target.name, value)
-        this.setState({ id: URL.createObjectURL(event.target.files[0]) });
+        //this.userData.set(event.target.name, value)
+        //this.setState({ id: URL.createObjectURL(event.target.files[0]) });
+
+        var img = new Image;
+        img.src = URL.createObjectURL(event.target.files[0]);
+        img.uploadImage = this.uploadValidate
+        img.value = value
+
+        img.onload = function () {
+            var picWidth = this.width;
+            var picHeight = this.height;
+
+            if (picHeight == 340 && picWidth == 340) {
+                this.uploadImage(this.src, this.value)
+            } else {
+                swal("IMAGE RESOLUTION REQUIRED IS 340x340")
+            }
+        }
+    }
+
+    uploadValidate = (src, value) => {
+        this.userData.set("photo", value)
+
+
+        this.setState({ id: src });
     }
 
     componentDidUpdate(prevProps) {
@@ -93,6 +116,8 @@ class PicBox extends React.Component {
                                 <img style={imageStyle} src={this.state.id} />
                                 <input name="photo" onChange={this._handleChange} id="profilePhoto" type="file" style={{ position: "unset" }} />
                             </div>
+
+                            <span>IMAGE RESOLUTION (340x340)</span>
                             <div className="btn-b e-wd">
                                 <label for="profilePhoto"><a className="outline-btn">CHOOSE PICTURE</a></label>
                                 <label><a onClick={this.submitImage} className="cancel-small">SAVE</a></label>

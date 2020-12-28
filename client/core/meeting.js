@@ -115,7 +115,7 @@ class Meeting extends Component {
                             <div className="col-md-6">
                                 <div className="input-spacez">
                                     <label>Duration in Minutes <span id="validationError">{this.state.durationValidation}</span></label>
-                                    <input autoComplete="off" name="duration" type="search" value={this.state.duration} onChange={this.onchange} />
+                                    <input autoComplete="off" name="duration" type="text" value={this.state.duration} onChange={this.onchange} />
                                 </div>
                             </div>
 
