@@ -1010,6 +1010,16 @@ div#chatbar button .next-btn:before {
     outline: none;
     height: 69px;
 }
+
+.input-space input[type=search] {
+    width: 100%;
+    height: 50px;
+    border: none;
+    padding-left: 50px;
+    background: #fff;
+    outline: none;
+    height: 69px;
+}
 a.icon-arrow {
     width: 10px;
     position: absolute;
