@@ -645,7 +645,7 @@ class Contact extends Component {
             _id: '',
             contact: [],
             searchContact: [],
-            searchValue: ' ',
+            searchValue: '',
             refresh: '',
             _refresh2: '',
             contacts: '',
