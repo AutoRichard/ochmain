@@ -581,11 +581,11 @@ class Timeline extends Component {
                     </div>
                     <div className="right-content">
                         <div className="search-area">
-                            <input autocomplete="off" name="post" type="text" value={this.state.post} onKeyDown={this._handleKeyDown} disabled={this.state.sending} onChange={this.onChangePost} autocomplete="off" placeholder="Share your thoughts and your music..." />
+                            <input  name="post" type="text" value={this.state.post} onKeyDown={this._handleKeyDown} disabled={this.state.sending} onChange={this.onChangePost} autocomplete="off" placeholder="Share your thoughts and your music..." />
 
                             <div className="button-wrap btn">
                                 <label className="new-button" for="upload1"> <img src="/client/assets/images/pic-up.png" style={{ paddingBottom: '15px' }} className="img-responsive upload" />
-                                    <input autocomplete="off" onChange={this.handleChange} name="photo" id="upload1" type="file" />
+                                    <input onChange={this.handleChange} name="photo" id="upload1" type="file" />
                                 </label>
                                 <a href="javascript:void(0)" style={{ width: '40px', height: '70px' }} onClick={this.upload} class="fa fa-share"></a>
                             </div>
@@ -645,7 +645,7 @@ class Contact extends Component {
             _id: '',
             contact: [],
             searchContact: [],
-            searchValue: '',
+            searchValue: null,
             refresh: '',
             _refresh2: '',
             contacts: '',
@@ -905,7 +905,7 @@ class Contact extends Component {
                             <div className="input-space networkStyling">
                                 <a href="javascript:void(0)" className="icon-arrow" id="pop-left"><i
                                     className="rotate fa fa-angle-right" aria-hidden="true"></i></a>
-                                <input autoComplete="false" name="searchValue" type="search" value={this.state.searchValue} style={{ width: '92%' }} onChange={this.onSearch} onKeyDown={this._handleKeyDown} placeholder="Search NETWORK..." />
+                                <input name="searchValue" type="text" value={this.state.searchValue} style={{ width: '92%' }} onChange={this.onSearch} onKeyDown={this._handleKeyDown} autocomplete="off" placeholder="Search NETWORK..." />
                                 <a href="javascript:void(0)" onClick={this.searchContact}><i className="fa fa-search" aria-hidden="true"></i></a>
                             </div>
                         </div>
