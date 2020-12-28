@@ -171,7 +171,7 @@ class Profile extends Component {
                                 <b><a href="javascript:void0" onClick={this.copyProfile}>Copy Profile Link</a></b>
                                 <p>Copy your profile link to the Copy/Paste buffer </p>
                                 <div className="input-area sp">
-                                    <input type="text" id="windowLocation" value={this.state.userLink} />
+                                    <input autocomplete="off" type="text" id="windowLocation" value={this.state.userLink} />
                                 </div>
                             </div>
                         </div>
@@ -477,8 +477,8 @@ class Audio extends Component {
                                 <p>Create new post containing link to the song</p>
 
                                 <b><a href="#">Add Song via Link</a></b>
-                                <input type="text" name="title" onChange={this.onChangeLink} value={this.state.title} placeholder="Enter/Paste Songs Title" />
-                                <input type="text" name="linkUrl" onChange={this.onChangeLink} value={this.state.linkUrl} placeholder="Enter/Paste Soundcloud Link..." />
+                                <input autocomplete="off" type="text" name="title" onChange={this.onChangeLink} value={this.state.title} placeholder="Enter/Paste Songs Title" />
+                                <input autocomplete="off" type="text" name="linkUrl" onChange={this.onChangeLink} value={this.state.linkUrl} placeholder="Enter/Paste Soundcloud Link..." />
                                 <span id="validationError">{this.state.linkUrlValidation}</span>
                                 <a href="javascript:void(0)" onClick={this.onSubmitAudio} className="save-btn btm">ADD LINK</a>
 
@@ -821,9 +821,9 @@ class Video extends Component {
                                     </div>
                                     <small>NB: thumbnail (Image Resolution 300x200)</small>*/}
 
-                                    <input type="text" name="title" onChange={this.onChangeLink} value={this.state.title} placeholder="Enter Title" />
+                                    <input autocomplete="off" type="text" name="title" onChange={this.onChangeLink} value={this.state.title} placeholder="Enter Title" />
 
-                                    <input type="text" name="linkUrl" onChange={this.onChangeLink} value={this.state.linkUrl} placeholder="Enter/Paste YouTube Link..." />
+                                    <input autocomplete="off" type="text" name="linkUrl" onChange={this.onChangeLink} value={this.state.linkUrl} placeholder="Enter/Paste YouTube Link..." />
 
                                     <span id="validationError">{this.state.linkUrlValidation}</span>
                                     <a href="javascript:void(0)" onClick={this.onSubmitVideo} className="save-btn btm">ADD VIDEO</a>
@@ -1170,7 +1170,7 @@ class Feeds extends Component {
                         </div>
                         <div className="right-content">
                             <div className="search-area">
-                                <input type="text" name="comment_text" disabled={this.state.sending} onKeyDown={this._handleKeyDown} value={this.state.comment_text} onChange={this.onChangeComment} placeholder={this.state.comments.length <= 0 ? "Be the first to write a comment..." : "Write a comment"} />
+                                <input type="text" autocomplete="off" name="comment_text" disabled={this.state.sending} onKeyDown={this._handleKeyDown} value={this.state.comment_text} onChange={this.onChangeComment} placeholder={this.state.comments.length <= 0 ? "Be the first to write a comment..." : "Write a comment"} />
 
                                 {/*<div className="button-wrap btn">
                                     <label className="new-button" for="upload2"> <img src="/client/assets/images/pic-up.png" className="img-responsive upload" />
@@ -1444,11 +1444,11 @@ class FeedTimeline extends Component {
                     </div>
                     <div className="right-content">
                         <div className="search-area">
-                            <input name="post" type="text" value={this.state.post} disabled={this.state.sending} onKeyDown={this._handleKeyDown} onChange={this.onChangePost} placeholder="Share your thoughts and your music..." />
+                            <input autocomplete="off" name="post" type="text" value={this.state.post} disabled={this.state.sending} onKeyDown={this._handleKeyDown} onChange={this.onChangePost} placeholder="Share your thoughts and your music..." />
 
                             <div className="button-wrap btn">
                                 <label className="new-button" for="upload1"> <img src="/client/assets/images/pic-up.png" style={{ paddingBottom: '15px' }} className="img-responsive upload" />
-                                    <input onChange={this.handleChange} name="photo" id="upload1" type="file" />
+                                    <input autocomplete="off" onChange={this.handleChange} name="photo" id="upload1" type="file" />
                                 </label>
                                 <a href="javascript:void(0)" onClick={this.upload}><span style={{ width: '40px', height: 'auto', fontSize: '25px' }} class="fa fa-share"></span></a>
                             </div>
@@ -1594,7 +1594,7 @@ class Timeline extends Component {
                                         <div className="dropdown-share"><div className=" edit-two"><i className="fa fa-eye" aria-hidden="true"></i></div>
                                             <div className="dropdown-share-content edit-drp d-nn">
                                                 {this.state.facebook}
-                                                <input style={{ display: 'none' }} type="text" placeholder="Enter/Paste Facebook Artist Link..." />
+                                                <input autocomplete="off" style={{ display: 'none' }} type="text" placeholder="Enter/Paste Facebook Artist Link..." />
                                                 {/*<a href="javascript:void0" className="save-btn btm">ADD LINK</a>*/}
                                             </div>
                                         </div></a>) : ''}</li>
@@ -1604,7 +1604,7 @@ class Timeline extends Component {
                                         <img src="/client/assets/images/insta.png" /><div className="dropdown-share"><div className=" edit-two"><i className="fa fa-eye" aria-hidden="true"></i></div>
                                             <div className="dropdown-share-content edit-drp d-nn">
                                                 {this.state.instagram}
-                                                <input style={{ display: 'none' }} type="text" placeholder="Enter/Paste Instagram Artist Link..." />
+                                                <input autocomplete="off" style={{ display: 'none' }} type="text" placeholder="Enter/Paste Instagram Artist Link..." />
                                                 {/*<a href="javascript:void0" className="save-btn btm">ADD LINK</a>*/}
                                             </div>
                                         </div></a>) : ''}</li>
@@ -1615,7 +1615,7 @@ class Timeline extends Component {
                                             <img src="/client/assets/images/spotify.png" /><div className="dropdown-share"><div className="edit-two"><i className="fa fa-eye" aria-hidden="true"></i></div>
                                                 <div className="dropdown-share-content edit-drp d-nn">
                                                     {this.state.spotify}
-                                                    <input style={{ display: 'none' }} type="text" placeholder="Enter/Paste Spotify Artist Link..." />
+                                                    <input autocomplete="off" style={{ display: 'none' }} type="text" placeholder="Enter/Paste Spotify Artist Link..." />
                                                     {/*<a href="javascript:void0" className="save-btn btm">ADD LINK</a>*/}
                                                 </div>
                                             </div></a>) : ''}</li>
@@ -1647,7 +1647,7 @@ class Timeline extends Component {
                                         <div className="dropdown-share"><div className="edit-two"><i className="fa fa-eye" aria-hidden="true"></i></div>
                                             <div className="dropdown-share-content edit-drp right d-nn">
                                                 {this.state.youtube}
-                                                <input style={{ display: 'none' }} type="text" placeholder="Enter/Paste Youtube Artist Link..." />
+                                                <input autocomplete="off" style={{ display: 'none' }} type="text" placeholder="Enter/Paste Youtube Artist Link..." />
                                                 {/*<a href="javascript:void0" className="save-btn btm">ADD LINK</a>*/}
                                             </div>
                                         </div></a>) : ''}</li>
@@ -1658,7 +1658,7 @@ class Timeline extends Component {
                                             <div className="dropdown-share"><div className=" edit-two"><i className="fa fa-eye" aria-hidden="true"></i></div>
                                                 <div className="dropdown-share-content edit-drp right d-nn">
                                                     {this.state.snapchat}
-                                                    <input style={{ display: 'none' }} type="text" placeholder="Enter/Paste Snapchat Artist Link..." />
+                                                    <input style={{ display: 'none' }} autocomplete="off" type="text" placeholder="Enter/Paste Snapchat Artist Link..." />
                                                     {/*<a href="javascript:void0" className="save-btn btm">ADD LINK</a>*/}
                                                 </div>
                                             </div></a>) : ''}</li>
@@ -1669,7 +1669,7 @@ class Timeline extends Component {
                                             <div className="dropdown-share"><div className=" edit-two"><i className="fa fa-eye" aria-hidden="true"></i></div>
                                                 <div className="dropdown-share-content edit-drp right d-nn">
                                                     {this.state.tiktok}
-                                                    <input style={{ display: 'none' }} type="text" placeholder="Enter/Paste Tiktok Artist Link..." />
+                                                    <input style={{ display: 'none' }} autocomplete="off" type="text" placeholder="Enter/Paste Tiktok Artist Link..." />
                                                     {/*<a href="javascript:void0" className="save-btn btm">ADD LINK</a>*/}
                                                 </div>
                                             </div></a>) : ''}</li>

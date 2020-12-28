@@ -232,7 +232,7 @@ class Chat extends React.Component {
                             e.preventDefault();
                             e.stopPropagation();
                         }
-                    }} onChange={this.handleInput} placeholder="Type Message..." />
+                    }} onChange={this.handleInput} autocomplete="off" placeholder="Type Message..." />
                     <div className="env">
                         <i className="fa fa-paper-plane" onClick={this.sentMessage} aria-hidden="true"></i>
                     </div>

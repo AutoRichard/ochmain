@@ -64,7 +64,7 @@ class ResetPassword extends Component {
                             <div className="col-md-6">
                                 <div className="input-spacez">
                                     <label>Enter Email <span id="validationError">{this.state.emailValidate}</span></label>
-                                    <input name="email" type="text" value={this.state.email} onChange={this.onchange} />
+                                    <input autocomplete="off" name="email" type="text" value={this.state.email} onChange={this.onchange} />
                                 </div>
                             </div>
                         </div>

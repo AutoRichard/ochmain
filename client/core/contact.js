@@ -80,24 +80,24 @@ class Contact extends Component {
                             <div className="col-md-6">
                                 <div className="input-spacez">
                                     <label>Name <span id="validationError">{this.state.nameValidation}</span></label>
-                                    <input name="name" type="text" value={this.state.name} onChange={this.onchange} />
+                                    <input autocomplete="off" name="name" type="text" value={this.state.name} onChange={this.onchange} />
                                 </div>
                             </div>
                             <div className="col-md-6">
                                 <div className="input-spacez">
                                     <label>Phone Number <span id="validationError">{this.state.phoneValidation}</span></label>
-                                    <input name="phoneNumber" type="text" value={this.state.phoneNumber} onChange={this.onchange} />
+                                    <input autocomplete="off" name="phoneNumber" type="text" value={this.state.phoneNumber} onChange={this.onchange} />
                                 </div>
                             </div>
                             <div className="col-md-6">
                                 <div className="input-spacez">
                                     <label>Email <span id="validationError">{this.state.emailValidation}</span></label>
-                                    <input name="email" type="text" value={this.state.email} onChange={this.onchange} />
+                                    <input autocomplete="off" name="email" type="text" value={this.state.email} onChange={this.onchange} />
                                 </div>
                             </div>
                             <div className="col-md-12">
                                 <div className="input-area sp">
-                                    <textarea name="text" className="textArea" value={this.state.text} onChange={this.onchange} placeholder="Enter Message"></textarea>                                    
+                                    <textarea name="text" autocomplete="off" className="textArea" value={this.state.text} onChange={this.onchange} placeholder="Enter Message"></textarea>                                    
                                     <label><span id="validationError">{this.state.textValidation}</span></label>
                                 </div>
                             </div>

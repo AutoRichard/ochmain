@@ -557,7 +557,7 @@ class News extends Component {
 
                     <a id="thanksnewsletter" href="#" data-toggle="modal" data-target="#newsletter"></a>
                     <div className="news-input">
-                        <input type="text" name="email" onChange={this.onChangeNews} value={this.state.email} placeholder="YOUR EMAIL ADDRESS" />
+                        <input type="text" name="email" autocomplete="off" onChange={this.onChangeNews} value={this.state.email} placeholder="YOUR EMAIL ADDRESS" />
                         <br />
                         <strong style={{ color: 'red' }}>{this.state.emailValidation}</strong>
                         <a href="javascript:void(0)" onClick={this.newsletter} className="book-now">SIGN UP</a>

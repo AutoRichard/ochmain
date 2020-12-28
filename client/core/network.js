@@ -339,7 +339,7 @@ class Feeds extends Component {
                         </div>
                         <div className="right-content">
                             <div className="search-area">
-                                <input type="text" name="comment_text" disabled={this.state.sending} onKeyDown={this._handleKeyDown} value={this.state.comment_text} onChange={this.onChangeComment} placeholder={this.state.comments.length <= 0 ? "Be the first to write a comment..." : "Write a comment"} />
+                                <input autocomplete="off" type="text" name="comment_text" disabled={this.state.sending} onKeyDown={this._handleKeyDown} value={this.state.comment_text} onChange={this.onChangeComment} placeholder={this.state.comments.length <= 0 ? "Be the first to write a comment..." : "Write a comment"} />
 
                                 {/*<div className="button-wrap btn">
                                     <label className="new-button" for="upload2"> <img src="/client/assets/images/pic-up.png" className="img-responsive upload" />
@@ -584,11 +584,11 @@ class Timeline extends Component {
                     </div>
                     <div className="right-content">
                         <div className="search-area">
-                            <input name="post" type="text" value={this.state.post} onKeyDown={this._handleKeyDown} disabled={this.state.sending} onChange={this.onChangePost} placeholder="Share your thoughts and your music..." />
+                            <input autocomplete="off" name="post" type="text" value={this.state.post} onKeyDown={this._handleKeyDown} disabled={this.state.sending} onChange={this.onChangePost} autocomplete="off" placeholder="Share your thoughts and your music..." />
 
                             <div className="button-wrap btn">
                                 <label className="new-button" for="upload1"> <img src="/client/assets/images/pic-up.png" style={{ paddingBottom: '15px' }} className="img-responsive upload" />
-                                    <input onChange={this.handleChange} name="photo" id="upload1" type="file" />
+                                    <input autocomplete="off" onChange={this.handleChange} name="photo" id="upload1" type="file" />
                                 </label>
                                 <a href="javascript:void(0)" style={{ width: '40px', height: '70px' }} onClick={this.upload} class="fa fa-share"></a>
                             </div>
@@ -909,7 +909,7 @@ class Contact extends Component {
                             <div className="input-space networkStyling">
                                 <a href="javascript:void(0)" className="icon-arrow" id="pop-left"><i
                                     className="rotate fa fa-angle-right" aria-hidden="true"></i></a>
-                                <input type="text" name="searchValue" style={{ width: '92%' }} onChange={this.onSearch} onKeyDown={this._handleKeyDown} placeholder="Search NETWORK..." />
+                                <input autocomplete="off" type="text" name="searchValue" style={{ width: '92%' }} onChange={this.onSearch} autocomplete="off" onKeyDown={this._handleKeyDown} placeholder="Search NETWORK..." />
                                 <a href="javascript:void(0)" onClick={this.searchContact}><i className="fa fa-search" aria-hidden="true"></i></a>
                             </div>
                         </div>

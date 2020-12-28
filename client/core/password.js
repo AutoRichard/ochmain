@@ -82,19 +82,19 @@ class Password extends Component {
                             <div className="col-md-6">
                                 <div className="input-spacez">
                                     <label>Email <span id="validationError">{this.state.emailValidate}</span></label>
-                                    <input name="email" type="text" value={this.state.email} onChange={this.onchange} />
+                                    <input autocomplete="off" name="email" type="text" value={this.state.email} onChange={this.onchange} />
                                 </div>
                             </div>
                             <div className="col-md-6">
                                 <div className="input-spacez">
                                     <label>Password <span id="validationError">{this.state.passwordValidate}</span></label>
-                                    <input name="password" type="password" value={this.state.password} onChange={this.onchange} />
+                                    <input autocomplete="off" name="password" type="password" value={this.state.password} onChange={this.onchange} />
                                 </div>
                             </div>
                             <div className="col-md-6">
                                 <div className="input-spacez">
                                     <label>Re-Enter Password <span id="validationError">{this.state.passwordCheckValidate}</span></label>
-                                    <input name="passwordCheck" type="password" value={this.state.passwordCheck} onChange={this.onchange} />
+                                    <input autocomplete="off" name="passwordCheck" type="password" value={this.state.passwordCheck} onChange={this.onchange} />
                                 </div>
                             </div>
                         </div>

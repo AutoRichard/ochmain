@@ -108,14 +108,14 @@ class Meeting extends Component {
                             <div className="col-md-6">
                                 <div className="input-spacez">
                                     <label>Topic <span id="validationError">{this.state.topicValidation}</span></label>
-                                    <input name="topic" type="text" value={this.state.topic} onChange={this.onchange} />
+                                    <input autocomplete="off" name="topic" type="text" value={this.state.topic} onChange={this.onchange} />
                                 </div>
                             </div>
 
                             <div className="col-md-6">
                                 <div className="input-spacez">
                                     <label>Duration in Minutes <span id="validationError">{this.state.durationValidation}</span></label>
-                                    <input name="duration" type="text" value={this.state.duration} onChange={this.onchange} />
+                                    <input autocomplete="off" name="duration" type="text" value={this.state.duration} onChange={this.onchange} />
                                 </div>
                             </div>
 
@@ -135,7 +135,7 @@ class Meeting extends Component {
                             <div className="col-md-6">
                                 <div className="input-spacez">
                                     <label>Start Time <span id="validationError">{this.state.start_timeValidation}</span></label>
-                                    <input name="start_time" type="datetime-local" value={this.state.start_time} onChange={this.onchange} />
+                                    <input autocomplete="off" name="start_time" type="datetime-local" value={this.state.start_time} onChange={this.onchange} />
                                 </div>
                             </div>
                         </div>
