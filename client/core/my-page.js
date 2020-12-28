@@ -992,7 +992,7 @@ class Feeds extends Component {
     }
 
     deletePost_ = () => {
-        
+
         if (auth.isAuthenticated()) {
             deletePost(this.props._id).then((data) => {
                 if (data.error) {
@@ -1353,6 +1353,10 @@ class FeedTimeline extends Component {
         setTimeout(this.reloadnewTimeline, 1500)
     }
 
+    __loadNewTimeline = () => {
+        this.fetchPost(this.state._userId)
+    }
+
     reloadnewTimeline = () => {
         this.setState({
             timeline: this.state.newtimeline.reverse(),
@@ -1489,7 +1493,7 @@ class FeedTimeline extends Component {
                             imageExist={el.imageExist}
                             socketConnection={this.socket}
                             key={el._id}
-                            _loadNewTimeline={this.loadNewTimeline}
+                            _loadNewTimeline={this.__loadNewTimeline}
                         />
                     )}
                 </div>
