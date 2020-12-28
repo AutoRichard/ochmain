@@ -97,12 +97,12 @@ class LoginModal extends React.Component {
                             <div className="input-box">
                                 <div className="input-area">
                                     <label>EMAIL ADDRESS</label>
-                                    <input type="email" name="email" onChange={this.onChange} value={this.state.email} />
+                                    <input type="email" name="email" onChange={this.onChange} autoComplete="off" value={this.state.email} />
                                     <div className="text-left" id="validationError">{this.state.emailValidate}</div>
                                 </div>
                                 <div className="input-area">
                                     <label>PASSWORD</label>
-                                    <input type="password" name="password" onChange={this.onChange} value={this.state.password} />
+                                    <input type="password" name="password" autoComplete="off" onChange={this.onChange} value={this.state.password} />
                                     <div className="text-left" id="validationError">{this.state.passwordValidate}</div>
                                 </div>
                                 {/*<a href="#" className="pull-right">Forgot Password?</a>*/}
