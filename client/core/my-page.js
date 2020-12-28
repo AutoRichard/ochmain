@@ -218,9 +218,9 @@ class AudioList extends Component {
                 this.setState({ linkUrl: _linkUrl })
 
             } else {
-                this.validateSpotify();
-                //this.setState({ linkUrlValidation: 'LINK IS INVALID' });
-                // Do anything for not being valid
+                //this.validateSpotify();
+                this.setState({ linkUrlValidation: 'LINK IS INVALID' });
+                //Do anything for not being valid
             }
         }
     }
