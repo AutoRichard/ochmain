@@ -505,6 +505,14 @@
 
     <script>
         $(document).ready(function () {
+
+            if (navigator.userAgent.toLowerCase().indexOf('chrome') >= 0) {
+                $('input[autocomplete="off"]').each(function () {
+                    var type = $(this).attr('type');
+                    $(this).attr('type', '_' + type);
+                    $(this).attr('type', type);
+                });
+            }
             //$('.count').prop('disabled', true);
             /*$(document).on('click', '.plus', function () {
                 $('.count').val(parseInt($('.count').val()) + 1);
