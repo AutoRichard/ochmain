@@ -776,6 +776,8 @@ class Contact extends Component {
             this.readUser();
         }
 
+        this.setState({searchValue: ''})
+
     }
 
     componentDidUpdate(prevProps) {
