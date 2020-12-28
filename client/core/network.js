@@ -417,9 +417,6 @@ class Timeline extends Component {
         }
     }
 
-
-
-
     fetchPost = () => {
         if (auth.isAuthenticated()) {
             const jwt = auth.isAuthenticated();

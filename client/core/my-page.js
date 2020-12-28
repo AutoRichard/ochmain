@@ -6,7 +6,7 @@ import { read, update } from './../api/api-user';
 import { checkLink, updateLinkAudio, deleteLinkAudio, updateLinkVideo, deleteLinkVideo } from './../api/api-link';
 import swal from 'sweetalert';
 import auth from './../auth/auth-helper';
-import { create, listByUser } from './../api/api-post';
+import { create, listByUser, deletePost } from './../api/api-post';
 import openSocket from 'socket.io-client'
 import moment from "moment";
 
@@ -991,6 +991,19 @@ class Feeds extends Component {
         }
     }
 
+    deletePost_ = () => {
+        
+        if (auth.isAuthenticated()) {
+            deletePost(this.props._id).then((data) => {
+                if (data.error) {
+                    console.log(data.error)
+                } else {
+                    this.props._loadNewTimeline()
+                }
+            })
+        }
+    }
+
     onSubmitComment = () => {
         if (auth.isAuthenticated()) {
             const jwt = auth.isAuthenticated();
@@ -1104,21 +1117,15 @@ class Feeds extends Component {
                 <div className="right-content position-relative">
                     <b>{this.props.postedBy_displayName} {/*this.props.postedBy_firstName*/} {/*this.props.postedBy_lastName*/}</b>
                     <span>{moment(this.props.createDate).fromNow()}</span>
-                    <div className="dots-a">
-                        {/*<div className="dropdown-share">
+                    {this.props.postedBy_id == this.state.userId ? (<div className="dots-a">
+                        <div className="dropdown-share">
                             <span><i className="fa fa-ellipsis-h" aria-hidden="true"></i></span>
                             <div className="dropdown-share-content">
-                                <b><a href="#">Hide Post</a></b>
+                                <b><a href="javascript:void(0)" onClick={this.deletePost_}>Delete Post</a></b>
                                 <p>Remove this post from your feed</p>
-
-                                <b><a href="#">Unfollow Ellie Soufi</a></b>
-                                <p>Stop seeing Ellie’s posts but stay connected</p>
-
-                                <b><a href="#">Report Post</a></b>
-                                <p>Something about this post concerns me</p>
                             </div>
-        </div>*/}
-                    </div>
+                        </div>
+                    </div>) : ''}
                 </div>
                 <div className="clearfix"></div>
                 <div className="desc-box">
@@ -1261,9 +1268,6 @@ class FeedTimeline extends Component {
 
     }
 
-
-
-
     fetchPost = (id) => {
         if (auth.isAuthenticated()) {
             const jwt = auth.isAuthenticated();
@@ -1373,7 +1377,6 @@ class FeedTimeline extends Component {
         this.postData.set(event.target.name, value)
         this.setState({ idPhoto: URL.createObjectURL(event.target.files[0]) });
     }
-
 
     onSubmitPost() {
         if (auth.isAuthenticated()) {
@@ -1486,6 +1489,7 @@ class FeedTimeline extends Component {
                             imageExist={el.imageExist}
                             socketConnection={this.socket}
                             key={el._id}
+                            _loadNewTimeline={this.loadNewTimeline}
                         />
                     )}
                 </div>
