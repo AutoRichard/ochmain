@@ -649,8 +649,7 @@ class Contact extends Component {
             refresh: '',
             _refresh2: '',
             contacts: '',
-            followButton: '',
-            searchValues: ''
+            followButton: ''
         }
     }
 
@@ -907,7 +906,7 @@ class Contact extends Component {
                             <div className="input-space networkStyling">
                                 <a href="javascript:void(0)" className="icon-arrow" id="pop-left"><i
                                     className="rotate fa fa-angle-right" aria-hidden="true"></i></a>
-                                <input type="text" name="searchValue" value={this.state.searchValues} style={{ width: '92%' }} autocomplete="off" onChange={this.onSearch} onKeyDown={this._handleKeyDown} placeholder="Search NETWORK..." />
+                                <input type="text" name="searchValue" value={this.state.searchValue} style={{ width: '92%' }} autoComplete="off" onChange={this.onSearch} onKeyDown={this._handleKeyDown} placeholder="Search NETWORK..." />
                                 <a href="javascript:void(0)" onClick={this.searchContact}><i className="fa fa-search" aria-hidden="true"></i></a>
                             </div>
                         </div>
