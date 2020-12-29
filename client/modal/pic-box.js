@@ -38,10 +38,10 @@ class PicBox extends React.Component {
             var picWidth = this.width;
             var picHeight = this.height;
 
-            if (picHeight == 340 && picWidth == 340) {
+            if (picHeight == 700 && picWidth == 700) {
                 this.uploadImage(this.src, this.value)
             } else {
-                swal("IMAGE RESOLUTION REQUIRED IS 340x340")
+                swal("IMAGE RESOLUTION REQUIRED IS 700x700")
             }
         }
     }
@@ -117,7 +117,7 @@ class PicBox extends React.Component {
                                 <input name="photo" onChange={this._handleChange} id="profilePhoto" type="file" style={{ position: "unset" }} />
                             </div>
 
-                            <span>IMAGE RESOLUTION (340x340)</span>
+                            <span>IMAGE RESOLUTION (700x700)</span>
                             <div className="btn-b e-wd">
                                 <label for="profilePhoto"><a className="outline-btn">CHOOSE PICTURE</a></label>
                                 <label><a onClick={this.submitImage} className="cancel-small">SAVE</a></label>
