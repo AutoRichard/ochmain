@@ -97,6 +97,7 @@ class Invite extends React.Component {
 
         let user_id = this.state.contact[key]._id
         let meeting_id = this.state.meeting_id
+        let name = this.state.contact[key].displayName || this.state.contact[key].firstName || this.state.contact[key].lastName
 
         if (auth.isAuthenticated()) {
 
@@ -113,12 +114,15 @@ class Invite extends React.Component {
                 if (data.error) {
                     swal(error)
                 } else {
+
+
+                    swal('Invitation sent to ' + name)
+
                     this.state.contact.splice(key, 1)
                     this.setState({
                         contact: this.state.contact
                     })
 
-                    swal('Invitate sent to ' + this.state.contact[key].displayName || this.state.contact[key].firstName || this.state.contact[key].lastName)
                 }
             })
 
