@@ -9,7 +9,7 @@ class Copyright extends React.Component {
                 <div className="container">
                     <p>Copyright © 2020 OC Hit Academy - All Rights Reserved</p>
                 </div>
-            </div>
+            </div> 
         );
     }
 }
