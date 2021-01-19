@@ -7,7 +7,7 @@ import swal from "sweetalert"
 import openSocket from 'socket.io-client'
 
 class Chat extends React.Component {
-
+ 
     constructor(props) {
         super(props);
 
