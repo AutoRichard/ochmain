@@ -2,7 +2,7 @@
 const link = 'https://ochback.herokuapp.com';
 
 
-
+ 
 const update = (credentials, formData, id) => {
     return fetch(link + '/api/instructor/' + id, {
         method: 'POST',
