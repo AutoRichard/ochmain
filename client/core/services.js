@@ -3,6 +3,15 @@ import { Header } from './../menu/header';
 import auth from './../auth/auth-helper';
 import { plan } from './../api/api-subscription';
 import UpgradePlan from './../modal/upgradeplan';
+import Coach from '../modal/coach';
+
+import { listInstructor } from './../api/api-instructor';
+
+
+
+
+
+
 
 
 const ServiceList = () => {
@@ -224,296 +233,190 @@ Price: 25 Credits<br />
     );
 }
 
-const Coaching = () => {
-    return (
-        <section className=" text-center indivi-s">
-            <h1>INDIVIDUAL SESSIONS</h1>
-            <div className="line2"></div>
+class Coaching extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            instructor: [],
+            vocal: [],
+            guitar: [],
+            production: [],
+            career: [],
+            instructor_id: ''
+        }
+    }
+
+    readInstructor = () => {
+
+        if (auth.isAuthenticated()) {
+            listInstructor().then((data) => {
+                if (data.error) {
+                    alert(data.error)
+                } else {
+                    this.setState({
+                        vocal: data.filter(v => v.profession == 1),
+                        guitar: data.filter(v => v.profession == 2),
+                        production: data.filter(v => v.profession == 3),
+                        career: data.filter(v => v.profession == 4)
+                    })
+
+                    console.log(this.state)
 
 
-            <div className="container-fluid  position-relative">
-                <h2>VOCAL COACHING</h2>
-                <div className="row">
-                    <div className="col-md-6 col-lg-3">
-                        <div className="production-box">
-                            <img src="/client/assets/images/vc-1.png" />
-                            <div className="h-box">
-                                <h1>JACKIE HISHMEH	</h1>
+                }
+            });
+        }
+    }
+
+    componentDidMount() {
+        this.readInstructor();
+    }
+
+    checkAvailabilty = (data, e) => {
+        this.props.parentCheckAvailabilty(data)
+    }
+
+
+
+    render() {
+        return (
+            <section className=" text-center indivi-s">
+                <h1>INDIVIDUAL SESSIONS</h1>
+                <div className="line2"></div>
+
+
+                <div className="container-fluid  position-relative">
+                    <h2>VOCAL COACHING</h2>
+                    <div className="row">
+
+                        {this.state.vocal.map((el, i) =>
+
+                            <div className="col-md-6 col-lg-3">
+                                <div className="production-box">
+                                    <img style={{ width: 'auto', height: '20%', marginTop: '-70px' }} src={"https://ochback.herokuapp.com/api/instructorPhoto/" + el._id} />
+                                    <div className="h-box">
+                                        <h1>{el.name}	</h1>
+                                    </div>
+                                    <div className="h-content">
+                                        <p>{el.about}</p>
+
+                                        <h5>RATES:</h5>
+                                        <div className="line4"></div>
+
+                                        <h6>SINGLE SESSION (1 hr):<br /> {el.pricing} credits</h6>
+
+                                        <a href="" onClick={this.checkAvailabilty.bind(this, el)} data-toggle="modal" data-target="#coach" className="book-now tp">CHECK AVAILABILITY</a>
+                                    </div>
+                                </div>
                             </div>
-                            <div className="h-content">
-                                <p>Jackie is an experienced recording artist who teaches live performance techniques as well.</p>
 
-                                <h5>RATES:</h5>
-                                <div className="line4"></div>
+                        )}
 
-                                <h6>SINGLE SESSION (1 hr):<br />
-6 credits</h6>
-                                <h6>MONTHLY SUBSCRIPTION:<br />
-20 CREDITS / MONTH<br />
-(4 sessions)</h6>
-                                <a href="" data-toggle="modal" data-target="#coach" className="book-now tp">CHECK AVAILABILITY</a>
-                            </div>
-                        </div>
+
+
+
                     </div>
-                    <div className="col-md-6 col-lg-3">
-                        <div className="production-box">
-                            <img src="/client/assets/images/vc-2.png" />
-                            <div className="h-box">
-                                <h1>JESSICA CABRAL</h1>
-                            </div>
-                            <div className="h-content">
-                                <p>Jessica is an incredible powerhouse of a singer who grew up singing in church. She also received a golden ticket from J. Lo in American Idol.</p>
-
-                                <h5>RATES:</h5>
-                                <div className="line4"></div>
-
-                                <h6>SINGLE SESSION (1 hr):<br />
-6 credits</h6>
-                                <h6>MONTHLY SUBSCRIPTION:<br />
-20 CREDITS / MONTH<br />
-(4 sessions)</h6>
-                                <a href="#" className="book-now tp">CHECK AVAILABILITY</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-md-6 col-lg-3">
-                        <div className="production-box">
-                            <img src="/client/assets/images/vc-3.png" />
-                            <div className="h-box">
-                                <h1>NICK YOUNG</h1>
-                            </div>
-                            <div className="h-content">
-                                <p>Christine is one of our most talented vocal coaches.  </p>
-
-                                <h5>RATES:</h5>
-                                <div className="line4"></div>
-
-                                <h6>SINGLE SESSION (1 hr):<br />
-5 credits</h6>
-                                <h6>MONTHLY SUBSCRIPTION:<br />
-16 CREDITS / MONTH<br />
-(4 sessions)</h6>
-                                <a href="#" className="book-now tp">CHECK AVAILABILITY</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-md-6 col-lg-3">
-                        <div className="production-box">
-                            <img src="/client/assets/images/vc-4.png" />
-                            <div className="h-box">
-                                <h1>LACI MERCEDE</h1>
-                            </div>
-                            <div className="h-content">
-                                <p>Laci is very versatile vocalist and an accomplished actress as well. </p>
-
-                                <h5>RATES:</h5>
-                                <div className="line4"></div>
-
-                                <h6>SINGLE SESSION (1 hr):<br />
-4 credits</h6>
-                                <h6>MONTHLY SUBSCRIPTION:<br />
-12 CREDITS / MONTH<br />
-(4 sessions)</h6>
-                                <a href="#" className="book-now tp">CHECK AVAILABILITY</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div className="container-fluid  position-relative">
-                <h2>GUITAR</h2>
-                <div className="row">
-                    <div className="col-md-3 col-lg-3"></div>
-                    <div className="col-md-6 col-lg-3">
-                        <div className="production-box">
-                            <img src="/client/assets/images/gui1.png" />
-                            <div className="h-box">
-                                <h1>CORY YOUNG</h1>
-                            </div>
-                            <div className="h-content">
-                                <p>Cory is an unbelievably talented artist and guitarist. He masters every aspect of the craft.</p>
-
-                                <h5>RATES:</h5>
-                                <div className="line4"></div>
-
-                                <h6>SINGLE SESSION (1 hr):<br />
-6 credits</h6>
-                                <h6>MONTHLY SUBSCRIPTION:<br />
-20 CREDITS / MONTH<br />
-(4 sessions)</h6>
-                                <a href="#" className="book-now tp">CHECK AVAILABILITY</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-md-6 col-lg-3">
-                        <div className="production-box">
-                            <img src="/client/assets/images/gui2.png" />
-                            <div className="h-box">
-                                <h1>ROBBIE DEAN</h1>
-                            </div>
-                            <div className="h-content">
-                                <p>Robbie is an amazing artist and multi-instrumentalist</p>
-
-                                <h5>RATES:</h5>
-                                <div className="line4"></div>
-
-                                <h6>SINGLE SESSION (1 hr):<br />
-5 credits</h6>
-                                <h6>MONTHLY SUBSCRIPTION:<br />
-16 CREDITS / MONTH<br />
-(4 sessions)</h6>
-                                <a href="#" className="book-now tp">CHECK AVAILABILITY</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-md-3 col-lg-3"></div>
+                    {this.state.vocal.length == 0 ? <div className="col-md-6 col-lg-3 text-center">No Vocal Coaching Available</div> : ''}
                 </div>
 
+                <div className="container-fluid  position-relative">
+                    <h2>GUITAR</h2>
+                    <div className="row">
+                        {this.state.guitar.map((el, i) =>
 
+                            <div className="col-md-6 col-lg-3">
+                                <div className="production-box">
+                                    <img style={{ width: 'auto', height: '20%', marginTop: '-70px' }} src={"https://ochback.herokuapp.com/api/instructorPhoto/" + el._id} />
+                                    <div className="h-box">
+                                        <h1>{el.name}	</h1>
+                                    </div>
+                                    <div className="h-content">
+                                        <p>{el.about}</p>
 
+                                        <h5>RATES:</h5>
+                                        <div className="line4"></div>
 
+                                        <h6>SINGLE SESSION (1 hr):<br /> {el.pricing} credits</h6>
 
-                <h2>PRODUCTION</h2>
-                <div className="row">
-                    <div className="col-md-6 col-lg-3">
-                        <div className="production-box">
-                            <img src="/client/assets/images/p1.png" />
-                            <div className="h-box">
-                                <h1>NICK YOUNG</h1>
+                                        <a href="" onClick={this.checkAvailabilty.bind(this, el)} data-toggle="modal" data-target="#coach" className="book-now tp">CHECK AVAILABILITY</a>
+                                    </div>
+                                </div>
                             </div>
-                            <div className="h-content">
-                                <p>Nick is one of our new, supremely talented staff producers.  </p>
 
-                                <h5>RATES:</h5>
-                                <div className="line4"></div>
+                        )}
 
-                                <h6>SINGLE SESSION (1 hr):<br />
-4 credits</h6>
-                                <h6>MONTHLY SUBSCRIPTION:<br />
-12 CREDITS / MONTH<br />
-(4 sessions)</h6>
-                                <a href="#" className="book-now tp">CHECK AVAILABILITY</a>
-                            </div>
-                        </div>
+
                     </div>
-                    <div className="col-md-6 col-lg-3">
-                        <div className="production-box">
-                            <img src="/client/assets/images/p2.png" />
-                            <div className="h-box">
-                                <h1>ROBBIE DEAN</h1>
-                            </div>
-                            <div className="h-content">
-                                <p>Robbie is an experienced producer who has produced numerous EP’s as well as his own releases as an artist.</p>
+                    {this.state.guitar.length == 0 ? <div className="text-center">No Guitar Coaching Available</div> : ''}
 
-                                <h5>RATES:</h5>
-                                <div className="line4"></div>
 
-                                <h6>SINGLE SESSION (1 hr):<br />
-5 credits</h6>
-                                <h6>MONTHLY SUBSCRIPTION:<br />
-16 CREDITS / MONTH<br />
-(4 sessions)</h6>
-                                <a href="#" className="book-now tp">CHECK AVAILABILITY</a>
+
+
+
+                    <h2>PRODUCTION</h2>
+                    <div className="row">
+                        {this.state.production.map((el, i) =>
+
+                            <div className="col-md-6 col-lg-3">
+                                <div className="production-box">
+                                    <img style={{ width: 'auto', height: '20%', marginTop: '-70px' }} src={"https://ochback.herokuapp.com/api/instructorPhoto/" + el._id} />
+                                    <div className="h-box">
+                                        <h1>{el.name}	</h1>
+                                    </div>
+                                    <div className="h-content">
+                                        <p>{el.about}</p>
+
+                                        <h5>RATES:</h5>
+                                        <div className="line4"></div>
+
+                                        <h6>SINGLE SESSION (1 hr):<br /> {el.pricing} credits</h6>
+
+                                        <a href="" onClick={this.checkAvailabilty.bind(this, el)} data-toggle="modal" data-target="#coach" className="book-now tp">CHECK AVAILABILITY</a>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+
+                        )}
+
                     </div>
-                    <div className="col-md-6 col-lg-3">
-                        <div className="production-box">
-                            <img src="/client/assets/images/p3.png" />
-                            <div className="h-box">
-                                <h1>PAUL NAJERA</h1>
-                            </div>
-                            <div className="h-content">
-                                <p>Paul is a world-class music producer with credits on records by
-Grammy Award-winning artists. </p>
-
-                                <h5>RATES:</h5>
-                                <div className="line4"></div>
-
-                                <h6>SINGLE SESSION (1 hr):<br />
-5 credits</h6>
-                                <h6>MONTHLY SUBSCRIPTION:<br />
-16 CREDITS / MONTH<br />
-(4 sessions)</h6>
-                                <a href="#" className="book-now tp">CHECK AVAILABILITY</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-md-6 col-lg-3">
-                        <div className="production-box">
-                            <img src="/client/assets/images/p4.png" />
-                            <div className="h-box">
-                                <h1>THOMAS BARSOE</h1>
-                            </div>
-                            <div className="h-content">
-                                <p>THomas is the founder of OC Hit Academy and has produced more than 100 EP’s and albums.</p>
-
-                                <h5>RATES:</h5>
-                                <div className="line4"></div>
-
-                                <h6>SINGLE SESSION (20 MINS):<br />
-20 credits</h6>
-                                <h6>MONTHLY SUBSCRIPTION:<br />
-70 CREDITS / MONTH<br />
-(4 sessions)</h6>
-                                <a href="#" className="book-now tp">CHECK AVAILABILITY</a>
-                            </div>
-                        </div>
-                    </div>
+                    {this.state.production.length == 0 ? <div className="text-center">No Production Coaching Available</div> : ''}
                 </div>
-            </div>
 
-            <div className="container-fluid  position-relative">
-                <h1>CAREER COACHING</h1>
-                <div className="row">
-                    <div className="col-md-3 col-lg-3"></div>
-                    <div className="col-md-6 col-lg-3">
-                        <div className="production-box">
-                            <img src="/client/assets/images/cc1.png" />
-                            <div className="h-box">
-                                <h1>LAURIEANN GIBSON</h1>
+                <div className="container-fluid  position-relative">
+                    <h1>CAREER COACHING</h1>
+                    <div className="row">
+                        {this.state.career.map((el, i) =>
+
+                            <div className="col-md-6 col-lg-3">
+                                <div className="production-box">
+                                    <img style={{ width: 'auto', height: '20%', marginTop: '-70px' }} src={"https://ochback.herokuapp.com/api/instructorPhoto/" + el._id} />
+                                    <div className="h-box">
+                                        <h1>{el.name}	</h1>
+                                    </div>
+                                    <div className="h-content">
+                                        <p>{el.about}</p>
+
+                                        <h5>RATES:</h5>
+                                        <div className="line4"></div>
+
+                                        <h6>SINGLE SESSION (1 hr):<br /> {el.pricing} credits</h6>
+
+                                        <a href="" onClick={this.checkAvailabilty.bind(this, el)} data-toggle="modal" data-target="#coach" className="book-now tp">CHECK AVAILABILITY</a>
+                                    </div>
+                                </div>
                             </div>
-                            <div className="h-content">
-                                <p>LaurieAnn has worked with some of the biggest stars in the world: Michael Jackson, Beyoncé, Lady Gaga, Alicia Keyes, Katy Perry & P Diddy.</p>
+                        )}
 
-                                <h5>RATES:</h5>
-                                <div className="line4"></div>
 
-                                <h6>SINGLE SESSION (20 MINS):<br />
-75 credits</h6>
-                                <h6>MONTHLY SUBSCRIPTION:<br />
-N/A</h6>
-                                <a href="#" className="book-now tp">CHECK AVAILABILITY</a>
-                            </div>
-                        </div>
+
                     </div>
-                    <div className="col-md-6 col-lg-3">
-                        <div className="production-box">
-                            <img src="/client/assets/images/p4.png" />
-                            <div className="h-box">
-                                <h1>THOMAS BARSOE</h1>
-                            </div>
-                            <div className="h-content">
-                                <p>Thomas is the founder of OC Hit Academy and has been engaged in talent development for more than a decade. </p>
-
-                                <h5>RATES:</h5>
-                                <div className="line4"></div>
-
-                                <h6>SINGLE SESSION (20 MINS):<br />
-20 credits</h6>
-                                <h6>MONTHLY SUBSCRIPTION:<br />
-70 CREDITS / MONTH<br />
-(4 sessions)</h6>
-                                <a href="#" className="book-now tp">CHECK AVAILABILITY</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-md-3 col-lg-3"></div>
+                    {this.state.career.length == 0 ? <div className="text-center">No Career Coaching Available</div> : ''}
                 </div>
-            </div>
-        </section>
-    );
+            </section>
+        );
+    }
+
 }
 
 class Plan extends Component {
@@ -697,10 +600,16 @@ class Services extends Component {
         super(props);
 
         this.state = {
-
+            instructor_id: ''
         }
 
 
+    }
+
+    _parentAvailabilty = (data) => {
+        this.setState({ instructor_id: data._id })
+
+        console.log(data._id)
     }
 
 
@@ -716,9 +625,17 @@ class Services extends Component {
 
                 <Session />
 
+                <Coaching
+                    parentCheckAvailabilty={this._parentAvailabilty}
+                />
+
                 <Plan />
 
                 <Production />
+
+                <Coach
+                    _id={this.state.instructor_id}
+                />
 
             </div>
         )

@@ -2817,7 +2817,7 @@ input.count {
 }
 .modal-body.bg-white:before {
 	content:"";
-    background: url(images/powered.jpg);
+    /*background: url(images/powered.jpg);*/
     width: 100px;
     height: 100px;
     position: absolute;

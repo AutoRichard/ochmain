@@ -735,7 +735,7 @@ class Video extends Component {
         var videoId = _linkArr[_linkArr.length - 1];
 
         if (videoId.startsWith('watch?v=')) {
-            let _videoId = videoId.replace('watch?v=', '')
+            let _videoId = videoId.replace('watch?v=', '') 
             videoId = _videoId;
         }
 

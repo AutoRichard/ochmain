@@ -95,7 +95,7 @@ class Meeting extends Component {
             <div>
                 <Header
                     path={this.props.location.pathname}
-                />
+                /> 
 
                 <section className="padd-b padd-top">
                     <div className="container-fluid">
