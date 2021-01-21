@@ -89,12 +89,12 @@ module.exports = {
             'Access-Control-Allow-Origin': https ? 'https://0.0.0.0:' + port : 'http://0.0.0.0:' + port
         }
     },
-    mode: 'production',
+    mode: 'development',
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
         new webpack.DefinePlugin({
-            'process.env.NODE_ENV': JSON.stringify('production'),
-            'process.env.BABEL_ENV': JSON.stringify('production'),
+            'process.env.NODE_ENV': JSON.stringify('development'),
+            'process.env.BABEL_ENV': JSON.stringify('development'),
         })
     ],
 };
