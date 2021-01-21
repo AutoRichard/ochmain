@@ -7,7 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "heroku-postbuild": "npm install --dev",
-    "start": "set NODE_ENV=production && set NODE_OPTIONS=--max_old_space_size=8172 && set BABEL_ENV=production && webpack-dev-server --config webpack.config.prod.js",
+    "start": "set NODE_ENV=production && set BABEL_ENV=production && webpack-dev-server --config webpack.config.prod.js",
     "https": "set NODE_ENV=development && set BABEL_ENV=development && webpack-dev-server --config webpack.config.dev.js --https true --open https://localhost:9999/index.html --watch",
     "http": "set NODE_ENV=development && set BABEL_ENV=development && webpack-dev-server --config webpack.config.dev.js --https false --open https://localhost:9999/index.html --watch"
   },

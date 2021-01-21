@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Header } from './../menu/header';
 import { createNews } from './../api/api-newsletter'
 import swal from 'sweetalert'
-        
+         
 
 const Description = () => {
     return (
