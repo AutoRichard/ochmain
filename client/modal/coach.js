@@ -63,7 +63,7 @@ class MyCalendar extends Component {
                     startAccessor="start"
                     endAccessor="end"
                     views={['month', 'week']}
-                    onSelectEvent={event => swal(event.title, {
+                    onSelectEvent={event => swal('Title: '+event.title+'\nStart Time: '+moment(event.start).format("YYYY-MM-DD HH:mm")+'\nEnd Time: '+moment(event.end).format("YYYY-MM-DD HH:mm"), {
                         buttons: {
                             cancel: "cancel",
                             catch: {
