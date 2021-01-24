@@ -5,8 +5,10 @@ import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from 'moment'
 import swal from 'sweetalert'
 
-import { listById } from './../api/api-instructor';
+import { listById, bookEvent, findEvent } from './../api/api-instructor';
+import { read } from './../api/api-user';
 import auth from './../auth/auth-helper';
+
 
 // Setup the localizer by providing the moment (or globalize) Object
 // to the correct localizer.
@@ -24,22 +26,30 @@ class MyCalendar extends Component {
         }
     }
 
-    handleSelect = ({ start, end }) => {
-        const title = window.prompt('New Event name')
-        const link = window.prompt('Zoom link')
+    bookEvent = (data) => {
+        //console.log(this.props)
+        //console.log(data)
 
-        if (title, link)
-            this.setState({
-                events: [
-                    ...this.state.events,
-                    {
-                        start,
-                        end,
-                        title,
-                        link
-                    },
-                ],
-            })
+        let booking = {
+            'userId': this.props.userId,
+            'eventId': data._id,
+            '_id': this.props.instructorId,
+            'pricing': this.props.pricing
+        }
+
+        bookEvent(booking).then((data) => {
+            if (data.error) {
+                swal(data.error, '', "warning");
+            } else {
+                swal(data.message, '', "success").then((value) => {
+                    window.location = '/services'
+                })
+            }
+        })
+
+
+
+
     }
 
     render() {
@@ -53,22 +63,23 @@ class MyCalendar extends Component {
                     startAccessor="start"
                     endAccessor="end"
                     views={['month', 'week']}
-                    onSelectEvent={event => swal(event.title/*, {
+                    onSelectEvent={event => swal(event.title, {
                         buttons: {
                             cancel: "cancel",
                             catch: {
-                                text: "Book Now",
-                                value: "catch",
+                                text: event.booked == true ? "Not Available" : "Book Now",
+                                value: event.booked == true ? "cancel" : "catch",
                             },
                         },
                     })
                         .then((value) => {
                             switch (value) {
                                 case "catch":
-                                    swal("Booked!", '', "success");
+                                    this.bookEvent(event)
+                                    //swal("Booked!", '', "success");
                                     break;
                             }
-                        }*/)}
+                        })}
                 />
             </div>
         );
@@ -86,7 +97,9 @@ class Coach extends React.Component {
         this.state = {
             events: [],
             Instructor_id: '',
-            Instructor: []
+            Instructor: {},
+            user_id: '',
+            creditBalance: 0
         }
     }
 
@@ -109,7 +122,9 @@ class Coach extends React.Component {
                             start: startTime,
                             end: endTime,
                             title: el.title,
-                            link: el.link
+                            link: el.link,
+                            _id: el._id,
+                            booked: el.booked
                         }
                     })
 
@@ -121,11 +136,34 @@ class Coach extends React.Component {
 
     }
 
+    componentDidMount() {
+        this.readUser();
+
+
+    }
+
     componentDidUpdate(prevProps) {
         if (this.props._id !== this.state.Instructor_id) {
             this.setState({ Instructor_id: this.props._id })
 
             this.readEvent(this.props._id)
+        }
+    }
+
+    readUser = () => {
+        if (auth.isAuthenticated()) {
+            const jwt = auth.isAuthenticated();
+            const userId = jwt.user._id;
+            const token = jwt.token;
+            read({
+                userId: userId
+            }, { t: token }).then((data) => {
+                if (data.error) {
+                    swal(data.error)
+                } else {
+                    this.setState({ user_id: data._id || '', creditBalance: data.creditBalance || 0 });
+                }
+            })
         }
     }
 
@@ -142,7 +180,7 @@ class Coach extends React.Component {
 
                         <div className="modal-body bg-white">
                             <div className="row">
-                                <div className="col-md-12 col-lg-4 bod"> 
+                                <div className="col-md-12 col-lg-4 bod">
                                     <img style={{ width: 'auto', height: '20%' }} src={"https://ochback.herokuapp.com/api/instructorPhoto/" + this.state.Instructor._id} />
 
                                     <h5>{this.state.Instructor.name}</h5>
@@ -171,14 +209,18 @@ class Coach extends React.Component {
                                         </label>
                                     </div>*/}
                                     <div className="text-center">
-                                        <a href="#" className="book-now m-b">BOOK NOW</a>
-                                        <p>(42 CREDITS AVAILABLE)</p>
+                                        <p>SINGLE SESSION (1 hr):<br /> {this.state.Instructor.pricing} credits</p>
+                                        <p>({this.state.creditBalance} CREDITS AVAILABLE)</p>
                                     </div>
                                 </div>
                                 <div className="col-md-12 col-lg-8 spc">
                                     <br />
                                     <MyCalendar
                                         events={this.state.events}
+                                        balance={this.state.creditBalance}
+                                        pricing={this.state.Instructor.pricing}
+                                        userId={this.state.user_id}
+                                        instructorId={this.state.Instructor_id}
                                     />
                                 </div>
 

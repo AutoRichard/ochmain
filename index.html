@@ -11,10 +11,10 @@
     <title>React App</title>
 
     <!--Template-->
-    
+
     <link href="/client/assets/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/client/assets/css/javascript-calendar.css" type="text/css">    
-    
+    <link rel="stylesheet" href="/client/assets/css/javascript-calendar.css" type="text/css">
+
     <link href="/client/assets/images/fav-icon.png" rel="icon">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -56,6 +56,21 @@
         .swal-button--confirm {
             background: #fc4349;
         }
+
+        .swal-button--catch {
+            background: #fc4349;
+        }
+
+        .swal-button--catch:hover {
+            background: #fc4349 !important;
+        }
+
+        .rbc-event {
+            background: #fc4349 !important;
+        }
+
+
+
 
         .__circular6 {
             width: 40px !important;
@@ -921,6 +936,27 @@
                     }
                 }
             });
+            $("#instructor-lists").owlCarousel({
+
+                margin: 20,
+                nav: true,
+                loop: true,
+                navText: ["<div class='nav-btn prev-btn'>Pre</div>", "<div class='nav-btn next-btn'>Next</div>"],
+                dots: true,
+                responsive: {
+                    0: {
+                        items: 1,
+                        margin: 5
+                    },
+                    1000: {
+                        items: 2
+                    },
+                    1100: {
+                        items: 3
+                    }
+                }
+            });
+
         });
     </script>
 

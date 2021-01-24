@@ -261,8 +261,6 @@ class Coaching extends Component {
                         career: data.filter(v => v.profession == 4)
                     })
 
-                    console.log(this.state)
-
 
                 }
             });
@@ -457,8 +455,6 @@ class Plan extends Component {
         this.setState({
             plan_id: data
         })
-
-        console.log(data)
     }
 
     render() {

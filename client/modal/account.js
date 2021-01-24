@@ -10,6 +10,8 @@ import { listBooking } from './../api/api-booking';
 import BillingAddress from './billingAddress';
 //import moment from 'moment';
 
+import { findEvent } from './../api/api-instructor'
+
 import { UserAndSubscription } from './../api/api-subscription'
 import moment from "moment";
 
@@ -402,7 +404,7 @@ class Billing extends React.Component {
         }
 
         this.userSubscription()
-    } 
+    }
 
 
     userSubscription = () => {
@@ -793,6 +795,119 @@ class Password extends React.Component {
     }
 }
 
+class Instructor extends React.Component {
+
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            instructors: [],
+            instructor_id: '',
+            name: ''
+        }
+    }
+
+    componentDidMount() {
+        this._listBooking()
+    }
+
+    _listBooking = () => {
+
+        if (auth.isAuthenticated()) {
+            const jwt = auth.isAuthenticated();
+            const user_id = jwt.user._id;
+
+            findEvent({
+                userId: user_id
+            }).then((data) => {
+                if (data.error) {
+                    swal(data.error)
+                } else {
+
+                    console.log(data)
+                    this.setState({ instructors: data[0].event, name: data[0].name, instructor_id: data[0]._id })
+
+                    if ($('#instructor-lists').hasClass('owl-theme')) {
+                        //resize event was triggering an error, this if statement is to go around it
+
+
+                        $('#instructor-lists').trigger('destroy.owl.carousel'); //these 3 lines kill the owl, and returns the markup to the initial state
+                        $('#instructor-lists').find('.owl-stage-outer').children().unwrap();
+                        $('#instructor-lists').removeClass("owl-center owl-loaded owl-text-select-on");
+
+                        $("#instructor-lists").owlCarousel({
+                            margin: 20,
+                            nav: true,
+                            loop: false,
+                            singleItem: true,
+                            navText: ["<div class='nav-btn prev-btn'>Pre</div>", "<div class='nav-btn next-btn'>Next</div>"],
+                            dots: true,
+                            responsive: {
+                                0: {
+                                    items: 1,
+                                    margin: 5
+                                },
+                                1000: {
+                                    items: 2
+                                },
+                                1100: {
+                                    items: 3
+                                }
+                            }
+                        }); //re-initialise the owl
+                    }
+
+                }
+            })
+        }
+
+
+    }
+
+    __moment = (time) => {
+        return time;
+    }
+
+    render() {
+        return (
+            <div>
+                <div id="instructor-lists" className="owl-carousel owl-theme">
+
+                    {this.state.instructors.map((el, i) =>
+
+                        <div className="item">
+                            <div className="border-box text-center">
+                                <img src={'https://ochback.herokuapp.com/api/instructorPhoto/' + this.state.instructor_id} className="user-dpz" />
+                                <h4>{this.state.name}</h4>
+
+                                <h5>DETAILS:</h5>
+                                <div className="line3"></div>
+                                <div className="time-icon"><img src="/client/assets/images/time-icon.png" /></div>
+                                <h5>{moment(el.start).format("YYYY-MM-DD HH:mm")}</h5>
+                                <div className="video-ic"><img src="/client/assets/images/video-cam.png" /></div>
+                                <h5>{el.title}<br />(ZOOM SESSION)</h5>
+                               
+                                {moment(new Date()).isAfter(new Date(el.start)) === true ? (<div className="join-cover">
+                                    {moment(new Date(el.start)).add(60, 'minutes').isAfter(new Date) == true ? (<a href={el.link} className="g-btn">JOIN SESSION</a>) : <a href="javascript:void(0)" className="g-btn">EXPIRED</a>}
+                                </div>) : ('')}
+                                {moment(new Date()).isAfter(new Date(el.start)) === false ? (<span>(START {moment(el.start).fromNow()} PRIOR)</span>) : ('Not Available')}
+                            
+                            </div>
+                        </div>
+
+                    )}
+
+
+
+
+                </div>
+            </div>
+
+        );
+    }
+
+}
+
 class Account extends React.Component {
 
     constructor(props) {
@@ -898,6 +1013,7 @@ class Account extends React.Component {
                                                 <li>BUY CREDITS</li>
                                                 <li>MY BOOKINGS</li>
                                                 <li>CHANGE PASSWORD</li>
+                                                <li>MY INSTRUCTORS</li>
 
 
                                             </ul>
@@ -923,6 +1039,8 @@ class Account extends React.Component {
                                             <Booking />
 
                                             <Password />
+
+                                            <Instructor />
                                         </div>
 
 
