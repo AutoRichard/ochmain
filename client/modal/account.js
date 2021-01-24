@@ -801,9 +801,7 @@ class Instructor extends React.Component {
         super(props)
 
         this.state = {
-            instructors: [],
-            instructor_id: '',
-            name: ''
+            instructors: []
         }
     }
 
@@ -823,9 +821,8 @@ class Instructor extends React.Component {
                 if (data.error) {
                     swal(data.error)
                 } else {
-
                     console.log(data)
-                    this.setState({ instructors: data[0].event, name: data[0].name, instructor_id: data[0]._id })
+                    this.setState({ instructors: data })
 
                     if ($('#instructor-lists').hasClass('owl-theme')) {
                         //resize event was triggering an error, this if statement is to go around it
@@ -877,20 +874,20 @@ class Instructor extends React.Component {
 
                         <div className="item">
                             <div className="border-box text-center">
-                                <img src={'https://ochback.herokuapp.com/api/instructorPhoto/' + this.state.instructor_id} className="user-dpz" />
-                                <h4>{this.state.name}</h4>
+                                <img src={'https://ochback.herokuapp.com/api/instructorPhoto/' + el._id} className="user-dpz" />
+                                <h4>{el.name}</h4>
 
                                 <h5>DETAILS:</h5>
                                 <div className="line3"></div>
                                 <div className="time-icon"><img src="/client/assets/images/time-icon.png" /></div>
-                                <h5>{moment(el.start).format("YYYY-MM-DD HH:mm")}</h5>
+                                <h5>{moment(el.event.start).format("YYYY-MM-DD HH:mm")}</h5>
                                 <div className="video-ic"><img src="/client/assets/images/video-cam.png" /></div>
-                                <h5>{el.title}<br />(ZOOM SESSION)</h5>
+                                <h5>{el.event.title}<br />(ZOOM SESSION)</h5>
                                
-                                {moment(new Date()).isAfter(new Date(el.start)) === true ? (<div className="join-cover">
-                                    {moment(new Date(el.start)).add(60, 'minutes').isAfter(new Date) == true ? (<a href={el.link} className="g-btn">JOIN SESSION</a>) : <a href="javascript:void(0)" className="g-btn">EXPIRED</a>}
+                                {moment(new Date()).isAfter(new Date(el.event.start)) === true ? (<div className="join-cover">
+                                    {moment(new Date(el.event.start)).add(60, 'minutes').isAfter(new Date) == true ? (<a href={el.event.link} className="g-btn">JOIN SESSION</a>) : <a href="javascript:void(0)" className="g-btn">EXPIRED</a>}
                                 </div>) : ('')}
-                                {moment(new Date()).isAfter(new Date(el.start)) === false ? (<span>(START {moment(el.start).fromNow()} PRIOR)</span>) : ('Not Available')}
+                                {moment(new Date()).isAfter(new Date(el.event.start)) === false ? (<span>(START {moment(el.event.start).fromNow()} PRIOR)</span>) : ('Not Available')}
                             
                             </div>
                         </div>
