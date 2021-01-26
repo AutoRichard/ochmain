@@ -292,7 +292,7 @@ class Coaching extends Component {
 
                             <div className="col-md-6 col-lg-3">
                                 <div className="production-box">
-                                    <img style={{ width: 'auto', height: '20%', marginTop: '-70px' }} src={"https://ochback.herokuapp.com/api/instructorPhoto/" + el._id} />
+                                    <img style={{ width: '45%', height: '20%', marginTop: '-70px' }} src={"https://ochback.herokuapp.com/api/instructorPhoto/" + el._id} />
                                     <div className="h-box">
                                         <h1>{el.name}	</h1>
                                     </div>
@@ -325,7 +325,7 @@ class Coaching extends Component {
 
                             <div className="col-md-6 col-lg-3">
                                 <div className="production-box">
-                                    <img style={{ width: 'auto', height: '20%', marginTop: '-70px' }} src={"https://ochback.herokuapp.com/api/instructorPhoto/" + el._id} />
+                                    <img style={{ width: '45%', height: '20%', marginTop: '-70px' }} src={"https://ochback.herokuapp.com/api/instructorPhoto/" + el._id} />
                                     <div className="h-box">
                                         <h1>{el.name}	</h1>
                                     </div>
@@ -358,7 +358,7 @@ class Coaching extends Component {
 
                             <div className="col-md-6 col-lg-3">
                                 <div className="production-box">
-                                    <img style={{ width: 'auto', height: '20%', marginTop: '-70px' }} src={"https://ochback.herokuapp.com/api/instructorPhoto/" + el._id} />
+                                    <img style={{ width: '45%', height: '20%', marginTop: '-70px' }} src={"https://ochback.herokuapp.com/api/instructorPhoto/" + el._id} />
                                     <div className="h-box">
                                         <h1>{el.name}	</h1>
                                     </div>
@@ -388,7 +388,7 @@ class Coaching extends Component {
 
                             <div className="col-md-6 col-lg-3">
                                 <div className="production-box">
-                                    <img style={{ width: 'auto', height: '20%', marginTop: '-70px' }} src={"https://ochback.herokuapp.com/api/instructorPhoto/" + el._id} />
+                                    <img style={{ width: '45%', height: '20%', marginTop: '-70px' }} src={"https://ochback.herokuapp.com/api/instructorPhoto/" + el._id} />
                                     <div className="h-box">
                                         <h1>{el.name}	</h1>
                                     </div>
