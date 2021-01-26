@@ -181,7 +181,7 @@ class Coach extends React.Component {
                         <div className="modal-body bg-white">
                             <div className="row">
                                 <div className="col-md-12 col-lg-4 bod">
-                                    <img style={{ width: 'auto', height: '20%' }} src={"https://ochback.herokuapp.com/api/instructorPhoto/" + this.state.Instructor._id} />
+                                    <img style={{ width: '45%', height: '20%' }} src={"https://ochback.herokuapp.com/api/instructorPhoto/" + this.state.Instructor._id} />
 
                                     <h5>{this.state.Instructor.name}</h5>
                                     <h4>{this.state.Instructor.profession == 1 ? 'Vocal Coaching' : ''}</h4>
