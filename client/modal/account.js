@@ -883,12 +883,12 @@ class Instructor extends React.Component {
                                 <h5>{moment(el.event.start).format("YYYY-MM-DD HH:mm")}</h5>
                                 <div className="video-ic"><img src="/client/assets/images/video-cam.png" /></div>
                                 <h5>{el.event.title}<br />(ZOOM SESSION)</h5>
-                               
+
                                 {moment(new Date()).isAfter(new Date(el.event.start)) === true ? (<div className="join-cover">
-                                    {moment(new Date(el.event.start)).add(60, 'minutes').isAfter(new Date) == true ? (<a href={el.event.link} className="g-btn">JOIN SESSION</a>) : <a href="javascript:void(0)" className="g-btn">EXPIRED</a>}
+                                    {moment(new Date(el.event.start)).add(60, 'minutes').isAfter(new Date) == true ? (<a href={"/zoomin.html?event_id=" + el.event._id +"&instructor_id=" + el._id} className="g-btn">JOIN SESSION</a>) : <a href="javascript:void(0)" className="g-btn">EXPIRED</a>}
                                 </div>) : ('')}
                                 {moment(new Date()).isAfter(new Date(el.event.start)) === false ? (<span>(START {moment(el.event.start).fromNow()} PRIOR)</span>) : ('Not Available')}
-                            
+
                             </div>
                         </div>
 

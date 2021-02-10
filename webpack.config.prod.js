@@ -15,7 +15,10 @@ module.exports = {
         ],
         meeting: [
             './client/api-zoom/meeting.js'
-        ]
+        ],
+        zoomin: [
+            './client/api-zoom/zoomin.js'
+        ],
     },
     output: {
         path: path.resolve(__dirname, '/static'),
