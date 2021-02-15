@@ -74,7 +74,7 @@ class Meeting extends React.Component {
                     success: function () {
                         console.log(meetingConfig);
                         //console.log("signature", signature);
-                        $.i18n.reload(meetingConfig.lang);
+                        //$.i18n.reload(meetingConfig.lang);
                         ZoomMtg.join({
                             meetingNumber: meetingConfig.meetingNumber,
                             userName: meetingConfig.userName,
