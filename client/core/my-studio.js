@@ -209,38 +209,42 @@ class Studios extends Component {
                         <div className="line2"></div>
                     </div>
 
-                    {this.state.meetingsLengthVS == 0 ? <div className="text-center">NO MEETING CREATED YET <a href="/meeting" className="watch-btn marg m-s">CREATE MEETING</a></div> :
-                        <div id="v-studio" className="owl-carousel owl-theme">
+                    {this.state.meetingsLengthVS == 0 ? <div className="text-center">NO SESSION CREATED YET <a href="/meeting" className="watch-btn marg m-s">CREATE SESSION</a></div> :
 
-                            {this.state.meetingVS.map((el, i) =>
+                        <div>
+                            <div id="v-studio" className="owl-carousel owl-theme">
+
+                                {this.state.meetingVS.map((el, i) =>
 
 
-                                <div className="item">
-                                    <div className="v-box">
-                                        <h3>{el.topic.substring(0, 15)}</h3>
-                                        <div className="request-box">
-                                            <img src="/client/assets/images/v1.jpg" className="img-responsive" />
-                                            <div className="request-text animate__animated animate__fadeIn">
-                                                {moment(new Date()).isAfter(new Date(el.start_time)) === false ? (<h5>(START {moment(el.start_time).fromNow()} PRIOR)</h5>) : (<h5></h5>)}
-                                                {moment(new Date()).isAfter(new Date(el.start_time)) === true ? (<div>
-                                                    {moment(new Date(el.start_time)).add(el.duration, 'minutes').isAfter(new Date) == true ? (<a href={"/zoom.html?meeting_id=" + el._id} className="book-now">JOIN SESSION</a>) : <a href="javascript:void(0)" className="book-now">EXPIRED</a>}
-                                                </div>) : ('')}
+                                    <div className="item">
+                                        <div className="v-box">
+                                            <h3>{el.topic.substring(0, 15)}</h3>
+                                            <div className="request-box">
+                                                <img src="/client/assets/images/v1.jpg" className="img-responsive" />
+                                                <div className="request-text animate__animated animate__fadeIn">
+                                                    {moment(new Date()).isAfter(new Date(el.start_time)) === false ? (<h5>(START {moment(el.start_time).fromNow()} PRIOR)</h5>) : (<h5></h5>)}
+                                                    {moment(new Date()).isAfter(new Date(el.start_time)) === true ? (<div>
+                                                        {moment(new Date(el.start_time)).add(el.duration, 'minutes').isAfter(new Date) == true ? (<a href={"/zoom.html?meeting_id=" + el._id} className="book-now">JOIN SESSION</a>) : <a href="javascript:void(0)" className="book-now">EXPIRED</a>}
+                                                    </div>) : ('')}
+                                                </div>
                                             </div>
+                                            {moment(new Date(el.start_time)).add(el.duration, 'minutes').isAfter(new Date) == true ? (<a href="#" onClick={this.openMeeting.bind(this, el)} data-toggle="modal" data-target="#v-st" className="book-now">INVITE</a>) : ('')}
                                         </div>
-                                        {moment(new Date(el.start_time)).add(el.duration, 'minutes').isAfter(new Date) == true ? (<a href="#" onClick={this.openMeeting.bind(this, el)} data-toggle="modal" data-target="#v-st" className="book-now">INVITE</a>) : ('')}
                                     </div>
-                                </div>
-                            )}
+                                )}
+                            </div>
+                            <div className="text-center"><a href="/meeting" className="watch-btn marg m-s">CREATE SESSION</a></div>
                         </div>
                     }
 
-                    <div className="text-center st-head">
+                    {/*<div className="text-center st-head">
                         <h2 className="text-center">VIRTUAL AUDITORIUMS (ZOOM)</h2>
-                        <span>(ZOOM VIDEO MEETING - UP TO 500 PEOPLE)</span>
+                        <span>(ZOOM VIDEO SESSION - UP TO 500 PEOPLE)</span>
                         <div className="line2"></div>
                     </div>
 
-                    {this.state.meetingsLengthVA == 0 ? <div className="text-center">NO MEETING CREATED YET <a href="/meeting" className="watch-btn marg m-s">CREATE MEETING</a></div> :
+                    {this.state.meetingsLengthVA == 0 ? <div className="text-center">NO SESSION CREATED YET <a href="/meeting" className="watch-btn marg m-s">CREATE SESSION</a></div> :
                         <div id="v-audi" className="owl-carousel owl-theme">
 
                             {this.state.meetingVA.reverse().map((el, i) =>
@@ -264,14 +268,14 @@ class Studios extends Component {
                             )}
 
                         </div>
-                    }
+                    }*/}
 
-                    <div className="text-center rs">
+                    {/*<div className="text-center rs">
                         <h1>RECORDING STUDIOS</h1>
                         <p>(TUSTIN, ORANGE COUNTY, USA & COPENHAGEN, DENMARK)</p>
                         <div className="line2"></div>
                     </div>
-                    {this.state.meetingsLengthRS == 0 ? <div className="text-center">NO MEETING CREATED YET <a href="/meeting" className="watch-btn marg m-s">CREATE MEETING</a></div> :
+                    {this.state.meetingsLengthRS == 0 ? <div className="text-center">NO SESSION CREATED YET <a href="/meeting" className="watch-btn marg m-s">CREATE SESSION</a></div> :
                         <div id="v-record" className="owl-carousel owl-theme">
                             {this.state.meetingRS.reverse().map((el, i) =>
                                 <div className="item">
@@ -291,7 +295,7 @@ class Studios extends Component {
                                 </div>
                             )}
                         </div>
-                    }
+                    }*/}
                     <p className="text-center">If you have any questions regarding studio bookings, don’t hesitate to contact us by clicking the button below.</p>
                     <div className="text-center"><a href="/contact" className="watch-btn marg m-s">CONTACT US</a></div>
                 </div>

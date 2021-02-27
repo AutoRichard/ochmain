@@ -125,11 +125,11 @@ class Booking extends React.Component {
                                         </div>
                                         <span class="s-text">START TIME : {moment(this.state.start_time).format("YYYY-MM-DD HH:mm")}</span>
 
-                                        <h3 class="total-p">TOTAL PRICE - {this.state.credit} CREDits<br />
+                                        {/*<h3 class="total-p">TOTAL PRICE - {this.state.credit} CREDits<br />
 
 
                                                 ({this.state.creditBalance} Credits available)</h3>
-                                        {/*<a href="#" class="book-now sp">BUY CREDITS</a>*/}
+                                        <a href="#" class="book-now sp">BUY CREDITS</a>*/}
                                         <a href="#" onClick={this.booking} class="book-now-green">BOOK NOW &#10094;</a>
                                     </div>
                                 </div>

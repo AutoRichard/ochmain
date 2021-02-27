@@ -100,7 +100,7 @@ class Meeting extends Component {
                 <section className="padd-b padd-top">
                     <div className="container-fluid">
                         <div className="text-center studio">
-                            <h1>Meeting Creation Form</h1>
+                            <h1>Session Creation Form</h1>
                             <div className="div-box"></div>
                         </div>
 

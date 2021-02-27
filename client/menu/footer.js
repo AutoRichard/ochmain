@@ -41,9 +41,9 @@ class Footer extends React.Component {
                                 {this.state.checkAuthenticated ? (<li className={this.props.path == '/studio' ? "nav-item active" : "nav-item"}>
                                     <a href="/studio">STUDIOS</a>
                                 </li>) : ''}
-                                {this.state.checkAuthenticated ? (<li className={this.props.path == '/meeting' ? "nav-item active" : "nav-item"}>
-                                    <a href="/meeting">MEETING</a>
-                                </li>) : ''}
+                                {/*this.state.checkAuthenticated ? (<li className={this.props.path == '/meeting' ? "nav-item active" : "nav-item"}>
+                                    <a href="/meeting">SESSION</a>
+                                </li>) : ''*/}
                                 <li className={this.props.path == '/news' ? "nav-item active" : "nav-item"}>
                                     <a href="/news">NEWS</a>
                                 </li>
