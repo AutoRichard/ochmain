@@ -125,8 +125,8 @@ class Meeting extends Component {
                                     <select id="mySelect" name="category" onChange={this.onchange} value={this.state.category} data-show-content="true" className="form-control textArea">
                                         <option >Select Category</option>
                                         <option selected value="1">VIRTUAL STUDIOS</option>
-                                        <option value="2">VIRTUAL AUDITORIUMS</option>
-                                        <option value="3">RECORDING STUDIOS</option>
+                                        {/*<option value="2">VIRTUAL AUDITORIUMS</option>
+                                        <option value="3">RECORDING STUDIOS</option>*/}
                                     </select>
                                 </div>
                             </div>

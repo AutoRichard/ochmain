@@ -17,6 +17,7 @@ import { listInstructor } from './../api/api-instructor';
 const ServiceList = () => {
     return (
         <section className="plans padd-t">
+            <br /><br /><br />
             <div className="container-fluid">
                 <div className="heading-area">
                     <h1>SERVICES</h1>
