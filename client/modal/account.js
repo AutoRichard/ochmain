@@ -11,6 +11,7 @@ import BillingAddress from './billingAddress';
 //import moment from 'moment';
 
 import { findEvent } from './../api/api-instructor'
+import { listJSession } from './../api/api-session'
 
 import { UserAndSubscription } from './../api/api-subscription'
 import moment from "moment";
@@ -885,9 +886,120 @@ class Instructor extends React.Component {
                                 <h5>{el.event.title}<br />(ZOOM SESSION)</h5>
 
                                 {moment(new Date()).isAfter(new Date(el.event.start)) === true ? (<div className="join-cover">
-                                    {moment(new Date(el.event.start)).add(60, 'minutes').isAfter(new Date) == true ? (<a href={"/zoomin.html?event_id=" + el.event._id +"&instructor_id=" + el._id} className="g-btn">JOIN SESSION</a>) : <a href="javascript:void(0)" className="g-btn">EXPIRED</a>}
+                                    {moment(new Date(el.event.start)).add(60, 'minutes').isAfter(new Date) == true ? (<a href={"/zoomin.html?event_id=" + el.event._id + "&instructor_id=" + el._id} className="g-btn">JOIN SESSION</a>) : <a href="javascript:void(0)" className="g-btn">EXPIRED</a>}
                                 </div>) : ('')}
                                 {moment(new Date()).isAfter(new Date(el.event.start)) === false ? (<span>(START {moment(el.event.start).fromNow()} PRIOR)</span>) : ('Not Available')}
+
+                            </div>
+                        </div>
+
+                    )}
+
+
+
+
+                </div>
+            </div>
+
+        );
+    }
+
+}
+
+class Session extends React.Component {
+
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            session: []
+        }
+    }
+
+    componentDidMount() {
+        this._listBooking()
+    }
+
+    _listBooking = () => {
+
+        if (auth.isAuthenticated()) {
+            const jwt = auth.isAuthenticated();
+            const user_id = jwt.user._id;
+
+            listJSession({
+                user_id: user_id
+            }).then((data) => {
+                if (data.error) {
+                    swal(data.error)
+                } else {
+                    console.log(data)
+                    this.setState({ session: data })
+
+                    if ($('#session-lists').hasClass('owl-theme')) {
+                        //resize event was triggering an error, this if statement is to go around it
+
+
+                        $('#session-lists').trigger('destroy.owl.carousel'); //these 3 lines kill the owl, and returns the markup to the initial state
+                        $('#session-lists').find('.owl-stage-outer').children().unwrap();
+                        $('#session-lists').removeClass("owl-center owl-loaded owl-text-select-on");
+
+                        $("#session-lists").owlCarousel({
+                            margin: 20,
+                            nav: true,
+                            loop: false,
+                            singleItem: true,
+                            navText: ["<div class='nav-btn prev-btn'>Pre</div>", "<div class='nav-btn next-btn'>Next</div>"],
+                            dots: true,
+                            responsive: {
+                                0: {
+                                    items: 1,
+                                    margin: 5
+                                },
+                                1000: {
+                                    items: 2
+                                },
+                                1100: {
+                                    items: 3
+                                }
+                            }
+                        }); //re-initialise the owl
+                    }
+
+                }
+            })
+        }
+
+
+    }
+
+    __moment = (time) => {
+        return time;
+    }
+
+    render() {
+        return (
+            <div>
+                <div id="session-lists" className="owl-carousel owl-theme">
+
+                    {this.state.session.map((el, i) =>
+
+                        <div className="item">
+                            <div className="border-box text-center">
+                                <img src={'https://ochback.herokuapp.com/api/sessionPhoto/' + el.session_id._id} className="user-dpz" />
+                                <br/><br/>
+                                
+
+                                <h5>DETAILS:</h5>
+                                <div className="line3"></div>
+                                <div className="time-icon"><img src="/client/assets/images/time-icon.png" /></div>
+                                <h5>{moment(el.session_id.start).format("YYYY-MM-DD HH:mm")}</h5>
+                                <div className="video-ic"><img src="/client/assets/images/video-cam.png" /></div>
+                                <h5>{el.session_id.title}<br />(ZOOM SESSION)</h5>
+
+                                {moment(new Date()).isAfter(new Date(el.session_id.start)) === true ? (<div className="join-cover">
+                                    {moment(new Date(el.session_id.start)).add(60, 'minutes').isAfter(new Date) == true ? (<a href={el.session_id.link} className="g-btn">JOIN SESSION</a>) : <a href="javascript:void(0)" className="g-btn">EXPIRED</a>}
+                                </div>) : ('')}
+                                {moment(new Date()).isAfter(new Date(el.session_id.start)) === false ? (<span>(START {moment(el.session_id.start).fromNow()} PRIOR)</span>) : ('Not Available')}
 
                             </div>
                         </div>
@@ -998,7 +1110,7 @@ class Account extends React.Component {
                                                     <img className="profile-ring2" src="/client/assets/images/profile-ring.png" />
                                                 </div>
                                                 <div className="account-data float-lg-left">
-                                                    <h3 style={{ color: 'white', fontSize: '29px !important' }}>{this.state.displayName !== '' ? this.state.displayName : this.state.firstName}</h3>
+                                                    <h3 style={{ color: 'white', fontSize: '20px !important' }}>{this.state.displayName !== '' ? this.state.displayName : this.state.firstName}</h3>
                                                     <h5>GOLD MEMBER</h5>
                                                     <h6>{this.state.creditBalance} CREDITS</h6>
                                                 </div>
@@ -1009,8 +1121,9 @@ class Account extends React.Component {
                                                 <li>PLAN & BILLING</li>
                                                 <li>BUY CREDITS</li>
                                                 <li>MY SESSIONS</li>
-                                                <li>CHANGE PASSWORD</li>
                                                 <li>MY BOOKINGS</li>
+                                                <li>MY SESSION</li>
+                                                <li>CHANGE PASSWORD</li>
 
 
                                             </ul>
@@ -1035,9 +1148,11 @@ class Account extends React.Component {
 
                                             <Booking />
 
-                                            <Password />
-
                                             <Instructor />
+
+                                            <Session />
+
+                                            <Password />
                                         </div>
 
 

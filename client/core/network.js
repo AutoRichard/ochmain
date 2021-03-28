@@ -1195,7 +1195,7 @@ class Dashboard extends Component {
 
 
                             <div className="white-box">
-                                <h2 className="in-h">MY EVENTS</h2>
+                                <h2 className="in-h">MY INVITES</h2>
                                 <div className="line3 text-left"></div>
                                 <div className="likes-section new networkStyling">
                                     {this.state.meetings.map((el, i) => moment(new Date(el.meeting_id.start_time)).add(el.meeting_id.dureation, 'minutes').isAfter(new Date) == true ? (<div className="img-area clearfix">

@@ -4,8 +4,10 @@ import auth from './../auth/auth-helper';
 import { plan } from './../api/api-subscription';
 import UpgradePlan from './../modal/upgradeplan';
 import Coach from '../modal/coach';
-
+import moment from "moment";
 import { listInstructor } from './../api/api-instructor';
+import { create, listSession } from './../api/api-session'
+import swal from 'sweetalert'
 
 
 
@@ -133,105 +135,123 @@ Price: 25 Credits<br />
     );
 }
 
-const Events = () => {
-    return (
-        <section className="events-list">
-            <div className="container-fluid-area">
-                <div id="event-list" className="owl-carousel owl-theme">
+class Events extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            session: []
+        }
+    }
+
+    fetchSession = () => {
+
+        if (auth.isAuthenticated()) {
 
 
-                    <div className="item">		<div className="gp-1 mg">
-                        <div className="p-area">
-                            <h2>MUSIC PUBLISHING<br /> FOR BEGINNERS<br /> W/LARS HALVOR JENSEN</h2>
-                            <h6>EVENT DETAILS:</h6>
-                            <div className="line3"></div>
-                            <p>
-                                Date: Aug 3<br />
 
-Time: 1 PM - 3 PM (PST)<br />
+            listSession().then((data) => {
+                if (data.error) {
+                    swal(data.error)
+                } else {
+                    this.setState({
+                        session: data.reverse()
+                    })
 
+                    if ($('#event-list').hasClass('owl-theme')) { //resize event was triggering an error, this if statement is to go around it
 
-Price: 4 Credits<br />
+                        $('#event-list').trigger('destroy.owl.carousel'); //these 3 lines kill the owl, and returns the markup to the initial state
+                        $('#event-list').find('.owl-stage-outer').children().unwrap();
+                        $('#event-list').removeClass("owl-center owl-loaded owl-text-select-on");
 
-(42 Credits available)</p>
+                        $("#event-list").owlCarousel({
+                            margin: 30,
+                            nav: true,
+                            loop: false,
+                            singleItem: true,
+                            navText: ["<div class='nav-btn prev-btn'>Pre</div>", "<div class='nav-btn next-btn'>Next</div>"],
+                            dots: true,
+                            responsive: {
+                                0: {
+                                    items: 1
+                                },
+                                600: {
+                                    items: 3
+                                },
+                                1000: {
+                                    items: 4
+                                },
 
-                            <a href="#" className="book-now tp">BUY NOW</a>
-                        </div>
-                        <img src="/client/assets/images/ev1.jpg" className="img-responsive" />
+                            },
+                        }); //re-initialise the owl
+                    }
+                }
+            });
+        }
+    }
 
-                    </div></div>
-                    <div className="item">		<div className="gp-1 mg">
-                        <div className="p-area">
-                            <h2>SONGWRITING CIRCLE <br /> MOVIE SYNC SPECIAL</h2>
-                            <h6>EVENT DETAILS:</h6>
-                            <div className="line3"></div>
-                            <p>
-                                Date: Aug 1<br />
+    componentDidMount() {
+        this.fetchSession()
+        this.linkData = new FormData()
+    }
 
-Time: 11 AM - 5 PM (PST)<br />
-
-
-Price: 20 Credits<br />
-
-(42 Credits available)</p>
-
-                            <a href="#" className="book-now tp">BUY NOW</a>
-                        </div>
-                        <img src="/client/assets/images/ev2.jpg" className="img-responsive" />
-
-                    </div></div>
-                    <div className="item">		<div className="gp-1 mg">
-                        <div className="p-area">
-                            <h2>THE TRUTH <br />
-
-
-REAL-TIME FEEDBACK FROM <br />
-
-
-THOMAS BARSOE</h2>
-                            <h6>EVENT DETAILS:</h6>
-                            <div className="line3"></div>
-                            <p>
-                                Date: Jul 29<br />
-
-Time: 11 AM - 5 PM (PST)<br />
+    bookSession = (data, e) => {
+        if (auth.isAuthenticated()) {
+            const jwt = auth.isAuthenticated();
+            const user_id = jwt.user._id;
+            let session_id = data._id;
+            let pricing = data.pricing
 
 
-Price: 20 Credits<br />
+            this.linkData.set('pricing', pricing)
+            this.linkData.set('user_id', user_id)
+            this.linkData.set('session_id', session_id)
+            const token = jwt.token
 
-(42 Credits available)</p>
+            create({ t: token }, this.linkData).then((data) => {
+                if (data.error) {
+                    swal(data.error);
+                } else {
+                    swal(data.success)                    
+                }
+            });
+        }
+    }
 
-                            <a href="#" className="book-now tp">BUY NOW</a>
-                        </div>
-                        <img src="/client/assets/images/ev3.jpg" className="img-responsive" />
+    render() {
+        return (
+            <section className="events-list">
+                <div className="container-fluid-area">
+                    <div id="event-list" className="owl-carousel owl-theme">
 
-                    </div></div>
+                        {this.state.session.map((el, i) =>
+                            <div className="item">		<div className="gp-1 mg">
+                                <div className="p-area">
+                                    <h2>{el.title}</h2>
+                                    <h6>EVENT DETAILS:</h6>
+                                    <div className="line3"></div>
+                                    <p>
+                                        Date: {moment(el.start).format("YYYY-MM-DD HH:mm")}<br />
+                                        duration: {el.duration}<br />
+                                        Price: {el.pricing} Credits<br />
+                                    </p>
 
-                    <div className="item">		<div className="gp-1 mg">
-                        <div className="p-area">
-                            <h2>PERFORMANCE CLASS <br />W/LAURIEANN GIBSON</h2>
-                            <h6>EVENT DETAILS:</h6>
-                            <div className="line3"></div>
-                            <p>
-                                Date: Jul 27<br />
+                                    <a onClick={this.bookSession.bind(this, el)} className="book-now tp">BUY NOW</a>
+                                </div>
+                                <img src={'https://ochback.herokuapp.com/api/sessionPhoto/' + el._id} className="img-responsive" />
 
-Time: 1 PM - 6 PM (PST)<br />
+                            </div></div>
+
+                        )}
 
 
-Price: 25 Credits<br />
-
-(42 Credits available)</p>
-
-                            <a href="#" className="book-now tp">BUY NOW</a>
-                        </div>
-                        <img src="/client/assets/images/ev-4.jpg" className="img-responsive" />
-
-                    </div></div>
-
+                    </div>
                 </div>
-            </div>
-        </section>
-    );
+            </section>
+        );
+    }
+
 }
 
 class Coaching extends Component {
@@ -621,6 +641,8 @@ class Services extends Component {
                 <ServiceList />
 
                 <Session />
+
+                <Events />
 
                 <Coaching
                     parentCheckAvailabilty={this._parentAvailabilty}
