@@ -239,7 +239,7 @@ class Events extends Component {
 
                                     <a onClick={this.bookSession.bind(this, el)} className="book-now tp">BUY NOW</a>
                                 </div>
-                                <img src={'https://ochback.herokuapp.com/api/sessionPhoto/' + el._id} className="img-responsive" />
+                                <img src={'https://ochback.herokuapp.com/api/sessionPhoto/' + el._id} className="img-responsive sessionS" />
 
                             </div></div>
 
