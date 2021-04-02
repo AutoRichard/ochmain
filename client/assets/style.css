@@ -3305,21 +3305,22 @@ label.switch.nw {
 .account-data.float-lg-left h3 {
     color: #fff;
     font-weight: 500;
-    margin-bottom: 0px;    margin-left: -2px;
-    font-size: 30px;
+    margin-bottom: 0px;
+    margin-left: -2px;
+    font-size: 15px;
     margin-top: 26px;
     font-family: 'LuloCleanW01-One';
 }
 .account-data.float-lg-left h5 {
     color: #fff;
     margin-bottom: 4px;
-    font-size: 14px;
+    font-size: 12px;
     font-family: 'LuloCleanOne';
 }
 .account-data.float-lg-left h6 {
     color: #fff;
     margin-bottom: 0px;
-    font-size: 17px;
+    font-size: 15px;
     font-family: 'LuloCleanOne';
 }
 .account-img.float-lg-left img {
@@ -4050,6 +4051,8 @@ div#upgrade-box {
     color: #fff;
     font-weight: 400;
 }
+
+
 a.sign-out {
     padding: 9px 7px;
     margin: 0;
@@ -4057,7 +4060,7 @@ a.sign-out {
     color: #fff !important;
     font-weight: 500;
     display: inline-block;
-    font-size: 24px;
+    font-size: 18px;
     float: none;
 }
 div#cancel-box-two button.close {
@@ -4118,7 +4121,7 @@ h5.creditz {
   
 }
 .account-img.float-lg-left {
-    margin: 34px 15px 15px 0px !important;
+    margin: 7px 15px 15px 0px !important;
 }
 	.group-b {
     position: relative;
@@ -4130,6 +4133,19 @@ background-position: 0px 0px;}}
 	img.user-dp {
     border-radius: 50%;
 
+}
+
+.account-img.float-lg-left {
+    margin: 28px 15px 15px 0px !important;
+}
+.account-data.float-lg-left h3 {
+    color: #fff;
+    font-weight: 500;
+    margin-bottom: 0px;
+    margin-left: -2px;
+    font-size: 13px;
+    margin-top: 26px;
+    font-family: 'LuloCleanW01-One';
 }
 	p.f-small {
     font-size: 9px;
@@ -4155,13 +4171,13 @@ background-position: 0px 0px;}}
 
     font-size: 20px;}
 	.resp-vtabs .resp-tabs-list li {
-    padding: 9px 7px;
-    font-family: 'Montserrat', sans-serif;
-    cursor: pointer;
-    color: #fff;
-    font-size: 20px !important;
-    float: none;
-    border: none;
+        padding: 9px 7px;
+        font-family: 'Montserrat', sans-serif;
+        cursor: pointer;
+        color: #fff;
+        font-size: 18px;
+        float: none;
+        border: none;
 }
 	.account-info.clearfix {
 

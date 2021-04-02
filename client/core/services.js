@@ -9,13 +9,6 @@ import { listInstructor } from './../api/api-instructor';
 import { create, listSession } from './../api/api-session'
 import swal from 'sweetalert'
 
-
-
-
-
-
-
-
 const ServiceList = () => {
     return (
         <section className="plans padd-t">
@@ -63,7 +56,7 @@ const ServiceList = () => {
 						</p>
 
                             <br />
-                            <a href="#" data-toggle="modal" data-target="#change-plan">PICK YOUR PLAN</a>
+                            <a href="javascript:void(0)" data-toggle="modal" data-target="#change-plan">PICK YOUR PLAN</a>
                         </div>
                     </div>
                     <div className="col-md-3">
@@ -84,55 +77,117 @@ const ServiceList = () => {
     );
 }
 
-const Session = () => {
-    return (
-        <section className="group-session text-center">
-            <h1>GROUP SESSIONS & CAMPS</h1>
-            <div className="line2"></div>
-            <div className="group-b">
-                <div className="overlay-wide"></div>
-                <div className="container position-relative">
-                    <h1>FEATURED</h1>
-                    <div className="row">
-                        <div className="col-md-6">
-                            <div className="gp-1">
-                                <div className="p-area">
-                                    <h2>VIRTUAL SONGWRITING CAMP W/SPECIAL GUEST NE-YO</h2>
-                                    <h6>EVENT DETAILS:</h6>
-                                    <div className="line3"></div>
-                                    <p>Date(s): Aug 23/24<br />
-Time: 10 AM - 6 PM (PST)<br />
-Price: 50 Credits<br />
-(<span>42 Credits available</span>)</p>
-                                    <a href="#" className="book-now tp">BUY CREDITS</a>
-                                </div>
-                                <img src="/client/assets/images/gp1.jpg" className="img-responsive" />
+class Session extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            session1: {},
+            session2: {}
+        }
+    }
+
+    fetchSession = () => {
+
+        if (auth.isAuthenticated()) {
+
+
+
+            listSession().then((data) => {
+                if (data.error) {
+                    swal(data.error)
+                } else {
+                    this.setState({
+                        session1: data.filter(el => moment(new Date(el.start)).add(el.start, 'minutes').isAfter(new Date) == true)[0],
+                        session2: data.filter(el => moment(new Date(el.start)).add(el.start, 'minutes').isAfter(new Date) == true)[1]
+                    })
+
+                }
+            });
+        }
+    }
+
+    componentDidMount() {
+        this.fetchSession()
+        this.linkData = new FormData()
+    }
+
+    bookSession = (data, e) => {
+        if (auth.isAuthenticated()) {
+            const jwt = auth.isAuthenticated();
+            const user_id = jwt.user._id;
+            let session_id = data._id;
+            let pricing = data.pricing
+
+
+            this.linkData.set('pricing', pricing)
+            this.linkData.set('user_id', user_id)
+            this.linkData.set('session_id', session_id)
+            const token = jwt.token
+
+            create({ t: token }, this.linkData).then((data) => {
+                if (data.error) {
+                    swal(data.error);
+                } else {
+                    swal(data.success)
+                }
+            });
+        }
+    }
+
+    render() {
+        return (
+            <section className="group-session text-center">
+                <h1>GROUP SESSIONS & CAMPS</h1>
+                <div className="line2"></div>
+                <div className="group-b">
+                    <div className="overlay-wide"></div>
+                    <div className="container position-relative">
+                    {this.state.session1 != null ? (<h1>FEATURED</h1>) : (<h1>NO SESSION AVAILABLE</h1>)}
+                        <div className="row">
+                            <div className="col-md-6">
+                                {this.state.session1 != null ? (<div className="gp-1">
+                                    <div className="p-area">
+                                        <h2>{this.state.session1.title}</h2>
+                                        <h6>EVENT DETAILS:</h6>
+                                        <div className="line3"></div>
+                                        <p>
+                                            Date: {moment(this.state.session1.start).format("YYYY-MM-DD HH:mm")}<br />
+                                    duration: {this.state.session1.duration}<br />
+                                    Price: {this.state.session1.pricing} Credits<br />
+                                        </p>
+                                        <a href="javascript:void(0)" onClick={this.bookSession.bind(this, this.state.session1)} className="book-now tp">BUY CREDITS</a>
+                                    </div>
+                                    <img src={'https://ochback.herokuapp.com/api/sessionPhoto/' + this.state.session1._id} className="img-responsive sessionS" />
+                                </div>) : ('')}
+
                             </div>
-                        </div>
 
 
-                        <div className="col-md-6">
-                            <div className="gp-1">
-                                <div className="p-area">
-                                    <h2>DREAM WARRIOR CAMP W/LAURIEANN GIBSON</h2>
-                                    <h6>EVENT DETAILS:</h6>
-                                    <div className="line3"></div>
-                                    <p>
-                                        Date(s): Jul 30/31<br />
-Time: 10 AM - 6 PM (PST)<br />
-Price: 25 Credits<br />
-(42 Credits available)</p>
-                                    <a href="#" className="book-now tp">BUY NOW</a>
-                                </div>
-                                <img src="/client/assets/images/gp-2.jpg" className="img-responsive" />
-
+                            <div className="col-md-6">
+                                {this.state.session1 != null ? (<div className="gp-1">
+                                    <div className="p-area">
+                                        <h2>{this.state.session2.title}</h2>
+                                        <h6>EVENT DETAILS:</h6>
+                                        <div className="line3"></div>
+                                        <p>
+                                            Date: {moment(this.state.session2.start).format("YYYY-MM-DD HH:mm")}<br />
+                                    duration: {this.state.session2.duration}<br />
+                                    Price: {this.state.session2.pricing} Credits<br />
+                                        </p>
+                                        <a href="javascript:void(0)" onClick={this.bookSession.bind(this, this.state.session2)} className="book-now tp">BUY CREDITS</a>
+                                    </div>
+                                    <img src={'https://ochback.herokuapp.com/api/sessionPhoto/' + this.state.session2._id} className="img-responsive sessionS" />
+                                </div>) : ('')
+                                }
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
-    );
+            </section>
+        );
+    }
 }
 
 class Events extends Component {
@@ -156,7 +211,7 @@ class Events extends Component {
                     swal(data.error)
                 } else {
                     this.setState({
-                        session: data.reverse()
+                        session: data.filter(el => moment(new Date(el.start)).add(el.start, 'minutes').isAfter(new Date) == true)
                     })
 
                     if ($('#event-list').hasClass('owl-theme')) { //resize event was triggering an error, this if statement is to go around it
@@ -213,7 +268,7 @@ class Events extends Component {
                 if (data.error) {
                     swal(data.error);
                 } else {
-                    swal(data.success)                    
+                    swal(data.success)
                 }
             });
         }
@@ -233,11 +288,11 @@ class Events extends Component {
                                     <div className="line3"></div>
                                     <p>
                                         Date: {moment(el.start).format("YYYY-MM-DD HH:mm")}<br />
-                                        duration: {el.duration}<br />
-                                        Price: {el.pricing} Credits<br />
+                                    duration: {el.duration}<br />
+                                    Price: {el.pricing} Credits<br />
                                     </p>
 
-                                    <a onClick={this.bookSession.bind(this, el)} className="book-now tp">BUY NOW</a>
+                                    <a href="javascript:void(0)" onClick={this.bookSession.bind(this, el)} className="book-now tp">BUY NOW</a>
                                 </div>
                                 <img src={'https://ochback.herokuapp.com/api/sessionPhoto/' + el._id} className="img-responsive sessionS" />
 
@@ -325,7 +380,7 @@ class Coaching extends Component {
 
                                         <h6>SINGLE SESSION (1 hr):<br /> {el.pricing} credits</h6>
 
-                                        <a href="" onClick={this.checkAvailabilty.bind(this, el)} data-toggle="modal" data-target="#coach" className="book-now tp">CHECK AVAILABILITY</a>
+                                        <a href="javascript:void(0)" onClick={this.checkAvailabilty.bind(this, el)} data-toggle="modal" data-target="#coach" className="book-now tp">CHECK AVAILABILITY</a>
                                     </div>
                                 </div>
                             </div>
@@ -358,7 +413,7 @@ class Coaching extends Component {
 
                                         <h6>SINGLE SESSION (1 hr):<br /> {el.pricing} credits</h6>
 
-                                        <a href="" onClick={this.checkAvailabilty.bind(this, el)} data-toggle="modal" data-target="#coach" className="book-now tp">CHECK AVAILABILITY</a>
+                                        <a href="javascript:void(0)" onClick={this.checkAvailabilty.bind(this, el)} data-toggle="modal" data-target="#coach" className="book-now tp">CHECK AVAILABILITY</a>
                                     </div>
                                 </div>
                             </div>
@@ -391,7 +446,7 @@ class Coaching extends Component {
 
                                         <h6>SINGLE SESSION (1 hr):<br /> {el.pricing} credits</h6>
 
-                                        <a href="" onClick={this.checkAvailabilty.bind(this, el)} data-toggle="modal" data-target="#coach" className="book-now tp">CHECK AVAILABILITY</a>
+                                        <a href="javascript:void(0)" onClick={this.checkAvailabilty.bind(this, el)} data-toggle="modal" data-target="#coach" className="book-now tp">CHECK AVAILABILITY</a>
                                     </div>
                                 </div>
                             </div>
@@ -421,7 +476,7 @@ class Coaching extends Component {
 
                                         <h6>SINGLE SESSION (1 hr):<br /> {el.pricing} credits</h6>
 
-                                        <a href="" onClick={this.checkAvailabilty.bind(this, el)} data-toggle="modal" data-target="#coach" className="book-now tp">CHECK AVAILABILITY</a>
+                                        <a href="javascript:void(0)" onClick={this.checkAvailabilty.bind(this, el)} data-toggle="modal" data-target="#coach" className="book-now tp">CHECK AVAILABILITY</a>
                                     </div>
                                 </div>
                             </div>
@@ -566,9 +621,9 @@ class Plan extends Component {
 
                             <tr>
                                 <td></td>
-                                <td data-column="Silver"><a data-toggle="modal" onClick={this.__setPlan.bind(this, this.state.silver)} data-target="#upgrade-boxes" href="#" className="book-now">Choose Plan</a></td>
-                                <td data-column="Gold"><a href="#" data-toggle="modal" onClick={this.__setPlan.bind(this, this.state.gold)} data-target="#upgrade-boxes" className="book-now gold">Choose Plan</a></td>
-                                <td data-column="Platinum"><a href="#" data-toggle="modal" onClick={this.__setPlan.bind(this, this.state.platinum)} data-target="#upgrade-boxes" className="book-now">Choose Plan</a></td>
+                                <td data-column="Silver"><a data-toggle="modal" onClick={this.__setPlan.bind(this, this.state.silver)} data-target="#upgrade-boxes" href="javascript:void(0)" className="book-now">Choose Plan</a></td>
+                                <td data-column="Gold"><a href="javascript:void(0)" data-toggle="modal" onClick={this.__setPlan.bind(this, this.state.gold)} data-target="#upgrade-boxes" className="book-now gold">Choose Plan</a></td>
+                                <td data-column="Platinum"><a href="javascript:void(0)" data-toggle="modal" onClick={this.__setPlan.bind(this, this.state.platinum)} data-target="#upgrade-boxes" className="book-now">Choose Plan</a></td>
                             </tr>
 
                         </tbody>

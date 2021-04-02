@@ -667,7 +667,7 @@ class Booking extends React.Component {
                                 {moment(new Date()).isAfter(new Date(el.meeting_id.start_time)) === true ? (<div className="join-cover">
                                     {moment(new Date(el.meeting_id.start_time)).add(el.meeting_id.duration, 'minutes').isAfter(new Date) == true ? (<a href={"/zoom.html?meeting_id=" + el.meeting_id._id} className="g-btn">JOIN SESSION</a>) : <a href="javascript:void(0)" className="g-btn">EXPIRED</a>}
                                 </div>) : ('')}
-                                {moment(new Date()).isAfter(new Date(el.meeting_id.start_time)) === false ? (<span>(START {moment(el.meeting_id.start_time).fromNow()} PRIOR)</span>) : ('Not Available')}
+                                {moment(new Date()).isAfter(new Date(el.meeting_id.start_time)) === false ? (<span>(START {moment(el.meeting_id.start_time).fromNow()})</span>) : ('Not Available')}
                             </div>
                         </div>
 
@@ -888,7 +888,7 @@ class Instructor extends React.Component {
                                 {moment(new Date()).isAfter(new Date(el.event.start)) === true ? (<div className="join-cover">
                                     {moment(new Date(el.event.start)).add(60, 'minutes').isAfter(new Date) == true ? (<a href={"/zoomin.html?event_id=" + el.event._id + "&instructor_id=" + el._id} className="g-btn">JOIN SESSION</a>) : <a href="javascript:void(0)" className="g-btn">EXPIRED</a>}
                                 </div>) : ('')}
-                                {moment(new Date()).isAfter(new Date(el.event.start)) === false ? (<span>(START {moment(el.event.start).fromNow()} PRIOR)</span>) : ('Not Available')}
+                                {moment(new Date()).isAfter(new Date(el.event.start)) === false ? (<span>(START {moment(el.event.start).fromNow()})</span>) : ('Not Available')}
 
                             </div>
                         </div>
@@ -997,9 +997,9 @@ class Session extends React.Component {
                                 <h5>{el.session_id.title}<br />(ZOOM SESSION)</h5>
 
                                 {moment(new Date()).isAfter(new Date(el.session_id.start)) === true ? (<div className="join-cover">
-                                    {moment(new Date(el.session_id.start)).add(60, 'minutes').isAfter(new Date) == true ? (<a href={el.session_id.link} className="g-btn">JOIN SESSION</a>) : <a href="javascript:void(0)" className="g-btn">EXPIRED</a>}
+                                    {moment(new Date(el.session_id.start)).add(el.session_id.start, 'minutes').isAfter(new Date) == true ? (<a href={el.session_id.link} className="g-btn">JOIN SESSION</a>) : <a href="javascript:void(0)" className="g-btn">EXPIRED</a>}
                                 </div>) : ('')}
-                                {moment(new Date()).isAfter(new Date(el.session_id.start)) === false ? (<span>(START {moment(el.session_id.start).fromNow()} PRIOR)</span>) : ('Not Available')}
+                                {moment(new Date()).isAfter(new Date(el.session_id.start)) === false ? (<span>(START {moment(el.session_id.start).fromNow()})</span>) : ('Not Available')}
 
                             </div>
                         </div>
