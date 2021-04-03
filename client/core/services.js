@@ -98,11 +98,20 @@ class Session extends Component {
                 if (data.error) {
                     swal(data.error)
                 } else {
-                    this.setState({
-                        session1: data.filter(el => moment(new Date(el.start)).add(el.start, 'minutes').isAfter(new Date) == true)[0],
-                        session2: data.filter(el => moment(new Date(el.start)).add(el.start, 'minutes').isAfter(new Date) == true)[1]
-                    })
+                    let dataLength = data.filter(el => moment(new Date(el.start)).add(el.start, 'minutes').isAfter(new Date) == true).length
 
+                    if (dataLength == 1 || dataLength == 2) {
+                        this.setState({
+                            session1: data.filter(el => moment(new Date(el.start)).add(el.start, 'minutes').isAfter(new Date) == true)[0],
+                            session2: data.filter(el => moment(new Date(el.start)).add(el.start, 'minutes').isAfter(new Date) == true)[1]
+                        })
+                    } else if (dataLength >= 3) {
+                        let count = dataLength - 1
+                        this.setState({
+                            session1: data.filter(el => moment(new Date(el.start)).add(el.start, 'minutes').isAfter(new Date) == true)[Math.floor(Math.random() * count)],
+                            session2: data.filter(el => moment(new Date(el.start)).add(el.start, 'minutes').isAfter(new Date) == true)[Math.floor(Math.random() * count)]
+                        })
+                    }
                 }
             });
         }
@@ -144,17 +153,17 @@ class Session extends Component {
                 <div className="group-b">
                     <div className="overlay-wide"></div>
                     <div className="container position-relative">
-                    {this.state.session1 != null ? (<h1>FEATURED</h1>) : (<h1>NO SESSION AVAILABLE</h1>)}
+                        {this.state.session1 != null ? (<h1>FEATURED</h1>) : (<h1>NO FEATURED SESSION AVAILABLE</h1>)}
                         <div className="row">
                             <div className="col-md-6">
-                                {this.state.session1 != null ? (<div className="gp-1">
+                                {this.state.session1 !== undefined ? (<div className="gp-1">
                                     <div className="p-area">
                                         <h2>{this.state.session1.title}</h2>
                                         <h6>EVENT DETAILS:</h6>
                                         <div className="line3"></div>
                                         <p>
                                             Date: {moment(this.state.session1.start).format("YYYY-MM-DD HH:mm")}<br />
-                                    duration: {this.state.session1.duration}<br />
+                                    duration: {this.state.session1.duration} Minute<br />
                                     Price: {this.state.session1.pricing} Credits<br />
                                         </p>
                                         <a href="javascript:void(0)" onClick={this.bookSession.bind(this, this.state.session1)} className="book-now tp">BUY CREDITS</a>
@@ -163,17 +172,15 @@ class Session extends Component {
                                 </div>) : ('')}
 
                             </div>
-
-
                             <div className="col-md-6">
-                                {this.state.session1 != null ? (<div className="gp-1">
+                                {this.state.session2 !== undefined ? (<div className="gp-1">
                                     <div className="p-area">
                                         <h2>{this.state.session2.title}</h2>
                                         <h6>EVENT DETAILS:</h6>
                                         <div className="line3"></div>
                                         <p>
                                             Date: {moment(this.state.session2.start).format("YYYY-MM-DD HH:mm")}<br />
-                                    duration: {this.state.session2.duration}<br />
+                                    duration: {this.state.session2.duration} Minutes<br />
                                     Price: {this.state.session2.pricing} Credits<br />
                                         </p>
                                         <a href="javascript:void(0)" onClick={this.bookSession.bind(this, this.state.session2)} className="book-now tp">BUY CREDITS</a>
