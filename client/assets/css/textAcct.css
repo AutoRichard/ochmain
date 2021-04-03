@@ -2,7 +2,7 @@
     color: #fff;
     font-weight: 500;
     margin-bottom: 0px;
-    margin-left: -2px;
+    margin-left: 10px;
     font-size: 25px;
     margin-top: 26px;
     font-family: 'LuloCleanW01-One';
@@ -10,12 +10,14 @@
 .account-data.float-lg-left h5 {
     color: #fff;
     margin-bottom: 4px;
+    margin-left: 10px;
     font-size: 12px;
     font-family: 'LuloCleanOne';
 }
 .account-data.float-lg-left h6 { 
     color: #fff;
     margin-bottom: 0px;
+    margin-left: 10px;
     font-size: 15px;
     font-family: 'LuloCleanOne';
 }
@@ -51,7 +53,7 @@ a.sign-out {
     color: #fff;
     font-weight: 500;
     margin-bottom: 0px;
-    margin-left: -2px;
+    margin-left: 10px;
     font-size: 13px;
     margin-top: 26px;
     font-family: 'LuloCleanW01-One';
@@ -61,4 +63,16 @@ a.sign-out {
 .account-img.float-lg-left {
     margin: 7px 15px 15px 0px !important;
 }
+.account-data.float-lg-left h3 {
+    margin-left: -2px;
+}
+
+.account-data.float-lg-left h5 {
+    margin-left: -2px;
+}
+.account-data.float-lg-left h6 {
+    margin-left: -2px;
+}
+
+
 }

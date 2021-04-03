@@ -92,7 +92,7 @@ font-family: 'Montserrat', sans-serif;
     padding-top: 15px;
 }
 .resp-vtabs li.resp-tab-active {
-    color: #fc4449;
+    color: #fc4449 !important;
     background: transparent;
     font-weight: 500;border:none;
 font-family: 'Montserrat', sans-serif;
