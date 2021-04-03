@@ -98,20 +98,12 @@ class Session extends Component {
                 if (data.error) {
                     swal(data.error)
                 } else {
-                    let dataLength = data.filter(el => moment(new Date(el.start)).add(el.start, 'minutes').isAfter(new Date) == true).length
 
-                    if (dataLength == 1 || dataLength == 2) {
-                        this.setState({
-                            session1: data.filter(el => moment(new Date(el.start)).add(el.start, 'minutes').isAfter(new Date) == true)[0],
-                            session2: data.filter(el => moment(new Date(el.start)).add(el.start, 'minutes').isAfter(new Date) == true)[1]
-                        })
-                    } else if (dataLength >= 3) {
-                        let count = dataLength - 1
-                        this.setState({
-                            session1: data.filter(el => moment(new Date(el.start)).add(el.start, 'minutes').isAfter(new Date) == true)[Math.floor(Math.random() * count)],
-                            session2: data.filter(el => moment(new Date(el.start)).add(el.start, 'minutes').isAfter(new Date) == true)[Math.floor(Math.random() * count)]
-                        })
-                    }
+                    let dataFeature = data.filter(el => el.feature == 1).reverse()
+                    this.setState({
+                        session1: dataFeature.filter(el => moment(new Date(el.start)).add(el.start, 'minutes').isAfter(new Date) == true)[0],
+                        session2: dataFeature.filter(el => moment(new Date(el.start)).add(el.start, 'minutes').isAfter(new Date) == true)[1]
+                    })
                 }
             });
         }
@@ -166,7 +158,7 @@ class Session extends Component {
                                     duration: {this.state.session1.duration} Minutes<br />
                                     Price: {this.state.session1.pricing} Credits<br />
                                         </p>
-                                        <a href="javascript:void(0)" onClick={this.bookSession.bind(this, this.state.session1)} className="book-now tp">BUY CREDITS</a>
+                                        <a href="javascript:void(0)" onClick={this.bookSession.bind(this, this.state.session1)} className="book-now tp">BUY NOW</a>
                                     </div>
                                     <img src={'https://ochback.herokuapp.com/api/sessionPhoto/' + this.state.session1._id} className="img-responsive sessionS" />
                                 </div>) : ('')}
@@ -183,7 +175,7 @@ class Session extends Component {
                                     duration: {this.state.session2.duration} Minutes<br />
                                     Price: {this.state.session2.pricing} Credits<br />
                                         </p>
-                                        <a href="javascript:void(0)" onClick={this.bookSession.bind(this, this.state.session2)} className="book-now tp">BUY CREDITS</a>
+                                        <a href="javascript:void(0)" onClick={this.bookSession.bind(this, this.state.session2)} className="book-now tp">BUY NOW</a>
                                     </div>
                                     <img src={'https://ochback.herokuapp.com/api/sessionPhoto/' + this.state.session2._id} className="img-responsive sessionS" />
                                 </div>) : ('')
@@ -218,7 +210,7 @@ class Events extends Component {
                     swal(data.error)
                 } else {
                     this.setState({
-                        session: data.filter(el => moment(new Date(el.start)).add(el.start, 'minutes').isAfter(new Date) == true)
+                        session: data.filter(el => moment(new Date(el.start)).add(el.start, 'minutes').isAfter(new Date) == true).reverse()
                     })
 
                     if ($('#event-list').hasClass('owl-theme')) { //resize event was triggering an error, this if statement is to go around it

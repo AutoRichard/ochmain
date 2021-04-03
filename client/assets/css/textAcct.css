@@ -1,0 +1,64 @@
+.account-data.float-lg-left h3 {
+    color: #fff;
+    font-weight: 500;
+    margin-bottom: 0px;
+    margin-left: -2px;
+    font-size: 25px;
+    margin-top: 26px;
+    font-family: 'LuloCleanW01-One';
+}
+.account-data.float-lg-left h5 {
+    color: #fff;
+    margin-bottom: 4px;
+    font-size: 12px;
+    font-family: 'LuloCleanOne';
+}
+.account-data.float-lg-left h6 { 
+    color: #fff;
+    margin-bottom: 0px;
+    font-size: 15px;
+    font-family: 'LuloCleanOne';
+}
+.account-img.float-lg-left img {
+    width: 100px;
+}
+.resp-vtabs .resp-tabs-list li {
+    padding: 9px 7px;
+    font-family: 'Montserrat', sans-serif;
+    cursor: pointer;
+    color: #fff;
+    font-size: 18px;
+    float: none;
+    border: none;
+}
+a.sign-out {
+    padding: 9px 7px;
+    margin: 0;
+    cursor: pointer;
+    color: #fff !important;
+    font-weight: 500;
+    display: inline-block;
+    font-size: 18px;
+    float: none;
+}
+
+
+@media (min-width: 992px) and (max-width: 1199px) {
+.account-img.float-lg-left {
+    margin: 28px 15px 15px 0px !important;
+}
+.account-data.float-lg-left h3 {
+    color: #fff;
+    font-weight: 500;
+    margin-bottom: 0px;
+    margin-left: -2px;
+    font-size: 13px;
+    margin-top: 26px;
+    font-family: 'LuloCleanW01-One';
+}
+}
+@media (min-width: 1400px) and (max-width: 10000px){
+.account-img.float-lg-left {
+    margin: 7px 15px 15px 0px !important;
+}
+}
