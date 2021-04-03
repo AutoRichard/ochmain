@@ -163,7 +163,7 @@ class Session extends Component {
                                         <div className="line3"></div>
                                         <p>
                                             Date: {moment(this.state.session1.start).format("YYYY-MM-DD HH:mm")}<br />
-                                    duration: {this.state.session1.duration} Minute<br />
+                                    duration: {this.state.session1.duration} Minutes<br />
                                     Price: {this.state.session1.pricing} Credits<br />
                                         </p>
                                         <a href="javascript:void(0)" onClick={this.bookSession.bind(this, this.state.session1)} className="book-now tp">BUY CREDITS</a>
@@ -295,7 +295,7 @@ class Events extends Component {
                                     <div className="line3"></div>
                                     <p>
                                         Date: {moment(el.start).format("YYYY-MM-DD HH:mm")}<br />
-                                    duration: {el.duration}<br />
+                                    duration: {el.duration} Minutes<br />
                                     Price: {el.pricing} Credits<br />
                                     </p>
 
