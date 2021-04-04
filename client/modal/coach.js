@@ -63,7 +63,7 @@ class MyCalendar extends Component {
                     startAccessor="start"
                     endAccessor="end"
                     views={['month', 'week']}
-                    onSelectEvent={event => swal('Title: '+event.title+'\nStart Time: '+moment(event.start).format("YYYY-MM-DD HH:mm")+'\nEnd Time: '+moment(event.end).format("YYYY-MM-DD HH:mm"), {
+                    onSelectEvent={event => swal('Title: ' + event.title + '\nStart Time: ' + moment(event.start).format("YYYY-MM-DD HH:mm") + '\nEnd Time: ' + moment(event.end).format("YYYY-MM-DD HH:mm"), {
                         buttons: {
                             cancel: "cancel",
                             catch: {
@@ -181,7 +181,12 @@ class Coach extends React.Component {
                         <div className="modal-body bg-white">
                             <div className="row">
                                 <div className="col-md-12 col-lg-4 bod">
-                                    <img style={{ width: '40%', height: '20%' }} src={"https://ochback.herokuapp.com/api/instructorPhoto/" + this.state.Instructor._id} />
+
+                                    <div className="__circular1">
+                                        <img className="user-dp inst2" src={"https://ochback.herokuapp.com/api/instructorPhoto/" + this.state.Instructor._id} />
+                                    </div>
+
+                                    <img className="profile-ring4" src="/client/assets/images/profile-ring.png" />
 
                                     <h5>{this.state.Instructor.name}</h5>
                                     <h4>{this.state.Instructor.profession == 1 ? 'Vocal Coaching' : ''}</h4>

@@ -368,7 +368,11 @@ class Coaching extends Component {
 
                             <div className="col-md-6 col-lg-3">
                                 <div className="production-box">
-                                    <img style={{ width: 'auto', height: '20%', marginTop: '-70px' }} src={"https://ochback.herokuapp.com/api/instructorPhoto/" + el._id} />
+
+                                    <img className="__circular9" style={{ width: 'auto', height: '20%', marginTop: '-70px' }} src={"https://ochback.herokuapp.com/api/instructorPhoto/" + el._id} />
+                                    <img className="profile-ring3" src="/client/assets/images/profile-ring.png" />
+
+
                                     <div className="h-box">
                                         <h1>{el.name}	</h1>
                                     </div>
@@ -401,7 +405,8 @@ class Coaching extends Component {
 
                             <div className="col-md-6 col-lg-3">
                                 <div className="production-box">
-                                    <img style={{ width: 'auto', height: '20%', marginTop: '-70px' }} src={"https://ochback.herokuapp.com/api/instructorPhoto/" + el._id} />
+                                    <img className="__circular9" style={{ width: 'auto', height: '20%', marginTop: '-70px' }} src={"https://ochback.herokuapp.com/api/instructorPhoto/" + el._id} />
+                                    <img className="profile-ring3" src="/client/assets/images/profile-ring.png" />
                                     <div className="h-box">
                                         <h1>{el.name}	</h1>
                                     </div>
@@ -434,8 +439,8 @@ class Coaching extends Component {
 
                             <div className="col-md-6 col-lg-3">
                                 <div className="production-box">
-                                    <img style={{ width: 'auto', height: '20%', marginTop: '-70px' }} src={"https://ochback.herokuapp.com/api/instructorPhoto/" + el._id} />
-                                    <div className="h-box">
+                                    <img className="__circular9" style={{ width: 'auto', height: '20%', marginTop: '-70px' }} src={"https://ochback.herokuapp.com/api/instructorPhoto/" + el._id} />
+                                    <img className="profile-ring3" src="/client/assets/images/profile-ring.png" /><div className="h-box">
                                         <h1>{el.name}	</h1>
                                     </div>
                                     <div className="h-content">
@@ -464,8 +469,8 @@ class Coaching extends Component {
 
                             <div className="col-md-6 col-lg-3">
                                 <div className="production-box">
-                                    <img style={{ width: 'auto', height: '20%', marginTop: '-70px' }} src={"https://ochback.herokuapp.com/api/instructorPhoto/" + el._id} />
-                                    <div className="h-box">
+                                    <img className="__circular9" style={{ width: 'auto', height: '20%', marginTop: '-70px' }} src={"https://ochback.herokuapp.com/api/instructorPhoto/" + el._id} />
+                                    <img className="profile-ring3" src="/client/assets/images/profile-ring.png" /><div className="h-box">
                                         <h1>{el.name}	</h1>
                                     </div>
                                     <div className="h-content">
