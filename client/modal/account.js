@@ -454,7 +454,14 @@ class Billing extends React.Component {
                 <div className="row">
                     <div className="col-md-8">
                         <ul className="package-list clearfix">
-                            <li>CURRENT PLAN:</li> 	<li>{this.state.plan.toUpperCase()} MEMBERSHIP <div className="gold-plat"><img src="/client/assets/images/gold.png" /></div></li>
+                            <li>CURRENT PLAN:</li> 	<li>{this.state.plan.toUpperCase()} MEMBERSHIP 
+                            
+                            
+                            {this.state.plan == 'gold' ? <div className="gold-plat"><img src="/client/assets/images/gold.png" /></div> : ''}
+                            {this.state.plan == 'silver' ? <div className="gold-plat"><img src="/client/assets/images/silver.png" /></div> : ''}
+                            {this.state.plan == 'platinum' ? <div className="gold-plat"><img src="/client/assets/images/platinum.png" /></div> : ''}
+                            
+                            </li>
 
 
                             <li>RENEWS ON:</li>		<li>{this.state.renew}</li>
