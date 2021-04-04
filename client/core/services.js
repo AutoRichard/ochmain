@@ -158,7 +158,7 @@ class Session extends Component {
                                     duration: {this.state.session1.duration} Minutes<br />
                                     Price: {this.state.session1.pricing} Credits<br />
                                         </p>
-                                        <a href="javascript:void(0)" onClick={this.bookSession.bind(this, this.state.session1)} className="book-now tp">BUY NOW</a>
+                                        <a href="javascript:void(0)" onClick={this.bookSession.bind(this, this.state.session1)} className="book-now tp">BOOK NOW</a>
                                     </div>
                                     <img src={'https://ochback.herokuapp.com/api/sessionPhoto/' + this.state.session1._id} className="img-responsive sessionS" />
                                 </div>) : ('')}
@@ -175,7 +175,7 @@ class Session extends Component {
                                     duration: {this.state.session2.duration} Minutes<br />
                                     Price: {this.state.session2.pricing} Credits<br />
                                         </p>
-                                        <a href="javascript:void(0)" onClick={this.bookSession.bind(this, this.state.session2)} className="book-now tp">BUY NOW</a>
+                                        <a href="javascript:void(0)" onClick={this.bookSession.bind(this, this.state.session2)} className="book-now tp">BOOK NOW</a>
                                     </div>
                                     <img src={'https://ochback.herokuapp.com/api/sessionPhoto/' + this.state.session2._id} className="img-responsive sessionS" />
                                 </div>) : ('')
@@ -209,8 +209,9 @@ class Events extends Component {
                 if (data.error) {
                     swal(data.error)
                 } else {
+                    let dataUnfeature = data.filter(el => el.feature != 1).reverse()
                     this.setState({
-                        session: data.filter(el => moment(new Date(el.start)).add(el.start, 'minutes').isAfter(new Date) == true).reverse()
+                        session: dataUnfeature.filter(el => moment(new Date(el.start)).add(el.start, 'minutes').isAfter(new Date) == true)
                     })
 
                     if ($('#event-list').hasClass('owl-theme')) { //resize event was triggering an error, this if statement is to go around it
@@ -291,7 +292,7 @@ class Events extends Component {
                                     Price: {el.pricing} Credits<br />
                                     </p>
 
-                                    <a href="javascript:void(0)" onClick={this.bookSession.bind(this, el)} className="book-now tp">BUY NOW</a>
+                                    <a href="javascript:void(0)" onClick={this.bookSession.bind(this, el)} className="book-now tp">BOOK NOW</a>
                                 </div>
                                 <img src={'https://ochback.herokuapp.com/api/sessionPhoto/' + el._id} className="img-responsive sessionS" />
 
