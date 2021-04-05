@@ -607,9 +607,10 @@ class Booking extends React.Component {
                 if (data.error) {
                     swal(data.error)
                 } else {
-                    this.setState({ meetings: data.booking })
+                    this.setState({ meetings: data.booking.reverse() })
 
                     if ($('#booking-lists').hasClass('owl-theme')) {
+                        console.log(123)
                         //resize event was triggering an error, this if statement is to go around it
 
 
@@ -829,8 +830,8 @@ class Instructor extends React.Component {
                 if (data.error) {
                     swal(data.error)
                 } else {
-                    console.log(data)
-                    this.setState({ instructors: data })
+                    let _data = data.reverse() 
+                    this.setState({ instructors: _data })
 
                     if ($('#instructor-lists').hasClass('owl-theme')) {
                         //resize event was triggering an error, this if statement is to go around it
@@ -939,8 +940,9 @@ class Session extends React.Component {
                 if (data.error) {
                     swal(data.error)
                 } else {
-                    console.log(data)
-                    this.setState({ session: data })
+                    let _data = data.reverse() 
+                    this.setState({ session: _data })
+
 
                     if ($('#session-lists').hasClass('owl-theme')) {
                         //resize event was triggering an error, this if statement is to go around it

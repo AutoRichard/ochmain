@@ -1017,7 +1017,7 @@ class Dashboard extends Component {
                 if (data.error) {
                     swal(data.error)
                 } else {
-                    this.setState({ meetingsInvite: data })
+                    this.setState({ meetingsInvite: data.reverse() })
                 }
             })
         }

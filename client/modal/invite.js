@@ -83,7 +83,7 @@ class Invite extends React.Component {
                             console.log(data.error);
                         } else {
                             swal("Meeting Booked")
-                            window.location = '/studio'
+                            window.location = '/my-studio'
                         }
                     });
                 } else if (countBooking > 0) {
