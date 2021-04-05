@@ -454,13 +454,13 @@ class Billing extends React.Component {
                 <div className="row">
                     <div className="col-md-8">
                         <ul className="package-list clearfix">
-                            <li>CURRENT PLAN:</li> 	<li>{this.state.plan.toUpperCase()} MEMBERSHIP 
-                            
-                            
+                            <li>CURRENT PLAN:</li> 	<li>{this.state.plan.toUpperCase()} MEMBERSHIP
+
+
                             {this.state.plan == 'gold' ? <div className="gold-plat"><img src="/client/assets/images/gold.png" /></div> : ''}
-                            {this.state.plan == 'silver' ? <div className="gold-plat"><img src="/client/assets/images/silver.png" /></div> : ''}
-                            {this.state.plan == 'platinum' ? <div className="gold-plat"><img src="/client/assets/images/platinum.png" /></div> : ''}
-                            
+                                {this.state.plan == 'silver' ? <div className="gold-plat"><img src="/client/assets/images/silver.png" /></div> : ''}
+                                {this.state.plan == 'platinum' ? <div className="gold-plat"><img src="/client/assets/images/platinum.png" /></div> : ''}
+
                             </li>
 
 
@@ -660,7 +660,9 @@ class Booking extends React.Component {
 
                         <div className="item">
                             <div className="border-box text-center">
-                                <img src={'https://ochback.herokuapp.com/api/usersPhoto/' + el.user_id._id} className="user-dpz" />
+                                <img className="user-dpz __circular5" style={{ width: '50%', height: '20%', top: '51px' }} src={'https://ochback.herokuapp.com/api/usersPhoto/' + el.user_id._id} />
+                                <img className="pf5 profile-ring5"  src="/client/assets/images/profile-ring.png" />
+                                
                                 <h4>{el.user_id.firstName}</h4>
 
                                 <h5>DETAILS:</h5>
@@ -830,7 +832,7 @@ class Instructor extends React.Component {
                 if (data.error) {
                     swal(data.error)
                 } else {
-                    let _data = data.reverse() 
+                    let _data = data.reverse()
                     this.setState({ instructors: _data })
 
                     if ($('#instructor-lists').hasClass('owl-theme')) {
@@ -940,7 +942,7 @@ class Session extends React.Component {
                 if (data.error) {
                     swal(data.error)
                 } else {
-                    let _data = data.reverse() 
+                    let _data = data.reverse()
                     this.setState({ session: _data })
 
 
@@ -995,8 +997,8 @@ class Session extends React.Component {
                         <div className="item">
                             <div className="border-box text-center">
                                 <img src={'https://ochback.herokuapp.com/api/sessionPhoto/' + el.session_id._id} className="user-dpz" />
-                                <br/><br/>
-                                
+                                <br /><br />
+
 
                                 <h5>DETAILS:</h5>
                                 <div className="line3"></div>
