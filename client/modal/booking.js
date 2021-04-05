@@ -130,7 +130,7 @@ class Booking extends React.Component {
 
                                                 ({this.state.creditBalance} Credits available)</h3>
                                         <a href="#" class="book-now sp">BUY CREDITS</a>*/}
-                                        <a href="#" onClick={this.booking} class="book-now-green sp">BOOK NOW &#10094;</a>
+                                        <a href="#" onClick={this.booking} class="book-now-green sp">Accept Invite &#10094;</a>
                                     </div>
                                 </div>
 

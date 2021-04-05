@@ -141,7 +141,7 @@ class CheckoutForm extends React.Component {
 
                 <div className="row">
 
-                    <div className="col-md-6">
+                    <div className="col-md-5">
 
                         <h5 className="m-b">CARD SELECTION</h5>
                         {/*<label className="control-r control-radio">
@@ -185,7 +185,7 @@ class CheckoutForm extends React.Component {
 
                     </div>
 
-                    <div className="col-md-6 text-center">
+                    <div className="col-md-5 text-center">
                         <h5 className="m-b">CREDITS IN CART</h5>
                         <div className="input-area ft-sz">
                             <input type="text" value={this.state.amount} />
@@ -199,7 +199,7 @@ class CheckoutForm extends React.Component {
 
                     </div>
 
-                    <div className="col-md-3 text-center">
+                    <div className="col-md-2 text-center">
                     </div>
 
                 </div>

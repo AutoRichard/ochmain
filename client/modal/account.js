@@ -885,7 +885,8 @@ class Instructor extends React.Component {
 
                         <div className="item">
                             <div className="border-box text-center">
-                                <img src={'https://ochback.herokuapp.com/api/instructorPhoto/' + el._id} className="user-dpz" />
+                                <img className="user-dpz __circular5" style={{ width: '50%', height: '20%', top: '51px' }} src={'https://ochback.herokuapp.com/api/instructorPhoto/' + el._id} />
+                                <img className="pf5 profile-ring5"  src="/client/assets/images/profile-ring.png" />
                                 <h4>{el.name}</h4>
 
                                 <h5>DETAILS:</h5>
@@ -996,7 +997,8 @@ class Session extends React.Component {
 
                         <div className="item">
                             <div className="border-box text-center">
-                                <img src={'https://ochback.herokuapp.com/api/sessionPhoto/' + el.session_id._id} className="user-dpz" />
+                            <img className="user-dpz __circular5" style={{ width: '50%', height: '20%', top: '51px' }} src={'https://ochback.herokuapp.com/api/sessionPhoto/' + el.session_id._id} />
+                                <img className="pf5 profile-ring5"  src="/client/assets/images/profile-ring.png" />
                                 <br /><br />
 
 
