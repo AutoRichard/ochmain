@@ -223,7 +223,7 @@ class Studios extends Component {
                                             <div className="request-box">
                                                 <img src="/client/assets/images/v1.jpg" className="img-responsive" />
                                                 <div className="request-text animate__animated animate__fadeIn">
-                                                    {moment(new Date()).isAfter(new Date(el.start_time)) === false ? (<h5>(START {moment(el.start_time).fromNow()} PRIOR)</h5>) : (<h5></h5>)}
+                                                    {moment(new Date()).isAfter(new Date(el.start_time)) === false ? (<h5>(START {moment(el.start_time).fromNow()})</h5>) : (<h5></h5>)}
                                                     {moment(new Date()).isAfter(new Date(el.start_time)) === true ? (<div>
                                                         {moment(new Date(el.start_time)).add(el.duration, 'minutes').isAfter(new Date) == true ? (<a href={"/zoom.html?meeting_id=" + el._id} className="book-now">JOIN SESSION</a>) : <a href="javascript:void(0)" className="book-now">EXPIRED</a>}
                                                     </div>) : ('')}
@@ -256,7 +256,7 @@ class Studios extends Component {
                                         <div className="request-box">
                                             <img src="/client/assets/images/vh1.jpg" className="img-responsive" />
                                             <div className="request-text animate__animated animate__fadeIn">
-                                                {moment(new Date()).isAfter(new Date(el.start_time)) === false ? (<h5>(START {moment(el.start_time).fromNow()} PRIOR)</h5>) : (<h5></h5>)}
+                                                {moment(new Date()).isAfter(new Date(el.start_time)) === false ? (<h5>(START {moment(el.start_time).fromNow()})</h5>) : (<h5></h5>)}
                                                 {moment(new Date()).isAfter(new Date(el.start_time)) === true ? (<div>
                                                     {moment(new Date(el.start_time)).add(el.duration, 'minutes').isAfter(new Date) == true ? (<a href={"/zoom.html?meeting_id=" + el._id} className="book-now">JOIN SESSION</a>) : <a href="javascript:void(0)" className="book-now">EXPIRED</a>}
                                                 </div>) : ('')}
@@ -284,7 +284,7 @@ class Studios extends Component {
                                         <div className="request-box">
                                             <img src="/client/assets/images/r1.jpg" className="img-responsive" />
                                             <div className="request-text animate__animated animate__fadeIn">
-                                                {moment(new Date()).isAfter(new Date(el.start_time)) === false ? (<h5>(START {moment(el.start_time).fromNow()} PRIOR)</h5>) : (<h5></h5>)}
+                                                {moment(new Date()).isAfter(new Date(el.start_time)) === false ? (<h5>(START {moment(el.start_time).fromNow()})</h5>) : (<h5></h5>)}
                                                 {moment(new Date()).isAfter(new Date(el.start_time)) === true ? (<div>
                                                     {moment(new Date(el.start_time)).add(el.duration, 'minutes').isAfter(new Date) == true ? (<a href={"/zoom.html?meeting_id=" + el._id} className="book-now">JOIN SESSION</a>) : <a href="javascript:void(0)" className="book-now">EXPIRED</a>}
                                                 </div>) : ('')}

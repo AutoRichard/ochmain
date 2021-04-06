@@ -1133,9 +1133,9 @@ class Account extends React.Component {
                                                 <li>ACCOUNT INFO</li>
                                                 <li>PLAN & BILLING</li>
                                                 <li>BUY CREDITS</li>
-                                                <li>MY SESSIONS</li>
+                                                <li>INVITED/BOOKED SESSIONS</li>
                                                 <li>MY BOOKINGS</li>
-                                                <li>MY SESSION</li>
+                                                <li>MY SESSIONS</li>
                                                 <li>CHANGE PASSWORD</li>
 
 

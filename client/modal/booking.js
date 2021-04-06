@@ -87,7 +87,7 @@ class Booking extends React.Component {
                         } else {
                             swal("Meeting Booked")
                             console.log(data)
-                            window.location = '/studio'
+                            window.location = '/my-studio'
                         }
                     });
                 } else if (countBooking > 0) {

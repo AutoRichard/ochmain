@@ -143,8 +143,10 @@ class CheckoutForm extends React.Component {
 
                     <div className="col-md-5">
 
+                        
+                        {/*
                         <h5 className="m-b">CARD SELECTION</h5>
-                        {/*<label className="control-r control-radio">
+                        <label className="control-r control-radio">
                             <ul className="card-detail new clearfix">
                                 <li><img src="/client/assets/images/card-one.png" className="card-im" /></li>
                                 <li><p>VISA - **** 3432</p>
@@ -178,10 +180,11 @@ class CheckoutForm extends React.Component {
                             <input type="radio" name="radio" checked="checked" />
                             <div className="control_indicator-r"></div>
                         </label>
+                        <a href="#" className="grey-link"><img src="/client/assets/images/gray-plus.png" className="grey-icon" /> ADD CARD</a>
 
         */}
 
-                        <a href="#" className="grey-link"><img src="/client/assets/images/gray-plus.png" className="grey-icon" /> ADD CARD</a>
+                        
 
                     </div>
 
