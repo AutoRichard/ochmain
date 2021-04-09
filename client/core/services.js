@@ -44,7 +44,7 @@ const ServiceList = () => {
 						</p>
 
                             <br />
-                            <a href="/studio">BOOK A SESSION</a>
+                            <a href="#individual">BOOK A SESSION</a>
                         </div>
                     </div>
                     <div className="col-md-3">
@@ -355,7 +355,7 @@ class Coaching extends Component {
 
     render() {
         return (
-            <section className=" text-center indivi-s">
+            <section id="individual" className=" text-center indivi-s">
                 <h1>INDIVIDUAL SESSIONS</h1>
                 <div className="line2"></div>
 

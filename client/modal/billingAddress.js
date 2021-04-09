@@ -127,8 +127,17 @@ class BillingAddress extends React.Component {
 
             <div>
                 <div className="row">
+                    
                     <div className="col-md-6">
-                        <h5>CARDS ON FILE</h5>
+                        <label>CREDIT CARD</label>
+                        <form>
+                            <CardSection />
+                        </form>
+                        <p>{/*NB: Add credit card details to activate subscription*/}</p>
+                    </div>
+
+                    <div className="col-md-6">
+                        {/*<h5>CARDS ON FILE</h5>
                         <ul className="card-detail clearfix">
                             {this.state.card_type == '' ? '' : (<li><img src="/client/assets/images/card-one.png" className="card-im" /></li>)}
                             <li style={{ width: '40% !important' }}><p>{this.state.card_type.toLocaleUpperCase()} - **** {this.state.last_4}</p>
@@ -136,7 +145,7 @@ class BillingAddress extends React.Component {
 
                                 <p>EXP. DATE : {this.state.exp_date}</p>
                                 <p>PRIMARY</p></li>
-                            {/*<li><a href="#"><img src="/client/assets/images/del.png" className="del-icon" /></a></li>*/}
+                            <li><a href="#"><img src="/client/assets/images/del.png" className="del-icon" /></a></li>
 
                         </ul>
                         {/*<ul className="card-detail clearfix">
@@ -152,13 +161,6 @@ class BillingAddress extends React.Component {
 
                         </ul>
                         <a href="#" className="grey-link"><img src="/client/assets/images/gray-plus.png" className="grey-icon" /> ADD MORE</a>*/}
-                    </div>
-                    <div className="col-md-6">
-                        <label>CREDIT CARD</label>
-                        <form>
-                            <CardSection />
-                        </form>
-                        <p>NB: Add credit card details to activate subscription</p>
                     </div>
                 </div>
                 <div className="text-center">
