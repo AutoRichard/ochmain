@@ -1,4 +1,5 @@
 import React from 'react';
+import { signout } from './../auth/api-auth';
 import auth from './../auth/auth-helper';
 import { read, update, password } from './../api/api-user';
 import { createLink, checkLink, updateLinkStatus } from './../api/api-link';
@@ -661,8 +662,8 @@ class Booking extends React.Component {
                         <div className="item">
                             <div className="border-box text-center">
                                 <img className="user-dpz __circular5" style={{ width: '50%', height: '20%', top: '51px' }} src={'https://ochback.herokuapp.com/api/usersPhoto/' + el.user_id._id} />
-                                <img className="pf5 profile-ring5"  src="/client/assets/images/profile-ring.png" />
-                                
+                                <img className="pf5 profile-ring5" src="/client/assets/images/profile-ring.png" />
+
                                 <h4>{el.user_id.firstName}</h4>
 
                                 <h5>DETAILS:</h5>
@@ -886,7 +887,7 @@ class Instructor extends React.Component {
                         <div className="item">
                             <div className="border-box text-center">
                                 <img className="user-dpz __circular5" style={{ width: '50%', height: '20%', top: '51px' }} src={'https://ochback.herokuapp.com/api/instructorPhoto/' + el._id} />
-                                <img className="pf5 profile-ring5"  src="/client/assets/images/profile-ring.png" />
+                                <img className="pf5 profile-ring5" src="/client/assets/images/profile-ring.png" />
                                 <h4>{el.name}</h4>
 
                                 <h5>DETAILS:</h5>
@@ -997,8 +998,8 @@ class Session extends React.Component {
 
                         <div className="item">
                             <div className="border-box text-center">
-                            <img className="user-dpz __circular5" style={{ width: '50%', height: '20%', top: '51px' }} src={'https://ochback.herokuapp.com/api/sessionPhoto/' + el.session_id._id} />
-                                <img className="pf5 profile-ring5"  src="/client/assets/images/profile-ring.png" />
+                                <img className="user-dpz __circular5" style={{ width: '50%', height: '20%', top: '51px' }} src={'https://ochback.herokuapp.com/api/sessionPhoto/' + el.session_id._id} />
+                                <img className="pf5 profile-ring5" src="/client/assets/images/profile-ring.png" />
                                 <br /><br />
 
 
@@ -1059,6 +1060,17 @@ class Account extends React.Component {
             }, { t: token }).then((data) => {
                 if (data.error) {
                     swal(data.error)
+
+                    signout().then((data) => {
+                        if (data.error) {
+                            alert(data.error)
+                        } else {
+
+                            auth.signout(() => window.location = '/')
+                        }
+                    });
+
+
                 } else {
                     this.setState({ firstName: data.firstName || '', displayName: data.displayName || '', dataEdit: { ...data, loading: false }, creditBalance: data.creditBalance });
                 }
