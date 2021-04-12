@@ -132,21 +132,21 @@ class ApplicationForm extends React.Component {
                                     <div className="col-md-6 padd-right">
                                         <div className="input-area sp">
                                             <label>FIRST NAME </label>
-                                            <input type="text" name="firstName" placeholder="Beaux" onChange={this.onChangeInput} value={this.state.firstName} />
+                                            <input type="text" name="firstName" placeholder="Enter First Nanme" onChange={this.onChangeInput} value={this.state.firstName} />
                                             <div className="text-left" id="validationError">{this.state.firstNameValidate}</div>
                                         </div>
                                     </div>
                                     <div className="col-md-6 padd-left">
                                         <div className="input-area sp">
                                             <label>LAST NAME </label>
-                                            <input type="text" name="lastName" placeholder="Beaux" onChange={this.onChangeInput} value={this.state.lastName} />
+                                            <input type="text" name="lastName" placeholder="Enter Last Name" onChange={this.onChangeInput} value={this.state.lastName} />
                                             <div className="text-left" id="validationError">{this.state.lastNameValidate}</div>
                                         </div>
                                     </div>
                                     <div className="col-md-6 padd-right">
                                         <div className="input-area sp">
                                             <label>EMAIL ADDRESS </label>
-                                            <input type="email" name="email" placeholder="michelledenise99@gmail.com" onChange={this.onChangeInput} value={this.state.email} />
+                                            <input type="email" name="email" placeholder="Enter E-mail" onChange={this.onChangeInput} value={this.state.email} />
                                             <div className="text-left" id="validationError">{this.state.emailValidate}</div>
                                         </div>
                                     </div>
