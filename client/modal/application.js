@@ -146,7 +146,7 @@ class ApplicationForm extends React.Component {
                                     <div className="col-md-6 padd-right">
                                         <div className="input-area sp">
                                             <label>EMAIL ADDRESS </label>
-                                            <input type="email" name="email" placeholder="Enter E-mail" onChange={this.onChangeInput} value={this.state.email} />
+                                            <input type="email" name="email" placeholder="Enter E-mail Address" onChange={this.onChangeInput} value={this.state.email} />
                                             <div className="text-left" id="validationError">{this.state.emailValidate}</div>
                                         </div>
                                     </div>
