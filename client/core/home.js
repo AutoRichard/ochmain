@@ -337,7 +337,7 @@ class VideoNews extends React.Component {
 
         this.state = {
             _id: '',
-            news: [],
+            news: {},
             view: false,
         }
 
@@ -351,9 +351,11 @@ class VideoNews extends React.Component {
                 if (data.error) {
                     alert(data.error)
                 } else {
-                    this.setState({
-                        news: data[0],
-                    })
+                    if(data.length > 0){
+                        this.setState({
+                            news: [data[0]],
+                        })
+                    }                    
                 }
             });
         }
